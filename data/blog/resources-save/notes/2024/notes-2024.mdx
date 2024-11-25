@@ -8,6 +8,53 @@ summary: ''
 
 <TOCInlineWithSticky toHeading={3} toc={props.toc} />
 
+#### 2024-11-19
+
+- 在平时开发依赖的第三方包中有部分代码有问题或者需要做出微小的变动
+
+可以考虑私服维护，另外也可以通过 patch-package 来实现，如果使用 pnpm 的话自带了 patch 子命令
+
+pnpm patch 包含以下能力
+
+**功能描述**
+
+1. 创建补丁：pnpm patch 允许你在本地对某个依赖包进行修改，然后生成一个补丁文件。这可以帮助你在不修改包的源代码仓库的情况下，快速修复问题或添加功能。
+2. 应用补丁：生成的补丁文件可以被 pnpm 自动应用到项目的依赖包中。这样，项目在安装依赖时会自动应用这些补丁，确保所有开发者和部署环境都使用相同的修改版本。
+3. 版本控制：补丁文件通常可以被添加到版本控制系统中（如 Git），从而确保团队成员在拉取代码时也能获得相同的补丁。
+
+**使用方法**
+
+1. 启动补丁模式
+
+```bash
+pnpm patch <package-name>
+```
+
+这将会打开一个临时目录，其中包含你要修改的包的内容。
+
+2. 进行修改：在打开的临时目录中，对包的源码进行所需的修改。
+3. 生成补丁：完成修改后，退出编辑器，pnpm 会提示你是否要生成补丁文件。确认后，pnpm 将生成一个补丁文件，并将其应用到你的项目中。
+4. 应用补丁：当你或其他人运行 pnpm install 时，pnpm 会自动应用这些补丁到相应的依赖包上。
+
+**示例**
+
+假设你想对 lodash 这个包进行补丁：
+
+```bash
+pnpm patch lodash
+```
+
+1. 这会打开一个 lodash 的副本供你修改。
+2. 修改完成后，保存并退出。
+3. pnpm 会生成一个补丁文件并提示你保存它。
+4. 下次运行 pnpm install 时，补丁会自动应用。
+
+**注意事项**
+
+- 补丁文件通常存储在 .pnpm/patches 目录中。
+- 确保补丁文件被纳入版本控制，以便团队成员都能使用相同的修复。
+- 使用补丁功能时，需谨慎评估对包的修改，以避免引入不兼容的更改。
+
 #### 2024-11-14
 
 - 在使用 dom 的全屏 API 的时候会有一些奇怪的问题（input[type=file]点击会退出全屏、有时候 win 的菜单栏不会被收起导致顶部部分内容被裁切）
@@ -168,36 +215,18 @@ PubSub.unsubscribe('myTopic')
 
 创建独立堆叠上下文的方法
 
-1.  根元素 `(<html>)`
-2.  有 position 属性且 z-index 值不为 auto 的元素
-3.  opacity 小于 1 的元素
-4.  transform 属性且值不为 none 的元素
-5.  filter 属性且值不为 none 的元素
-6.  perspective 属性且值不为 none 的元素
-7.  clip-path 属性且值不为 none 的元素
-8.  mask 属性且值不为 none 的元素
-9.  isolation: isolate 的元素
-10. will-change 属性且值为 opacity、transform 等的元素
-11. mix-blend-mode 属性且值不为 normal 的元素
-12. `<iframe>` 元素
-
-```mermaid
-graph TB
-    subgraph Stacking Contexts
-        A[root-html]
-        B[position & z-index]
-        C[opacity < 1]
-        D[transform != none]
-        E[filter != none]
-        F[perspective != none]
-        G[clip-path != none]
-        H[mask != none]
-        I[isolation: isolate]
-        J[will-change]
-        K[mix-blend-mode != normal]
-        L[iframe]
-    end
-```
+1.  根元素 `(<html>)`（root-html）
+2.  有 position 属性且 z-index 值不为 auto 的元素（position & z-index）
+3.  opacity 小于 1 的元素（opacity < 1）
+4.  transform 属性且值不为 none 的元素（transform != none）
+5.  filter 属性且值不为 none 的元素（filter != none）
+6.  perspective 属性且值不为 none 的元素（perspective != none）
+7.  clip-path 属性且值不为 none 的元素（clip-path != none）
+8.  mask 属性且值不为 none 的元素（mask != none）
+9.  isolation: isolate 的元素（isolation: isolate）
+10. will-change 属性且值为 opacity、transform 等的元素（will-change）
+11. mix-blend-mode 属性且值不为 normal 的元素（mix-blend-mode != normal）
+12. `<iframe>` 元素（iframe）
 
 **html 示例**
 
