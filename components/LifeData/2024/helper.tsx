@@ -561,7 +561,7 @@ export const booksAndMediaData: TableData = {
         // 音
         '8',
         // 听
-        '12',
+        '14',
       ],
     },
   ],
