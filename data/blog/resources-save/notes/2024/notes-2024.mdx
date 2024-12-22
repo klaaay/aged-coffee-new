@@ -1,12 +1,22 @@
 ---
 title: notes-2024
 date: '2024-11-11'
-tags: ['resources-save']
+tags: ['notes']
 draft: false
 summary: ''
 ---
 
 <TOCInlineWithSticky toHeading={3} toc={props.toc} />
+
+#### 2024-12-19
+
+在某些特殊情况下浏览器的有效高度区域大于整个系统的屏幕有效高度区域（例如浏览器全屏，但是底部还有一个 win 的菜单栏）  
+这样会导致部分内容被菜单栏挡住，可以通过 window.innerHeight 和 screen.availHeight 分别获取浏览器的有效高度区域和系统屏幕的有效高度区域  
+并给他们两个差值的间隙
+
+```js
+const offset = window.innerHeight - (screen?.availHeight || window.innerHeight)
+```
 
 #### 2024-11-19
 

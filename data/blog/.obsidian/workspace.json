@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2db434fa2c86d318",
+        "id": "2140b3eda8f253ad",
         "type": "tabs",
         "children": [
           {
-            "id": "0918ee36feceeaca",
+            "id": "e3954e9d085b0549",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -152,19 +152,30 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "smart-connections:Open: View Smart Connections": false,
-      "smart-connections:Open: Smart Chat Conversation": false,
       "mermaid-tools:Open Mermaid Toolbar": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "smart-connections:Open: View Smart Connections": false,
+      "smart-connections:Open: Smart Chat Conversation": false
     }
   },
-  "active": "0918ee36feceeaca",
+  "active": "e3954e9d085b0549",
   "lastOpenFiles": [
-    "smart-chats",
-    "tech-blog/yuan-gou-jian-gong-ju-vite-chu-tan.md",
+    "photo-gallery/photos.md",
+    "photo-gallery/2023/ao-men.md",
+    "my-notes/moth-notes/2024/6.md",
+    "my-notes/moth-notes/2024/5.md",
+    "my-notes/moth-notes/2024/4.md",
+    "my-notes/moth-notes/2024/3.md",
+    "my-notes/moth-notes/2024/1.md",
+    "my-notes/moth-notes/2023/all.md",
+    "my-notes/moth-notes/2023/12.md",
+    "my-notes/moth-notes/2023/11.md",
+    "my-notes/moth-notes/2023/10.md",
     "life/zou-zou-ting-ting.md",
     "life/subscription.md",
     "life/schedule.md",
+    "smart-chats",
+    "tech-blog/yuan-gou-jian-gong-ju-vite-chu-tan.md",
     "my-notes/yearly-notes/2024/index.md",
     "read-note/zhe-cai-shi-xin-li-xue.md",
     "tech-blog/jotai-user-guide.md",
@@ -175,16 +186,6 @@
     "my-notes/weekly-study/2024/28-2024.md",
     "my-notes/weekly-study/2024/26-2024.md",
     "my-notes/weekly-study/2024/27-2024.md",
-    "my-notes/moth-notes/2024/4.md",
-    "my-notes/moth-notes/2024/5.md",
-    "my-notes/moth-notes/2024/6.md",
-    "my-notes/moth-notes/2024/3.md",
-    "my-notes/moth-notes/2024/1.md",
-    "read-note/yan-yuan-de-xiang-ri-kui-di.md",
-    "read-note/99-you-guai.md",
-    "photo-gallery/2023/hangzhou-longjingwu.md",
-    "photo-gallery/2023/huzhou-12.3.md",
-    "photo-gallery/2023/ao-men.md",
-    "my-notes/moth-notes/2023/10.md"
+    "read-note/yan-yuan-de-xiang-ri-kui-di.md"
   ]
 }
