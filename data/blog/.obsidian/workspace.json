@@ -11,8 +11,12 @@
             "id": "e3954e9d085b0549",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "my-notes/weekly-study/2024/4-2024.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
         ]
@@ -81,6 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "my-notes/weekly-study/2024/4-2024.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "my-notes/weekly-study/2024/4-2024.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +124,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "my-notes/weekly-study/2024/4-2024.md"
+              }
             }
           },
           {
@@ -160,6 +168,7 @@
   },
   "active": "e3954e9d085b0549",
   "lastOpenFiles": [
+    "my-notes/weekly-study/2022/1-2022.md",
     "photo-gallery/photos.md",
     "photo-gallery/2023/ao-men.md",
     "my-notes/moth-notes/2024/6.md",
@@ -185,7 +194,6 @@
     "my-notes/weekly-study/2024/24-2024.md",
     "my-notes/weekly-study/2024/28-2024.md",
     "my-notes/weekly-study/2024/26-2024.md",
-    "my-notes/weekly-study/2024/27-2024.md",
-    "read-note/yan-yuan-de-xiang-ri-kui-di.md"
+    "my-notes/weekly-study/2024/27-2024.md"
   ]
 }
