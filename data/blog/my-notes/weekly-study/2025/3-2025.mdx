@@ -1,0 +1,123 @@
+---
+title: 2025-第三周
+date: '2025-01-16'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [你的 tsconfig.json 文件检查清单](https://2ality.com/2025/01/tsconfig-json.html)
+
+这篇文章总结了 TypeScript 配置文件（tsconfig.json）的常用选项，涵盖了输入文件、输出目录、模块系统、类型检查等内容。还包括了其他人对 tsconfig.json 的建议和一些特定用例的配置建议。文章还提到了一些未涵盖的功能和编写配置文件时需要考虑的其他因素。
+
+- tsconfig.json 中的常用选项包括指定输入文件、输出文件和生成 source maps 等，需要根据项目需求进行配置。
+- 需要注意进行输出声明文件和声明映射文件的配置，以便其他工具正确使用 TypeScript 代码。
+- 在进行类型检查时，需要考虑是否启用严格模式和一些额外的严格性设置，以确保代码质量和可读性。
+
+### [React 的渲染机制、效果处理和引用功能是如何在后台运作的](https://tigerabrodi.blog/how-reacts-render-effects-and-refs-work-under-the-hood)
+
+这段文字主要介绍了 React 组件的渲染周期，包括状态更新与渲染、虚拟 DOM 的作用和渲染阶段、提交阶段的执行过程，以及在使用 ref 时的注意事项和最佳实践。同时也解释了 effect 的运行时机和清理函数的执行时机。
+
+- React 的渲染周期包括两个主要阶段：渲染阶段和提交阶段，每次渲染都会执行这两个阶段，并且通过虚拟 DOM 来确定实际 DOM 的变化。
+- 虚拟 DOM 是 React 的核心概念，它通过 JavaScript 对象表示实际 DOM，并且可以跨不同平台进行渲染，同时可以批量处理 DOM 更新，提高性能。
+- Refs 在组件渲染周期中起到重要作用，使用 useRef 时需要注意初始值为 null，而使用回调 ref 则可以确保在 DOM 元素添加到 DOM 树时立即执行。useEffect 和 useLayoutEffect 也有不同的触发时机，影响到 DOM 的测量和布局。
+
+### [AsyncLocalStorage：简化 Node.js 中的上下文管理](https://www.trevorlasn.com/blog/node-async-local-storage)
+
+AsyncLocalStorage 是一个在异步操作中跟踪上下文的工具，可以让开发者在不需要手动传递数据的情况下，跟踪请求的重要信息。它通过在整个应用程序生命周期中传递上下文，消除了在多个函数之间传递参数的繁琐过程。它适合用于跟踪请求的流动、管理数据库事务、以及日志记录，但并不适用于所有情况，例如在处理同步代码和构建公共 API 时。要有效地使用 AsyncLocalStorage，需要明确其适用范围和边界，以便更清晰地管理应用程序上下文。
+
+- AsyncLocalStorage 通过创建一个类似秘密存储盒的方式，可以在异步操作中跟踪请求的相关上下文信息，避免在每个函数中手动传递数据。
+- AsyncLocalStorage 适用于跟踪微服务中的请求流，可以记录请求 ID、跟踪 ID 等元数据而无需在每个函数中传递它们。
+- AsyncLocalStorage 还适用于数据库操作中传递事务对象以及在日志记录中存储和检索请求上下文信息。
+
+### [CSS scroll-state() ](https://developer.chrome.com/blog/css-scroll-state-queries?hl=zh-cn)
+
+Chrome 133 引入了滚动状态容器查询，可以通过 CSS 查询和调整页面元素的粘性定位、滚动贴靠点和可滚动状态。滚动状态查询分为卡住、定格和可滚动状态，可以用于触发样式更改或动画效果。通过这种方式，可以提高性能并实现页面元素的智能处理。同时，还提供了渐进增强和条件功能使用的方法。具体应用场景包括停滞、已固定和可滚动状态查询。整体而言，这种新特性使得页面元素的状态查询和相应操作更为便捷和灵活。
+
+- 滚动状态容器查询是一种新的 CSS 特性，可用于查询和调整元素的卡住、固定和溢出状态，无需使用 JavaScript。
+- 通过滚动状态查询，可以实现一些常见的页面互动效果，如导航栏在固定时添加阴影、突出显示固定元素等，使页面交互更加智能和优雅。
+- 使用滚动状态查询可以实现渐进增强，为网页增加动画效果，并且可以应用于各种场景，例如突出显示固定元素、箭头提示滚动方向等。
+
+### [揭秘：React 的新型实验动画 API](https://motion.dev/blog/reacts-experimental-view-transition-api)
+
+这段文字介绍了 React 团队推出的首个动画 API - `<ViewTransition />`。它基于浏览器强大的 View Transition API 特性，可以在 React 和 Next.js 中实现动画效果。文章解释了如何开始使用 `<ViewTransition />`，以及其基本用法和功能。同时还採讨了 View Transition API 的局限性和未来可能的发展方向。
+
+- React 推出了新的动画 API `<ViewTransition />`，基于浏览器的 View Transition API，能够解决 React 中动画实现的诸多问题，提高性能和响应性。
+- `<ViewTransition />` 可以实现视图之间的过渡动画，支持自动生成和应用 view-transition-name，以及跨元素、共享元素动画效果，同时允许自定义动画特性。
+- 虽然 `<ViewTransition />` 对于 React 动画表示重大进步，但仍有待稳定版本推出，并有望在未来结合 Motion 组件进一步完善 API，使得视图过渡动画更易用并适用于更多开发者。
+
+### [回归基础：为何我们选择长轮询而非 WebSockets](https://www.inferable.ai/blog/posts/postgres-nodejs-longpolling.mdx)
+
+这篇文章介绍了如何使用 Node.js、TypeScript 和 PostgreSQL 实现实时更新，采用了 HTTP 长轮询而不是 WebSockets。它讨论了长轮询的工作原理、实现细节以及与 WebSockets 的对比。文章还提到了长轮询的优势，有关数据库优化、客户端实现以及应用层最佳实践的建议。最后，文章也提到了 WebSockets 的一些潜在挑战和适用情况。
+
+- 实现实时更新的挑战：Node.js/TypeScript 后端面临处理大规模更新的挑战，包括数百个工作节点和代理节点对基于 PostgreSQL 的控制平面进行持续轮询，需要高效的查询策略和数据流传输。
+- 长轮询 vs WebSockets：长轮询是一种"老派"但出人意料有效的解决方案，通过在 Postgres 上进行 HTTP 长轮询来实现实时更新，避免了 WebSockets 的复杂性和额外的基础设施配置。
+- 深入实施细节和最佳实践：基于 Node.js 的长轮询实现需要适当的数据库索引优化、实现合理的轮询间隔、以及对连接超时的处理，同时避免了构建、维护和监控 WebSockets 连接的复杂性。
+
+### [了解 React 服务器组件](https://tonyalicea.dev/blog/understanding-react-server-components/)
+
+这段文字介绍了 React Server Components（RSC）是如何工作的，以及开发人员在何时应该使用它们。它讨论了 RSC 的工作原理，如何将服务器和客户端组件相互交织，以及 RSC 对带宽和包大小的影响。文章还提到了 RSC 在实际应用中的利与弊，并指出了开发者应该如何选择合适的使用场景。文章对 React Server Components 进行了深入的解析，旨在帮助读者更好地理解它们的工作原理，以便做出明智的架构决策。
+
+- React 服务器组件允许在服务器上执行组件函数，并将结果转化为 Virtual DOM 数据，以便在客户端构建和更新虚拟 DOM。
+- React 服务器组件可以在页面加载时减少客户端 JavaScript，但可能会增加网络带宽和数据传输。
+- 使用 React 服务器组件需要遵循特定规则，包括在服务器和客户端组件之间进行交错使用，并注意区分组件的执行环境。
+
+### [深入了解 Next.js 15 和 React 19 中的表单使用技巧](https://engineering.udacity.com/mastering-forms-in-next-js-15-and-react-19-e3d2d783946b)
+
+这段文字介绍了在 Next.js 和 React 中构建表单的新方法。其中包括了 Server Actions（服务器操作）、useActionState（状态钩子）、useOptimistic（乐观更新）、revalidateTag（缓存清理）、Form（表单组件）等概念和用法。通过这些新特性，可以更高效地处理数据、简化验证，并实现无缝的用户体验。
+
+- 服务器操作：在服务器上执行的异步函数，可用于处理表单提交和数据变更。
+- useActionState 钩子：允许根据表单操作的结果更新状态，包括数据验证、错误状态和等待状态。
+- Form 组件：提供预取数据、客户端导航和逐步增强功能，极大地简化了 Next.js 和 React 中的表单处理。
+
+### [How to customize Next.js metadata](https://clerk.com/blog/how-to-customize-nextjs-metadata?utm_source=nextjs-weekly&utm_medium=newsletter&utm_campaign=nextjs-metadata&utm_content=01-17-25)
+
+本文介绍了网站元数据的重要性和配置方法，以及在 Next.js 应用程序中如何进行元数据定制。作者提到了元数据在搜索引擎优化、社交媒体分享、内容发现和富媒体片段中的作用，并指出了配置不当可能导致的问题。文章还介绍了 Next.js 中使用 next/head、导出元数据对象和动态生成元数据的方法，以及如何在父子路由间自动应用继承规则。最后强调了定制元数据对用户体验和网站排名的重要影响。
+
+- 网站 metadata 配置不当会对用户体验和网站可发现性造成严重问题，包括搜索引擎优化、社交媒体分享和内容发现等方面。
+- Next.js 提供多种方式来定制和优化网站 metadata，包括使用 next/head 组件、导出 metadata 变量和动态生成 metadata 值。
+- 合理设置 metadata 可以避免网站出现低搜索排名、破损链接、404 错误等问题，提升用户体验，同时也有助于改善搜索引擎排名和社交媒体展示效果。
+
+### [每位前端开发者都应了解的无障碍设计基础知识](https://martijnhols.nl/blog/accessibility-essentials-every-front-end-developer-should-know)
+
+这篇文章介绍了前端开发人员在构建组件时应遵循的关键无障碍原则，包括语义化 HTML、表单设计、键盘导航、模态框、图像 alt 文本、样式设计和 ARIA 属性的使用。强调了无障碍实践不仅有利于依赖辅助技术的用户，还能提升整体用户体验，甚至对 SEO 也有益处。文章鼓励开发人员从一开始就将无障碍性纳入开发流程，并指出虽然基本的改进可以带来很大的效益，但要实现完全的无障碍性还需要更多的努力和测试。
+
+- 语义化的 HTML：正确使用 HTML5 元素，包括按钮和链接，以提供内置的辅助功能，并提高搜索引擎优化。
+- 表单和标签：确保表单字段包含在`<form>`元素内，每个输入字段都有清晰的标签描述，并尽量避免使用占位符。
+- 键盘导航和焦点指示器：确保用户可以使用键盘在应用程序中进行逻辑导航，同时保持焦点指示器对键盘导航的支持。
+
+## 工具
+
+### [tsr](https://github.com/line/tsr)
+
+TypeScript Remove (tsr) 是一款实用工具，专门用于清理 TypeScript 项目中的未使用代码——可以把它看作是对源文件进行的“树摇”（tree shaking）。
+
+### [readability](https://github.com/mozilla/readability)
+
+Readability.js 是一个经过实战考验的库，可为 RAG 应用从网页中抓取相关数据。
+
+## AI
+
+### [agent-service-toolkit](https://github.com/JoshuaC215/agent-service-toolkit)
+
+一个完整的工具包，用于搭建基于 LangGraph、FastAPI 和 Streamlit 的 AI 代理服务
+
+## 其他
+
+如果你仔细想想，最好的书实际上是一个极其漫长的咒语，它让你在余生中变成另一个人。
+
+-- @thisone0verhere.bsky.social
+
+---
+
+我不明白，99% 进入 AI 底层模型开发的公司，能得到什么好处？
+
+如果 AI 模型真的像宣传的那样，能做到任何事情，那么大多数公司只需要等待，就能获得跟自行开发模型同样的好处。很多公司似乎都非常害怕错失良机，其实根本不存在这一点。
+
+-- Hacker News 读者
