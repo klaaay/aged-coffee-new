@@ -1,0 +1,177 @@
+---
+title: 2025-第四周
+date: '2025-01-20'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [什么是 Next.js 中的中间件？](https://clerk.com/blog/what-is-middleware-in-nextjs?utm_source=nextjs-weekly&utm_medium=newsletter&utm_campaign=nextjs-middleware&utm_content=01-24-25)
+
+这段文字介绍了 Next.js 中间件的作用和用法。它解释了中间件是如何拦截请求并执行操作的，以及如何在 Next.js 项目中创建和使用中间件。文章还涵盖了中间件的常见用途，如身份验证、日志记录、数据获取、请求路由、缓存、速率限制等。此外，还介绍了 Clerk 如何使用 Next.js 中间件来保护路由。文章还指出了 Next.js 中间件的一些限制和性能考虑。
+
+- Next.js 中间件是用于拦截和处理每个请求的函数，可以用于认证、日志记录和错误处理等多种用途。
+- 中间件在 Next.js 应用程序处理请求的顺序是固定的，包括处理配置文件、路由、文件系统路由和动态路由等多个阶段。
+- 中间件在 Next.js 中存在一些限制，如运行时约束、大小限制、只能使用 ES 模块等，开发者需要注意这些限制并编写高效的中间件代码。
+
+### [React 开发者的初始加载性能分析：深度探讨](https://www.developerway.com/posts/initial-load-performance)
+
+这篇文章探讨了核心网络指标，性能开发工具，初始加载性能，相关度量指标，以及缓存控制和不同网络条件如何影响性能。文章强调了性能优化的重要性，并介绍了通过性能工具和模拟不同网络条件来评估网页性能。同时也讨论了缓存控制和 CDN 在性能优化中的重要性。文章内容详实丰富，对前端开发者而言具有实际应用价值。
+
+- 初始加载性能指标：文章解释了浏览器初始加载过程中的关键性能指标，如 Time To First Byte（TTFB）、First Contentful Paint（FCP）和 Largest Contentful Paint（LCP）等，并介绍了它们的影响和意义。
+- 性能优化工具：介绍了 Chrome DevTools 中的性能面板和 Lighthouse 工具，以及如何使用这些工具来分析和优化网页的加载性能，帮助开发人员理解并改善网页的性能表现。
+- 网络条件对性能的影响：通过模拟不同网络条件下的加载性能，如慢速服务器、带宽和延迟的影响等，阐述了网络条件对初始加载性能的重要影响，并介绍了如何通过 Cache-Control 头和 CDN 来优化性能。
+
+### [无障碍工具](https://techhub.iodigital.com/articles/accessibility-tools)
+
+这段文字介绍了数字世界中的无障碍设计和开发，以及用于改善网页内容可访问性的工具和方法。提到了 Web Content Accessibility Guidelines（WCAG）的推荐，以及一些可用的工具，如 Lighthouse、Axe Devtools、WAVE、Accessibility Insights 和测试自动化。文章强调了自动化测试和手动测试相结合是确保真正无障碍和用户友好体验的关键。
+
+- 网页辅助工具可帮助开发人员检测并解决网页内容的无障碍访问问题，包括自动化工具如 Lighthouse、Axe Devtools 和 WAVE，以及测试自动化工具 Cypress 结合 wick-a11y 插件。
+- 自动化工具可以提高检测的一致性和效率，但可能无法捕捉到一些细微问题，因此需要结合用户反馈和手动测试来确保网页内容的真正无障碍访问体验。
+- 通过采用这些工具提供的引导检查清单，开发人员可以从简单易处理的问题入手，逐步实现网页内容的无障碍访问合规目标。
+
+### [译：我的写作过程以及如何保持可持续性](https://sorrycc.com/my-writing-process/)
+
+这段文字描述了作者的写作过程，包括如何捕捉灵感和记录想法、持续思考和构思、实际写作和编辑。作者强调了保持写作趣味性、建立固定写作计划、专注于完成而不是追求完美等建议，并分享了她的编辑清单和发布流程。同时，作者也讨论了如何保持写作的可持续性，强调了写作对她而言的乐趣和动力来源。
+
+- 写作过程不是一次性完成，包括捕捉灵感、持续思考和实际写作，需要建立写作习惯和养成持续思考的习惯。
+- 作者在写作之前常常在日常生活中持续思考选定的主题，尝试在脑海中逐渐清晰想法，并且通过定期写作养成思考的习惯。
+- 编辑和发布文章时，作者采取了文字编辑、反馈征询和细节处理等一系列步骤来保证文章的质量，同时保持写作的趣味性和保持发布的可持续性。
+
+### [我如何把我的原生 React Native 应用迁移到 Expo 平台](https://expo.dev/blog/how-i-migrated-my-bare-react-native-app-to-expo)
+
+Alfred 是一位挪威开发人员，他将一款七年前的 React Native 应用迁移到了 Expo，删除了 18.6 万行代码。迁移过程包括了替换依赖、使用 Expo CNG 生成原生代码、集成 EAS 作为 CI/CD 解决方案，以及处理本地化问题和苹果小部件支持。他认为 Expo 提供了良好的开发体验，但也指出了一些潜在的问题，最终鼓励读者尝试使用 Expo。
+
+- 迁移原生 React Native 应用到 Expo 平台，在四天内完成，成功删除了 18.6 万行代码，通过使用 Expo 的 Continuous Native Generation（CNG）工具和配置插件，完成了这一迁移过程。
+- 迁移的动机包括遵循 React Native 团队的官方建议，使用 Expo 提供的 CI/CD 解决方案替代即将退役的 CodePush，以及减少应用复杂性和升级痛点，同时保持所有功能和特性的完整性，包括本地代码、小部件和通知等。
+- 作者通过描述具体的迁移步骤，包括文档化具有本地代码的依赖项、安装 Expo 并重构支持的软件包、迁移到 CNG，并解决了迁移过程中遇到的问题，最终成功将应用迁移到了 Expo 平台。
+
+### [学习 HTML 是我做过的最明智的投资选择。](https://christianheilmann.com/2025/01/15/learning-html-is-the-best-investment-i-ever-did/)
+
+这段文字讨论了 HTML 的重要性和价值，强调 HTML 对内容结构化、索引化和界面元素可访问性的作用。作者指出了一些 HTML 常见错误和最佳实践，并表达了对 HTML 的热爱和尊重。文章还谈到了 HTML 在历史上的发展和在当前开发环境中的地位，最后呼吁开发者重新认识并重视 HTML 的作用。
+
+- HTML 不仅是一个编程语言，而且对于内容结构、索引和易用的界面元素都起到重要作用，学习 HTML 是一项有价值且易于掌握的投资。
+- 在编写 HTML 时需要注意细节，如使用 fieldset 时需要添加 legend，label 要正确关联 form 元素的 ID 而非 name 属性，这些细节对于页面结构和用户体验至关重要。
+- 虽然 HTML 在发展过程中经历了各种变革，但其重要性不可小觑，特别是在当前 AI 搜索引擎仍无法解析 JavaScript 的情况下，再学习和重视 HTML 的作用将对 Web 开发大有裨益。
+
+### [我如何让我的网站在 Google 推荐用户中实现 LCP 低于 350 毫秒](https://blog.pawelpokrywka.com/p/how-i-took-lcp-down-under-350ms)
+
+这篇文章讨论了如何通过将网页内容转换为 Signed Exchanges（SXG）格式来优化核心网络体验，并展示了如何在生产环境中实现这一优化。文章介绍了如何利用谷歌 SXG 缓存来提高网站性能，并说明了在实现 SXG 过程中需要考虑的各种因素，包括缓存控制、CSRF 令牌处理、Cookie 管理以及安全性头信息设置。文章还介绍了如何使用各种工具和技术来测试和验证 SXG 生成和优化效果。
+
+- 采用 Signed Exchanges 技术，通过 Cloudflare 实现网页预取，以实现在 Google 搜索结果页面点击链接后几乎瞬间展示页面内容，从而显著降低 Largest Contentful Paint（LCP）时间。
+- 优化缓存策略、禁用部分 HTTP 头、移除 CSRF 令牌、改善存储用户登录状态的机制等措施，确保服务端生成的 HTML 页面内容在多用户、不同设备下表现一致，从而适应 SXG 技术的特性。
+- 在实施 SXG 过程中，进行了大量测试和调试，利用 SXG Validator、前端 SXG 预取页面、Chrome 开发者工具、dump-signedexchange 工具、Requestly 浏览器扩展以及 Google Search Console 的 Inspect URL 工具等进行验证和调试。
+
+## 工具
+
+### [ChordSheetJS](https://github.com/martijnversluis/ChordSheetJS)
+
+这是一个可以用来解析和格式化和弦以及和弦谱的 JavaScript 库。
+
+### [JSON Query](https://jsonquerylang.org/)
+
+一种体积小、灵活多变且易于扩展的 JSON 查询语言。
+
+### [gantt](https://github.com/frappe/gantt)
+
+开源的 Javascript 甘特图工具
+
+### [jotai-effect](https://github.com/jotaijs/jotai-effect)
+
+一个专为处理反应性副作用而设计的 Jōtai 实用工具包
+
+### [cursify](https://github.com/ui-layouts/cursify)
+
+适用于 React 和 Next.js 的光标动画库
+
+### [llmpeg](https://github.com/jjcm/llmpeg)
+
+利用大语言模型来自动生成 ffmpeg 命令
+
+## 更新
+
+### [NextUI -> HeroUI](https://www.heroui.com/blog/introducing-heroui)
+
+HeroUI 宣布将取代 NextUI，并承诺在新身份下继续提供优质的组件和功能。此次更名是为了反映其扩展的使命，即帮助整个 React 生态系统构建快速美观的应用程序。用户需要迁移到新的 HeroUI 包，并将看到即将推出的新功能和组件。团队感谢社区的支持，并欢迎用户积极参与贡献。
+
+- NextUI 更名为 HeroUI，扩大了目标群体，除了支持 Next.js 开发者，还加入了对其他 React 框架的支持，未来还计划拓展到其他生态系统。
+- 迁移至 HeroUI 只需运行一个命令，相关包名和 cli 工具也有相应变化，但没有引入破坏性变化。
+- HeroUI 未来有多项更新计划，包括新组件发布、对 Tailwind CSS v4 的支持、React 19 的完整支持及代码迁移，以及 HeroUI v3 的更新等，欢迎社区的参与和反馈。
+
+### [Capacitor 7](https://ionic.io/blog/capacitor-7-has-hit-ga)
+
+Capacitor 7 发布了，重点是确保移动应用与不断更新的 Android 和 iOS 系统保持兼容，同时引入增强功能以使框架更加强大和多功能。同时，与 Outsystems 合作加强了企业移动应用开发，并支持 Swift Package Manager 以简化 iOS 项目的依赖管理。Capacitor 7 标志着对基于 Web 的移动应用开发的承诺，为未来更大的改进奠定了基础。
+
+- Capacitor 7 发布了，更新支持 Android 15 和 iOS 18，确保应用程序充分利用最新功能和性能改进。
+- Outsystems 与 Capacitor 深度集成，利用 Capacitor 加速构建跨平台应用程序，推动企业应用程序开发创新。
+- Capacitor 将全面支持 Swift Package Manager（SPM），以简化 iOS 项目的依赖管理，助力开发者更高效地构建优秀应用。
+
+### [NestJS 11](https://trilon.io/blog/announcing-nestjs-11-whats-new)
+
+这篇文章宣布了 NestJS 11 的发布，介绍了更新的关键亮点，包括日志记录的增强、微服务的灵活性提升和应用启动时间的加速。此外，还提到了对 Express 和 Fastify 的更新，以及其他一些有价值的更新和迁移指南。文章还介绍了 NestJS 企业咨询和支持服务，并感谢了社区和赞助商的支持。
+
+- NestJS 11 的新特性包括日志记录器的升级和对 JSON 日志格式的支持，提高了日志的可定制性和容器化环境的适用性。
+- 在微服务方面，NestJS 11 提供了更灵活的功能，包括 unwrap 方法、on 方法和 status observable stream，使开发人员能够更好地监控和控制微服务的状态和连接。
+- 为了提高应用程序的启动速度，NestJS 11 改进了模块不透明密钥生成过程，采用更简单的方法提高了应用程序启动性能，特别是对于具有大型动态模块的应用程序。
+
+### [Vitest 3.0](https://vitest.dev/blog/vitest-3)
+
+Vitest 团队宣布推出了 Vitest 3.0 版本，这是一个重要的更新。新版本包括了对测试报告、工作区配置、多浏览器配置以及按行号过滤测试等方面的改进。此外，新版本还引入了全新的公共 API，并对文档进行了更新。发布团队感谢了所有贡献者和赞助者的支持。
+
+- Vitest 3.0 发布了，引入了 Inline Workspace、Multi-Browser Configuration 和 Filtering by Location 等新特性，提升了测试功能和性能。
+- 通过对 Vitest 3 的改进，提供了更稳定的输出、更好的 API 可用性以及更好的文档覆盖，为开发者提供了更好的开发和测试体验。
+- Vitest 3 的发布离不开来自 550 多名贡献者和多家公司的支持，体现了整个开源社区的力量和合作精神。
+
+### [Rspack 1.2](https://rspack.dev/blog/announcing-1-2)
+
+Rspack 1.2 版本发布公告，介绍了新功能和性能改进，包括持久缓存、Yarn PnP 支持、代码分割优化、监视范围变化等。还提到了 Angular 支持和 Rsbuild 1.2 版本的新特性。同时给出了升级指南，包括升级 SWC 插件和默认禁用 WarnCaseSensitiveModulesPlugin。
+
+- Rspack 1.2 发布了一些重要的新功能和性能改进，包括持久缓存、Yarn PnP 支持和更快的代码拆分算法。
+- 持久缓存可以显著提高热启动性能，但目前仍处于实验阶段，只支持构建过程的缓存，未来将继续优化以提高性能和覆盖范围。
+- Rspack 1.2 还增加了对 Angular 的支持，以及与 Rsbuild 1.2 一起发布，提供了新的功能和升级指南。
+
+### [Tailwind CSS v4.0](https://tailwindcss.com/blog/tailwindcss-v4)
+
+Tailwind CSS v4.0 是一个经过性能和灵活性优化的全新框架版本。它包含了重塑过的配置和自定义体验，充分利用了最新的网页平台进展。新版本包括了高性能引擎、基于最新 CSS 特性的设计、简化安装、以及一系列新的实用工具和变体。同时，还包括了全面的升级指南和自动升级工具。
+
+- Tailwind CSS v4.0 是一个针对性能和灵活性进行优化的全新框架版本，具备全新的配置和自定义体验，充分利用了最新的 web 平台的技术进步。
+- v4.0 引入了全新的高性能引擎，完全重写了框架架构，使得全量构建速度提高了约 5 倍，增量构建速度提高了超过 100 倍，实现了毫秒级构建。
+- 更新还包括了现代化的 CSS 功能、简化的安装流程、一流的 Vite 插件、自动内容检测、内置的导入支持、CSS-first 配置、CSS 主题变量、动态工具值和变体、现代化的 P3 调色板、容器查询、3D 变换工具、扩展的渐变 API 等一系列新功能和变化。
+
+### [Storybook 8.5](https://storybook.js.org/blog/storybook-8-5/)
+
+这段文字介绍了 Storybook 8.5 版本的新功能和改进，包括实时辅助功能测试、项目代码覆盖率、集中测试、React Native Web Vite 框架以及 Storybook 测试训练营等内容。这些功能旨在提高前端开发中的组件测试效率和质量，使 UI 组件的构建、文档编写和测试更加便捷和高效。
+
+- Storybook 8.5 提供了实时辅助功能测试，帮助开发人员构建面向所有用户的用户界面，并且可以在整个 Storybook 中运行辅助功能测试并获得实时反馈。
+- 项目代码覆盖率功能可以帮助开发人员了解代码测试的完整性，并在测试运行过程中收集覆盖率数据，方便开发人员进行详细分析。
+- 引入了专注测试功能，可以在 Storybook 的分层边栏中测试单个故事、组件或组件组，为开发人员提供更快的测试反馈。
+
+### [Rspack 1.2](https://rspack.dev/blog/announcing-1-2)
+
+spack 1.2 发布了，带来了新功能和性能改进。新功能包括持久缓存和 Yarn PnP 支持，性能改进涵盖了快速代码拆分、观察范围变化和内存优化等方面。此外，还加入了 Angular 支持和 Rsbuild v1.2。升级指南提到了升级 SWC 插件和禁用 WarnCaseSensitiveModulesPlugin。
+
+- Rspack 1.2 引入了持久缓存实验特性，能够显著提高热启动性能，尤其对项目规模较大的情况效果更为明显。
+- 新版本支持 Yarn PnP，并通过多线程和增量重建实现了更快的代码拆分，大大提升了代码拆分性能。
+- 通过优化代码结构和默认 SWC 最小化参数，新版本实现了内存占用和打包文件大小的降低，提升了执行效率。
+
+### [组件库网站](https://21st.dev/)
+
+## 设计
+
+### [TailwindCSS Snippets](https://snippets.alexandru.so/)
+
+## 其他
+
+### [互联网作为一个创意行业，正在经历与电影、电视和出版业类似的衰退以及经济困境。](https://www.baldurbjarnason.com/notes/2025/the-web-is-a-creative-industry/)
+
+这段文字讨论了当前许多行业就业市场的困境，包括网络开发和创意行业。作者指出，许多领域的就业形势不佳，人们不得不为了追求自己的项目或热情而在低薪水甚至无偿工作。他还探讨了管理不善对行业发展的影响，并提出了重新思考和调整策略的建议，例如直接为客户制作软件，提供高质量的课程和产品以及避免依赖单一平台。
+
+- 许多创意产业和科技公司的工作市场都面临严重的问题，工作者们在充满挑战的环境中艰难求存，需重新思考行业发展模式。
+- 创意产业和网络开发行业都受到管理不善的影响，导致产品质量下降、工作机会减少，工作者们需要寻求新的发展思路。
+- 工作者们需要重新思考自己的定位和发展策略，例如直接为用户提供软件服务、制作对小型企业有益的网页开发课程等，以应对行业动荡和就业困境。

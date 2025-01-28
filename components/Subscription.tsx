@@ -34,9 +34,23 @@ export const Subscription = () => {
         extra: '',
       },
       {
+        name: '苹果 iCloud 2TB',
+        yearly: 68 * 12,
+        expiry: '2030-01-01',
+        type: '效率',
+        extra: '每月自动续订',
+      },
+      {
         name: '夸克网盘 VIP',
         yearly: 198,
         expiry: '2025-7-21',
+        type: '效率',
+        extra: '',
+      },
+      {
+        name: 'aged-coffee.me',
+        yearly: 229,
+        expiry: '2025-4-15',
         type: '效率',
         extra: '',
       },
