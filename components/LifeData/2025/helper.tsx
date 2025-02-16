@@ -15,15 +15,15 @@ export const sleepData: TableData = {
       month: '1 月',
       data: [
         // 睡眠时间
-        '7:01',
+        '6:30',
         // 优质睡眠
-        '5:48',
+        '5:23',
         // 入睡时间
-        '2:21',
+        '2:38',
         // 心率
         '59',
         // 深度睡眠
-        '2:17',
+        '2:38',
       ],
     },
   ],
@@ -33,58 +33,61 @@ export const dietAndExerciseData: TableData = {
   headers: [
     '高糖食物',
     '牛奶',
-    '运动',
+    '运动 (有氧)',
+    '运动 (无氧)',
     '水果',
     '痘痘',
     '保持专注',
-    '写博文',
     '阅读',
     '学日语',
-    '仰卧起坐&俯卧撑',
+    '学乐理',
+    '不吃宵夜',
   ],
   months: [
     {
       month: '1 月',
       data: [
         // 高糖食物
-        '18',
+        '21',
         // 牛奶
-        '3',
-        // 运动
-        '23',
+        '9',
+        // 运动（有氧）
+        '18',
+        // 运动（无氧）
+        '6',
         // 水果
-        '27',
-        // 痘痘
-        '3',
-        // 保持专注
-        '24',
-        // 写博文
-        '5',
-        // 阅读
         '22',
+        // 痘痘
+        '2',
+        // 保持专注
+        '19',
+        // 阅读
+        '20',
         // 学日语
-        '27',
-        // 仰卧起坐&俯卧撑
+        '28',
+        // 学乐理
         '0',
+        // 不吃宵夜
+        '28',
       ],
     },
   ],
 }
 
 export const booksAndMediaData: TableData = {
-  headers: ['书', '影', '音', '听'],
+  headers: ['影', '书', '音', '听 - 播客'],
   months: [
     {
       month: '1 月',
       data: [
-        // 书
-        '1',
         // 影
         '4',
+        // 书
+        '1',
         // 音
-        '3',
+        '10',
         // 听
-        '0',
+        '5:04',
       ],
     },
   ],
@@ -126,8 +129,8 @@ export const calculateAverage = (months: MonthData[]): string[] => {
   for (let i = 0; i < months[0].data.length; i++) {
     let sum = 0
     let count = 0
-    for (let j = 0; j < months.length; j++) {
-      const value = months[j].data[i]
+    for (const element of months) {
+      const value = element.data[i]
       if (value.includes(':')) {
         sum += parseTime(value)
       } else {
