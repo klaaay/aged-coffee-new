@@ -27,6 +27,13 @@ export const Subscription = () => {
   const [subscriptions, setSubscriptions] = useState<SubscriptionItem[]>(
     [
       {
+        name: 'LobeChat 自助',
+        yearly: 428.73,
+        expiry: '2026-02-17',
+        type: '效率',
+        extra: '',
+      },
+      {
         name: 'Cursor Pro',
         yearly: toFixed2Number(192 * DOLLAR2RMB),
         expiry: '2025-11-14',
