@@ -1,21 +1,15 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import mermaid from 'mermaid'
 
 const Mermaid = ({ chart }: { chart: string }) => {
-  const [diagram, setDiagram] = useState('')
-  const graphIdRef = useRef(`graphDiv_${Math.floor(Math.random() * 10000)}`)
-
   useEffect(() => {
-    const renderChart = async () => {
-      mermaid.initialize({ startOnLoad: true })
-      const { svg } = await mermaid.render(graphIdRef.current, chart)
-      setDiagram(svg)
-    }
-    renderChart()
+    mermaid.initialize({ startOnLoad: true })
+    mermaid.run()
   }, [chart])
 
-  return <div dangerouslySetInnerHTML={{ __html: diagram }} id={graphIdRef.current} />
+  return <div className="mermaid">{chart}</div>
 }
+
 export default Mermaid
