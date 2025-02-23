@@ -19,7 +19,7 @@ const TOCInlineWithSticky = ({
   toc,
   indentDepth = 3,
   fromHeading = 1,
-  toHeading = 6,
+  toHeading = 3,
   asDisclosure = false,
   exclude = '',
   collapse = false,
