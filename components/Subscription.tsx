@@ -111,7 +111,7 @@ export const Subscription = () => {
       {
         name: 'QQ 音乐',
         yearly: 158,
-        expiry: '2025-03-06',
+        expiry: '2026-03-06',
         type: '娱乐',
         extra: '续订 3/6 Apple 付款',
       },
