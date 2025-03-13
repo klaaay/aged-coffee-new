@@ -117,9 +117,17 @@ prompt_context() {}
 # -------------------------------- #
 
 alias clr='clear'
+alias p3='python3'
 alias ..="cd .."
 
 # -------------------------------- #
+
+alias yalcp="yalc publish"
+alias yalca="yalc add"
+
+# -------------------------------- #
+
+alias gca="git commit --amend"
 
 alias ga="git add"
 alias gA="git add -A"
@@ -135,6 +143,7 @@ alias gclr="git checkout ./"
 alias gp="git pull origin"
 alias gps="git push origin"
 alias gcm="git commit -m"
+alias gcme="git commit --allow-empty -m 'cicd trigger'"
 alias gch="git cherry-pick"
 
 alias gsv="git stash save"
@@ -146,7 +155,7 @@ alias aicm="aicommits"
 
 # -------------------------------- #
 
-alias cfgzsh="vscode ~/.zshrc"
+alias cfgzsh="code ~/.zshrc"
 alias sourcezsh="source ~/.zshrc"
 alias cpwd="pwd | pbcopy"
 
@@ -155,11 +164,13 @@ alias cpwd="pwd | pbcopy"
 alias crm="create-mr"
 
 alias qg="quick-gen"
+alias qgu="quick-gen uno"
 alias qgn="quick-gen name-input"
 alias qgd="quick-gen direct"
 alias qgp="quick-gen package-update"
 
 alias qc="quick-commit --mode auto"
+alias qcm="quick-commit"
 alias qce="quick-commit --locale en --mode auto"
 alias qca="quick-commit -ap true -a create-mr"
 

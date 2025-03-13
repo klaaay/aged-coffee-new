@@ -1,0 +1,219 @@
+---
+title: 2025-第十一周
+date: '2025-03-10'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [超越 React.memo：更聪明的性能优化策略](https://cekrem.github.io/posts/beyond-react-memo-smarter-performance-optimization/)
+
+React 性能优化中，React.memo 常被过度使用，而实际上通过组件组合和状态管理可以更优雅地解决问题。本文探讨了 React 的渲染机制，并提供了几种无需复杂记忆化的优化方案。
+
+- 🛠 **React.memo 的局限性**：虽然 React.memo 可以避免不必要的重新渲染，但它增加了复杂性和潜在的错误风险。
+- 🔍 **重新渲染的根源**：当父组件状态变化时，所有子组件都会重新渲染，即使它们的 props 没有变化。
+- 🧩 **状态下沉**：将状态管理移到更小的组件中，可以减少不必要的重新渲染。例如，将模态框的状态管理独立出来，避免影响其他复杂组件。
+- 🎨 **组合模式**：通过将组件作为 props 或 children 传递，可以有效避免不必要的重新渲染。例如，将滚动容器中的内容作为 children 传递，避免每次滚动时重新渲染所有内容。
+- ⚙ **自定义钩子的陷阱**：自定义钩子虽然简化了状态管理，但并不会隔离重新渲染的影响，仍需通过组合模式优化。
+- 📌 **关键建议**：优先通过组件结构和状态管理优化性能，最后再考虑使用 React.memo、useMemo 和 useCallback 等记忆化工具。
+
+### [使用 JavaScript 进行文件上传的 7 个最佳实践](https://storagebowl.net/blogs/best-practices-of-file-upload)
+
+StorageBowl 是一个现代一体化存储工具，提供占位符图片、媒体流、类似 shadcn 的组件等功能。本文分享了优化上传功能的最佳实践，帮助提升网站性能和上传速度。
+
+- 🖼️ **优化图片**：用户不关心图片格式，但未优化的图片会增加成本和降低性能。使用 WebP 格式，并通过 JavaScript 的 sharp 库进行图片处理。
+- 📏 **设置边界**：检查文件的最小/最大尺寸、宽度、高度、文件数量和格式等属性，确保上传文件符合要求。
+- 🖌️ **使用占位符**：通过 ThumbHash 等算法生成模糊图片的占位符，提升网站加载速度。
+- ✂️ **用户赋能**：提供裁剪工具，帮助用户选择图片的同时减少存储空间。
+- ⏳ **提前上传**：在用户选择图片后立即触发预上传功能，减少等待时间，提升效率。
+- ⚡ **并行上传**：利用 JavaScript 的并行 Promise 支持，显著提高上传速度。
+- 🍰 **切片大文件**：将大文件切片上传，结合并行上传功能，进一步提升上传效率。
+
+### [利用 Next.js 创建 API 接口](https://nextjs.org/blog/building-apis-with-nextjs#3-creating-an-api-with-route-handlers)
+
+本指南介绍了如何使用 Next.js 构建 API，包括项目设置、App Router 和 Route Handlers 的使用、处理多种 HTTP 方法、实现动态路由、创建可重用的中间件逻辑，以及何时需要创建独立的 API 层。
+
+- 🚀 **开始使用**
+
+  - 使用 `npx create-next-app@latest --api` 创建 Next.js 项目，自动生成示例 API 路由文件。
+  - App Router（默认）与 Pages Router 的区别：App Router 使用 Web 标准的 Request/Response API，简化学习曲线。
+
+- 🤔 **为什么（以及何时）使用 Next.js 构建 API**
+
+  - 为多个客户端构建公共 API，或作为现有后端的代理层。
+  - 处理 Webhook 和集成，或实现自定义身份验证逻辑。
+
+- 🛠️ **使用 Route Handlers 创建 API**
+
+  - 在 `app/` 目录下创建路由文件夹和 `route.ts` 文件。
+  - 在同一文件中导出多个 HTTP 方法（如 GET、POST）。
+
+- 🌐 **使用 Web API**
+
+  - 直接使用标准的 `Request` 和 `Response` 对象。
+  - 处理查询参数、请求头和 Cookies。
+
+- 🔄 **动态路由**
+
+  - 使用动态段（如 `[id]`）创建动态路径，处理动态参数。
+
+- 🔗 **将 Next.js 作为代理或转发层**
+
+  - 代理现有后端服务，处理身份验证、日志记录或数据转换。
+
+- 🧩 **构建共享的中间件逻辑**
+
+  - 创建可重用的中间件函数（如 `withAuth`），用于身份验证等逻辑。
+
+- 🚀 **部署和 SPA 模式注意事项**
+
+  - 标准 Node.js 部署支持所有服务器功能。
+  - SPA/静态导出模式不支持服务器端代码，需单独托管 API。
+  - 在 Vercel 上部署 API，支持速率限制和 Cron Jobs 等功能。
+
+- ⏭️ **何时跳过创建 API 端点**
+
+  - 如果数据仅用于 Next.js 应用内部，可直接使用 Server Components 获取数据，无需公开 API。
+
+- 📖 **总结**
+
+  - Next.js 的 App Router 和 Route Handlers 提供了灵活且现代化的 API 构建方式，支持公共 API、代理服务、动态路由和中间件逻辑。
+
+- ❓ **常见问题**
+  - **Server Actions**：用于数据变更操作，自动生成 POST API 路由。
+  - **TypeScript 支持**：可在 Route Handlers 中使用 TypeScript。
+  - **身份验证最佳实践**：参考 Next.js 的身份验证文档。
+
+## 工具
+
+### [flowgram.ai](https://github.com/bytedance/flowgram.ai)
+
+FlowGram.AI 是一个基于节点的流程构建引擎，帮助开发者快速创建固定布局或自由连接布局的工作流。它提供了一套交互最佳实践，特别适用于具有明确输入和输出的可视化工作流。在当前 AI 热潮中，FlowGram.AI 也致力于为工作流赋能 AI 能力。
+
+- 🛠️ **FlowGram.AI 核心功能**：支持固定布局和自由连接布局模式，适合可视化工作流开发。
+- 🤖 **AI 赋能**：专注于将 AI 能力融入工作流，提升智能化水平。
+- 📚 **文档资源**：提供官方文档和贡献指南，方便开发者快速上手。
+- 📦 **核心包**：包括应用创建器（@flowgram.ai/create-app）、固定布局编辑器（@flowgram.ai/fixed-layout-editor）和自由布局编辑器（@flowgram.ai/free-layout-editor）。
+- 🎮 **示例展示**：固定布局支持节点拖拽和复合节点（如分支和循环），自由布局支持节点自由放置和连接。
+- 🚀 **快速开始**：通过命令行工具快速创建和选择示例项目，支持全功能或基础用法。
+- 🔨 **开发环境**：需要安装 Node.js 18+，使用 pnpm 和 Rush 管理依赖，支持文档和示例项目的本地运行。
+
+### [eslint-plugin-readable-tailwind](https://github.com/schoero/eslint-plugin-readable-tailwind)
+
+一个 ESLint 插件，能够自动将较长的 tailwind 类字符串分成多行，从而提升代码的可读性。
+
+### [Node Modules Inspector](https://node-modules.dev/grid)
+
+可视化你的 node_modules，查看依赖关系等等
+
+### [nanobrowser](https://github.com/nanobrowser/nanobrowser)
+
+一款开源的 Chrome 扩展，专为 AI 驱动的网页自动化设计。用户可以通过自己的大语言模型 API 密钥来运行多代理工作流程，是 OpenAI Operator 的一个替代选择。
+
+### [search-input-query](https://github.com/williamcotton/search-input-query)
+
+搜索输入查询的解析器与 React 组件
+
+### [paperless-ai](https://github.com/clusterzx/paperless-ai)
+
+这是一个为 Paperless-ngx 提供的自动文档分析工具，它利用 OpenAI API、Ollama、Deepseek-r1 和 Azure 等多种与 OpenAI API 兼容的服务，可以帮助您自动分析和标记文档。
+
+### [CopilotKit](https://github.com/CopilotKit/CopilotKit)
+
+使用 React UI 和优雅的基础设施，打造 AI 副驾驶、AI 聊天机器人以及应用内的 AI 代理。实现 Agentic 的最后一公里 🪁
+
+## 更新
+
+### [Bun v1.2.5](https://bun.sh/blog/bun-v1.2.5)
+
+Bun v1.2.5 版本修复了 75 个错误，增加了 69 个通过的 Node.js 测试，并带来了多项改进，包括前端开发服务器优化、CSS 模块支持、Node-API 完全重写、node:crypto 模块的性能提升等。
+
+- 🐛 **修复 75 个错误**：解决了 162 个点赞的问题，提升了稳定性和兼容性。
+- 🚀 **Node-API 完全重写**：大幅提升了与 Node.js 的兼容性，支持更多原生模块。
+- ⚡ **性能优化**：node:crypto 模块的 Sign、Verify、Hash 和 Hmac 操作速度显著提升。
+- 🌐 **前端开发服务器改进**：支持 CSS 模块和 Svelte 框架，优化了 HMR（热模块替换）功能。
+- 🛠️ **Node.js 兼容性增强**：修复了 node:net、node:timers 等模块的多个问题，提升了与 Node.js 的兼容性。
+- 🔒 **安全性增强**：新增 Bun.CSRF.generate 和 Bun.CSRF.verify 方法，防止 CSRF 攻击。
+- 🧪 **测试工具改进**：支持 test.failing 和 Jest 全局变量，修复了 VSCode 扩展中的测试运行问题。
+- 📦 **包管理优化**：修复了 bun.lock 文件中的工作区覆盖问题，支持更长的包名。
+- 🐳 **Docker 支持**：提供了 Docker 镜像，方便在容器中运行 Bun。
+- 📜 **TypeScript 类型定义改进**：增强了 @types/bun 的类型支持，提升了开发体验。
+- 🧹 **内存泄漏修复**：开发服务器的内存管理得到优化，资源释放更加彻底。
+- 📊 **SQL 操作增强**：Bun.sql 支持动态列选择和 WHERE IN 子句，提升了数据库操作的灵活性。
+
+### [Electron 35.0.0](https://www.electronjs.org/blog/electron-35-0)
+
+Electron 35.0.0 已发布，包含 Chromium 134.0.6998.44、V8 13.5 和 Node 22.14.0 的升级。此次更新引入了多项新功能和改进，同时也有一些破坏性变更和弃用功能。
+
+- 🚀 **Electron 35.0.0 发布**：包含 Chromium、V8 和 Node 的升级，可通过 npm 或官网下载安装。
+- 🛠️ **Service Worker 预加载脚本支持**：新增 `ses.registerPreloadScript(script)` API，支持在 Service Worker 上下文中注册预加载脚本，提升扩展支持。
+- 🔄 **IPC 通信改进**：Service Worker 和预加载脚本之间可通过 `ServiceWorkerMain.ipc` 类进行 IPC 通信。
+- 📦 **堆栈更新**：Chromium 升级至 134.0.6998.44，Node 升级至 22.14.0，V8 升级至 13.5。
+- 🆕 **新功能**：
+  - 新增 `ServiceWorkerMain` 类，支持在主进程中与 Service Worker 交互。
+  - 新增 `contextBridge.executeInMainWorld`，支持跨世界边界安全执行代码。
+  - 新增 `webContents.navigationHistory.restore` API，支持恢复导航历史。
+  - 新增 `BrowserWindow.setVibrancy` 的动画参数支持。
+  - 支持 `roundedCorners` 选项，适用于 Windows 平台的 `BrowserWindow`。
+- ⚠️ **破坏性变更**：
+  - 移除 `PrinterInfo` 对象的 `isDefault` 和 `status` 属性。
+  - 弃用 `session.serviceWorkers.fromVersionID`，推荐使用 `getInfoFromVersionID`。
+  - 弃用 `Session` 的 `setPreloads` 和 `getPreloads`，推荐使用 `registerPreloadScript` 等新 API。
+  - 弃用 `console-message` 事件的部分参数，改为事件对象形式。
+  - 弃用 `systemPreferences.isAeroGlassEnabled()`，无替代方案。
+- 🛑 **32.x.y 版本支持结束**：Electron 32.x.y 已停止支持，建议升级至更新版本。
+
+### [深入探讨 TypeScript 编译器在 Go 语言移植过程中的具体细节](https://2ality.com/2025/03/typescript-in-go.html#typescript-go-wasm)
+
+微软宣布开始将 TypeScript 编译器和工具移植到 Go 语言，这将显著提升编辑器启动速度、减少构建时间 10 倍，并大幅降低内存使用。以下是关键点总结：
+
+- 🚀 **TypeScript 移植到 Go**：TypeScript 团队正在将现有的 JavaScript 代码库移植到 Go 语言，以提升性能。
+- ⏱️ **性能提升**：新的原生代码库将减少构建时间 10 倍，并大幅降低内存使用。
+- 📅 **时间线**：TypeScript 6 将继续使用 JavaScript 代码库，TypeScript 7 将发布原生 Go 版本，预计 2025 年完成。
+- 🔧 **迁移内容**：包括 TypeScript 编译器和语言服务器，新的语言服务器将使用语言服务器协议（LSP）。
+- 🛠️ **工具支持**：与 Go 代码库的交互将采用全新的方式，减少内部暴露，跨进程交互。
+- 🐹 **选择 Go 的原因**：Go 支持循环数据结构、垃圾回收、并发处理，且与 TypeScript 的代码风格更接近。
+- 🚫 **为什么不选 C#**：Go 更底层，支持更好的原生代码生成，且更适合 TypeScript 的功能性编码风格。
+- ⚡ **速度提升来源**：一半来自共享内存并发和多核利用，另一半来自原生代码的高效数据结构和无即时编译。
+- 🌐 **WebAssembly 支持**：新的 Go 代码库将支持 WebAssembly，适用于 TypeScript Playground 等场景。
+- 🧠 **团队成就**：TypeScript 团队在短时间内成功移植代码库，避免了重写带来的时间和一致性问题。
+- 🔍 **未来展望**：随着类型检查速度的提升，可能需要工具来分析类型的性能并进行调试。
+
+## 设计
+
+## AI
+
+### [译：构建 Agent 的新工具](https://sorrycc.com/new-tools-for-building-agents)
+
+OpenAI 推出了一系列新工具，旨在帮助开发者和企业构建更实用、可靠的 AI 代理系统。这些工具简化了代理逻辑、编排和交互过程，使开发者能够更轻松地构建智能代理。OpenAI 相信代理系统将很快成为工作中不可或缺的一部分，并将继续投资开发更多工具来优化生产环境中的代理系统。
+
+- 🛠️ **新工具发布**：OpenAI 推出了 Responses API，结合了 Chat Completions API 的简单性和 Assistants API 的工具使用能力，简化了智能代理的开发。
+- 🌐 **内置工具**：包括网络搜索、文件搜索和计算机使用功能，帮助代理系统与现实世界连接，提升任务完成效率。
+- 🔄 **Agents SDK**：用于编排单代理和多代理工作流，简化了代理之间的协作和任务交接。
+- 🔍 **可观察性工具**：集成了追踪和检查代理工作流执行情况的功能，帮助开发者调试和优化代理性能。
+- 📅 **API 更新**：Chat Completions API 将继续支持，而 Assistants API 计划在 2026 年中期停用，开发者将获得迁移指南。
+- 🖥️ **计算机使用工具**：支持自动化计算机任务，如浏览器操作和数据输入，适用于多种现实世界场景。
+- 📂 **文件搜索工具**：改进的文件搜索功能支持多种文件类型和元数据过滤，帮助快速检索相关信息。
+- 🛡️ **安全措施**：新增了防止提示注入、敏感任务确认提示等安全功能，确保代理系统的安全性。
+- 🚀 **未来展望**：OpenAI 将继续投资于智能代理平台的开发，帮助各行业提高生产力，处理复杂任务。
+
+## 其他
+
+### [AI 不会吃掉你 - 少数派](https://sspai.com/post/97078)
+
+Matrix 是少数派的写作社区，主张分享真实的产品体验和实用经验。文章探讨了 AI 时代的教育与营销策略，分析了情绪对决策的影响，并强调了前额叶在理性思考中的重要性。作者认为，AI 是工具而非威胁，关键在于如何保持理性思维和探索未知的能力。
+
+- 🧠 **情绪与决策**：情绪会窄化认知，影响理性分析能力，尤其是在焦虑或恐惧时，容易做出冲动决策。
+- 🎯 **营销策略**：许多营销手段通过激发情绪（如焦虑、希望）来促使消费者购买，尤其是利用「限时折扣」等紧迫感。
+- 🤔 **前额叶的作用**：前额叶负责理性思考、规划和情绪调节，情绪高涨时其功能会被抑制，导致决策质量下降。
+- 🛡️ **AI 的角色**：AI 是工具，帮助处理繁琐任务，但不应被视为威胁。真正的价值在于个人的认知和探索能力。
+- 🧩 **问题空间**：探索未知和解决问题是获得价值的关键，安全感是推动探索的基础。
+- � **心力耗竭**：当心力耗竭时，人们会像「僵尸」一样追求快速反馈，忽视复杂问题的解决。
+- 📚 **哲学的重要性**：哲学思维训练能帮助我们面对复杂问题，保持理性判断力，避免被消费主义和算法推荐所控制。
+- 🚀 **AI 的局限**：AI 无法替代人类的独特价值，真正的智慧在于提出问题和面对不确定性。
