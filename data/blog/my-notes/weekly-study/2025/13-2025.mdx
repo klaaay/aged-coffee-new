@@ -14,6 +14,19 @@ summary: ''
 
 ## 工具
 
+### [birpc](https://github.com/antfu/birpc)
+
+本文介绍了 **birpc**，一种基于消息的双向远程过程调用（RPC）工具，适用于 WebSocket 和 Workers 通信。它具有轻量、协议无关、支持 TypeScript 等特点，并提供了多种使用示例。
+
+- 🌟 **功能简介** - 支持类似本地函数的远程调用，返回 Promise 结果，兼容 TypeScript 类型安全。  
+- 📦 **轻量无依赖** - 零依赖，体积仅约 0.5KB。  
+- 🔄 **协议无关** - 适用于 WebSocket、MessageChannel 等任何基于消息传递的协议。  
+- 📡 **WebSocket 示例** - 需自定义序列化/反序列化方法（如 `JSON.stringify`），支持客户端与服务器双向通信。  
+- 🔄 **循环引用支持** - 推荐使用 `structured-clone-es` 处理 JSON 无法序列化的循环引用。  
+- 📨 **MessageChannel 示例** - 自动支持循环引用，无需额外配置序列化。  
+- 👥 **一对多通信** - 参考示例文件实现多端通信。  
+
+
 ## 更新
 
 ## 设计
