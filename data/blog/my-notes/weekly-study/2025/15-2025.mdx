@@ -1,0 +1,44 @@
+---
+title: 2025-第十五周
+date: '2025-04-07'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [介绍 `content-visibility: auto` - 一个隐藏的性能宝石](https://cekrem.github.io/posts/content-visibility-auto-performance/)
+
+文章介绍了 CSS 属性`content-visibility: auto`如何通过跳过视口外元素的渲染来显著提升大型列表或复杂 DOM 结构的性能，并探讨了其使用场景、注意事项及浏览器兼容性问题。
+
+- 🧙‍♂️ `content-visibility: auto` 通过跳过视口外元素的渲染，简化性能优化，类似虚拟滚动但无需手动管理。
+- 📏 需搭配 `contain-intrinsic-size` 属性（自动或固定尺寸）以避免布局偏移，如 `auto` 或 `0 50px`。
+- 🚫 注意：Safari 的页面搜索功能（Cmd+F）可能无法定位被隐藏的内容（截至 18.3.1 版本）。
+- 🔍 若搜索功能关键，可禁用此优化、自定义搜索方案或针对 Safari 特殊处理。
+- 🏆 适用场景：长列表（如商品目录）、复杂仪表盘、无限滚动或多行表格。
+
+### [使用 Zustand 和 Immer 构建强大的 React 应用程序](https://zwit.link/posts/20250301173228-building-robust-react-apps-with-zustand-and-immer/)
+
+作者长期回避使用 React 和 JavaScript，偏好静态网站生成工具如 Zola（基于 Rust），但近期因时间限制和生态优势重新转向 React，并发现其成熟度提升（如 Hooks 和 TypeScript 支持）。重点介绍了状态管理库 Zustand 和不可变更新工具 Immer 的协同使用，通过实例展示了它们如何简化复杂应用开发。
+
+- 🚫 **长期回避 React 与 JS**：作者曾避免使用 React 和 JavaScript，偏好静态生成工具如 Zola（基于 Rust）。
+- 🔄 **转向 React 的原因**：时间压力和 React 生态的丰富性（如 UI 库）促使回归，并发现其成熟度显著提升。
+- 🧩 **Zustand 的简洁状态管理**：替代 Redux，减少样板代码，示例展示计数器实现的对比（useState vs. Zustand）。
+- 🛠 **Immer 的不可变更新**：简化嵌套状态操作，通过“草稿”模式避免手动展开，与 Zustand 结合更高效。
+- 🎨 **实战案例：画布交互**：通过异步加载模拟（10 秒延迟）演示 Zustand+Immer 如何管理复杂状态（如加载态和点坐标）。
+- 🔗 **工具协同优势**：Zustand 处理状态逻辑，Immer 优化不可变更新，TypeScript 弥补类型安全，提升开发效率。
+
+## 工具
+
+## 更新
+
+## 设计
+
+## AI
+
+## 其他
