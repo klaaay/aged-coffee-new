@@ -1,0 +1,90 @@
+---
+title: 2025-第十六周
+date: '2025-04-19'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### ["后开发者时代 • Josh W. Comeau"](https://www.joshwcomeau.com/blog/the-post-developer-era/)
+
+**原文标题**: [The Post-Developer Era • Josh W. Comeau](https://www.joshwcomeau.com/blog/the-post-developer-era/)
+
+这篇文章探讨了 AI 对软件开发行业的影响，作者认为尽管 AI 工具在辅助开发方面取得了进展，但人类开发者仍不可或缺。
+
+- 🧑💻 作者两年前预测 AI 不会取代开发者，而是增强其能力，目前看来这一观点依然成立。  
+- 🤖 尽管 AI 如 Google 的代码生成占比达 25%，但仍需人类开发者指导和编辑，无法独立工作。  
+- 🚀 初创公司 Devin 等尝试完全替代开发者，但实际效果不佳，仅能完成简单任务。  
+- 🛠️ AI 工具（如 Cursor IDE）虽能提升效率，但仍需开发者监督和修正错误，无法完全自主。  
+- 📉 当前就业市场严峻，主因是宏观经济、大厂裁员及企业对 AI 的误解，而非 AI 取代人类。  
+- 🌟 未来 AI 更可能作为开发者的增强工具，而非替代品，开发者需求仍将存在。  
+- ⚠️ 需警惕过度依赖 AI 导致技能退化，但合理使用可加速学习（如调试和文档查询）。  
+- 📈 技术曲线进入增量改进阶段，AI 突破性进展减少，开发者需保持核心技能竞争力。
+
+### ["2025 年使用 currentColor – Frontend Masters 博客"](https://frontendmasters.com/blog/using-currentcolor-in-2025/)
+
+**原文标题**: [Using currentColor in 2025 – Frontend Masters Blog](https://frontendmasters.com/blog/using-currentcolor-in-2025/)
+
+CSS 中的 currentColor 关键字及其在 2025 年的应用现状
+
+- 🎨 **currentColor 简介**：CSS 中的原始变量，代表当前元素的文本颜色，可简化代码并保持颜色一致性。  
+- 🔄 **使用示例**：通过`border: 3px solid currentColor`，边框颜色自动继承文本颜色（如`color: red`）。  
+- 📉 **使用率下降**：相比自定义属性（如`var(--mainColor)`），currentColor 在现代代码库中较少见，因后者更灵活清晰。  
+- 🛠️ **局限性**：仅适用于颜色值，无法像自定义属性那样存储其他 CSS 属性（如间距或字体）。  
+- 🐞 **已知问题**：某些场景下无效（如`accent-color: currentColor`），或受用户代理样式表干扰（需显式继承`color: inherit`）。  
+- 👍 **适用场景**：图标填充（`fill: currentColor`）或动态阴影（基于相对颜色语法）仍具实用性。  
+- 💡 **开发者建议**：SVG 图标内联时，currentColor 可确保颜色继承；但性能上，与 CSS 变量无显著差异。  
+- 🔍 **社区反馈**：部分开发者认为其简洁性在特定场景（如按钮边框）优于自定义属性。
+
+## 工具
+
+### ["Tailwind CSS 速查表"](https://kombai.com/tailwind/cheat-sheet/)
+
+**原文标题**: [Tailwind CSS Cheat Sheet](https://kombai.com/tailwind/cheat-sheet/)
+
+概述了 CSS 布局与定位相关的多种实用工具类，涵盖宽高比、列布局、断点控制、盒模型、显示模式、浮动清除、层叠控制、对象适配、溢出处理、滚动行为、定位方式及可见性等核心功能。
+
+## 更新
+
+### [Astro 5.7 | Astro](https://astro.build/blog/astro-570/)
+
+**原文标题**: [Astro 5.7 | Astro](https://astro.build/blog/astro-570/)
+
+Astro 5.7 发布，带来了一系列新功能和改进，包括实验性字体 API、稳定的会话 API、SVG 组件支持以及配置导入功能。
+
+- 🌟 **实验性字体 API**：提供统一的字体管理，支持本地和第三方字体服务，自动优化性能并生成备用字体。  
+- 🔒 **稳定的会话 API**：支持服务器端存储用户数据，适用于购物车、表单状态等，无需客户端 JavaScript。  
+- 🖼️ **SVG 组件支持**：直接导入 SVG 文件作为组件，支持传递属性如宽度、高度和颜色。  
+- ⚙️ **配置导入功能**：通过`astro:config`虚拟模块安全访问配置信息，支持客户端和服务器端使用。  
+- 🛠️ **升级工具**：提供`@astrojs/upgrade` CLI 工具或手动升级命令，方便项目升级到最新版本。  
+- 🐞 **错误修复**：修复了自 5.6 版本以来的多个问题，详细内容参见更新日志。  
+- 👏 **社区贡献**：感谢核心团队和众多社区成员的贡献，推动了 Astro 5.7 的发布。
+
+## 设计
+
+### ["包容性深色模式：为所有用户设计无障碍深色主题 — Smashing Magazine"](https://www.smashingmagazine.com/2025/04/inclusive-dark-mode-designing-accessible-dark-themes/)
+
+**原文标题**: [Inclusive Dark Mode: Designing Accessible Dark Themes For All Users — Smashing Magazine](https://www.smashingmagazine.com/2025/04/inclusive-dark-mode-designing-accessible-dark-themes/)
+
+概述  
+本文探讨了如何设计包容性深色模式，以确保所有用户都能获得良好的体验。深色模式不仅是一种时尚美学，还能减少眼睛疲劳，但若设计不当，可能对视觉障碍用户造成阅读困难。文章提供了设计高对比度、易读且用户友好的深色主题的实用策略，并强调了用户自定义的重要性。
+
+- 🌑 深色模式需兼顾美观与可访问性，避免纯黑背景，改用深灰色（如#121212）以减少眼睛疲劳。  
+- 👁️ 高对比度（至少 4.5:1）对可读性至关重要，尤其对视觉障碍用户（如散光或低对比敏感度用户）。  
+- 📝 选择无衬线字体并调整字号/字重，确保深色背景下的文本清晰易读。  
+- 🎨 避免高饱和色，使用对比检查工具（如 WebAIM）验证配色，适配色盲或低视力用户需求。  
+- 🔄 提供深色/浅色模式切换选项，并通过 CSS 媒体查询（如`prefers-color-scheme`）自动适配系统设置。  
+- 🤖 保持语义化 HTML 和结构一致性，提升机器可读性（如屏幕阅读器和自动化工具兼容性）。  
+- 🛠️ 真实环境测试及用户反馈迭代，覆盖多种视觉障碍场景（如青光眼、夜盲症等）。  
+- ✨ 示例：Slack 通过预设视觉辅助选项，显著提升用户友好度。
+
+## AI
+
+## 其他
+
