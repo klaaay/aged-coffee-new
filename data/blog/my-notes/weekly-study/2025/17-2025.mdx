@@ -1,0 +1,119 @@
+---
+title: 2025-第十七周
+date: '2025-04-21'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [了解 Vite 如何处理你的 node_modules](https://dev.to/jinjiang/understanding-how-vite-deals-with-your-nodemodules-3pdf)
+
+文章探讨了 Vite 在不同模式和场景下处理项目依赖（node_modules）的机制，包括 CJS/ESM 转换、依赖预构建、SSR 模式配置等核心问题。
+
+- ⚡️ **Vite 简介**：现代前端构建工具，开发时基于浏览器原生 ES 模块，生产环境使用 Rollup 打包，已成为前端开发的事实标准。
+- 📦 **node_modules 挑战**：Vite 能高效处理混乱的 node_modules，包括 CJS/ESM/UMD 等混合模块，但存在边缘情况需手动处理。
+- 🔄 **依赖预构建**：
+  - 通过 `optimizeDeps` 配置优化边界（如强制包含/排除特定依赖）。
+  - 生成 `node_modules/.vite/deps` 缓存文件，将 CJS 转换为 ESM 以支持浏览器。
+- 🖥️ **SSR 模式**：
+  - 默认外部化（`ssr.external`）纯 JS 依赖，需通过 `ssr.noExternal` 内联非纯资源（如含 CSS 的模块）。
+  - CJS 依赖需同时配置 `ssr.optimizeDeps.include` 预构建为 ESM。
+- ⚠️ **注意事项**：
+  - `resolve.alias` 可能破坏 SSR 下的 CJS 外部化，优先使用 `resolve.dedupe` 确保单例。
+  - 嵌套依赖需显式配置 `noExternal` 和 `optimizeDeps`。
+- 🔮 **未来改进**：Vite 6+ 将引入 `environments.ssr` 替代旧配置，Rolldown 集成可能简化现有逻辑。
+
+### [后开发者时代](https://www.joshwcomeau.com/blog/the-post-developer-era/)
+
+AI 并未终结前端开发，人类开发者仍不可或缺。过去两年，AI 工具虽被广泛采用，但更多是辅助而非替代开发者。当前就业市场严峻主要受经济环境和 AI 误解影响，而非 AI 取代人力。未来，AI 与开发者协作将成主流，但需警惕过度依赖 AI 导致技能退化。
+
+- 🤖 作者两年前质疑“AI 将取代前端开发者”的预测，认为 AI 是辅助工具而非替代品，如今观点仍被验证。
+- 🏢 企业虽采用 AI 工具（如谷歌 25% 代码由 AI 生成），但实际由人类开发者主导，AI 仅作为辅助工具。
+- � 初创公司 Devin 等 AI 开发工具表现不佳，真实案例显示其仅能完成少量简单任务，复杂场景仍需人工干预。
+- 🛠️ 作者亲测 AI 编程工具（如 Cursor+Claude）效率提升显著，但仍需人工纠错和指导，完全依赖会导致代码质量失控。
+- 📉 当前就业市场低迷主因宏观经济、大厂裁员及企业对 AI 的误解（误以为 AGI 即将取代人力），而非 AI 实际替代效应。
+- 🔮 未来 AI 将持续迭代（如 Gemini 2.5），但进步趋于渐进式，开发者需平衡 AI 辅助与主动学习以避免“氛围编程”陷阱。
+- ⚠️ 需警惕政治经济环境（如美国政策变动）对行业的影响，以及过度依赖 AI 导致的新手开发者技能空心化。
+- 🌟 作者鼓励新人开发者：AI 时代掌握编程技能仍具高价值，人机协作将催生“开发者复兴”。
+
+### [不可能的组合件——过度反应](https://overreacted.io/impossible-components/)
+
+文章探讨了如何通过 React Server Components 实现前后端逻辑的封装与组合，构建自包含的“不可能组件”。核心思想是将数据加载（后端）与交互逻辑（前端）拆分为独立但协作的模块，通过自上而下的数据流无缝整合。以下是关键要点：
+
+- 🧩 **组件拆分**：将组件分为后端部分（如`GreetingBackend`处理文件读取）和前端部分（如`GreetingFrontend`管理状态），通过 props 传递数据。
+- 🔄 **数据流模型**：后端作为父组件优先执行，将数据注入前端子组件，形成单次往返的完整交互，而非传统的前端主动请求。
+- 🎨 **动态交互示例**：通过`ExpandingSection`组件展示如何将后端数据（如文章首句）与前端状态（展开/折叠）结合，实现无额外请求的交互。
+- 📂 **自包含数据加载**：如`PostPreview`自动读取 Markdown 文件并统计字数，逻辑封装在组件内部，复用时无需外部协调。
+- 🔍 **组合式功能**：通过`SortableList`复用实现可排序/过滤的列表，支持任意内容（如文件列表或博客预览），保持前后端逻辑隔离。
+- 🌐 **跨栈组合**：强调前后端不应割裂，而应通过组件化设计（如`<PostPreview slug="...">`）统一用户体验，映射直观的 UI 抽象。
+- ⚡ **性能优势**：静态构建时预取数据，避免运行时加载闪烁，动态应用亦可局部更新而不破坏现有状态。
+
+### [Tailwind 与 Linaria 性能对比研究](https://www.developerway.com/posts/tailwind-vs-linaria-performance)
+
+本文对比了 Tailwind 和 Linaria 在性能方面的表现，重点关注初始加载和交互性能。通过实际测量和分析，作者发现两者在性能上的差异并不显著，但 Tailwind 在某些交互场景下表现稍逊。最终建议开发者根据个人偏好和项目需求选择框架，而非单纯基于性能考量。
+
+- 🔍 **调查背景**  
+  作者对 Tailwind 和 Linaria 进行性能对比，旨在验证 Tailwind 是否如传闻中在性能上优于其他 CSS 解决方案。
+
+- 🛠️ **工具与方法**  
+  使用真实应用（非合成示例）进行测试，测量初始加载（LCP）和交互性能（INP），并在不同渲染模式（CSR/SSR）下进行对比。
+
+- 📊 **测量结果**
+
+  - CSS 文件大小：Tailwind 比 Linaria 小 13%。
+  - HTML 文件大小（SSR 模式）：Tailwind 在某些页面上比 Linaria 大 70%-162%。
+  - JavaScript 文件大小：Tailwind 比 Linaria 大 3%。
+
+- ⚡ **初始加载性能**  
+  在 CSR 和 SSR 模式下，Tailwind 和 Linaria 的 LCP 时间几乎相同，压缩技术抵消了文件大小的差异。
+
+- 🖱️ **交互性能**  
+  Tailwind 在某些交互（如打开下拉菜单）中表现稍差，原因是其内置的通用选择器（如`*`、`::before`）导致样式计算时间更长。
+
+- 🎯 **结论与建议**  
+  Tailwind 和 Linaria 在性能上差异不大，选择框架时应优先考虑开发体验、维护性等因素，而非仅关注性能。
+
+## 工具
+
+### [Frimousse — React 表情选择器](https://frimousse.liveblocks.io/)
+
+Frimousse 是一个轻量级、无样式且可组合的 React 表情符号选择器。
+
+- 🚀 **轻量级与可组合**：Frimousse 是一个无样式的 React 表情符号选择器，支持高度自定义和组合。
+- 🛠 **安装方式**：可通过 npm 安装 (`npm i frimousse`)，也支持通过 shadcn CLI 安装为预构建组件。
+- 🎨 **样式自定义**：支持 Tailwind CSS、CSS-in-JS 或原生 CSS 进行样式定制，各部分可通过 `[frimousse-*]` 属性进行定位。
+- 🔍 **功能组件**：包含搜索框 (`EmojiPicker.Search`)、视口 (`EmojiPicker.Viewport`)、列表 (`EmojiPicker.List`) 等组件，支持加载和空状态显示。
+- 📱 **响应式设计**：支持动态调整尺寸，无需固定宽高，适合移动端和桌面端。
+- 🌈 **皮肤色调选择**：内置皮肤色调选择器 (`EmojiPicker.SkinToneSelector`)，支持自定义表情符号作为视觉标识。
+- 🎭 **活跃表情符号跟踪**：通过 `useActiveEmoji` 钩子或 `EmojiPicker.ActiveEmoji` 组件可跟踪当前选中的表情符号。
+- 📚 **多语言支持**：支持通过 `locale` 属性设置语言，默认为英语 (`"en"`)。
+- 🔗 **集成示例**：可与 shadcn/ui、Radix UI 等库集成，支持弹出框等交互形式。
+- 🧩 **虚拟化列表**：使用虚拟化技术优化性能，支持动态加载和滚动。
+
+## 更新
+
+### [React 编译器 RC 版本 - React](https://react.dev/blog/2025/04/21/react-compiler-rc)
+
+React 团队发布了 React Compiler RC 版本，为稳定版做准备，并分享了相关更新和优化。
+
+- 🚀 **React Compiler RC 发布**：首个候选版本，接近稳定版，可用于生产环境测试。
+- 🔧 **工具整合**：将`eslint-plugin-react-compiler`合并至`eslint-plugin-react-hooks`，简化配置。
+- ⚡ **性能优化**：支持可选链和数组索引依赖，减少重复渲染，提升 UI 响应速度。
+- 🛠️ **构建支持**：新增对`swc`的实验性支持，并与`oxc`合作实现无 Babel 构建。
+- 📦 **安装方式**：提供`npm`、`pnpm`、`yarn`的安装命令，支持 React 17 及以上版本。
+- ⚠️ **兼容性调整**：默认关闭`ref-in-render`验证（因误报问题），后续版本将改进后重新启用。
+- 📝 **文档与反馈**：详细使用文档已更新，鼓励用户试用并通过 GitHub 提交反馈。
+- 🔄 **升级建议**：推荐通过端到端测试确保兼容性，或固定编译器版本以避免意外行为。
+- 🗺️ **稳定版路线图**：RC 收集反馈后推出稳定版，未来计划持续优化自动记忆化和新特性。
+
+## 设计
+
+## AI
+
+## 其他
