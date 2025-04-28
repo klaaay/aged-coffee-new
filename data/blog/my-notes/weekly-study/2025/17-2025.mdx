@@ -38,6 +38,30 @@ summary: ''
 
 ## AI
 
+### [rowboat](https://github.com/rowboatlabs/rowboat)
+
+Rowboat 基于 OpenAI 的 Agents SDK，支持通过自然语言描述生成多智能体系统，并提供 HTTP API 和 Python SDK 两种集成方式。
+
+- ✨ **快速构建工作流**  
+  通过自然语言描述（如“为食品配送公司构建处理配送状态和缺失物品的助手”），Rowboat 可自动生成多智能体工作流。  
+
+- 🌐 **连接 MCP 服务器**  
+  在设置中添加 MCP 服务器，并将工具导入 Rowboat 平台。  
+
+- 📞 **灵活集成方式**  
+  支持通过 HTTP API 或 Python SDK 将智能体集成到应用中，需从设置中获取项目 ID 和 API 密钥。  
+
+- ⚡ **快速启动指南**  
+  1. 设置 OpenAI API 密钥：`export OPENAI_API_KEY=your-key`  
+  2. 克隆仓库并启动 Docker：`git clone` + `docker-compose up`  
+  3. 访问本地应用：`http://localhost:3000`  
+
+- 🔧 **集成示例**  
+  - **HTTP API**：使用`curl`调用本地 API 端点，传递消息和认证信息。  
+  - **Python SDK**：通过`Client`类初始化会话，支持状态化聊天或低级 API 调用。  
+  
+Summarized by https://chrome.google.com/webstore/detail/cbgecfllfhmmnknmamkejadjmnmpfjmp
+
 ### [mcp-gateway](https://github.com/mcp-ecosystem/mcp-gateway)
 
 MCP Gateway 是一款轻量级、高可用的网关服务，可将现有 API 快速转换为符合 MCP 协议的服务，无需修改代码，仅需配置即可实现。支持多种部署方式，并提供内置管理界面，适合个人和组织快速集成。
