@@ -1,0 +1,89 @@
+---
+title: 2025-第十八周
+date: '2025-05-01'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [在人工智能时代避免技能退化](https://addyo.substack.com/p/avoiding-skill-atrophy-in-the-age)
+
+
+本文探讨了 AI 编程助手在提升效率的同时可能导致的技能退化问题，强调了开发者需警惕过度依赖 AI 而丧失核心编程能力，并提出了平衡使用 AI 与保持技能敏锐的具体策略。
+
+- 🤖 **AI 助手的双重影响**：提升效率但可能导致技能退化（如调试、架构设计等核心能力）  
+- 🧠 **认知卸载的风险**：过度依赖 AI 会削弱独立解决问题和批判性思维能力  
+- 📉 **技能退化的表现**：跳过文档阅读、依赖 AI 调试、代码理解肤浅、基础语法遗忘  
+- ⚖️ **效率与知识的权衡**：AI 提供快速答案但可能牺牲深度理解，需警惕“表面学习”  
+- 🚨 **长期职业隐患**：过度依赖可能导致应对突发问题能力下降，团队协作和知识传承受阻  
+- 🔍 **解决方案：有意识使用 AI**  
+  - ✅ **验证 AI 输出**：主动测试代码、理解原理，而非盲目复制  
+  - 🚫 **保留“无 AI”时间**：定期手动编码以巩固基础技能  
+  - 💡 **先自行尝试**：遇到问题先独立思考，再借助 AI 补充  
+  - 👥 **人工代码审查**：将 AI 生成代码视为同事提交，严格审核  
+  - 📚 **主动学习**：通过追问 AI 解释、记录知识缺口来深化理解  
+- 🛠️ **未来建议**：将 AI 视为协作工具而非替代品，保持人类直觉与创造力的核心地位
+
+
+## 工具
+
+## 更新
+
+### [Express@5.1.0：现作为 npm 默认版本并提供 LTS 支持时间线](https://expressjs.com/2025/03/31/v5-1-latest-release.html)
+
+Express v5.0.0 发布后未立即设为 npm 默认版本，现公布 LTS 时间线及未来规划  
+
+- 🚀 Express v5.0.0 于去年 9 月发布，但未立即设为 npm 的 `latest` 版本，现通过 v5.1.0 完成过渡并启动 LTS 计划  
+- 📚 文档与迁移支持：更新了 v5 文档和迁移指南，新增自动化工具（codemod）辅助从 v4 升级，部分破坏性变更仍需手动调整  
+- 🔄 生态系统兼容性：预留时间让中间件和教程适配 v5，特别关注新手用户避免版本混淆  
+- ⏳ LTS 三阶段支持策略：  
+  - **CURRENT**（新版本初期，至少 3 个月）：接收所有更新，推荐尝鲜  
+  - **ACTIVE**（稳定期，至少 12 个月）：设为 npm 默认版本，全面支持  
+  - **MAINTENANCE**（维护期，12 个月）：仅安全修复，强烈建议升级  
+- 📅 拟议时间表：  
+  - v4 进入维护期（2025-04-01），EOL 不早于 2026-10-01  
+  - v5 为当前活跃版本（2025-03-31 起），EOL 取决于 v6 发布时间  
+- ✨ v5.1.0 改进：支持 `Uint8Array`、依赖版本范围优化、ETag 功能增强等  
+- 🤝 社区合作：与 HeroDevs 合作支持企业升级，呼吁通过 PR 或 OpenCollective 资助项目  
+- 🔜 未来计划：性能优化工作组、TypeScript 体验提升、v6 前期讨论启动  
+
+### [发布 v3.0.0 · koajs/koa · GitHub](https://github.com/koajs/koa/releases/tag/v3.0.0)
+
+Koa v3.0.0 是一个主要版本发布，包含多项重大变更、新功能和修复。
+
+- 🚨 **重大变更**: 最低要求 Node.js v18，移除 `.redirect('back')` 并新增 `.back(fallback_url)`  
+- 🔄 **移除功能**: 不再支持生成器，移除 `createAsyncCtxStorageMiddleware`  
+- 🛠 **修复与改进**: 修复 `req.origin` 对齐 CORS 的 `Origin` 头部，修复 `ctx.throw` 格式要求  
+- 📂 **文件处理**: 移除特殊 `ENOENT` 支持，需适配 404 处理逻辑  
+- 🆕 **新功能**: 支持自定义流和 WHATWG 响应体，新增 `app.currentContext` 通过 `asyncLocalStorage` 获取当前上下文  
+- 🐞 **问题修复**: 修复响应时 socket 不可写、`Content-Length` 与 `Transfer-Encoding` 冲突等问题  
+- ♻️ **重构**: 使用 `URLSearchParams` 替代 Node.js 查询字符串  
+
+### [发布 electron v36.0.0 · electron/electron · GitHub](https://github.com/electron/electron/releases/tag/v36.0.0)
+
+Electron v36.0.0 发布，包含 Chromium、Node 和 V8 的版本升级，新增多项功能并修复了大量问题。  
+
+- 🚀 **核心升级**：Chromium 升级至 136.0.7103.48，Node 升级至 22.14.0，V8 升级至 13.6。  
+- ⚠️ **破坏性变更**：废弃了 `NativeImage.getBitmap()`，移除了 `systemPreferences.isAeroGlassEnabled()` API，并调整了部分 API 的行为。  
+- ✨ **新增功能**：  
+  - 添加了 `BrowserWindow.isSnapped()` 以检测窗口是否已通过 Snap 排列。  
+  - 引入了 `ServiceWorkerMain` 类以在主进程中与服务工作者交互。  
+  - 支持 Windows 上的圆角窗口 (`roundedCorners`)。  
+- 🛠️ **修复与改进**：  
+  - 修复了多个崩溃问题，包括 `shell.readShortcutLink` 和 OSR 渲染问题。  
+  - 优化了 ASAR 完整性检查及桌面捕获性能。  
+  - 解决了 Linux 和 macOS 上的多个窗口管理和打印问题。  
+- 📜 **文档与通知**：更新了文档并结束了对 Electron 33.x.y 的支持。
+
+## 设计
+
+## AI
+
+## 其他
+
