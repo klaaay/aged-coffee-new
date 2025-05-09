@@ -6,6 +6,18 @@ draft: false
 summary: ''
 ---
 
+#### 2025-05-09
+
+网络请求过快时，加载动画的短暂闪烁（如仅显示 10ms）反而影响用户体验  
+可以提供延迟（delay）和最小持续时间（minDuration）配置，确保动画只在必要时显示且停留足够时间  
+可以参考 https://github.com/smeijer/spin-delay 的实现
+
+有些 @types 定义和实际的类型不同，但是总体可用，例如只是导入方式的声明入口不匹配缺少一层 default，可以通过下面的方式处理
+
+```ts
+const pinyin = ((_pinyin as any)?.default ? (_pinyin as any)?.default : _pinyin) as typeof _pinyin
+```
+
 #### 2025-02-28
 
 部署 nextjs 应用 public 资源访问问题
