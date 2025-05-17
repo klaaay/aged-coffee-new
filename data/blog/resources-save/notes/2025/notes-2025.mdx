@@ -1,0 +1,55 @@
+---
+title: notes-2025
+date: '2025-01-10'
+tags: ['notes']
+draft: false
+summary: ''
+---
+
+#### 2025-05-09
+
+网络请求过快时，加载动画的短暂闪烁（如仅显示 10ms）反而影响用户体验  
+可以提供延迟（delay）和最小持续时间（minDuration）配置，确保动画只在必要时显示且停留足够时间  
+可以参考 https://github.com/smeijer/spin-delay 的实现
+
+有些 @types 定义和实际的类型不同，但是总体可用，例如只是导入方式的声明入口不匹配缺少一层 default，可以通过下面的方式处理
+
+```ts
+const pinyin = ((_pinyin as any)?.default ? (_pinyin as any)?.default : _pinyin) as typeof _pinyin
+```
+
+#### 2025-02-28
+
+部署 nextjs 应用 public 资源访问问题
+
+使用 `standalone`打包的产物中不包含一些静态的资源，Dockerfile 需要注意添加相关文件的 copy
+
+```shell
+COPY --chown=nextjs:nodejs ./packages/zhongbao-docs/.next/static  ./packages/zhongbao-docs/.next/static
+COPY --chown=nextjs:nodejs ./packages/zhongbao-docs/public  ./packages/zhongbao-docs/public
+```
+
+以及注意如果是 monorepo 的打包，最终的 server，在 monorepo 对应的文件夹中（示例里的 packages/zhongbao-docs）
+
+```shell
+CMD ["pm2-runtime", "packages/zhongbao-docs/server.js"]
+```
+
+#### 2025-02-19
+
+##### 在 vscode 中使用正则匹配
+
+`(manageRoleTypes|roleTypes)` 会匹配 xxxmanageRoleTypesyyy 和 xxxroleTypesyyy 之类的额外信息
+`\b(manageRoleTypes|roleTypes)\b` 添加的 \b 表示 单词边界，确保匹配的是完整的单词，而不是单词的一部分
+
+#### 2025-01-14
+
+```tsx
+// 是 false
+;[
+  [1, 2],
+  [2, 3],
+].includes([1, 2])
+```
+
+import { shelljs } from 'globals'

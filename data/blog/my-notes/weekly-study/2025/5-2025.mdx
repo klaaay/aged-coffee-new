@@ -1,0 +1,233 @@
+---
+title: 2025-第五周
+date: '2025-01-28'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [容器查询的全面应用](https://www.joshwcomeau.com/css/container-queries-unleashed/)
+
+这段文字介绍了容器查询的概念和实际运用，强调了容器查询在响应式设计中的重要性以及其在用户界面设计中的创新性。作者分享了自己发现的一种有用的设计模式，并举例说明了如何使用容器查询实现 UI 子布局的动态响应。同时还介绍了容器查询的一些特性和应用场景，展望了容器查询在未来可能带来的创新可能性。
+
+- 容器查询（Container Queries）允许开发者在响应式设计中创建子布局，并根据容器的大小动态调整 UI 元素的样式，提供了全新的设计可能性。
+- 通过利用容器查询，可以解决传统媒体查询难以处理的情况，如在布局中动态调整元素样式，避免使用传统的媒体查询中的"魔法数字"，提高开发的稳定性和灵活性。
+- 容器查询的发展还处于初级阶段，但已经有开发者在实际项目中发现了其广泛应用的可能性，预示着容器查询技术将为 Web UI 带来更多有趣和创新的可能性。
+
+### [如何通过 Next.js 查看 React 服务器组件的活动情况](https://www.dash0.com/blog/how-to-inspect-react-server-component-activity-with-next-js)
+
+React 服务器组件 (RSC) 虽然提高了性能，但也带来了调试和检查服务器端行为的挑战。
+OpenTelemetry 可以帮助开发者追踪和分析 RSC 的执行过程，提供服务器端活动的详细视图。
+通过在 Next.js 应用中集成 OpenTelemetry，开发者可以获得 RSC 行为的深入洞察，从而优化代码和识别潜在问题。
+
+这段文字主要讨论了以下几点：
+
+1. React Server Components (RSCs) 的出现带来了性能提升，但也增加了调试难度。
+2. 介绍了 RSCs 和 Next.js App Router 的基本概念。
+3. 提出了使用 OpenTelemetry 来观察和调试 RSCs 的方法。
+4. 解释了 OpenTelemetry 的功能，包括跟踪请求、收集指标和聚合日志。
+5. 通过一个实际案例展示了 OpenTelemetry 如何帮助优化 RSCs 性能。
+6. 提供了在 Next.js 应用中集成 OpenTelemetry 的详细步骤。
+7. 介绍了如何创建自定义 spans 来获得更细粒度的洞察。
+8. 总结 OpenTelemetry 对于理解和调试 RSCs 的重要性，以及与 Dash0 结合使用的优势。
+
+### [⭐️关于 Electron，人们常常有一些误解](https://felixrieseberg.com/things-people-get-wrong-about-electron/)
+
+Electron 允许开发者灵活地结合网页技术和原生代码，而不是强制使用 JavaScript。  
+网页应用并非天生劣质，许多成功和受欢迎的应用都是基于网页技术开发的。  
+Electron 选择捆绑 Chromium 引擎，主要是为了让开发者能够控制应用的稳定性、安全性和可靠性，而非追求性能优势。
+
+这段文字主要讨论了 Electron 框架及其相关争议，可以概括为以下几点：
+
+1. Electron 是一个将网页技术与桌面应用结合的开源项目，作者花了 10 年时间开发。
+2. 作者解释了为什么选择使用网页技术构建用户界面，以及为什么要打包 Chromium 引擎。
+3. 反驳了一些对 Electron 的常见误解：
+   - Electron 不是纯 JavaScript，可以与原生代码结合使用
+   - 网页应用并非都比原生应用差
+   - Electron 的性能不一定比操作系统自带的 WebView 差
+   - 应用程序大小对用户来说并不是最重要的因素
+4. 强调 Electron 的优势在于允许开发者混合使用网页技术和原生代码，以及对渲染引擎的控制。
+5. 指出 Electron 存在是为了满足桌面应用开发需求，如果有更好的替代方案，Electron 开发者会欢迎。
+
+总的来说，作者试图澄清对 Electron 的误解，并解释其存在的价值和理由。
+
+### [Standard Schema](https://standardschema.dev/)
+
+Standard Schema 是一个通用接口，旨在让 JavaScript 和 TypeScript 的模式库更容易被生态系统工具接受和使用。
+该规范由一个单一的 TypeScript 接口 StandardSchemaV1 组成，任何希望符合规范的模式库都可以实现它。
+多个知名的模式库 (如 Zod、Valibot、ArkType 等) 已经实现了这个规范，并且有许多工具和框架支持接受符合 Standard Schema 规范的用户定义模式。
+
+这段文字主要介绍了 Standard Schema，一个为 JavaScript 和 TypeScript 架构库设计的通用接口。以下是主要内容：
+
+1. 目的：使生态系统工具更容易接受用户定义的类型验证器，无需为每个支持的库编写自定义逻辑或适配器。
+2. 设计者：由 Zod、Valibot 和 ArkType 的创建者设计。
+3. 接口：由一个名为 StandardSchemaV1 的 TypeScript 接口组成。
+4. 设计目标：支持运行时验证、静态类型推断，同时保持最小化和避免 API 冲突。
+5. 实现：多个流行的架构库已经实现了这个规范。
+6. 集成：多个工具和框架接受符合 Standard Schema 规范的用户定义架构。
+7. 实现方法：架构库需要实现 StandardSchemaV1 接口，并在验证器对象/实例中添加~standard 属性。
+8. 使用方法：第三方库和框架可以利用此规范以类型安全的方式接受用户定义的架构。
+
+总的来说，Standard Schema 旨在为 JavaScript 和 TypeScript 生态系统提供一个统一的架构验证接口，以提高不同库和工具之间的互操作性。
+
+### [现代 JavaScript 服务器的编写方式](https://marvinh.dev/blog/modern-way-to-write-javascript-servers/)
+
+Request/Response API 比传统的 Node.js HTTP API 更快，更易于测试，无需绑定实际的网络套接字。
+使用 Request/Response API 可以将服务器表示为一个接受 Request 对象并返回 Response 对象的函数，简化了测试和互操作性。
+新的 API 标准化使得在不同运行时环境中运行代码变得更容易，无需修改服务器处理部分的代码。
+
+这段文字主要讨论了 Request/Response API 相比传统 Node.js 的 http 服务器 API 的优势：
+
+1. Request/Response API 更快，性能更好。
+2. 它使得编写和运行测试更容易，不需要绑定实际的 socket。
+3. 代码更简洁，不需要额外的库就可以进行测试。
+4. 它是标准化的 API，可以在不同的运行时环境中使用，提高了代码的可移植性。
+5. 虽然 Node.js 目前还不完全支持这种 API，但可以通过 polyfill 来实现。
+6. 这种 API 已经被一些现代框架采用，如 SvelteKit。
+
+总的来说，Request/Response API 被认为是构建 web 服务器的一种更现代、更高效的方式。
+
+### [在 TypeScript 中如何利用元组进行计算](https://2ality.com/2025/01/typescript-tuples.html)
+
+TypeScript 提供了两种数组类型：普通数组类型 (Array) 和元组类型 (Tuple),元组类型可以指定固定长度和每个元素的类型。
+元组类型支持可变长度元素、标签元素等高级特性，可以通过索引访问、映射类型等方式进行类型计算。
+元组类型可以用于实现函数参数的部分应用、zip 函数等实际应用场景，但在表达某些复杂约束时也存在局限性。
+
+这段文字主要介绍了 TypeScript 中元组 (Tuple) 类型的高级用法和计算：
+
+1. 元组类型的基本语法，包括必选元素、可选元素和剩余元素。
+2. 可变元组元素和标记元组元素的语法。
+3. 如何将数组字面量推断为元组类型。
+4. 使用索引访问操作符从元组中提取联合类型。
+5. 通过映射类型对元组进行转换。
+6. 在类型层面上对元组进行计算，如连接、递归、过滤等操作。
+7. 一些实际应用案例，如偏函数应用、zip 函数类型推断、promisify 函数等。
+8. 元组类型计算的一些局限性。
+
+总的来说，这段文字深入探讨了 TypeScript 中元组类型的高级特性和类型级编程技巧，展示了元组在复杂类型推断和计算中的强大能力。
+
+### [Tauri v2 和 Next.js 的结合：单一代码库指南](https://melvinoostendorp.nl/blog/tauri-v2-nextjs-monorepo-guide)
+
+文章介绍了如何使用 Tauri 和 Next.js 搭建一个跨平台 (Web、移动端和桌面端) 的单一代码库应用程序架构。  
+文章详细讲解了项目的设置步骤，包括初始化 monorepo、配置 Tauri、创建共享 UI 组件、设置 Next.js API 等。  
+文章展示了如何创建一个简单的文本分析应用，并说明了如何将其部署到不同平台。
+
+这段文字主要介绍了如何使用 Tauri 和 Next.js 创建一个跨平台的应用程序。主要内容包括：
+
+1. 背景介绍：作者正在开发一个名为 Language.lol 的翻译应用，需要在 web、移动和桌面平台上运行。
+2. 技术选择：比较了 Expo、Electron 和 Tauri，最终选择 Tauri 作为跨平台解决方案。
+3. 项目设置：详细介绍了如何设置 monorepo 项目结构，包括 Tauri、Next.js 和共享 UI 组件。
+4. API 开发：使用 Next.js 创建后端 API，实现文本分析功能。
+5. UI 开发：创建共享的 React 组件，实现文本分析的用户界面。
+6. 移动端开发：简要介绍了如何使用 Tauri 开发 iOS 和 Android 应用。
+7. 桌面端开发：提到 Tauri 对 Linux、macOS 和 Windows 的支持。
+8. 部署：简述了各平台的部署选项。
+9. 结论：强调这种 setup 可以实现单一代码库跨平台开发，提供一致的用户体验。
+
+整体来说，这是一个详细的技术指南，展示了如何使用现代 web 技术栈构建跨平台应用。
+
+## 工具
+
+### [nim](https://github.com/ibelick/nim)
+
+Nim 是一个免费且开源的个人网站模板，它是基于 Next.js 15、React 19、Tailwind CSS v4 和 Motion-Primitives 开发的。
+
+### [jscanify](https://github.com/puffinsoft/jscanify)
+
+一个用于文档扫描的 Javascript 库。
+
+### [github-stars-semantic-search](https://github.com/LuisReinoso/github-stars-semantic-search)
+
+通过自然语言搜索，你可以快速方便地找到自己在 GitHub 上的星标项目。
+
+### [blendy](https://github.com/TahaSh/blendy)
+
+只需几行代码，就能轻松实现一个元素平滑过渡到另一个元素的效果。
+
+### [derive-zustand](https://github.com/zustandjs/derive-zustand)
+
+一个用于从现有存储中创建派生 Zustand 存储的函数
+
+### [react-to-print](https://github.com/MatthewHerbst/react-to-print)
+
+在浏览器中显示 React 组件
+
+## 更新
+
+### [Astro 5.2](https://astro.build/blog/astro-520/)
+
+Astro 5.2 版本发布，新增了对 Tailwind 4 的支持，以及改进了尾部斜杠处理和外部重定向功能。
+新版本引入了实验性的 astro:config 模块，提供了一种统一的方式来访问配置值。
+@astrojs/react 集成现在允许禁用 React 流式传输，以支持某些不兼容的库。
+
+这段文字主要介绍了 Astro 5.2 版本的新特性和改进：
+
+1. 支持 Tailwind 4，推荐使用新的@tailwindcss/vite 插件。
+2. 改进了尾部斜杠处理，可以自动重定向到正确的 URL 路径。
+3. 支持外部重定向到 http 或 https 目标。
+4. Markdown 文件现在支持 TOML 格式的 frontmatter。
+5. 实验性功能 astro:config，提供统一的方式访问配置选项。
+6. 实验性功能可以禁用 React 流式渲染。
+7. 修复了许多 bug。
+8. 提供了自动和手动升级的方法。
+
+总的来说，这个版本增加了一些新功能，改进了现有功能，并修复了一些问题，旨在提升开发体验和性能。
+
+### [Bun 1.2](https://bun.sh/blog/bun-v1.2)
+
+Bun 1.2 版本大幅提升了对 Node.js 的兼容性，通过运行 Node.js 测试套件修复了数千个 bug。
+Bun 新增了内置的 S3 对象存储 API 和 PostgreSQL 客户端，使其成为更完整的云开发工具包。
+Bun 的包管理器现在使用基于文本的 lockfile(bun.lock),解决了之前二进制 lockfile 的一些问题。
+
+这段文字主要介绍了 Bun 1.2 版本的主要更新和新功能：
+
+1. 提高了与 Node.js 的兼容性，通过运行 Node.js 测试套件来修复 bug。
+2. 新增内置 S3 对象存储 API(Bun.s3) 和 PostgreSQL 客户端 (Bun.sql)。
+3. 包管理器改用文本格式的锁文件 (bun.lock)。
+4. 优化了 Express 框架的性能，速度提升 3 倍。
+5. 改进了测试运行器，增加了 JUnit 和 LCOV 报告支持。
+6. 增强了 JavaScript 打包器功能，支持 HTML 导入和跨平台编译。
+7. 新增了一些 Bun 特有的 API，如静态路由、UDP socket 等。
+8. 改进了文件操作 API(Bun.file)。
+9. 新增 CSS 解析器和打包功能。
+
+总的来说，这次更新大幅提升了 Bun 的功能和性能，使其更接近成为一个全面的 JavaScript 开发工具包。
+
+### [JavaScript 的 Temporal 特性即将推出](https://developer.mozilla.org/en-US/blog/javascript-temporal-is-coming/)
+
+JavaScript 新的 Temporal 对象即将在浏览器中实现，它将大大简化和现代化 JavaScript 中的日期和时间处理。
+Temporal 对象解决了 JavaScript 现有 Date 对象的许多问题，包括时区支持、可靠的解析行为以及跨夏令时和历史日历变更的计算等。
+Temporal 提供了丰富的 API，支持处理时间点、时钟时间和持续时间，并简化了日历系统、时区和时间戳的操作。
+
+这段文字主要介绍了 JavaScript 新的 Temporal 对象，内容可以概括如下：
+
+1. JavaScript Temporal 对象正在实验性浏览器版本中推出，这对 Web 开发者来说是一个重大消息。
+2. Temporal 旨在解决 JavaScript 现有 Date 对象的诸多问题，如缺乏时区支持、解析不可靠等。
+3. Temporal 提供了多个新的时间相关类，如 Instant、ZonedDateTime、PlainDateTime 等，可以更精确地处理日期和时间。
+4. Temporal 支持不同的日历系统，并提供了许多实用方法来进行时间转换、比较和计算。
+5. 文章给出了几个 Temporal 的使用示例，展示了其在处理时区、日历和时间戳方面的优势。
+6. 目前 Temporal 还处于实验阶段，主要在 Firefox Nightly 版本中可用，其他浏览器也在逐步实现中。
+7. 开发者可以通过浏览器实验版本或 polyfill 来尝试使用 Temporal，为未来广泛采用做准备。
+
+### [TypeScript 5.8 正式发布 --erasableSyntaxOnly 功能用于禁用枚举类型](https://www.totaltypescript.com/erasable-syntax-only)
+
+TypeScript 5.8 引入了新的 erasableSyntaxOnly 标志，禁用了一些非可擦除语法特性，如枚举、命名空间和类参数属性。
+可擦除语法指的是可以删除而不影响运行时行为的语法，这对打包工具更友好，也符合 Node.js 的 TypeScript 支持。
+这一变化可能预示着 TypeScript 团队正在为未来 JavaScript 中直接支持类型做准备，如"类型即注释"提案。
+
+这段文字主要讨论了 TypeScript 5.8 中即将推出的新标志"erasableSyntaxOnly"，内容概括如下：
+
+1. erasableSyntaxOnly 标志将禁用一些非可擦除语法，如枚举、命名空间和类参数属性。
+2. 可擦除语法指的是可以删除而不影响运行时行为的语法，如普通类型注释。
+3. 非可擦除语法使得打包工具更难处理代码。
+4. Node.js 的 TypeScript 支持默认只支持可擦除语法。
+5. TypeScript 团队可能在为未来不再使用这些非可擦除语法做准备。
+6. 有几个将类型添加到 JavaScript 的提案，其中"types as comments"很受欢迎，它允许 JavaScript 在运行时忽略代码中的类型。
+7. 这种方法只适用于可擦除语法，复杂转换的语法（如枚举或命名空间）将无法在这种模型中工作。
+8. erasableSyntaxOnly 将在即将发布的 TypeScript 5.8 中推出，现在可以在 TypeScript playground 中试用。

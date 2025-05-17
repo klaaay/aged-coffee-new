@@ -1,0 +1,251 @@
+---
+title: 2025-第六周
+date: '2025-02-05'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [接下来讨论仅使用 ESM 的情况](https://antfu.me/posts/move-on-to-esm-only)
+
+随着工具和生态系统的发展，作者认为现在是时候全面转向仅使用 ESM 模块格式了。  
+采用 ESM 可以简化开发过程，减少维护开销，并为未来的生态系统发展做好准备。  
+作者建议新的包采用仅 ESM 格式，并提供了一个工具来分析依赖的 ESM 采用情况，以帮助开发者做出迁移决策。
+
+这篇文章主要讨论了 JavaScript 生态系统向 ESM(ECMAScript 模块) 过渡的现状和未来趋势。主要观点包括：
+
+1. 现代工具和框架越来越多地采用 ESM 作为主要模块格式。
+2. 从顶层框架到底层库的 ESM 采用正在推动整个生态系统向前发展。
+3. Node.js 新增了 require() 导入 ESM 模块的功能，有助于平滑过渡。
+4. 双格式 (CJS/ESM) 包虽然有助于过渡，但也带来了一些问题，如互操作性、依赖解析和包大小等。
+5. 作者建议新包、面向浏览器的包、独立 CLI 工具等考虑只使用 ESM。
+6. 作者开发了 Node Modules Inspector 工具来帮助分析依赖的 ESM 采用情况。
+7. 整体而言，生态系统已经准备好更多地采用 ESM，作者鼓励开发者评估向 ESM 过渡的利弊。
+8. 展望未来，JavaScript/TypeScript 生态系统将变得更加可移植、弹性和优化。
+
+### [保护你的 Node.js 应用程序安全，使用 npx is-my-node-vulnerable 工具](https://www.trevorlasn.com/blog/is-my-node-vulnerable)
+
+is-my-node-vulnerable 是 Node.js 官方维护的安全工具，可以帮助开发者识别已知的 Node.js 版本漏洞。  
+文章通过实例展示了 Node.js 20.5.1 版本存在多个安全漏洞，强调了及时更新到更安全版本的重要性。  
+该工具支持多种使用方式，包括 npx 命令、手动安装运行，以及作为 GitHub Action 使用，方便开发者将安全检查融入日常工作流程。
+
+这段文字主要介绍了以下几点：
+
+1. Node.js 团队维护了一个名为"is-my-node-vulnerable"的官方安全工具，用于帮助开发者识别 Node.js 版本中的已知漏洞。
+2. 该工具通过比对当前 Node.js 版本与 Node.js 安全数据库来检测漏洞。
+3. 文中以 Node.js 20.5.1 版本为例，运行检查后发现了多个安全漏洞，包括各种级别的 CVE。
+4. 工具输出详细列出了每个漏洞的描述、严重程度和修复版本。
+5. 作者建议及时更新到更安全的 Node.js 版本。
+6. 该工具支持旧版 Node.js，但可能需要手动安装运行。
+7. "is-my-node-vulnerable"还提供了 GitHub Action，可以集成到 CI/CD 流程中。
+8. 作者强调定期检查 Node.js 版本安全性的重要性。
+
+### [next.js：一篇真实的评测](https://beeps.dev/blog/nextjs-an-honest-review)
+
+Next.js 14 虽然性能快速，但 App Router 的复杂性增加了开发者的认知负担。  
+Server Actions 功能强大，但存在安全隐患，需要谨慎使用。  
+Vercel 作为托管平台使用体验良好，能为开发者节省大量时间。
+
+这段文字主要讨论了 Next.js 14 的优缺点以及使用体验：
+
+优点：
+
+1. 默认情况下性能快速
+2. 服务器组件中的数据获取方便
+3. 基于文件的路由系统直观
+4. 内置组件 (如 Image、Link 等) 自动优化性能
+5. 服务器操作 (Server Actions) 提供了类型安全的方式调用服务器代码
+6. 生态系统庞大，有很多现成的解决方案
+7. Vercel 平台易用，提供了许多便利功能
+
+缺点：
+
+1. middleware.ts 有一些限制，不完全支持 Node.js API
+2. 服务器操作 (Server Actions) 存在安全隐患
+3. server-only 模块不是类型安全的
+4. 服务器组件向客户端组件传递 props 时有一些限制
+5. layout.tsx 组件无法访问 searchParams 或 pathname
+6. 客户端组件 (Client Component) 的命名可能造成混淆
+7. 可能意外地将服务器代码打包到客户端
+8. 在 App Router 中实现路由间动画较困难
+
+总的来说，Next.js 适合静态网站，但对于动态组件，App Router 引入的复杂性增加了认知负担。作者希望 Vercel 能够关注小型创业公司的动态应用需求，并继续提高框架的安全性。
+
+### [我如何利用声音来学习编程](https://whitep4nth3r.com/blog/how-i-learned-to-code-with-my-voice/)
+
+作者因手部疼痛无法打字，被迫学习使用语音编程技术来继续工作。  
+作者主要使用 Talon、Cursorless、Apple Voice Control 和 Rango 等工具来实现语音编程。  
+学习语音编程需要从基础开始，循序渐进，并且需要耐心和持续练习才能熟练掌握。
+
+这段文字主要讲述了作者因手部疼痛而学习使用语音编码的经历：
+
+1. 2025 年 1 月，作者手部出现严重疼痛，影响工作。
+2. 经诊断可能是桡神经受压，需要休息和锻炼。
+3. 作者开始学习语音控制电脑和编码，最初感到困难和困惑。
+4. 他最终成功使用了四个主要工具:Talon、Cursorless、Apple Voice Control 和 Rango。
+5. 作者分享了学习语音编码的建议：
+   - 慢慢来，不要着急
+   - 从基础开始，如学习 Talon 字母表
+   - 先掌握基本导航和编辑，再尝试编码
+   - 从小任务开始练习
+6. 经过两周练习，作者能够用语音完成 80% 的工作。
+7. 虽然手部状况有所改善，但作者仍会交替使用语音和手动操作。
+8. 这段经历让作者意识到残障的可能性，以及作为开发者考虑无障碍设计的重要性。
+
+### [视图过渡片段：在进行视图过渡时如何保持页面的互动性](https://www.bram.us/2025/01/29/view-transitions-page-interactivity/)
+
+View Transitions 期间页面会变得无响应，因为::view-transition 伪元素覆盖了文档并捕获了所有点击。  
+通过在 CSS 中设置 "::view-transition `{ pointer-events: none; }`" 可以让点击穿透到下层文档。  
+为了避免根元素被捕获为 View Transition 的一部分，可以设置 ":root `{ view-transition-name: none; }`"。
+
+这段文字主要讨论了以下几点：
+
+1. View Transitions(视图过渡) 技术在使用时可能导致页面在过渡期间无响应点击。
+2. 这是因为::view-transition 伪元素覆盖在文档之上并捕获了所有点击。
+3. 解决方法是在 CSS 中为::view-transition 添加 pointer-events: none;属性，使点击可以穿透到下层文档。
+4. 作者还提到了防止:root 元素被捕获为 View Transition 的一部分的技巧。
+5. 解释了为什么参与过渡的元素不响应点击测试，这是出于规范和技术原因。
+6. 最后简要介绍了文章作者 Bramus 的背景，他是一名在 Google 工作的前端开发工程师。
+
+### [在 JavaScript 中，有许多方法可以将复杂的长任务分解成更小的部分](https://macarthur.me/posts/long-tasks/)
+
+长时间占用主线程的任务会阻塞用户界面，影响用户体验，需要将其分解成小任务来执行。  
+有多种方法可以将长任务分解，包括使用 setTimeout、async/await、scheduler API、Web Workers 等。  
+选择合适的任务分解方法需要考虑浏览器兼容性、API 复杂度、性能等因素，没有一种方法适用于所有场景。
+
+这段文字主要讨论了在 JavaScript 中如何避免长时间运行的任务阻塞主线程，从而影响用户体验。文章提出了几种方法来将大型任务分解成小块，以便让浏览器有机会处理其他事务：
+
+1. 使用 setTimeout() 和递归
+2. 使用 async/await 和 setTimeout()
+3. 使用 scheduler.postTask()
+4. 使用 scheduler.yield()
+5. 使用 requestAnimationFrame()
+6. 使用 MessageChannel
+7. 使用 Web Workers
+
+文章详细解释了每种方法的实现方式、优缺点和适用场景。作者最后给出了自己的建议：
+
+- 如果可以在主线程外执行，首选 Web Workers
+- 如果需要简单的任务分解方法，选择 scheduler.yield()
+- 如果需要精细控制任务优先级，使用 scheduler.postTask()
+- 如果浏览器兼容性最重要，使用传统的 setTimeout()
+
+总的来说，文章强调了在复杂应用中合理分配主线程资源的重要性，并提供了多种实用的解决方案。
+
+## 工具
+
+### [rvf](https://github.com/airjp73/rvf)
+
+轻松实现 React 和 Remix 的表单验证与状态管理
+
+### [API Parrot](https://apiparrot.com/)
+
+API Parrot 是一款专为逆向分析任何网站的 HTTP API 而设计的工具。它让那些想要自动化、整合或抓取没有公开 API 网站的开发者们生活变得更加轻松。
+
+### [monoco-react](https://github.com/Monokai/monoco-react)
+
+可以为元素增添圆润的角落（即“squircles”）以及其他不同风格的边角设计
+
+### [node-modules-inspector](https://github.com/antfu/node-modules-inspector)
+
+用于本地节点模块检查的互动用户界面
+
+### [TanStackVirtual](https://tanstack.com/virtual/latest/docs/framework/react/examples/sticky)
+
+在使用 TS/JS、React、Vue、Solid、Svelte、Lit 和 Angular 时，只需对大型可滚动元素中可见的 DOM 节点进行虚拟化，确保以每秒 60 帧的速度运行，并且可以完全控制标记和样式。
+
+## 更新
+
+### [2025 年 1 月，Chrome 扩展的最新动态](https://developer.chrome.com/blog/extension-news-january-2025?hl=en)
+
+Chrome 浏览器扩展平台推出了内置 AI API，包括 Prompt API、翻译器、摘要器和语言检测器 API，开发者可以利用这些 API 创建创新的扩展程序。  
+Chrome DevTools 新增了扩展存储查看器功能，允许开发者查看和编辑扩展存储。  
+Chrome 134 版本将引入 userScripts.execute() API，使开发者能够在运行时以编程方式注入用户脚本。
+
+这段文字主要介绍了 Chrome 浏览器扩展平台和 Chrome 网上应用店的最新更新和功能：
+
+1. Chrome 内置 AI API:推出了 Prompt API、翻译器、摘要生成器和语言检测器 API 的初步试用。
+2. Chrome 内置 AI 挑战赛：开发者利用新 API 创建创新应用，大多数参赛作品是 Chrome 扩展。
+3. 扩展菜单改进：给用户更多控制权，新增 chrome.permissions.addHostAccessRequest() API。
+4. DevTools 新增扩展存储查看器功能。
+5. userScripts.execute() API 即将在 Chrome 134 版本推出。
+6. 平台更新：包括 web_accessible_resources 支持 use_dynamic_url 属性、Tabs API 新增 frozen 属性等。
+7. 新视频：回答关于 Chrome 网上应用店的问题，以及介绍 Chrome 扩展可能性的演讲。
+8. 未来计划：即将推出取消审核功能，并继续致力于提高应用商店的安全性。
+
+### [Chrome 133 新特性 ](https://developer.chrome.com/blog/new-in-chrome-133?hl=en)
+
+CSS 高级 `attr()` 函数允许在所有 CSS 属性中使用除`<string>`以外的类型。  
+CSS 滚动状态容器查询让你可以基于容器的滚动状态来设置其后代元素的样式。  
+CSS 新增的 text-box、text-box-trim 和 text-box-edge 属性使得对文本垂直对齐的精细控制成为可能。
+
+这段文字主要介绍了 Chrome 133 版本的一些新功能和改进：
+
+1. CSS 高级 `attr()` 函数：允许在所有 CSS 属性中使用更多类型的属性值。
+2. CSS 滚动状态容器查询：可以根据容器的滚动状态来设置其后代元素的样式。
+3. CSS 文本框相关属性:text-box、text-box-trim 和 text-box-edge 允许更精细地控制文本的垂直对齐。
+4. 动画总体进度:Animation.overallProgress 提供了动画进度的一致表示。
+5. DOM 操作:Node.prototype.moveBefore 允许在不重置元素状态的情况下移动 DOM 树中的元素。
+6. 文件系统观察器:FileSystemObserver 接口可以通知网站文件系统的变化。
+7. WebAuthn 功能检测:PublicKeyCredential.getClientCapabilities() 方法可以确定用户客户端支持的 WebAuthn 功能。
+
+文章还提到了其他一些改进，并提供了进一步阅读的链接和资源。
+
+### [个人软件正在逐渐成为一种流行趋势](https://xuanwo.io/links/2025/02/personal-software-is-becoming-a-trend/)
+
+个人软件或自私软件是指为满足自己需求而开发的软件，不考虑外部用户的需求。  
+人工智能的发展使得开发个人软件变得更加容易，可以快速创建一次性脚本或工具。  
+开发个人软件可以重拾编程的乐趣，让开发者专注于满足自己的需求而不是考虑市场。
+
+这段文字主要讨论了"个人软件"或"自私软件"的概念，主要内容如下：
+
+1. 个人软件是为满足开发者自身需求而创建的软件，不考虑外部客户。
+2. AI 的发展使得创建个人软件变得更加容易。
+3. 作者计划开始创建个人软件，并开源项目，但不接受与自身需求不符的功能请求。
+4. 个人软件开发可以帮助恢复编程的乐趣，因为开发者只需关注自己的需求。
+5. AI 工具可以帮助快速创建一次性脚本，用于验证想法。
+6. 开发个人软件时，应该专注于让自己满意，而不是考虑其他人的需求。
+7. 这种方法可能会带来意想不到的收益，但主要目的是享受创作过程。
+8. 个人软件开发可以帮助开发者重新找到编程的乐趣和创造力。
+
+## AI
+
+### [Thinking-Claude](https://github.com/richards199999/Thinking-Claude)
+
+让你的 Claude 具备思考能力
+
+### [awesome-deepseek-integration](https://github.com/deepseek-ai/awesome-deepseek-integration)
+
+列举了多种支持 DeepSeek 等大语言模型的应用程序，包括桌面客户端、网页界面和移动应用等
+
+## 其他
+
+### [2024 年的大环境下，开了个副业淘宝店的过程记录与阶段性感悟](https://sspai.com/post/95152)
+
+作者夫妇利用业余时间开设淘宝店，通过低价策略和专业知识积累了一定客户，实现了初步盈利。  
+他们采取不投放广告、不参加官方活动的经营策略，主要依靠价格优势和产品专业度吸引客户。  
+经营淘宝店让他们学习了新技能，获得了新视角，增进了夫妻关系，但目前仍只能作为副业而非全职工作。
+
+这段文字主要讲述了作者夫妻二人开设淘宝店的经历和感悟：
+
+1. 背景：作者夫妻都有稳定工作，经济状况良好，开店是副业。
+2. 开店原因：闲鱼销售受限，淘宝有更高客单价，产品在淘宝属蓝海市场。
+3. 开店过程：注册公司，申请食品经营许可证，开设淘宝店。
+4. 经营策略：初期主打低价策略，后期增加高毛利产品，不参与官方活动和投放。
+5. 经营困难：客服响应要求高，遇到麻烦客户和同行刁难。
+6. 经济投入：开公司花费 3500 元，库存占用约 3 万元。
+7. 经营成果：三个月销售额达 3.3 万，毛利近 3000 元，基本收回成本。
+8. 体会收获：学习了企业经营知识，获得新的消费视角，增进夫妻感情。
+9. 总结：虽然收益不高，但作为副业仍有增长潜力，希望新的一年能有更好发展。
+
+---
+
+我们越忙碌，就越能敏锐地感受到自己在生活，对生活也就越有想法。
+
+---- 康德，德国哲学家

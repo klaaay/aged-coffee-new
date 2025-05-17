@@ -1,0 +1,473 @@
+---
+title: 2025-第十三周
+date: '2025-03-22'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [组件只是闪亮的钩子](https://www.bbss.dev/posts/sparkling-hooks/)
+
+本文探讨了 React 中组件（Component）和钩子（Hook）的关系，提出“组件是钩子的子类型”这一大胆观点，并深入分析了无头组件（Headless Components）的实践价值及其在逻辑复用和测试中的优势。
+
+- 🧩 **组件与钩子的关系**：组件是 UI 的构建块，返回 ReactNode；钩子是管理状态和副作用的工具函数。但组件本质上也是钩子的一种子类型，遵循相同的规则。
+- 🔥 **大胆观点**：组件和钩子并无本质区别，组件可被当作钩子使用，反之则受限。
+- ⚠️ **面试策略**：在筛选轮次中，回答简单问题时过于大胆可能不明智。
+- 📦 **组件定义**：组件是返回 ReactNode 的函数，支持动态输入（props）和状态管理（hooks），可被其他组件复用。
+- 🎣 **钩子特性**：钩子是 React 内置函数，用于状态和副作用管理，需遵循“钩子规则”（如不可条件调用）。
+- 🤯 **无头组件**：通过钩子实现组件逻辑但不返回 JSX，而是暴露状态和事件，提供更高灵活性。
+- 🛠️ **无头组件的优势**：
+  - 解耦视图与逻辑，便于单元测试。
+  - 支持逻辑复用，避免组合模式的样板代码。
+- 🌍 **实际应用**：部分库（如 React Aria）完全采用无头组件模式，而另一些（如 Headless UI）仅提供无样式组件。
+
+### [在任何服务器上部署 Next.js 应用到生产环境](https://www.saybackend.com/blog/04-deploy-nextjs-to-production-without-vercel)
+
+本文详细介绍了如何将 Next.js 应用部署到生产环境，避免使用昂贵的 Vercel 等平台，并通过 Docker 优化镜像大小和性能。
+
+- 🚀 **Next.js 生产部署痛点**
+
+  - Vercel 等平台成本高且有限制
+  - 错误配置可能导致高额账单（案例：开发者因应用爆火被收取 10 万美元）
+
+- 🛠️ **项目设置**
+
+  - 创建 Next.js 应用：`npx create-next-app@latest nextjs-app`
+  - 初始 Dockerfile 性能差（镜像大小 1.53GB，构建耗时 3 分钟）
+
+- 🐳 **Docker 优化**
+
+  - 多阶段构建：分离依赖安装与构建阶段
+  - 使用`standalone`输出模式（镜像缩小至 287MB，构建时间降至 40 秒）
+  - 修复静态资源问题：复制`public`和`.next/static`目录
+
+- 🔒 **安全增强**
+
+  - 以非 root 用户运行容器
+  - 添加健康检查指令（`HEALTHCHECK`）
+
+- ⚙️ **高级配置**
+
+  - 通过 Redis 实现类 Vercel 的缓存（需自定义`cache-handler.js`）
+  - 支持 Next.js 中间件（需自行配置 CDN 实现全球分发）
+
+- ⚠️ **自托管限制**
+
+  - 无边缘函数/全球 CDN
+  - 需手动管理 SSL、扩展、监控
+  - 缓存优化需自行实现
+
+- 🔄 **持续集成**
+
+  - GitHub Actions 示例配置（含缓存优化）
+  - 生产环境变量管理建议
+
+- 🌟 **Next.js 15 改进**
+
+  - 自动启用`sharp`优化图片
+  - 增强缓存控制头
+
+### [在文档中使用 document.designMode 预览内容更改](https://www.smashingmagazine.com/2025/03/previewing-content-changes-work-documentdesignmode/)
+
+本文介绍了浏览器开发者工具中的 `document.designMode` 功能，它能直接在网页上进行实时编辑，适用于内容预览、团队协作、A/B 测试等多种场景，并提供了具体的使用方法和实际案例。
+
+- 🛠️ **核心功能**：`document.designMode` 可全局编辑网页内容，类似文本编辑器，支持修改文本、移动或删除元素。
+- 🔄 **启用方式**：通过浏览器控制台输入 `document.designMode = "on"` 或创建书签快捷开关。
+- ✏️ **基础编辑**：直接修改标题、段落等文本，实时预览效果（WYSIWYG）。
+- 🔍 **A/B 测试**：快速对比竞品文案或设计布局，无需后端修改。
+- 📊 **SEO 优化**：预览标题和元描述在搜索结果中的截断效果，优化点击率。
+- 💻 **开发辅助**：临时调整元素位置或删除组件，辅助 UI 决策（但本地环境更常用）。
+- 🤝 **团队协作**：快速响应客户临时需求，实时共享修改截图或会议讨论。
+- 🎓 **教学工具**：帮助初学者直观理解 DOM 操作，无需代码编辑器。
+- 📱 **社交预览**：模拟社交媒体广告或帖子的展示效果。
+- 😆 **趣味用途**：制作无害的网页梗图（需注意伦理）。
+- 🔚 **总结**：`document.designMode` 虽原始但实用，适合即时编辑需求，值得尝试。
+
+### [WebAssembly 组件如何取代 JavaScript SDKs](https://www.edgee.cloud/blog/posts/wasm-component-is-the-new-sdk)
+
+上周发布的 Edgee 组件注册表为开发者提供了一种在边缘共享和运行 WebAssembly 组件的新方式，标志着从 JavaScript SDK 到 Edgee 组件的根本性转变。WebAssembly 组件模型通过标准化和互操作性解决了传统 SDK 的性能、安全和隐私问题，但当前使用门槛较高。Edgee 旨在通过抽象层简化该技术，推动其主流化。
+
+- 🚀 **性能提升**：Edgee 组件在边缘运行，减少客户端负载，加快页面加载速度，优化资源使用，确保跨设备一致体验。
+- ⚡ **高效可扩展**：将 SDK 逻辑移至边缘组件，减少浏览器依赖，支持实时处理和简化集成。
+- 🔒 **安全合规**：避免第三方代码在用户浏览器中直接运行，降低安全风险，符合隐私法规。
+- 🛠️ **开发体验优化**：减少维护负担，简化调试和代码管理，加速开发周期。
+- 📉 **传统 SDK 问题**：JavaScript SDK 导致性能下降、资源消耗高、安全漏洞、隐私合规难题和数据不一致。
+- 🌐 **组件化未来**：WebAssembly 组件代表更快速、安全、隐私友好的解决方案，Edgee 平台推动这一转型。
+- 📥 **快速入门**：通过四步即可在网站中使用预建组件（如分析、数据存储等），或通过 CLI 工具构建自定义组件。
+- 🔧 **自定义组件开发**：支持多种语言创建组件，定义设置并发布到注册表，供个人或公共使用。
+- 🔄 **架构革新**：从客户端 SDK 转向边缘组件，解决性能、安全、隐私和数据完整性等核心问题。
+
+### [在您的网站上启用视图过渡所需的最低配置](https://www.amitmerchant.com/bare-minimum-view-transitions/)
+
+视图过渡能让网站在页面切换时更动态、吸引人。View Transition API 支持单页应用（SPA）和多页应用（MPA）的动画过渡效果，只需少量代码即可实现基础功能，且不影响不支持该特性的浏览器用户体验。
+
+- 🌟 **API 功能**：支持 DOM 状态动画（SPA）和文档间导航动画（MPA），可控制初始状态和元素过渡。
+- 🛠️ **简易实现**：仅需添加 HTML meta 标签 `<meta name="view-transition" content="same-origin" />` 和 CSS 规则 `@view-transition { navigation: auto; }`。
+- 🔒 **同源限制**：`same-origin` 确保仅在同源文档间触发过渡。
+- 🎥 **效果对比**：启用后过渡更流畅（支持视频演示），未启用时则生硬跳跃。
+- 🌍 **浏览器兼容**：主流浏览器均支持（除 Firefox），但属渐进增强，可安全使用。
+
+### [Next.js 中的授权](https://www.robinwieruch.de/next-authorization/)
+
+本文是一篇关于在 Next.js 应用中实现授权机制的详细指南，重点探讨了在 React Server Components 和 Server Actions 中如何分层实施授权，覆盖数据访问、路由、UI 和中间件等场景，并强调了安全性与开发体验的平衡。
+
+- 🔒 **数据访问授权**
+
+  - 在 API 层、服务层和数据访问层分层实施授权，确保读写操作前验证用户权限。
+  - 示例：通过`getAuth`函数验证会话，未授权时抛出错误或重定向到登录页。
+
+- 🛡️ **路由授权**
+
+  - 在 Server Component 的页面或布局组件中检查权限，阻止未授权访问。
+  - 警告：布局组件的授权可能被绕过，需结合后端授权层确保安全。
+
+- 👁️ **UI 授权**
+
+  - 根据用户权限隐藏/禁用 UI 元素（如删除按钮），但仅为优化体验，不可替代后端安全检查。
+
+- ⚡ **中间件授权**
+
+  - 可用于路由保护，但避免数据库密集型操作（如会话验证），推荐轻量级检查（如 Cookie 存在性）。
+  - 注意：边缘运行时限制（如 Prisma 兼容性问题）和单文件中间件的粗粒度问题。
+
+- 📌 **核心原则**
+  - 授权应尽可能靠近数据源（如数据库访问层），并分层防御（API→服务→数据层）。
+  - 开发便利性（如集中式布局授权）不能牺牲安全性，需冗余检查关键路径。
+
+## 工具
+
+### [docxy](https://github.com/harrisonwang/docxy)
+
+Docxy 是一个轻量级 Docker 镜像代理服务，旨在解决国内访问 Docker Hub 受限的问题，通过代理转发请求绕过网络封锁并加速镜像下载。
+
+- 🐳 **Docker 镜像仓库简介**：存储和分发容器镜像的服务，包括官方仓库（Docker Hub）、第三方仓库（如 AWS ECR）和镜像加速服务（如清华 TUNA）。
+- 🌐 **网络限制问题**：国内直接访问 Docker Hub 困难，多数镜像加速服务已停止。
+- 🔄 **镜像代理作用**：作为中间层转发请求，解决访问限制和提升下载速度。
+- ⚠️ **速率限制**：Docker Hub 对未登录用户限制 10 次/小时/IP，个人账户登录后限制 100 次/小时。
+- 🛠️ **技术原理**：实现 Docker Registry API 代理，支持透明代理、流式传输和 TLS 加密。
+- 🚀 **快速部署**：提供一键安装脚本，支持 Let's Encrypt 证书。
+- ⚙️ **客户端配置**：通过修改 `/etc/docker/daemon.json` 添加代理设置。
+- 📜 **许可证**：采用 MIT 许可证，开源免费使用。
+- ⚡ **替代方案**：Cloudflare Worker 或 Nginx 代理存在局限性，Docxy 提供更完整的解决方案。
+
+### [supa-simple-socket](https://github.com/JustinGastby/supa-simple-socket)
+
+Supa Simple Socket 是一个功能丰富的 WebSocket 客户端工具，提供自动重连、心跳检测、事件订阅、文件传输等高级功能，支持 TypeScript 并兼容原生 WebSocket API。
+
+- 🔄 **自动重连** - 网络波动时自动重连，支持指数退避策略
+- 💓 **心跳检测** - 自定义心跳消息和间隔，保持连接活跃
+- 🔔 **事件驱动** - 支持链式调用和多种事件（消息、状态变化等）
+- ⚡ **消息队列** - 连接未建立时自动缓存消息，连接成功后发送
+- 📁 **文件传输** - 分块发送大文件，支持进度回调
+- 📊 **状态管理** - 实时监控连接状态变化
+- 🔧 **易配置** - 提供运行时更新选项（心跳、重连策略等）
+- 📝 **调试日志** - 可选日志输出，便于问题排查
+- 🛠️ **TypeScript 支持** - 完整的类型定义
+- 🔁 **兼容原生** - 增强原生 WebSocket 功能
+
+- 📦 **安装简单** - 通过 `npm install supa-simple-socket` 快速集成
+- 🚀 **快速上手** - 支持发送 JSON、文本、二进制数据及文件
+- ⏱️ **连接管理** - 手动重连、状态检查、销毁实例等方法
+- 🔄 **动态配置** - 支持运行时更新参数（如心跳间隔）
+- 📜 **详细文档** - 提供配置选项、API 参考和状态枚举说明
+- 🌟 **优势突出** - 相比原生 WebSocket，简化重连、心跳等复杂逻辑
+
+- 🌐 **兼容性** - 支持现代浏览器和 Node.js 环境
+- 📂 **示例丰富** - 包含基础用法和进阶功能演示
+
+### [bondma](https://github.com/HeroIsUseless/bondma)
+
+Bondma 是一个现代化的多语言翻译管理平台，旨在简化应用程序和网站的国际（i18n）化流程。它提供直观的用户界面，帮助团队高效管理、翻译和同步多语言内容。该项目前后端分离且完全开源，支持团队协作、多语言管理、数据导入导出等功能，并采用 Next.js 和 NestJS 技术栈构建。
+
+- 🌐 **平台概述**：Bondma 是多语言翻译管理平台，简化应用和网站国际化流程。
+- 🛠️ **技术栈**：前端使用 Next.js + React，后端基于 NestJS + MongoDB，支持 Docker 部署。
+- 👥 **团队协作**：支持多成员协作，提供基于角色的权限管理。
+- 🌍 **多语言支持**：可添加无限语言，涵盖主流语种。
+- 📥 **导入导出**：支持 JSON、CSV、YAML、XML 等多种格式。
+- 🔄 **版本控制**：跟踪内容变更历史，确保翻译一致性。
+- ⚙️ **API 集成**：提供 REST API，便于与 CI/CD 流程对接。
+- 🔒 **安全可靠**：数据加密存储，配备安全访问控制。
+- 🎬 **命名灵感**：源自电影《让子弹飞》中擅长翻译的角色“汤师爷”（Bond Ma）。
+- 🚀 **快速启动**：需 Node.js 18+ 和 MongoDB，支持 Docker 部署（可选）。
+- 💡 **自托管特性**：平台自身国际化条目也通过 Bondma 管理，实现“自举”。
+
+### [devjar](https://github.com/huozhi/devjar)
+
+nobuild React 现场代码运行时在浏览器中
+
+### [zig-js-runtime](https://github.com/lightpanda-io/zig-js-runtime)
+
+在你的 Zig 项目中添加一个 JS 运行时
+
+### [jscodeshift](https://github.com/facebook/jscodeshift)
+
+jscodeshift 是一个用于对多个 JavaScript 或 TypeScript 文件运行代码修改（codemod）的工具包。它提供了运行器、AST 转换 API、安装与调试指南、CLI 和 JS 使用方式、转换模块结构、核心概念（如 AST 节点和路径对象）、扩展性、文件忽略功能、单元测试支持以及示例代码修改脚本等内容。
+
+- 🛠️ **工具包功能**：jscodeshift 是一个运行代码修改的工具包，支持 JavaScript 和 TypeScript 文件。
+- 🏃 **运行器**：提供文件转换执行和结果摘要输出功能。
+- 🔄 **AST 转换**：基于 recast 封装，保留原始代码风格并提供 jQuery 风格的 API。
+- 📥 **安装**：通过 npm 全局安装 `jscodeshift`。
+- 🖥️ **CLI 使用**：支持多种选项，如指定转换文件、解析器类型、并行处理等。
+- 📜 **JS API**：可通过 `require('jscodeshift/src/Runner')` 以编程方式运行转换。
+- 📂 **转换模块**：导出函数处理文件内容，支持 TypeScript 编写。
+- 🌳 **核心概念**：包括 AST 节点、路径对象、构建器和集合遍历。
+- 🔧 **扩展性**：支持注册自定义方法到集合。
+- 🚫 **忽略文件**：支持通过 `.gitignore` 或自定义模式忽略文件。
+- 🧪 **单元测试**：提供 Jest 测试工具，支持快照测试和自定义输入输出。
+- 📚 **示例项目**：如 react-codemod 和 js-codemod，提供学习参考。
+- 🐛 **调试支持**：配置 VSCode 调试器便于开发。
+- 📝 **文档与本地服务器**：可通过 `npm run docs` 更新并查看本地文档。
+
+### [birpc](https://github.com/antfu/birpc)
+
+本文介绍了 **birpc**，一种基于消息的双向远程过程调用（RPC）工具，适用于 WebSocket 和 Workers 通信。它具有轻量、协议无关、支持 TypeScript 等特点，并提供了多种使用示例。
+
+- 🌟 **功能简介** - 支持类似本地函数的远程调用，返回 Promise 结果，兼容 TypeScript 类型安全。
+- 📦 **轻量无依赖** - 零依赖，体积仅约 0.5KB。
+- 🔄 **协议无关** - 适用于 WebSocket、MessageChannel 等任何基于消息传递的协议。
+- 📡 **WebSocket 示例** - 需自定义序列化/反序列化方法（如 `JSON.stringify`），支持客户端与服务器双向通信。
+- 🔄 **循环引用支持** - 推荐使用 `structured-clone-es` 处理 JSON 无法序列化的循环引用。
+- 📨 **MessageChannel 示例** - 自动支持循环引用，无需额外配置序列化。
+- 👥 **一对多通信** - 参考示例文件实现多端通信。
+
+### [Cursorful](https://cursorful.com/welcome)
+
+**一款带有自动缩放功能的屏幕录制工具，支持光标追踪、多比例导出及离线渲染，适用于多平台，提供免费和付费方案。**
+
+- 🎥 **自动缩放与光标追踪**：根据光标点击自动调整缩放和平移，轻松制作专业级屏幕录制视频。
+- ✏️ **灵活编辑功能**：可在时间轴上手动添加、删除或调整缩放位置、深度和时机，支持固定或跟随光标。
+- 🖼️ **自定义背景**：选择预设背景或上传个人图片，隐藏浏览器框架保持画面简洁。
+- 📏 **多比例导出**：支持横向、纵向等多种比例导出，适配不同平台需求。
+- 🔒 **本地离线渲染**：视频仅保存在本地，除非主动上传至云端（即将推出）。
+- 💻 **多平台兼容**：支持 Chrome、Edge 和 Brave 浏览器，适用于 Windows、macOS 和 Linux 系统。
+- 💰 **免费基础版**：无需注册即可使用，含缩放编辑、背景选择等功能；付费版（$40 早鸟价）支持 4K 导出、麦克风/摄像头录制等。
+- 🚀 **未来更新计划**：包括系统音频录制（Windows）、离线音频转文字、桌面客户端等（详见路线图）。
+
+### [node-rate-limiter-flexible](https://github.com/animir/node-rate-limiter-flexible)
+
+原子计数器和速率限制工具。在任何规模上限制资源访问。
+
+### [mcp-nodejs-debugger](https://github.com/hyperdrive-eng/mcp-nodejs-debugger)
+
+✸ MCP Node.js 调试器
+
+### [alien-signals](https://github.com/stackblitz/alien-signals)
+
+该项目探索了一种基于推送 - 拉取（push-pull）的信号算法，其实现与多个前端框架的响应式系统相关，并通过性能优化约束实现了显著的速度提升。
+
+- 🚀 **算法特性**：结合了 Vue 3 的传播算法、Preact 的双向链表、Svelte 的内部调度及 Reactively 的图着色技术。
+- ⚡ **性能优化**：禁用数组/集合/递归等约束下，简化算法比复杂调度策略更有效，速度优于 Vue 3.4。
+- 🔗 **衍生项目**：已有 Lua、Dart、Go 等语言实现，并提供 React 绑定和状态管理工具。
+- 🛠️ **核心应用**：被 Vue 3.6+ 核心及语言工具采用，用于增量 AST 解析和虚拟代码生成。
+- 📊 **基础 API**：提供`signal`、`computed`、`effect`等接口，支持作用域隔离（`effectScope`）。
+- 🔄 **底层逻辑**：通过`propagate`和`checkDirty`函数优化递归调用，但代码复杂度较高。
+- 🌐 **扩展性**：允许通过`createReactiveSystem()`自定义信号 API，参考 Starter 模板或 Polyfill 提案。
+
+### [vecto3d](https://github.com/lakshaybhushan/vecto3d)
+
+Vecto3d 是一个简单易用的工具，可将 SVG（主要是标志）快速转换为 3D 模型，支持多种自定义选项和导出格式，并附带独特的“氛围模式”功能。
+
+- 🛠️ **功能简介**：将简单 SVG 转换为 3D 模型，支持几何、材质、环境等自定义，提供直观的 UI 操作。
+- 🎨 **材质与颜色**：可调整厚度、倒角，并实验不同材质（如玻璃、金属、塑料等）。
+- 🌍 **环境预览**：在多种环境中预览模型，支持自定义背景图片或颜色。
+- 📥 **导出选项**：支持 STL、GLB、GLTF 格式的 3D 模型，以及 HD/2K/4K 的 PNG 图片。
+- ✨ **氛围模式**：一键添加梦幻效果（泛光和柔影），增强视觉体验。
+- 🔧 **技术支持**：使用 V0.dev、shadcn/ui 等工具开发，UI 组件来自 Magic UI。
+
+## 更新
+
+### [Ionic 8.5](https://ionic.io/blog/announcing-ionic-8-5)
+
+Ionic 8.5 发布，带来表单控件、模态框和框架自定义的增强更新，同时支持 React 19，提升开发效率和用户体验。
+
+- 🎉 **Ionic 8.5 发布**：包含表单控件、模态框和框架自定义的重要更新，支持 React 19。
+- 📝 **增强的表单控件**：新增 `helperText` 和 `errorText` 属性，支持 `ion-checkbox`、`ion-select`、`ion-toggle` 和 `ion-radio-group`，提升用户引导和验证流程。
+- 🔍 **必填属性**：为 `ion-checkbox`、`ion-select` 和 `ion-toggle` 添加 `required` 属性，提升无障碍体验（仅用于屏幕阅读器提示）。
+- 🖱️ **模态框滚动优化**：新增 `expandToScroll` 属性，允许模态框在所有断点下可滚动，提升内容丰富的模态框体验。
+- 👏 **社区贡献**：感谢多位开发者对工具栏阴影、日志级别配置和 RTL 语言支持的贡献。
+- ⚛️ **React 19 支持**：完全兼容 React 19，修复相关类型问题，优化 React 开发体验。
+- 🛠️ **关键修复**：包括 Capacitor v7 兼容性、Alert 键盘导航改进和 Select 自动滚动优化。
+
+### [tRPC v11](https://trpc.io/blog/announcing-trpc-v11)
+
+tRPC v11 正式发布，带来多项新功能和改进，同时保持与 v10 的向后兼容性。以下是关键内容总结：
+
+- 🎉 **正式发布**：tRPC v11 结束 `@next` 标签阶段，已稳定用于生产环境。
+- 📈 **社区增长**：GitHub 35k+ stars、Discord 5k+ 成员、700k+ 周下载量、数百贡献者。
+- 🔄 **TanStack Query v5 支持**：完全兼容 React Suspense，迁移指南可参考官方文档。
+- 📤 **非 JSON 数据类型支持**：新增 `FormData`、二进制文件（如 `Blob`、`File`）传输功能。
+- ⚡ **Next.js App Router 优化**：改进 React Server Components 集成，支持服务端预取和客户端缓存自动填充。
+- 🌊 **流式响应**：通过 `httpBatchStreamLink` 实现查询结果流式传输，适合大数据集或实时处理场景。
+- ✂️ **路由定义简化**：新增更简洁的子路由语法，减少代码冗余。
+- 🔔 **订阅功能增强**：支持 Server-Sent Events (SSE) 和生成器，提升实时性和类型安全。
+- 🚫 **移除旧版兼容**：不再支持 v9 的 `.interop()` 模式，需按 v10 迁移指南升级。
+- 📚 **迁移指南**：v10 用户可参考官方文档平滑升级至 v11。
+
+### [Node.js 现在原生支持 TypeScript：您需要了解的一切](https://nodesource.com/blog/Node.js-Supports-TypeScript-Natively)
+
+Node.js v23.6.0 原生支持 TypeScript，无需额外工具（如 ts-node 或手动编译步骤），显著简化开发流程并提升开发体验。
+
+- 🚀 **原生 TypeScript 支持**：Node.js v23.6.0 可直接运行 `.mts` 文件，无需编译步骤。
+- ⚠️ **实验性功能警告**：类型剥离（Type Stripping）仍处于实验阶段，不建议用于生产环境。
+- 🔧 **禁用警告**：通过 `--disable-warning=ExperimentalWarning` 或 `NODE_OPTIONS` 配置可隐藏警告。
+- 📂 **文件扩展名规则**：
+  - `.ts`：根据 `package.json` 的 `type` 字段决定模块类型（ESM 或 CommonJS）。
+  - `.mts`：始终视为 ESM。
+  - `.cts`：始终视为 CommonJS。
+  - `.tsx`：暂不支持。
+- ❌ **不支持的 TypeScript 特性**：
+  - 枚举（Enums）、命名空间（Namespaces）、参数属性（Parameter Properties）等需使用替代方案。
+  - JSX（`.tsx`）需依赖 Babel 或 `tsc`。
+- 🔄 **本地导入需 `.ts` 扩展名**：如 `import { x } from './module.ts'`。
+- 📜 **推荐 `tsconfig.json` 配置**：确保类型检查和 IDE 支持，但不影响运行时。
+- 🔮 **未来展望**：可能引入 `--experimental-transform-types` 以支持完整 TypeScript 转译。
+- 🌐 **浏览器支持可能性**：理论可行，但受限于引擎差异和性能问题。
+- 📊 **快速参考表**：列出原生支持与不支持的 TypeScript 特性。
+
+### [Bun v1.2.6](https://bun.sh/blog/bun-v1.2.6)
+
+Bun v1.2.6 版本修复了 74 个错误，提升了性能与兼容性，新增多项功能并优化了开发体验。
+
+- 🚀 **性能提升**：优化了 node:crypto 模块，显著提升 DiffieHellman、Cipheriv/Decipheriv 和 scrypt 的性能。
+- ⏱️ **新功能**：Bun.spawn 支持 timeout 选项，可设置超时终止进程。
+- 🐘 **数据库增强**：Bun.SQL 支持通过 Unix 套接字连接 PostgreSQL，提升本地数据库性能。
+- 🧪 **测试支持**：初步支持 node:test 模块，兼容 Node.js 测试 API。
+- 🔧 **开发工具改进**：修复了 Dev Server 的 HMR、Windows 路径处理和文件系统监视问题。
+- 🔐 **加密功能**：新增 hkdf、generatePrime 等 node:crypto 函数，提升加密操作灵活性。
+- 🛠️ **兼容性改进**：支持 module.children 追踪子模块，修复 node:前缀一致性问题。
+- 📉 **体积优化**：二进制文件大小减少 1.4MB。
+- 🐞 **错误修复**：修复了包括内存泄漏、Svelte 插件、CSS 模块等在内的多个问题。
+
+## 设计
+
+### [Figma 插件：Evoker](https://www.figma.com/community/plugin/1483385411494564236/evoker)
+
+该插件支持将自己的 Gemini-2.0-Flash-exp 的 API 填写到插件中，在 Figma 中使用多模态模型。生成之后可以很方便的插入回 Figma
+
+### [Figma 插件 AI-Style Copy](https://www.figma.com/community/plugin/1437318459007099882/ai-style-copy)
+
+这款插件之前推荐过，插件中包含丰富的 AI 处理工具，最近作者添加了谷歌多模态 Gemini-2.0-Flash-exp 模型，在「AI 图像编辑」工具中就能愉快的使用了。
+
+## AI
+
+### [WebCraft](https://github.com/mggger/WebCraft)
+
+一个基于 AI 的网页设计工具，支持动态生成网页并实时交互编辑组件，依托 Cloudflare 架构和 Claude AI 模型实现高效设计。
+
+- 🌐 **AI 驱动网页设计**：利用 AI 技术动态生成响应式网页布局
+- ✏️ **实时组件编辑**：直接在浏览器中交互式修改每个 UI 组件
+- 🔌 **WebSocket 实时更新**：设计生成过程中提供即时状态反馈
+- ☁️ **Cloudflare 架构**：基于 Workers 和 R2 存储实现高可靠性与性能
+- ⚙️ **技术栈**：React 前端 + Craft.js 组件编辑 + Claude AI 模型
+- 📦 **安装要求**：需 Cloudflare 账户（R2 存储）和 Anthropic API 密钥
+- 🔧 **配置步骤**：需设置 R2 存储桶和跨域访问（CORS），并配置环境变量
+- 🚀 **部署方式**：支持本地开发热更新和 Cloudflare 一键部署
+
+### [easy-dataset](https://github.com/ConardLi/easy-dataset)
+
+Easy Dataset 是一款专为简化大型语言模型（LLM）微调数据集创建而设计的工具，提供直观界面，支持文件上传、智能分割、问题生成，并能导出高质量训练数据。
+
+- 🚀 **核心功能**：快速生成兼容 OpenAI 格式的微调数据集，适用于所有遵循该格式的 LLM API
+- 📄 **智能文档处理**：上传 Markdown 文件并自动分割为有意义的段落
+- ❓ **智能问题生成**：从文本段落中提取相关问题
+- 💡 **答案生成**：利用 LLM API 为每个问题生成详细答案
+- ✏️ **灵活编辑**：随时修改问题、答案和数据集内容
+- 📤 **多格式导出**：支持 Alpaca、ShareGPT 等格式，可导出为 JSON 或 JSONL 文件
+- 🌐 **广泛模型支持**：兼容所有遵循 OpenAI 格式的 LLM API
+- 🖥️ **用户友好界面**：设计简洁，适合技术与非技术用户
+- 🔧 **自定义系统提示**：可添加提示词引导模型生成答案
+
+### [unplugin-mcp](https://github.com/situ2001/unplugin-mcp)
+
+一个统一的 MCP（模型上下文协议）服务器插件，适用于任何 JavaScript 构建工具。
+
+### [ai-agents-for-beginners](https://github.com/microsoft/ai-agents-for-beginners)
+
+这是一门面向初学者的 AI Agents 课程，包含 10 节课，涵盖构建 AI Agents 的基础知识，支持多语言，并提供代码示例和额外资源。
+
+- 🌱 **课程简介**：10 节课涵盖 AI Agents 的基础知识，适合初学者，支持多语言，并提供代码示例。
+- 🌐 **多语言支持**：课程提供多种语言版本，包括简体中文、繁体中文、法语、日语等。
+- 🛠️ **所需工具**：课程使用 Azure AI Foundry 和 GitHub Model Catalogs，需 Azure 账户。
+- 📚 **课程框架**：使用 Microsoft 的 Azure AI Agent Service、Semantic Kernel 和 AutoGen 框架。
+- 📂 **课程内容**：每节课包含文字教程、Python 代码示例和额外资源链接。
+- 🎥 **视频教程**：视频教程将于 2025 年 3 月上线。
+- 🤝 **社区支持**：遇到问题可加入 Azure AI Community Discord 寻求帮助。
+- 🎓 **其他课程**：团队还提供生成式 AI、机器学习、数据科学等初学者课程。
+
+### [iMCP](https://github.com/loopwork-ai/iMCP)
+
+一个为您的信息、联系人等提供 MCP 服务器的 macOS 应用程序
+
+### [yek](https://github.com/bodo-run/yek)
+
+一个基于 Rust 的快速工具，用于序列化存储库或目录中的文本文件，以供 LLM 使用。
+
+### [MCP 的笔记](https://taoofmac.com/space/notes/2025/03/22/1900)
+
+作者对 Anthropic 的 MCP 工具提出了批评，认为其设计复杂且不够实用，并倾向于继续使用标准的工具调用方法。
+
+- 🤯 **过度复杂**：Python SDK 充斥着不必要的封装和装饰器，显得臃肿且难以理解。
+- 🔄 **重复造轮子**：MCP 要求为现有 API 创建新服务端，而非直接利用 REST 或 Swagger 等成熟方案。
+- 🔒 **安全隐患**：缺乏对安全性和访问控制的重视，暴露 MCP 服务端给 LLM 存在风险。
+- 🏗 **状态化设计问题**：MCP 依赖持久连接，与无服务器环境（如 AWS Lambda）的现代 API 架构不兼容。
+- 📦 **本地集成混乱**：本地 MCP 服务端以独立进程运行，效率低下且管理繁琐。
+- 🎚 **选项过载**：MCP 将所有功能塞入模型上下文，导致令牌浪费和模型行为不稳定。
+- 🛠 **更优替代方案**：作者偏好`agents.json`等工具，认为其 API 端点发现机制更自然高效。
+- 🔮 **观望态度**：尽管当前不看好 MCP，但承认 AI 领域变化迅速，未来可能有改进空间。
+
+## 其他
+
+### [通过 TypeScript 类型体操学习日语语法](https://zhuanlan.zhihu.com/p/32253458953)
+
+本文探讨了如何利用 TypeScript 的高级泛型编程来建模日语语法结构，将编程语言转化为辅助语言学习的工具。通过类型系统模拟日语的动词变形、疑问句、条件句和组合句等复杂语法规则，展示了类型编程在语言学习中的潜在应用价值。
+
+- 🧩 **基本原理共通性**：自然语言与编程语言共享语法规则、结构限制和组合方式，如日语的严谨语法与 TypeScript 类型系统的灵活性。
+- 🔄 **范式转变**：从命令式编程（"如何做"）转向类型编程（"是什么"），利用泛型、条件类型和模板字符串在编译时验证语法规则。
+- 🇯🇵 **日语动词分类**：五段动词、一段动词和不规则动词的变形逻辑通过类型系统实现，如「買う→買って」（过去形）和「食べる→食べて」（て形）。
+- ❓ **疑问句建模**：用泛型类型`InterrogativePhrase`组合疑问词、主题、动词和助词，示例「なんで春日影やったの」（为什么要演奏春日影？）。
+- 🔀 **条件句结构**：通过`ConditionalPhrase`类型表示条件助词（なら/たら）与结果的组合，如「ヒンメルならそうした」（辛美尔的话也会这么做）。
+- 🎶 **组合句节奏**：用逗号连接短句的类型系统表示，如「いいよ、来いよ」（好时代，来临啦！）。
+- 🤖 **LLM 与类型标注**：结合大语言模型（LLM）自动生成强类型语法标注，降低学习门槛，提升语法规则的可验证性。
+
+---
+
+### [Next.js 修复了关键中间件漏洞 (CVE-2025-29927)](https://socket.dev/blog/next-js-patches-critical-middleware-vulnerability)
+
+Next.js 团队本周末发布了针对关键漏洞（CVE-2025-29927）的补丁，该漏洞允许攻击者绕过基于中间件的安全检查，包括身份验证和授权逻辑。问题影响所有使用 next start 且 output 为'standalone'的自托管 Next.js 应用，且在修复前的所有主要版本中均存在。
+
+- 🔒 **漏洞概述**：攻击者可伪造`x-middleware-subrequest`标头，跳过中间件逻辑，直接访问受保护路由，导致身份验证和授权失效。
+- 🛠️ **受影响版本**：
+  - 15.x：需升级至 15.2.3
+  - 14.x：需升级至 14.2.251
+  - 13.x：需升级至 13.5.9
+  - 12.x：需升级至 12.3.5
+- 🌐 **不受影响场景**：Vercel/Netlify 托管或静态导出的应用。
+- ⚠️ **临时缓解**：过滤或拦截包含`x-middleware-subrequest`标头的请求，Cloudflare 已部署自动 WAF 规则。
+- 📜 **漏洞原理**：标头值匹配中间件路径名称时，框架会跳过中间件执行，形成“万能绕过密钥”。
+- 🔍 **利用细节**：不同版本需构造特定标头格式（如旧版路径`pages/_middleware`或新版重复中间件名）。
+- ⏳ **时间线**：
+  - 2 月 27 日：漏洞首次报告
+  - 3 月 18 日：15.2.3 版本修复并向后移植
+  - 3 月 21-23 日：安全公告发布
+- 💥 **影响评级**：GitHub 评定为 9.1 分（严重），每周超 900 万次下载的框架面临广泛风险。
+- 🔧 **建议**：立即升级至修复版本，审计中间件使用逻辑，避免其作为敏感操作的唯一防线。
+
+---
+
+在 2025 年开发 Web 应用，有点像组装宜家家具。你必须拼凑和配置许多单独的服务：前端、后端、cdn、https、数据库、身份验证、付款......
+
+你的工作不是写代码，而是配置、管道、编排、工作流、最佳实践。
+
+-- Andrej Karpath，著名 AI 科学家
+
+---
+
+愤怒是一种具有破坏性的情绪，会让人产生报复的欲望，这不利于你的根本利益。更理性的方法是，不要先想到报复，而要想想你与对方有没有共同利益，寻求合作和谅解。
+
+-- 《超越愤怒》

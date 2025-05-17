@@ -1,0 +1,121 @@
+---
+title: 2024-第五十一周
+date: '2024-12-08'
+tags: ['WEEKLY-2024']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [2025 年流行的 React 技术栈](https://www.robinwieruch.de/react-tech-stack/)
+
+这篇文章介绍了一种 2025 年流行的 React 技术栈，适用于全栈应用程序开发。作者分享了自己在开发多个项目和作为独立创始人的经验，以及对于不同技术选择的理解和思考。他详细介绍了每个技术的作用和选择理由，包括 Next.js、Astro、Tailwind CSS、TypeScript、Prisma、Supabase 等，并分享了自己的建议和看法。
+
+- 2025 年流行的 React 全栈技术栈包括 Next.js、Astro 和 Server Components，以搭建稳定、可维护的全栈应用。
+- 使用 Tailwind CSS 和 Shadcn UI 可快速开发产品并长期维护 CSS，搭配 Lucide React 提供的图标库。
+- 选择 TypeScript、Prisma、Supabase 和其他工具来提升开发体验，并使用自建的认证和文件上传系统，以及 Inngest 进行后台任务调度。
+
+### [打破偏见：SSR 其实并不贵](https://t3.gg/blog/post/ssr-is-not-expensive)
+
+这段文字主要阐述了服务器端渲染（SSR）的成本和效益。作者指出，SSR 的计算开销相对较小，可以降低多次客户端请求引起的性能和成本开销。同时，SSR 能够提供更好的用户体验，包括更快的加载时间和更具响应性的页面。总的来说，文章认为 SSR 通常能够节省费用而不是浪费费用。
+
+- 服务器端渲染（SSR）的计算开销很小，与客户端请求的复杂性和低效相比可以大大降低整体成本。
+- SSR 可以减少云服务费用，通过在单个连接上渲染所有必要数据，降低了基础设施的负载。
+- SSR 提供更好的用户体验，包括路由特定的元数据、JS 和样式以及加载状态，从而提高用户感知的加载速度和响应性。
+
+### [现代前端应用的架构设计](https://blog.meetbrackets.com/architectures-of-modern-front-end-applications-8859dfe6c12e)
+
+这段文字讨论了软件架构对业务需求的灵活性、可扩展性和可维护性的重要性。它介绍了经典架构、模块化架构和特性分层设计（FSD）架构，分析它们的优势和用途。文章强调了架构的清晰结构、独立模块和灵活组件，并鼓励使用 FSD 架构来实现这些目标。
+
+- 不同的业务需求需要灵活、可扩展和易维护的架构，并且项目所有人都需要清晰地理解项目。
+- 传统架构容易随着应用规模的增长而导致结构瓦解，模块化架构可以有效地避免组件间的过度依赖，而特性切片设计（FSD）架构则在此基础上更进一步，通过按功能区域组织项目，实现更清晰的责任分离和更灵活的组件独立性。
+- 特性切片设计（FSD）架构提供了清晰的结构、明确定义的层次结构、灵活的组件和独立的模块，同时也倡导使用“kebab case”文件命名规范。
+
+### [了解浏览器的主线程工作原理](https://calendar.perfplanet.com/2024/understanding-the-main-thread-in-the-browser/)
+
+这篇文章主要介绍了浏览器中的主线程（main thread）以及 JavaScript 的单线程特性。文章首先解释了主线程的作用，涵盖了 JavaScript 执行、DOM 操作、样式重计算、用户交互和事件循环等多个方面。接着讨论了 JavaScript 如何处理异步任务，并通过事件循环实现非阻塞的行为。最后，文章阐述了浏览器在主线程上执行的重要任务，包括执行 JavaScript 代码、处理用户交互、更新 DOM 和运行事件循环。文章强调了主线程的重要性，以及需要谨慎处理任务以确保主要任务得到充分执行。
+
+- 浏览器的主线程负责执行 JavaScript、处理用户交互和更新 DOM，这些高级任务都在主线程上执行，因为 JavaScript 是单线程语言，DOM 操作不是线程安全的，使用单线程可以避免复杂的同步问题。
+- JavaScript 使用事件循环（Event Loop）来处理异步任务和提供非阻塞的 I/O 操作，通过任务队列和微任务队列来确保单线程 JavaScript 能够以非阻塞的方式运行任务。
+- 主线程负责执行 JavaScript 代码、处理用户交互、更新 DOM 和运行事件循环，需要仔细管理这些任务，避免阻塞关键任务，并通过合理的分配来保证任务的顺利执行。
+
+### [现代 CSS 重置样式](https://www.joshwcomeau.com/css/custom-css-reset/)
+
+这段文字介绍了作者的自定义 CSS 重置样式，讨论了每个重置规则的作用和原因。作者分享了包括盒模型、默认边距、文字换行、字体继承等在内的多项重置规则，并解释了它们的优势和用途。同时，作者还提到了一些可选的样式规则，并分享了与作者思考过程相关的深入内容。
+
+- 介绍了自己的定制 CSS 重置样式表，包括对盒模型、默认外边距、文本渲染等方面的优化规则，旨在提高用户体验和 CSS 编写体验。
+- 解释了自己在 CSS 重置样式表中的每一条规则的作用和意义，以及为什么应该使用它们，涵盖了盒模型、文本渲染、媒体默认值等多个方面。
+- 强调了学习 CSS 的重要性，推荐了他自己开发的面向 JavaScript 开发者的交互式在线课程 "CSS for JavaScript Developers"，并分享了对课文内容的更新和完善。
+
+### [超越 'Ctrl+F' 的智慧：直接连接到网页内容](https://alfy.blog/2024/10/19/linking-directly-to-web-page-content.html)
+
+这篇文章介绍了文本片段的概念及其在现代网页平台上的强大功能。通过文本片段，用户可以在网页中精确地链接到特定文本，而无需添加锚点。文章还介绍了文本片段的基本语法，并提及了如何使用文本片段来高亮文本、链接到隐藏内容以及对高亮文本进行样式化。此外，还涉及了浏览器支持和兼容性以及对未来使用文本片段的展望。
+
+- 文本片段是现代网络平台的强大功能，可以在网页内精确链接到特定文本，而无需添加锚点。
+- 文本片段通过在 URL 末尾添加特殊语法来实现，可以高亮指定文本并使其可见，同时还支持对隐藏内容的链接。
+- 支持文本片段的浏览器可以通过::target-text 伪元素来调整高亮文本的样式，但不同浏览器的默认样式和行为有所不同。
+
+## 工具
+
+### [react-router-hono-server](https://github.com/rphlmr/react-router-hono-server)
+
+hono & remix 在 vite 中结合的插件
+
+### [nuqs](https://github.com/47ng/nuqs)
+
+一种为 React 框架提供类型安全的搜索参数状态管理工具 - 它类似于 useState，但将数据保存在 URL 的查询字符串中。
+
+### [vscode-pokemon](https://github.com/jakobhoeg/vscode-pokemon)
+
+在 VS Code 或光标窗口中增添经典的宝可梦角色图案，唤起童年回忆。
+
+### [roquefort](https://github.com/Bercon/roquefort)
+
+Roquefort - 基于 WebGPU 的流体模拟器
+
+## 更新
+
+### [Next.js 15.1](https://nextjs.org/blog/next-15-1)
+
+Next.js 15.1 版本带来了核心升级、新的 API 和改进的开发者体验。关键更新包括 React 19 的支持、改进的错误调试、新的 after API 以及实验性的 forbidden 和 unauthorized API。此外，还有其他改进和修复，以提高应用的性能和开发体验。
+
+- Next.js 15.1 带来了核心升级、新 API 和改进开发者体验，包括对 React 19 的全面支持、改进的错误调试和 after() 等稳定 API。
+- React 19 稳定版本现在完全支持 Next.js 15.1，同时 Pages Router 可以使用 React 19，而 App Router 将继续提供 React Canary 版本，包括所有稳定的 React 19 更改以及在新 React 发布之前在框架中进行验证的新特性。
+- 引入了稳定的 after() API，以及针对禁止和未经授权访问的实验性 API，通过这些改进和新增 API，提高了应用的性能和安全性。
+
+### [对 Tailwind 4 的一些想法](https://nmn.sh/blog/2024-11-30-thoughts-on-tailwind-4)
+
+这段文字主要讨论了对 Tailwind CSS v4.0 beta 的一些担忧和批评，同时也提到了一些积极的变化。作者对新版本的一些特性进行了详细分析，包括对 LightningCSS 的移动、CSS-first 配置、CSS 主题变量、原生 CSS 层叠层级、简化主题配置等方面进行了评价。同时，对一些新增特性如渐变、新的变体以及长期存在的问题提出了一些批评和建议。
+
+- Tailwind CSS v4.0 beta 带来了一些显而易见的改进，如 LightningCSS、CSS-first 配置和原生 CSS cascade layers，但也引发了一些争议，特别是关于变量的使用和新的 descendant variants。
+- CSS 变量的引入可能存在性能问题，特别是在重新分配变量或在其他元素上定义变量时，可能会带来明显的性能影响。对于开发者来说，需要谨慎使用自定义作用域覆盖变量，或者考虑将变量内联到 CSS 输出中。
+- 新增的 descendant variants 功能可能会引发滥用，破坏了原子 CSS 的概念，可能导致开发者滥用这些功能并遇到 Tailwind 本来帮助他们避免的问题，因此作者呼吁在时机尚早之时回滚这一功能。
+
+## AI
+
+### [全新发布的 Gemini 2.0：专为代理时代设计的 AI 模型](https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/)
+
+这篇文章介绍了 Google DeepMind 推出了 Gemini 2.0，这是一个新的人工智能模型，旨在满足"自主时代"的需求。Gemini 2.0 比以往的版本更为强大，具有原生图像和音频输出以及工具使用的能力。文章还提到了 Gemini 2.0 Flash 的可用性，并介绍了若干与 Gemini 2.0 相关的项目。此外，文章强调了 Google 致力于负责任地构建人工智能，并将安全和安全性作为关键优先事项。
+
+- Google DeepMind 推出 Gemini 2.0，这是一种全新的人工智能模型，专为“代理性时代”设计，具有原生图像和音频输出以及工具使用的能力。
+- Gemini 2.0 Flash 已经向开发人员和受信任的测试人员提供，计划在明年早些时候进行更广泛的推广，同时 Google 正在探索与 Gemini 2.0 相关的“代理性体验”，包括 Project Astra、Project Mariner 和 Jules。
+- Google 致力于负责任地构建人工智能，将安全和安全性作为重要的优先事项，并已经在 Gemini 2.0 的开发过程中进行了多项安全和风险评估。
+
+## 其他
+
+我生活中一切顺利的事情都遵循相同的过程：
+
+（1）我关注自己喜欢的​​事情。
+
+（2）我找到多做这些事情的方法。
+
+（3）我让有趣的人很容易发现我在做这些事情。
+
+（4）我和他们一起出去玩，一起做项目。
+
+-- 亨里克·卡尔森

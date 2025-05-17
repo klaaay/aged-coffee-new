@@ -1,0 +1,151 @@
+---
+title: 2025-第十九周
+date: '2025-05-05'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [如何在 React Router 中添加配色方案切换功能 - sergiodxa](https://sergiodxa.com/tutorials/add-a-color-scheme-toggle-in-react-router)
+
+本文介绍了如何在 React Router 应用中实现颜色方案切换功能，支持用户选择浅色、深色或跟随系统设置。
+
+- 🌗 颜色方案切换的正确术语是"color scheme toggle"，而非"theme toggle"，因为它支持多种主题的深浅模式。
+- 🍪 使用 cookie 存储用户偏好比 localStorage 更好，可避免页面重载时的颜色闪烁问题。
+- 🎨 通过 Tailwind 的自定义变体实现.dark 类与系统偏好媒体查询的兼容处理。
+- 🔄 创建了包含验证逻辑的 cookie 工具函数，支持"dark"、"light"和"system"三种模式。
+- 🏗️ 在根布局组件中通过 loader 读取 cookie 值并应用到 html 标签的 className。
+- ✨ 使用无页面跳转的 Form 提交方式实现即时颜色切换体验。
+- 🔄 利用 React Router 的重新验证机制自动更新界面样式。
+
+### [构建 React 登录页面模板](https://clerk.com/blog/building-a-react-login-page-template?dub_id=3H2SnbWogkXW3vuP)
+
+本文介绍了如何使用 React 和 Express 实现基于会话的认证系统，包括创建登录页面、用户注册、保护路由等功能。
+
+- 🔐 认证是任何需要用户登录的 Web 应用的关键部分，本文探讨了如何使用 Express 和 React.js 实现基本的认证系统。
+- 🔄 介绍了 JWT 和基于会话的认证的区别，并详细说明了如何逐步实现会话认证。
+- 🏗️ 需要存储用户和会话信息的机制，使用数据库需要两个表：users 表和 sessions 表。
+- 📝 注册用户需要前端表单和后端路由处理程序，确保密码哈希存储并进行输入验证。
+- 🔑 登录功能需要验证用户凭据，创建会话并设置 cookie，确保安全性。
+- 🛡️ 使用`<ProtectedRoute />`组件保护前端路由，Express 中间件保护后端路由。
+- 🛠️ 演示项目 Quillmate 使用 React、Express、Neon、Prisma 和 OpenAI 等技术栈。
+- 📊 更新 Express 服务器以支持认证功能，包括 cookie 解析、注册路由和保护路由。
+- ⚛️ 在 React 中实现登录页面，创建认证上下文和提供者，处理全局认证状态。
+- 🔄 添加注册和登录视图，使用 zod 进行客户端验证，保护应用页面并添加注销按钮。
+- 🧪 测试应用，创建用户、文章并体验 AI 功能，检查数据库中的用户和会话记录。
+- 🤔 虽然自定义认证系统有助于学习，但现实中的用户管理需要更多功能，如社交登录和密码重置。
+- 🚀 Clerk 是一个用户管理和认证平台，简化了这些功能的实现，只需几行代码即可完成。
+
+### [复杂 React/Next.js 应用的健壮数据获取架构](https://www.trevorlasn.com/blog/fetching-data-for-complex-next-and-react-apps)
+
+本文介绍了在复杂 React/Next.js 应用中采用"三层数据架构"模式来优化数据获取，避免常见问题和技术债务，提升性能的方法。  
+
+- 🚀 **数据获取的常见问题**：列举了 11 种常见问题，如重复请求、状态管理混乱、缓存失效等，这些问题会随着应用规模扩大而加剧。  
+- ⚠️ **传统方法的缺陷**：直接在组件中使用`useEffect`和`fetch`会导致请求瀑布流、状态混乱、内存泄漏等问题，难以维护和测试。  
+- 🏗️ **三层数据架构**：  
+  - **第一层（服务端组件）**：处理初始数据获取，提升首屏加载速度。  
+  - **第二层（React Query）**：管理客户端缓存和状态更新，解决数据一致性问题。  
+  - **第三层（乐观更新）**：通过即时 UI 反馈提升用户体验，支持`onMutate`或`useMutation`实现。  
+- 📂 **目录结构示例**：展示了如何通过分层组织代码，分离数据逻辑与 UI 渲染。  
+- 🔄 **数据流**：三层架构独立运作，服务端组件提供初始数据，React Query 管理动态更新，乐观更新优化交互体验。  
+- 🧩 **上下文整合**：通过`Context`集中管理数据访问，避免属性钻取，简化复杂应用的状态共享。  
+- 💡 **适用场景**：该架构适合中大型应用，虽对小项目略显复杂，但能显著提升可维护性和测试性。  
+- 🌟 **扩展性**：类似架构可应用于 Vue.js 或 Svelte 等框架，核心是关注点分离和组件专注渲染。  
+- 📚 **推荐工具**：建议使用`React Query`简化数据管理，并搭配`<ReactQueryDevtools>`辅助调试。  
+
+### [URLPattern - Web API 接口 | MDN](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern)
+
+URLPattern 是 URL Pattern API 提供的接口，用于匹配 URL 或其部分内容，支持通过捕获组提取匹配部分。该技术目前处于实验阶段，兼容性有限，需谨慎在生产环境中使用。
+
+- 🌐 **URLPattern 接口**：用于匹配 URL 或部分 URL，支持捕获组提取内容。
+- ⚠️ **实验性技术**：尚未广泛支持，使用前需检查浏览器兼容性。
+- 🔧 **构造函数**：`URLPattern()` 根据给定模式和基础 URL 创建新对象。
+- 📌 **实例属性**：包括 `hash`、`hostname`、`password`、`pathname`、`port`、`protocol`、`search` 和 `username`，分别匹配 URL 的各个部分。
+- 🔍 **实例方法**：
+  - `exec()`：返回匹配的 URL 部分对象，不匹配则返回 `null`。
+  - `test()`：返回布尔值，表示 URL 是否匹配给定模式。
+- 📚 **相关资源**：
+  - 语法参考：[URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API)。
+  - GitHub 上有 [polyfill](https://github.com/kenchris/urlpattern-polyfill) 可用。
+
+## 工具
+
+### [发布 6.0.0 · bvaughn/react-error-boundary · GitHub](https://github.com/bvaughn/react-error-boundary/releases/tag/6.0.0)
+
+react-error-boundary 是一个由 bvaughn 开发的公共 GitHub 仓库，主要用于处理 React 应用中的错误边界问题。
+
+- 🚀 项目已发布 6.0.0 版本
+- 🔄 模块现在仅支持 ESM，以更好地兼容现代工具链  
+
+### [GitHub - EvanZhouDev/polycompiler：将Python和JS代码合并为可在两种语言中运行的单一文件](https://github.com/EvanZhouDev/polycompiler)
+
+Polycompiler 是一个实验性项目，旨在将 Python 和 JavaScript 代码合并到一个源文件中，使其可以在两种语言环境中运行。
+
+- 🚀 **项目功能**：将 Python 和 JS 代码合并为一个文件，支持在 Node.js 和 Python 3 中分别运行对应的代码段。
+- 📦 **安装方法**：通过 npm 安装 `polycompiler`：`npm i polycompiler`。
+- 🛠 **使用步骤**：运行 `polycompiler` 命令，提供 JS 文件、Python 文件路径及可选的输出文件路径。
+- 📝 **文件命名**：输出文件扩展名为 `.py.js`，以确保 Node.js 能够解析。
+- 🐍 **Python 运行**：执行 Python 代码时，忽略 JS 部分。
+- 🌐 **JS 运行**：执行 JS 代码时，忽略 Python 部分。
+- ❓ **项目动机**：主要为趣味性，但也可能适用于需要同时面向 Python 和 JS 用户的场景。
+- 🎥 **工作原理**：通过巧妙利用 Python 的 `exec` 和 JS 的 `eval` 及标签语句，实现在不同环境中运行对应代码。
+- 📌 **示例代码**：展示如何在同一文件中分别输出 "Hello Python" 和 "Hello JS"。
+- 🔍 **技术细节**：详细解释了代码在 Python 和 JS 中的执行逻辑。
+- ⚠ **注意事项**：项目仍在进行中（WIP），当前文件命名规则为 `.py.js`。
+
+### [react-sounds](https://github.com/aediliclabs/react-sounds)
+
+React-Sounds 是一个为 React 应用提供数百种即用音效的库，通过简单的 API 和懒加载技术，轻松为 UI 添加交互音效，支持离线使用和自托管。
+
+### [GitHub - gitbrent/PptxGenJS: 使用 JavaScript 创建 PowerPoint 演示文稿。支持 Node、React、网页浏览器等环境。](https://github.com/gitbrent/PptxGenJS)
+
+PptxGenJS 是一个用于生成 PowerPoint 演示文稿的 JavaScript 库，支持 Node.js、React、浏览器等多种环境，无需安装 PowerPoint 即可创建专业的演示文稿。
+
+- 🚀 **功能丰富**：支持创建文本、表格、形状、图像、图表等多种幻灯片对象，并支持自定义幻灯片母版。
+- 🌍 **广泛兼容**：兼容 Microsoft PowerPoint、Apple Keynote、LibreOffice Impress 和 Google Slides。
+- 📦 **安装简便**：可通过 npm、yarn 或 CDN 快速安装，支持多种现代开发环境。
+- 📖 **文档齐全**：提供详细的 API 参考、教程和集成指南，帮助快速上手。
+- 💻 **多平台支持**：适用于 Node.js、React、Angular、Vite、Electron 和浏览器环境。
+
+
+## 更新
+
+### [ESLint v9.26.0 发布 - ESLint - 可插拔的 JavaScript 代码检查工具](https://eslint.org/blog/2025/05/eslint-v9.26.0-released/)
+
+ESLint v9.26.0 是一个小版本升级，引入了新功能并修复了之前版本中的多个错误。
+
+- 🚀 **MCP 服务器集成**：新增支持 Model Context Protocol (MCP) 服务器，使 ESLint 能够通过统一接口与 AI 模型和工具交互，适用于 AI 辅助开发工具如 GitHub Copilot。  
+- 🔍 **`no-shadow-restricted-names` 支持 `globalThis`**：新增检测 `globalThis` 遮蔽的功能，需通过 `reportGlobalThis: true` 启用。  
+- ⚙️ **`no-unused-expressions` 新增 `ignoreDirectives` 选项**：允许在 ES3 代码库中忽略指令（如 `"use strict"`），避免误报未使用代码。  
+- 🛠 **新特性**：包括为 `eqeqeq` 规则添加建议、MCP 服务器支持等。  
+- 🐞 **错误修复**：修复缓存文件删除检查、`RuleTester` 循环引用崩溃等问题。  
+- 📚 **文档更新**：修复 Markdown 格式、命令空格等细节。  
+
+
+## AI
+
+### [Gemini 2.5 Pro 预览版：更卓越的编程表现 - Google 开发者博客](https://developers.googleblog.com/en/gemini-2-5-pro-io-improved-coding-performance/)
+
+Google 发布了 Gemini 2.5 Pro 预览版（I/O 版），重点提升了编码能力，尤其在前端和 UI 开发方面表现卓越。
+
+- 🚀 **提前发布**：Gemini 2.5 Pro 预览版提前几周发布，以让开发者更早体验其强大的编码功能。
+- 💻 **编码能力提升**：在代码转换、编辑及复杂代理工作流创建方面有显著改进。
+- 🌟 **前端开发领先**：在 WebDev Arena 排行榜上排名第一，能够构建美观且功能强大的网页应用。
+- 🎥 **视频理解能力**：在 VideoMME 基准测试中得分 84.8%，支持从视频生成交互式学习应用。
+- 🛠️ **功能开发简化**：帮助开发者快速实现新功能，如根据设计文件自动生成 CSS 代码。
+- 🎨 **UI 设计优化**：能够设计并实现美观的网页动画和响应式设计，如麦克风 UI 动画。
+- 🔧 **开发者工具支持**：可通过 Gemini API 在 Google AI Studio 和 Vertex AI 中使用。
+- 🔄 **无缝升级**：现有用户无需操作即可自动升级到新版本，价格不变。
+- 📢 **反馈改进**：新版本减少了函数调用错误并提高了触发率，模型卡也已更新。
+
+## 其他
+
+人们在夜晚和周末所做的事情，代表了世界上所有未充分利用的时间和精力。
+
+-- 安德鲁·陈《冷启动问题》

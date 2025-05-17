@@ -1,0 +1,142 @@
+---
+title: 2025-第九周
+date: '2025-02-24'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [Shadcn Registry: 更有效的 UI 组件管理方式](https://ouassim.tech/notes/shadcn-registry-a-better-way-to-manage-your-ui-components/)
+
+这段文字介绍了 shadcn registry，一个用于创建和管理自定义组件注册表的工具，使您能够更轻松地在多个 React 项目中分发组件、钩子、页面和其他文件。文章提供了 shadcn registry 的总体概述，讨论了一些较少知识的 CLI 选项和设置过程中获得的见解。它讨论了 registry-item.json 的架构，用于定义自定义注册表项，以及如何更新 tailwind.config.ts 和 next.config.ts 文件。文章还介绍了如何使用 build 命令生成输出文件，以及如何使用 @/registry 路径导入组件。最后，它提供了一些使用 shadcn registry 的开源项目示例。
+
+- shadcn 注册表是一个用于创建和管理自定义组件注册表的工具，使您可以更轻松地在多个 React 项目中分发组件、钩子、页面和其他文件。
+- 使用 shadcn CLI，您可以直接将组件拉入代码基础中，而无需依赖传统的 npm 包，从而实现对自定义和更新的全面控制。
+- 在设置注册表时，您可以定义一个结构化的组件集合，并使用 JSON 模式进行描述，以便将这些组件安装到不同的项目中，提高维护一致性和灵活性。
+
+### [提升 Next.js 应用速度：一份超越 Next.js 的实用性能提升指南](https://tigerabrodi.blog/making-nextjs-apps-faster-a-practical-performance-guide-beyond-nextjs)
+
+这段文字是关于如何提高 Next.js 应用程序性能的指南。它涵盖了许多方面，包括什么是 Next.js 包，如何使用 PageSpeed Insights 和 Coverage Tab 找到性能问题，常见导致未使用 JavaScript 的模式，如何使用包分析器，以及提高应用程序性能的一般策略。它还提供了一些提示和技巧，例如如何优化大型依赖项和代码分割策略。最后，它介绍了 Next.js 的未来发展趋势。这篇文章强调了实践和实验的重要性，并鼓励读者在开发过程中使用工具和文档。
+
+- 了解 Next.js 的打包机制：Next.js 会将应用程序分割成多个代码块（chunk），每个页面都有自己的代码块，并且还有一些共享的代码块和第三方库的代码块。这种代码分割机制可以使用户只下载所需的代码，但是还是需要注意代码块的大小和下载速度。
+- 优化 JavaScript 代码以提高性能：当 JavaScript 代码在浏览器中运行时，它需要经过下载、解压缩、解析和执行几个阶段，所有这些阶段都是在主线程上完成的。因此，减少 JavaScript 代码的大小和提高代码的执行效率可以提高应用程序的实际性能和感知性能。
+- 使用工具查找性能问题：使用 PageSpeed Insights 和 Chrome 开发者工具中的 Coverage 和 Performance 选项卡可以帮助查找应用程序中的性能问题，如未使用的代码、长时间阻塞主线程的任务和低效的图像加载等。这些工具可以提供关于性能问题的具体信息，以便开发人员能够采取措施来优化应
+
+### [React "as" Prop Using TypeScript](https://playfulprogramming.com/posts/react-as-prop)
+
+这篇文章介绍了如何在使用 TypeScript 时为 React 组件添加 "as" 属性，以实现多态组件的创建。通过使用 "as" 属性，开发者可以动态地渲染不同的 HTML 标签，同时保持类型安全。文章首先介绍了 "as" 属性的概念，然后详细讲解了如何使用 TypeScript 对其进行类型定义。最后，文章通过一个例子演示了如何创建一个可重用的、具有类型安全性的多态组件。
+
+- 在现代的 React 开发中，使用 "as" prop 创建可重用的 UI 组件是实现动态渲染不同 HTML 标签的一种流行方法，同时保持类型安全。
+- 使用 TypeScript 正确地对 "as" prop 进行类型定义可以确保在构建多态组件时灵活性和类型安全性。
+- 通过创建一个接收泛型的类型，并结合 React 的实用程序类型，可以实现一个带有类型安全的可选 "as" prop 的组件，该组件可以默认为 `<p>` 标签并自动完成其他属性。
+
+### [使用 Node.js 创建一个简单的交互式命令行应用程序](https://www.robinwieruch.de/node-js-cli/)
+
+这段文字主要介绍了如何使用 Node.js 和 TypeScript 创建一个简单的交互式命令行应用（CLI app）。应用程序将创建一个聊天界面，读取用户输入并进行交互回应。文章提供了代码示例并解释了如何运行应用程序。除此之外，文章还提到了如何在 create-react-app 应用程序中使用 SASS 和 Docker。最后，文章推荐了一本关于学习 React 的书籍，并提供了订阅开发者学习资源的选项。
+
+- 本教程教您如何使用 Node.js 和 TypeScript 构建一个简单的交互式 CLI 应用程序，该应用程序创建一个聊天接口，读取用户输入并进行交互响应。
+- 通过在终端中执行命令 "npm run dev" 来运行该应用程序，然后您可以输入命令进行交互，输入 "exit" 并按 Enter 键退出应用程序。
+- 本文还介绍了如何在 create-react-app 应用程序中添加 Sass 支持和如何使用 Docker 进行 create-react-app 网络应用程序开发。
+
+### [如何在单元测试中检测内存泄漏](https://newsletter.daishikato.com/p/how-to-check-for-memory-leaks-in-unit-tests)
+
+这篇文章介绍了如何使用 Jest-leak-detector 检测内存泄露，并分析了示例代码。Jotai 使用 WeakMap 进行内存管理，并通过单元测试来检查其行为。作者还进行了不使用 Jotai 的情况下使用 Map 和 WeakMap 进行内存管理的测试，结果表明使用 Map 时会产生内存泄露，而使用 WeakMap 则不会。最后，作者简要介绍了 Jest-leak-detector 的实现原理，并表示它使用 FinalizationRegistry 来跟踪对象的终结并包含一个小的 hack 来暴露 gc。
+
+- 本文介绍了如何使用 Jotai 进行单元测试以检查 WeakMap 的行为，并提供了示例代码进行说明。
+- 作者进行了实验，比较了使用普通 Map 和 WeakMap 进行存储时的内存泄漏问题，结果显示使用 WeakMap 时内存泄漏问题得到了解决。
+- 文章最后介绍了 jest-leak-detector 的实现原理，该工具用于检测内存泄漏，它使用 FinalizationRegistry 来跟踪对象的终结并且包含一个小技巧来暴露 gc。
+
+### [React Router v7 中的去抖动技术](https://programmingarehard.com/2025/02/24/debouncing-in-react-router-v7.html/)
+
+这段文字介绍了如何在 React Router 中使用 clientLoader 函数来优化用户输入过程中的数据请求。当用户在输入框中快速输入时，每个键盘事件都会触发一个新的请求，这会浪费后端资源并且可能导致系统压力过大。为了解决这个问题，作者提出了使用 debouncing 技术，即在用户停止输入一定时间后再发起请求。文中提到了使用 useEffect 和 useDebounce 钩子来实现 debouncing，但是这种方法会导致代码复杂度增加。作者建议使用 clientLoader 函数，它可以在浏览器中运行，作为请求通向服务器端 loader 函数的门卫。通过在 clientLoader 函数中添加 debouncing 逻辑，可以有效地减少对后端资源的浪费。最终，作者给出了使用 clientLoader 函数实现 debouncing 的代码示例。
+
+- 本文介绍了如何在 React Router 中有效地处理用户快速连续触发的多个请求，以避免浪费后端资源和不必要的系统压力。
+- 文中提出了使用 "debouncing" 技术的概念，即在用户停止输入后稍作延迟再发起请求，以提高效率和用户体验。
+- 文章还详细介绍了如何使用 React Router 的 clientLoader 函数和 AbortSignal 来实现 debouncing，从而简化代码和优化性能。
+
+### [利用弱引用来打破控制](https://jlongster.com/subverting-control-weak-refs)
+
+这段文字讨论了弱引用（Weak References）在 JavaScript 中的应用。弱引用是一种特殊的引用，它不会阻止垃圾回收机制回收对象。文中介绍了 WeakMap 和 WeakRef 两个 API，其中 WeakMap 是一个键值对的集合，它对键使用弱引用，对值使用强引用。文中还提供了一些使用弱引用的例子和应用场景，如缓存和扩展类的功能。通过使用弱引用，可以在一定程度上避免内存泄漏和不必要的性能开销。文中还提到，使用弱引用需要谨慎，因为它有一些奇怪的行为和低级的特性。
+
+- 弱引用是一种有用的语言特性，它可以启用不同类型的抽象，在 JavaScript 中，我们有两个 API 来处理弱引用：WeakMap 和 WeakRef。
+- WeakMap 是一个常见的使用弱引用的数据结构，它对键保持弱引用，对键和值之间保持强引用，一旦键被垃圾回收，它就不再存在于映射中。
+- 弱引用可用于实现缓存机制，以避免重复获取数据，同时不必担心内存泄漏，因为一旦键被垃圾回收，它们就不再存在于映射中。
+
+### [Cloudflare、Unikernels 与裸金属：Prisma Postgres 查询的整个过程](https://www.prisma.io/blog/cloudflare-unikernels-and-bare-metal-life-of-a-prisma-postgres-query)
+
+Prisma Postgres 是一种基于 unikernel 的数据库，旨在提供零冷启动、全球缓存、实时事件等特性。它的技术栈包括 Prisma ORM、Cloudflare Workers、Unikraft Cloud 等组件。当用户发出查询请求时，首先通过 Prisma ORM 生成 SQL 查询语句，然后通过 HTTP 请求发送到 Prisma Postgres 的认证和路由层。认证层使用 Cloudflare Workers 实现，负责验证用户的访问权限。路由层根据查询是否设置了缓存策略决定是否进入缓存层。如果未命中缓存，则进入连接池层，由连接池负责管理数据库连接和生成 SQL 查询语句。最终，查询请求通过 TCP 连接发送到基于 unikernel 的 PostgreSQL 数据库实例中执行。此外，Prisma Postgres 还提供了一个全管理的变更数据捕获（CDC）服务，用于捕获数据库写入操作并生成事件。事件通过 Cloudflare Workers 和 Durable Objects 构建的队列系统传递给订阅的 Prisma ORM 实例。总的来说，Prisma Postgres 结合了多种先进技术，为用户提供了高性能、可靠性强、易于使用的数据库解决方案。
+
+- 是一种基于 unikernels 的数据库，它提供了零冷启动、全球缓存、实时事件等多种特性，同时具有简单的按使用付费定价模式。
+- 的技术栈包括 Prisma ORM、认证层、缓存层、连接池和 unikernel 数据库等组件，这些组件共同保证了查询的高性能和高可靠性。
+- 的查询生命周期包括五个阶段：使用 Prisma ORM 定义查询、认证请求、缓存查询结果、连接池管理和查询 unikernel 数据库，其中每个阶段都有具体的技术细节和优化措施。
+
+### [使用 Angular 和 Native Federation 实现微前端](https://blog.angular.dev/micro-frontends-with-angular-and-native-federation-7623cfc5f413)
+
+这段文字主要介绍了微前端（Micro Frontends）在单页应用中的优缺点，以及如何使用 Native Federation 在 Angular 中实现微前端架构。微前端是一种将单页应用分解成多个小型前端应用的架构模式，每个小应用由独立的团队开发、部署和维护。这种架构模式可以提高团队的自主性，加快发布周期，但也带来了一些挑战，如 UI/UX 的不一致、加载时间的增加和运行时集成的复杂性等。文中还介绍了 Angular 官方不支持微前端，以及如何使用 Native Federation 在 Angular 中实现微前端架构。Native Federation 是一个基于 ECMAScript 模块和 Import Maps 等标准的微前端解决方案，它可以与 Angular CLI 无缝集成，并支持惰性加载、依赖共享、服务器端渲染等特性。
+
+- Micro Frontends 是一种架构风格，它将单页应用程序分解为多个小型前端应用程序，每个应用程序都由一个独立的团队开发和部署，以提高团队的自治权和效率。
+- Micro Frontends 带来了许多优势，如简化测试、性能调优和故障隔离，但也存在一些挑战，如用户界面不一致、加载时间增加和复杂的运行时集成。
+- 在实现 Micro Frontends 时，可以使用 Module Federation 和 Native Federation 等技术来实现懒加载和依赖共享，但这些技术也存在一些限制和问题，需要在实际应用中进行权衡和评估。
+
+## 工具
+
+### [quansync](https://github.com/antfu/quansync)
+
+“同步和异步之间的结合”
+
+### [pathfinder](https://github.com/shadowoff09/pathfinder)
+
+基于 Next.js 实现的 3D 在线地图
+
+## 更新
+
+### [Next.js 15.2](https://nextjs.org/blog/next-15-2)
+
+1. 错误调试体验改进：错误界面重新设计，提供了更清晰的栈跟踪信息。
+2. 异步元数据流式处理：异步元数据不再阻塞页面渲染或客户端页面转换。
+3. Turbopack 性能优化：提高编译速度，减少内存使用。
+4. React View Transitions（实验性功能）：支持 React 的新的 View Transitions API。
+5. Node.js 中间件（实验性功能）：支持在中间件中使用 Node.js 运行时。
+6. 升级方式：提供了自动化升级 CLI，也可以手动升级或创建新项目。
+
+除此之外，还有一些其他的改进和变更，如添加了"--api"标志来创建无头 API，支持 next/image 的 images.qualities，以及一些警告和改进等。
+
+### [Astro 5.4](https://astro.build/blog/astro-540/)
+
+Astro 5.4 版本带来了几个新特性和改进，包括 Markdown 中的远程图像优化，实验性的 Markdownresponsive 图像支持，开发和预览服务器的增强安全性，Vercel ISR 排除 RegExp 支持等。此外，还提供了新的配置帮助程序和构建选项，并修复了一些错误。要升级现有项目，可以使用自动化的@astrojs/upgrade CLI 工具或手动运行包管理器的升级命令。感谢所有为这个版本做出贡献的人。
+
+- 引入了远程图片优化和实验性的响应式图片支持的 Markdown 功能，使用户可以在 Markdown 文件中享受 Astro 图片优化的好处。
+- 增加了 dev 和预览服务器的允许列表主机功能，提高了安全性，同时支持 Vercel ISR 排除项的正则表达式，方便用户管理大规模的 ISR 排除。
+- 新增了配置帮助器和构建选项的 API，使得用户可以更轻松地进行测试和脚本编写，并修复了一些错误。
+
+### [为您带来全新的 TanStack React Query 集成功能](https://trpc.io/blog/introducing-tanstack-react-query-client)
+
+TanStack 宣布推出了新的 React Query 集成，适用于 tRPC 的 next-release。新客户端比经典的 React Query 集成更简单、更接近 TanStack Query，利用了 TanStack React Query 本身的 QueryOptions 和 MutationOptions 接口，而不是使用自己的客户端包装 useQuery 和 useMutation。新客户端去除了一个常引起新用户困惑的抽象层，提供了一种更直接、更熟悉的与 TanStack React Query 合作的方式。新客户端的变化减少了学习曲线，提高了熟悉度，改善了可维护性，并获得了积极的反馈。经典的 tRPC React Query 集成将继续维护，但不会再添加新特性，建议新项目采用新的 TanStack React Query 集成，并鼓励现有项目逐步迁移。迁移过程中，两个客户端可以共存，并且正在开发中的代码修改工具也将会加速迁移过程。
+
+- TanStack React Query 的新 tRPC 集成已经在 tRPC 的 next-release 上线，新客户端比经典 React Query 集成更简单、更接近 TanStack Query，利用了 QueryOptions 和 MutationOptions 这些 TanStack React Query 原生接口，取消了对 useQuery 和 useMutation 的封装。
+- 新客户端的优势包括简单易用、与 TanStack Query 保持一致、维护性更强、反馈积极等方面，而经典客户端将继续维护，但不会再添加新特性。
+- 推荐新项目采用新的 TanStack React Query 集成，已有项目可逐步迁移，两种客户端可以在同一个应用中共存，且正在开发迁移工具，欢迎社区贡献。
+
+### [ESLint v9.21.0](https://eslint.org/blog/2025/02/eslint-v9.21.0-released/)
+
+ESLint v9.21.0 版本已经发布，这是一个次要版本升级，新版本增加了一些特性并修复了之前版本中的一些错误。其中包括重新引入命令行选项--ext，以便对具有特定扩展名的文件进行 lint 检查。此外，新版本还扩展了规则元数据的格式，以更好地注释已弃用的规则，提供更详细的信息。此外，还修复了一些错误和文档更新等。ESLint 是一个可插拔的 JavaScript 和 JSX linter，用于查找和报告代码中的模式问题。
+
+- ESLint v9.21.0 版本重新引入了命令行选项--ext，用于对特定文件扩展名进行 lint 检查，而无需配置文件。
+- 该版本扩展了规则元数据的格式，以更好地注释已弃用的规则，提供更详细的信息，包括规则被弃用的特定插件版本和替代规则和插件的链接。
+- ESLint v9.21.0 修复了几个 bug，如更新缺失的插件消息模板、规则崩溃时不退出进程等，并进行了一些文档和代码维护工作。
+
+## AI
+
+### [Claude 3.7 Sonnet 和 Claude Code【译】](https://baoyu.io/translations/claude-3-7-sonnet-and-claude-code)
+
+文本宣布了一款名为 Claude 3.7 Sonnet 的新 AI 模型，它是市场上首个混合推理模型，能够实时回答问题，也能进行分步推理思考，且这种思考过程对用户是可见的。该模型在编程和前端网页开发方面表现尤为出色。除此之外，还推出了一款名为 Claude Code 的命令行工具，用于代理式编程。Claude 3.7 Sonnet 已在所有 Claude 订阅计划（包括免费版、专业版、团队版和企业版）以及 Anthropic API、Amazon Bedrock 和 Google Cloud 的 Vertex AI 上全面上线。在标准模式和扩展思考模式下，其定价与前代模型相同。Claude 3.7 Sonnet 在编程能力方面依旧处于领先地位，在真实场景下的编程任务中表现出色。在 SWE-bench Verified 基准测试和 TAU-bench 框架中，Claude 3.7 Sonnet 同样表现领先。Claude Code 是一款主动协作工具，能够搜索并阅读代码、编辑文件、编写并运行测试、提交并推送代码到 GitHub，还能使用命令行工具。Claude 3.7 Sonnet 和 Claude Code 标志着向能真正增强人类能力的 AI 系统迈出了重要一步。
+
+- 该文介绍了 Claude 3.7 Sonnet，一个新推出的混合推理模型，它不仅能够实现瞬间回答，还能进行分步推理思考，且思考过程对用户可见，并在编程和前端网页开发方面表现出色。
+- 除了 Claude 3.7 Sonnet，文中还提到了一款用于代理式编程的命令行工具 Claude Code，它目前作为有限的研究预览版向开发者开放，允许他们从终端直接将大量工程任务委派给 Claude。
+- Claude 3.7 Sonnet 已在所有 Claude 订阅计划以及 Anthropic API、Amazon Bedrock 和 Google Cloud 的 Vertex AI 上全面上线，其定价与前代模型相同，在两种模式下（标准模式和扩展思考模式）都具有出色的表现。

@@ -1,0 +1,303 @@
+---
+title: 2025-第十五周
+date: '2025-04-07'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+## [如何将 use API 与 Next 15 和 React 19 结合使用？](https://www.premieroctet.com/blog/en/how-does-the-use-api-work-with-next-15-and-react-19)
+
+Next 15 和 React 19 中 API 的使用方式及其优化数据获取和用户体验的新特性。
+
+- 🌐 数据获取和变更是网站开发的核心，Next 15 和 React 19 提供了多种解决方案。
+- 🔄 React 19 引入了新的`use` API，用于处理异步数据获取，优化用户体验。
+- ⚡ 传统数据获取方法包括客户端`fetch`、服务器操作、服务器组件`fetch`和服务器函数，各有优缺点。
+- 🚀 `use` API 允许传递`Promise`到客户端组件，实现非阻塞渲染，提升性能。
+- 🛠️ 使用`use` API 需要配合`Suspense`和`ErrorBoundary`来管理加载和错误状态。
+- 📦 服务器组件可以立即渲染，无需等待`Promise`解析，提高页面响应速度。
+- ⚠️ 注意避免遗留未使用的`Promise`，以免影响性能。
+- 🔧 `use` API 的其他用途包括条件使用、从`Context`获取数据等。
+- 📉 缺点是每个使用`use` API 的组件都需要配置`Suspense`和`ErrorBoundary`，可能增加代码量。
+- 📚 相关资源包括 NextJS 数据获取文档、React `use` API、`Suspense`和服务器组件 RFC。
+
+## [2025 年每位 JavaScript 开发者都应了解的一些特性](https://waspdev.com/articles/2025-04-06/features-that-every-js-developer-must-know-in-2025)
+
+JavaScript 在 2025 年开发者应掌握的重要特性，涵盖迭代器助手、数组方法、Promise 优化、字符串处理、变量交换、深拷贝、标记模板、WeakMap/WeakSet 及集合操作等现代功能。
+
+- 🔄 **迭代器助手**：通过`Iterator.prototype`方法（如`drop()`、`take()`、`filter()`等）实现高效链式操作，避免临时数组分配，提升大数组处理性能。
+- 📌 **数组 at() 方法**：支持负索引访问元素（如`arr.at(-1)`），简化末尾元素获取，替代`arr[arr.length-1]`的冗长写法。
+- 🤝 **Promise.withResolvers()**：简化 Promise 构造，直接解构出`promise`、`resolve`、`reject`，告别手动赋值冗余代码。
+- ✏️ **字符串替换回调**：`replace()`/`replaceAll()`支持回调函数，单次遍历完成复杂替换（如动态计数替换），提升效率。
+- 🔄 **变量交换**：使用解构赋值`[a, b] = [b, a]`替代临时变量，代码更简洁。
+- 🧩 **深拷贝 API**：优先用`structuredClone()`替代`JSON.stringify()`，正确处理`NaN`、循环引用等场景，避免数据丢失或异常。
+- 🏷️ **标记模板**：通过标签函数解析模板字符串（如自动 HTML 转义），灵活处理插值内容。
+- 🗑️ **WeakMap/WeakSet**：弱引用集合，键对象无引用时自动垃圾回收，适合无副作用的对象关联场景。
+- 🔗 **集合操作**：新增`difference()`、`intersection()`、`union()`等方法，支持集合间布尔运算（如差集、并集），简化逻辑处理。
+
+## [Node.js 开发者实用指南：Llama Stack](https://developers.redhat.com/articles/2025/04/02/practical-guide-llama-stack-nodejs-developers)
+
+- 🚀 Node.js 团队探索了如何利用 JavaScript/TypeScript 和 Llama Stack 框架与 LLM 协同工作，重点关注工具调用和代理功能。
+- 🛠️ Llama Stack 通过标准化 API 和插件体系支持多种发行版，与 Ollama 集成时可选择 meta-llama/Llama-3.1-8B-Instruct 等模型。
+- 📦 配置示例展示了通过 Podman 容器快速部署 Llama Stack 实例，并保持 Ollama 模型持续运行的方法。
+- 🔍 文档探索技巧：利用/docs 端点交互式测试 API，比查阅 Markdown 文档更直观高效（附示意图说明）。
+- 💡 工具调用实践：演示了定义本地工具（如 favorite_color_tool）、处理 LLM 响应循环，以及通过添加"assistant"关键词优化错误提示的细节。
+- 🤖 代理 API 与 MCP 集成：通过注册远程 MCP 服务器（如 favorites 服务），实现工具集中化管理，对比了代理 API 与补全 API 的流程差异。
+- 🔗 本地环境支持方案：当需要访问应用本地资源时，可通过 Supergateway 桥接 stdio-based MCP 服务，并转换工具描述格式兼容 Llama Stack。
+- ⚠️ 注意事项：Llama 3.1 模型存在过度依赖工具的问题（即使无关问题也强制使用工具），且代理 API 的"深度思考"特性可能导致冗余响应。
+- 📚 延伸资源：推荐 Red Hat 的 Node.js 参考架构、AI 开发指南及相关技术博客（如 LangChain4j 集成、数据提取等）。
+
+### [自动为您的 Astro 博客创建社交卡片图像](https://www.emgoto.com/astro-social-card/)
+
+本文介绍了如何为博客文章创建社交卡片（social card），包括设计、生成截图以及集成到 SEO 组件中的详细步骤。以下是关键点总结：
+
+- 🖼️ **社交卡片的作用**：社交卡片是链接分享时显示的预览图片，能提升博客文章的吸引力。
+- 🔧 **技术实现**：通过 Astro 框架创建一个专门渲染社交卡片的页面（`/social-card`），并利用 React 组件动态加载文章数据。
+- 📸 **截图生成**：使用 Puppeteer 脚本自动截取社交卡片页面，保存为 PNG 图片，支持批量处理所有文章。
+- ⚙️ **脚本配置**：需安装 Puppeteer、隐藏开发工具栏，并设置输出文件夹路径（如`public/social-cards`）。
+- 🔗 **SEO 集成**：通过`og:image`元标签将生成的社交卡片图片添加到文章 SEO 配置中。
+- 🖌️ **卡片设计技巧**：支持本地图片（通过文章 Frontmatter 引用）或远程图片（如 Unsplash 链接）作为卡片背景。
+- 🚫 **隐藏页面**：通过重命名文件（如添加下划线`_social-card.astro`）或重定向，避免社交卡片页面被公开访问。
+- ⏱️ **脚本优化**：支持限制处理文章数量（测试时），完成后可移除限制批量生成。
+
+### [介绍 `content-visibility: auto` - 一个隐藏的性能宝石](https://cekrem.github.io/posts/content-visibility-auto-performance/)
+
+文章介绍了 CSS 属性`content-visibility: auto`如何通过跳过视口外元素的渲染来显著提升大型列表或复杂 DOM 结构的性能，并探讨了其使用场景、注意事项及浏览器兼容性问题。
+
+- 🧙‍♂️ `content-visibility: auto` 通过跳过视口外元素的渲染，简化性能优化，类似虚拟滚动但无需手动管理。
+- 📏 需搭配 `contain-intrinsic-size` 属性（自动或固定尺寸）以避免布局偏移，如 `auto` 或 `0 50px`。
+- 🚫 注意：Safari 的页面搜索功能（Cmd+F）可能无法定位被隐藏的内容（截至 18.3.1 版本）。
+- 🔍 若搜索功能关键，可禁用此优化、自定义搜索方案或针对 Safari 特殊处理。
+- 🏆 适用场景：长列表（如商品目录）、复杂仪表盘、无限滚动或多行表格。
+
+### [使用 Zustand 和 Immer 构建强大的 React 应用程序](https://zwit.link/posts/20250301173228-building-robust-react-apps-with-zustand-and-immer/)
+
+作者长期回避使用 React 和 JavaScript，偏好静态网站生成工具如 Zola（基于 Rust），但近期因时间限制和生态优势重新转向 React，并发现其成熟度提升（如 Hooks 和 TypeScript 支持）。重点介绍了状态管理库 Zustand 和不可变更新工具 Immer 的协同使用，通过实例展示了它们如何简化复杂应用开发。
+
+- 🚫 **长期回避 React 与 JS**：作者曾避免使用 React 和 JavaScript，偏好静态生成工具如 Zola（基于 Rust）。
+- 🔄 **转向 React 的原因**：时间压力和 React 生态的丰富性（如 UI 库）促使回归，并发现其成熟度显著提升。
+- 🧩 **Zustand 的简洁状态管理**：替代 Redux，减少样板代码，示例展示计数器实现的对比（useState vs. Zustand）。
+- 🛠 **Immer 的不可变更新**：简化嵌套状态操作，通过“草稿”模式避免手动展开，与 Zustand 结合更高效。
+- 🎨 **实战案例：画布交互**：通过异步加载模拟（10 秒延迟）演示 Zustand+Immer 如何管理复杂状态（如加载态和点坐标）。
+- 🔗 **工具协同优势**：Zustand 处理状态逻辑，Immer 优化不可变更新，TypeScript 弥补类型安全，提升开发效率。
+
+### [近期关于 cobra 库的一些实践心得总结](https://wiki.eryajf.net/pages/7b8eff/#%E6%89%93%E5%8D%B0%E7%89%88%E6%9C%AC)
+
+开源社区中有多个 Go 语言的 CLI 库，个人建议精通一个（如 cobra）即可，其余稍作了解。本文分享了 cobra 库的实践心得，包括版本信息打印、环境变量读取、文档生成等功能的具体实现方法。
+
+- 🛠️ **版本信息打印**：通过`SetVersionTemplate`自定义模板，展示版本号、Git 提交、构建时间等关键信息，需配合`-ldflags`在构建时传递变量。
+- 🔧 **构建配置**：使用 Makefile 定义构建参数，确保版本信息正确注入二进制文件，注意包路径与代码中的定义一致。
+- 🌍 **环境变量支持**：结合`viper`库实现环境变量与命令行参数的双向绑定，优先读取环境变量并隐藏敏感信息的默认值输出。
+- 📄 **文档自动生成**：通过 cobra 内置功能一键生成 Markdown 格式的使用文档，包含所有子命令和参数的详细说明。
+- 🔄 **实践扩展**：未来计划探索自动生成配置文件的功能，欢迎有相关经验的开发者交流补充。
+
+### [记录最近在 Github Action 配置实践中的几个新的收获](https://wiki.eryajf.net/pages/67c388/#node-%E9%A1%B9%E7%9B%AE)
+
+作者分享了在配置 Github Actions 流水线时的新思路和实践，包括缓存应用、Node 和 Go 项目的构建优化、Docker 镜像构建缓存策略，以及一些实用工具和制品共享的方法。
+
+- 🚀 **缓存应用**：在构建过程中引入缓存机制，显著提升构建速度，特别是在 Node 和 Go 项目中。
+- 📦 **Node 项目优化**：使用 pnpm 构建工具，通过配置缓存路径（如`pnpm-lock.yaml`）加速依赖安装。
+- 🐹 **Go 项目优化**：利用`go.sum`文件配置缓存，减少重复编译时间，提升构建效率。
+- 🐳 **Docker 构建缓存**：介绍两种缓存方式——基于镜像的缓存和 GitHub Action 缓存，优化镜像构建速度。
+- 🔧 **实用工具**：添加 UPX 压缩二进制文件大小，使用 gox 工具并发交叉编译 Go 项目。
+- 📂 **制品共享**：通过 GitHub Actions 的`upload-artifact`和`download-artifact`实现前后端构建阶段的制品共享。
+- 🛠️ **Docker 构建新思路**：调整构建策略，将二进制构建移至 Dockerfile 外部，利用交叉编译和 gox 提升速度，解决多平台构建慢和缓存配置复杂的问题。
+- 📌 **实践模板**：推荐参考`eryajfctl`项目的 Makefile、Dockerfile 和 Action 配置，作为 Go 项目构建的最佳实践模板。
+
+## 工具
+
+## [⭐️prompt-kit](https://www.prompt-kit.com/)
+
+AI 应用的核心构建模块，提供高质量、易用且可定制的 AI 界面组件。
+
+- 🧩 高质量、可访问且可定制的 AI 界面组件
+- 🚀 提供快速入门指南
+- ⭐ 支持在 GitHub 上标星
+- 🔍 内置搜索功能
+- 💬 兼容多种 AI 模型（如 ChatGPT、Mistral AI、DeepSeek）
+- 📝 示例代码展示 Prompt 输入框组件（包含文本区域和操作按钮）
+- 📤 支持文件上传功能
+
+## [⭐️Hydration Overlay](https://github.com/BuilderIO/hydration-overlay)
+
+hydration-overlay 是一个用于检测 React 水合错误的工具，提供服务器端和客户端渲染差异的显式对比，帮助开发者快速定位问题。
+
+- 🕵️ 功能：显示水合错误时的覆盖层，展示服务器端和客户端渲染的差异。
+- 📦 安装：通过 `npm install @builder.io/react-hydration-overlay` 安装。
+- 🛠️ 使用：在应用根节点包裹 `HydrationOverlay` 组件，支持 Next.js 和 webpack。
+- ⚠️ 注意事项：目前处于测试阶段，不建议在生产环境中使用。
+- 🔍 工作原理：通过比较服务器端和客户端的 HTML 字符串来检测差异。
+- 📜 支持框架：目前支持 Next.js，欢迎贡献其他框架的支持。
+- 🚀 发布流程：通过 changesets 管理版本更新和发布。
+
+## [RetroUI](https://retroui.dev/)
+
+升级至 TailwindCSS v4，推出复古风格 React 组件库 RetroUI，内含 40+ 免费可复制粘贴的 UI 组件，支持 Tailwind 定制与 TypeScript 类型安全，拥有活跃开发者社区，并提供 50+ 付费高级组件与模板。
+
+- 🎨 升级至 TailwindCSS v4，打造复古风格 React 组件库 RetroUI
+- 🆓 提供 40+ 免费 UI 组件，支持直接复制粘贴使用
+- 🛠️ 基于 TailwindCSS 高度可定制，且全面支持 TypeScript 类型安全
+- 🌟 开发者社区活跃：350+ GitHub 星标，100+ Discord 成员
+- 🔄 兼容 SSR 和 SPA 应用开发
+- 💖 开源项目，由社区贡献者共同维护
+- 🚀 付费 Pro 版含 50+ 高级组件、完整网站模板及终身更新
+
+### [Tailwind CSS 组件](https://www.creative-tim.com/twcomponents/)
+
+这是一个关于开源 Tailwind CSS 组件和模板的免费资源库的介绍，旨在帮助用户快速启动新应用、项目或落地页。
+
+- 🌟 免费提供社区贡献的 Tailwind CSS 组件和模板
+- 🆕 最新组件区展示社区新发布的特色模板和工具
+- 🛠️ 含低代码工具如**Soft UI Dashboard**和**Tailwind Builder**（支持拖拽生成模板）
+- 📦 示例组件：Web3 模态框、折叠列表、工具提示、带复选框的下拉菜单等（作者多为`ale`）
+- 🏆 顶尖创作者榜单：**Creative Tim**（200 组件）领衔，8 位高产出开发者/团队上榜
+- 🔥 热门组件推荐：如付费版**Notus Tailwind CSS PRO React**（$79，含专业 UI 套件和 React 管理组件库）
+
+## [MarkusJx/node-java-bridge: Node.js 与 Java 之间的桥梁](https://github.com/MarkusJx/node-java-bridge)
+
+一个连接 Node.js 和 Java 的桥梁工具，使用 Rust 编写，提供快速且内存安全的接口。
+
+- 🌉 项目名称：node-java-bridge，提供 Node.js 与 Java API 的桥梁功能
+- ⚙️ 技术栈：基于 Rust 的 napi-rs 实现，支持同步/异步调用 Java 方法
+- 📦 安装要求：仅需 JRE 环境（Windows 需额外安装 VC++ 2015 运行时）
+- 📜 开源协议：MIT License
+- 🌍 多平台支持：提供 Linux/Win/macOS 预编译二进制文件（x64/arm64）
+- 🔌 特色功能：
+  - 动态加载 JVM 库（非硬链接 JDK 版本）
+  - 支持 Electron 打包应用
+  - 可注入自定义 JAR 到 classpath
+  - 提供 Java 接口的 Node.js 实现能力
+- ⚡ 性能优化：
+  - 同步 API（方法名带 Sync 后缀）
+  - 异步 API 支持线程池配置（通过环境变量）
+- 📚 配套工具：包含 TS 类型定义生成器（java-ts-definition-generator）
+- 🐞 错误处理：Java 异常会转换为包含完整堆栈的 JavaError 对象
+- 🔄 类型转换：自动处理 JS/Java 基础类型互转（含 Buffer/Byte 数组转换）
+
+### [awesome-ai-system-prompts](https://github.com/dontriskit/awesome-ai-system-prompts)
+
+🧠 精心策划的系统提示集合，适用于顶级 AI 工具。非常适合 AI 代理构建者和提示工程师。包括：ChatGPT、Claude、Perplexity、Manus、Claude-Code、Loveable、v0、Grok、新同类、风帆、Notion 和 MetaAI。
+
+### [fastmcp](https://github.com/punkpeye/fastmcp)
+
+FastMCP 是一个基于 TypeScript 的框架，用于构建支持客户端会话的 MCP 服务器。它提供了丰富的功能，包括工具定义、认证、会话管理、图像内容处理等，并支持多种传输协议（如 SSE）。
+
+## 更新
+
+## ["API 路由 — Waku"](https://waku.gg/blog/api-routes)
+
+Waku v0.22 发布，完成了重大重构并引入了 API 路由功能，使其成为一个更完整的 React 框架。API 路由允许开发者轻松添加公共 API 端点，适用于表单提交、身份验证流程、LLM 交互等多种场景。
+
+- 🎉 Waku v0.22 发布，支持 API 路由，标志着框架的重大演进。
+- 📂 在 `./src/pages/api` 目录下创建文件即可定义 API 路由，支持多种 HTTP 方法。
+- 📨 示例展示了如何通过 API 路由处理表单提交并发送电子邮件。
+- 🔄 客户端组件可通过标准 `Fetch` 方法调用 API 路由。
+- ⚙️ 通过导出 `getConfig` 函数，可将动态 API 路由配置为静态资源（如 RSS 订阅）。
+- 🌱 团队期待开发者利用 API 路由构建更强大的应用，并欢迎通过 GitHub 和 Discord 提供反馈。
+- ⏳ 下一版本 v0.23 即将发布，敬请期待。
+
+## [Next.js 15.3](https://nextjs.org/blog/next-15-3)
+
+Next.js 15.3 引入了 Turbopack 构建工具、新的客户端监控和导航钩子等功能，提升了开发和生产构建的性能和灵活性。
+
+- 🚀 **Turbopack 构建工具（Alpha）**：生产构建速度提升，支持多核性能扩展，4 核快 28%，16 核快 60%，30 核快 83%。
+- 🔧 **Rspack 社区支持（实验性）**：提供 Webpack 兼容的替代打包工具，测试通过率约 96%。
+- 📊 **客户端监控钩子**：通过 `instrumentation-client.js` 提前设置性能跟踪和错误监控。
+- 🔗 **导航钩子**：新增 `onNavigate` 和 `useLinkStatus`，支持路由控制和加载状态管理。
+- ⚡ **TypeScript 插件优化**：语言服务器性能提升约 60%，减少大型代码库的卡顿问题。
+- 📦 **其他改进**：包括 `new URL()` 支持、视口选项分离、Pinterest Rich Pins 支持等。
+- 🔄 **升级指南**：提供 CLI 或手动升级方式，建议非关键生产环境试用 Turbopack。
+- 🤝 **社区合作**：与 Rspack 团队合作，共享 SWC 和 Lightning CSS 等基础技术。
+
+## [Zod 4 Beta](https://v4.zod.dev/v4)
+
+Zod 4 beta 版本发布，带来性能提升、新功能和架构改进。
+
+- 🚀 **性能提升**：Zod 4 解析速度显著提升，字符串解析快 2.6 倍，数组解析快 3 倍，对象解析快 7 倍。
+- 📦 **更小的体积**：核心包体积减少 57%，引入 `@zod/mini` 进一步减少 85% 体积。
+- ⚡ **TypeScript 优化**：类型实例化减少 20 倍，解决泛型爆炸问题。
+- 🆕 **新功能**：
+  - 元数据支持 (`z.registry` 和 `z.meta`)
+  - JSON Schema 转换 (`z.toJSONSchema`)
+  - 新的 `z.interface()` API，支持精确可选属性和递归类型
+  - 文件验证 (`z.file()`)
+  - 国际化支持 (`z.config`)
+  - 错误美化 (`z.prettifyError`)
+  - 模板字面量类型 (`z.templateLiteral`)
+  - 数字和布尔值格式增强
+- 🔄 **简化错误定制**：统一 `error` 参数，取代多个旧 API。
+- 🧩 **可扩展基础**：引入 `@zod/core` 作为共享核心，支持构建其他库。
+
+### [Tailwind CSS v4.1：文本阴影、遮罩以及更多功能](https://tailwindcss.com/blog/tailwindcss-v4-1)
+
+Tailwind CSS v4.1 发布，新增文本阴影工具、遮罩元素支持、浏览器兼容性改进等多项功能优化，并引入多种新变体和开发体验提升。
+
+- 🌟 **新增文本阴影工具** - 提供从 `text-shadow-2xs` 到 `text-shadow-lg` 的五种预设阴影，支持颜色和透明度调整。
+- 🎭 **遮罩元素支持** - 新增 `mask-*` 工具，支持使用图片和渐变遮罩元素，提供更灵活的 API。
+- 🌐 **浏览器兼容性改进** - 优化对旧版浏览器的支持，确保颜色、阴影等基础功能正常渲染。
+- 📏 **精细化文本换行** - 新增 `overflow-wrap` 工具，如 `wrap-break-word` 和 `wrap-anywhere`，解决长单词破坏布局的问题。
+- 🌈 **彩色投影支持** - 新增 `drop-shadow-color` 工具，支持为投影添加颜色和透明度。
+- 🖱️ **输入设备适配** - 通过 `pointer-*` 和 `any-pointer-*` 变体，针对鼠标或触摸设备调整样式。
+- 🔽 **基线对齐优化** - 新增 `items-baseline-last` 和 `self-baseline-last`，对齐弹性或网格项的最后一行文本基线。
+- 🛡️ **安全对齐工具** - 使用 `justify-center-safe` 等工具，防止内容溢出时居中失效。
+- 🚫 **忽略特定路径** - 通过 `@source not` 排除无需扫描的目录，加速构建。
+- 📌 **强制生成工具类** - 使用 `@source inline(...)` 确保未使用的类被包含在生成的 CSS 中。
+- 🔄 **其他新变体** - 包括 `noscript`、`user-valid`、`inverted-colors` 等，增强交互和样式控制。
+
+升级方式：
+
+- 通过 Tailwind CLI：`npm install tailwindcss@latest @tailwindcss/cli@latest`
+- 通过 Vite：`npm install tailwindcss@latest @tailwindcss/vite@latest`
+- 通过 PostCSS：`npm install tailwindcss@latest @tailwindcss/postcss@latest`
+
+## AI
+
+## [Gemini 2.5：具备思考能力的最新 Gemini 模型](https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/)
+
+Google DeepMind 发布了其最智能的 AI 模型 Gemini 2.5，具备强大的推理和编码能力，并在多个基准测试中领先。
+
+- 🧠 Gemini 2.5 Pro Experimental 是目前最先进的 AI 模型，擅长处理复杂任务，在 LMArena 排行榜上领先。
+- 📊 该模型在数学、科学和编码基准测试中表现优异，如 GPQA 和 AIME 2025。
+- 💻 Gemini 2.5 在编码性能上有显著提升，擅长创建视觉吸引人的网页应用和代理代码应用。
+- 🔍 具备增强的推理能力，能够分析信息、结合上下文并做出明智决策。
+- 🌐 支持多模态输入（文本、音频、图像、视频等），并拥有 100 万 token 的上下文窗口（未来将扩展至 200 万）。
+- 🚀 开发者可通过 Google AI Studio 和 Gemini Advanced 体验 Gemini 2.5 Pro，Vertex AI 版本即将推出。
+- 📈 未来将进一步优化模型，并逐步推出定价方案，支持规模化生产使用。
+
+## [Firebase 工作室](https://firebase.studio/)
+
+Firebase Studio 是一个全栈 AI 工作空间，通过 AI 代理加速整个开发生命周期，支持后端、前端和移动应用的构建。
+
+- 🚀 **快速开始**：从浏览器打开到构建只需几分钟，支持从 GitHub、GitLab 等导入现有仓库，或使用 App Prototyping 代理快速创建新应用。
+- 🛠️ **灵活构建**：支持自然语言、草图工具、截图或模板创建应用，并可利用 Nix 自定义环境。
+- 🆓 **免费预览**：预览期间提供 3 个免费工作空间，Google 开发者计划成员可享最多 30 个。
+- 🤖 **AI 助力**：集成 Gemini，协助编码、调试、测试、重构等，支持选择不同模型，新 Gemini Code Assist 代理可帮助迁移和 AI 测试。
+- 📱 **跨平台测试**：通过 Open VSX Registry 的扩展测试和优化 API 及后端，内置网页预览和 Android 模拟器。
+- 🚀 **部署与监控**：一键发布到 Firebase App Hosting，支持 Firebase Hosting、Cloud Run 或自定义基础设施部署。
+- 🔍� **持续创新**：Firebase 持续进化，支持生成式 AI 和新型构建方式，助力开发者更高效地开发应用。
+
+### [代理模式：对所有用户开放并支持 MCP](https://code.visualstudio.com/blogs/2025/04/07/agentMode)
+
+VS Code 正式推出 Agent 模式，作为自主编程助手，可执行多步骤编码任务（如分析代码库、建议文件修改、运行终端命令等），并支持与外部工具集成。该模式现已向所有用户开放，未来几周将默认启用。
+
+- 🤖 **Agent 模式功能**：自主处理多步骤任务，包括代码编辑、终端命令执行、错误监控及循环修正，支持与 MCP 服务器和 VS Code 扩展交互。
+- 🛠️ **启用方式**：在 Chat 视图中登录 GitHub，设置`chat.agent.enabled`并选择 Agent 模式，更新后需重启 VS Code。
+- 🔧 **适用场景**：多步骤任务、不确定修改范围、需与外部应用交互时；简单任务建议使用 Edit 模式。
+- 🔄 **统一体验**：合并 Chat 与 Edits 视图，支持会话历史、独立窗口及优化 Working Set 视图。
+- 📢 **用户反馈改进**：新增撤销操作、多会话支持、笔记本编辑、工具调用自动批准等功能。
+- 🌐 **扩展性**：支持 MCP 服务器和 VS Code 扩展工具，涵盖浏览器调试、数据库交互、云平台集成等。
+- ⚙️ **开发控制**：工具调用需用户批准（只读工具除外），可通过 Dev Containers 隔离环境增强安全性。
+- 🚀 **未来计划**：自定义模式、更快代码应用、扩展 MCP 支持、流式编辑优化及会话检查点功能。
+- 📚 **快速开始**：通过工具 UI 添加或查阅 MCP 文档，开发者可构建 MCP 服务器或扩展工具。
+
+## 其他
+
+只有那些有耐心做好简单事情的人，才能获得轻松完成困难事情的技能。
+
+---- 席勒，德国诗人

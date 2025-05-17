@@ -1,0 +1,249 @@
+---
+title: 2025-第十六周
+date: '2025-04-19'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [JSX 通过线路传输 —— overreacted](https://overreacted.io/jsx-over-the-wire/)
+
+**原文标题**: [JSX Over The Wire — overreacted](https://overreacted.io/jsx-over-the-wire/)
+
+本文探讨了如何通过 JSX Over The Wire 技术将服务器端的数据逻辑与客户端的 UI 组件紧密结合，从而提升开发效率和用户体验。以下是关键点总结：
+
+- 🚀 **JSX Over The Wire 概述**：通过 JSX 在服务器端生成 JSON 数据，直接传递给客户端的 React 组件，实现数据与 UI 的无缝连接。
+- 🔄 **数据流与组件结合**：服务器端的 ViewModel（如`LikeButtonViewModel`）生成 JSON 数据，客户端的组件（如`LikeButton`）直接消费这些数据，无需手动传递。
+- 🏗️ **自包含组件**：每个组件（如`PostDetails`）可以独立加载自己的数据，并通过嵌套其他组件（如`LikeButton`）实现复杂的 UI 结构。
+- ⚡ **单次往返**：所有服务器端逻辑在单次请求中完成，避免了多次客户端 - 服务器往返，提升了性能。
+- 🔗 **历史背景**：从早期的 HTML 和 SSI 到 XHP 和 Async XHP，再到现代的 React Server Components（RSC），逐步演进出 JSX Over The Wire 技术。
+- 🧩 **RSC 的优势**：RSC 允许服务器端组件生成 JSON，客户端组件直接消费，支持富交互性和状态保持，同时可以通过 bundler 生成 HTML。
+- 📦 **代码示例**：展示了如何通过 RSC 实现`PostDetails`和`LikeButton`的服务器端数据加载与客户端渲染的无缝结合。
+
+### [探索使用 Fastify 实现 React 服务端渲染](https://blog.platformatic.dev/exploring-react-ssr-with-fastify)
+
+**原文标题**: [Exploring React SSR with Fastify](https://blog.platformatic.dev/exploring-react-ssr-with-fastify)
+
+概述：本文详细介绍了如何在 Fastify 框架中集成 React SSR（服务器端渲染），并利用 Vite 作为构建工具。文章从基础配置开始，逐步深入到实际应用开发，包括数据获取、路由管理、生产环境构建等关键环节，并通过一个电影引用应用的重写示例展示了具体实现方法。
+
+- 🚀 **React SSR 与 Fastify 集成**：探讨了在 Fastify 框架中实现 React SSR 的方法，强调了 Vite 作为现代构建工具的重要性。
+- ⚙️ **配置 Fastify 和 Vite**：详细介绍了如何配置 Fastify 服务器和 Vite 构建工具，包括开发和生产环境的设置。
+- 📂 **项目结构**：说明了推荐的项目结构，特别是将客户端代码放在`client`子文件夹中的好处。
+- 🔄 **混合渲染模式**：支持 SSR 和 CSR（客户端渲染）的混合模式，首次渲染由服务器完成，后续导航在客户端进行。
+- 📝 **路由和上下文管理**：通过`@fastify/react`提供的路由和上下文管理功能，简化了 React 应用与 Fastify 的集成。
+- 📊 **数据获取**：介绍了`getData()`方法，用于在服务器端获取数据，并自动处理客户端导航时的数据请求。
+- 🏷️ **头部管理**：通过`getMeta()`方法动态管理页面的`<head>`内容，如标题和元标签。
+- 🛠️ **生产环境构建**：详细说明了如何构建和优化生产环境下的客户端和服务器端代码。
+- 🎬 **电影引用应用示例**：通过重写一个电影引用应用，展示了如何将上述技术应用于实际项目，包括组件重写和 API 集成。
+- 🌟 **简洁高效**：强调了 Fastify 和 Vite 组合的简洁性和高效性，为开发者提供了最小化但功能强大的工具集。
+
+### [React 服务器组件中的 Toast 消息](https://buildui.com/posts/toast-messages-in-react-server-components)
+
+**原文标题**: [Toast messages in React Server Components](https://buildui.com/posts/toast-messages-in-react-server-components)
+
+本文介绍了如何在 Next.js 应用中利用 React Server Components 实现 Toast 消息系统，结合 Server Actions、Cookies 和 Sonner 库，实现跨页面/重定向的持久化提示。
+
+- 🚀 **核心目标**：通过 Server Components 构建基于 Cookie 的 Toast 系统，支持服务端触发（如`toast("保存成功")`）
+- 🛠️ **实现步骤**  
+  - 1️⃣ 初始化 Next.js 应用并创建博客表单  
+  - 2️⃣ 用 Cookie 存储 Toast（随机 ID 防覆盖）  
+  - 3️⃣ 服务端组件`<Toaster />`读取 Cookie 渲染消息  
+  - 4️⃣ 通过 Server Action 删除 Cookie 实现消息关闭  
+  - 5️⃣ 用`useOptimistic`解决延迟问题（客户端即时更新）  
+  - 6️⃣ 集成 Sonner 库美化 Toast 界面  
+- 🔥 **技术亮点**  
+  - 混合服务端/客户端状态管理  
+  - `startTransition`处理乐观更新  
+  - Cookie 实现跨页面/重定向持久化  
+- ⚠️ **设计权衡**：选择服务端操作而非`document.cookie`的优缺点分析  
+- 📦 **扩展应用**：该模式已用于开源框架 Twofold 的 Flash 消息系统
+
+### [后开发者时代 • Josh W. Comeau](https://www.joshwcomeau.com/blog/the-post-developer-era/)
+
+**原文标题**: [The Post-Developer Era • Josh W. Comeau](https://www.joshwcomeau.com/blog/the-post-developer-era/)
+
+这篇文章探讨了 AI 对软件开发行业的影响，作者认为尽管 AI 工具在辅助开发方面取得了进展，但人类开发者仍不可或缺。
+
+- 🧑💻 作者两年前预测 AI 不会取代开发者，而是增强其能力，目前看来这一观点依然成立。  
+- 🤖 尽管 AI 如 Google 的代码生成占比达 25%，但仍需人类开发者指导和编辑，无法独立工作。  
+- 🚀 初创公司 Devin 等尝试完全替代开发者，但实际效果不佳，仅能完成简单任务。  
+- 🛠️ AI 工具（如 Cursor IDE）虽能提升效率，但仍需开发者监督和修正错误，无法完全自主。  
+- 📉 当前就业市场严峻，主因是宏观经济、大厂裁员及企业对 AI 的误解，而非 AI 取代人类。  
+- 🌟 未来 AI 更可能作为开发者的增强工具，而非替代品，开发者需求仍将存在。  
+- ⚠️ 需警惕过度依赖 AI 导致技能退化，但合理使用可加速学习（如调试和文档查询）。  
+- 📈 技术曲线进入增量改进阶段，AI 突破性进展减少，开发者需保持核心技能竞争力。
+
+### [2025 年使用 currentColor – Frontend Masters 博客](https://frontendmasters.com/blog/using-currentcolor-in-2025/)
+
+**原文标题**: [Using currentColor in 2025 – Frontend Masters Blog](https://frontendmasters.com/blog/using-currentcolor-in-2025/)
+
+CSS 中的 currentColor 关键字及其在 2025 年的应用现状
+
+- 🎨 **currentColor 简介**：CSS 中的原始变量，代表当前元素的文本颜色，可简化代码并保持颜色一致性。  
+- 🔄 **使用示例**：通过`border: 3px solid currentColor`，边框颜色自动继承文本颜色（如`color: red`）。  
+- 📉 **使用率下降**：相比自定义属性（如`var(--mainColor)`），currentColor 在现代代码库中较少见，因后者更灵活清晰。  
+- 🛠️ **局限性**：仅适用于颜色值，无法像自定义属性那样存储其他 CSS 属性（如间距或字体）。  
+- 🐞 **已知问题**：某些场景下无效（如`accent-color: currentColor`），或受用户代理样式表干扰（需显式继承`color: inherit`）。  
+- 👍 **适用场景**：图标填充（`fill: currentColor`）或动态阴影（基于相对颜色语法）仍具实用性。  
+- 💡 **开发者建议**：SVG 图标内联时，currentColor 可确保颜色继承；但性能上，与 CSS 变量无显著差异。  
+- 🔍 **社区反馈**：部分开发者认为其简洁性在特定场景（如按钮边框）优于自定义属性。
+
+### [用分层 React 结构扩展你的项目 | 趣味编程](https://playfulprogramming.com/posts/layered-react-structure)
+
+**原文标题**: [Scale Your Project with Layered React Structure | Playful Programming](https://playfulprogramming.com/posts/layered-react-structure)
+
+介绍了 Layered React Structure (LRS)，一种用于组织 React 项目的分层结构方法，旨在提高代码的可维护性、可测试性和开发效率。LRS 通过明确的层级划分和文件组织，帮助开发者快速定位代码、减少错误并简化逻辑流程。
+
+- 🧩 **LRS 核心概念**：Layered React Structure (LRS) 是一种分层组织 React 项目的方法，强调各层独立性和组合性。
+- 🏗️ **分层结构**：包括共享代码层、文件路由层等，确保代码模块化和可维护性。
+- 📂 **文件组织**：详细的文件目录结构示例，如`src/`下的`components/`、`services/`、`views/`等。
+- 🧠 **Smart vs Dumb 组件**：区分业务逻辑组件（Smart）和展示组件（Dumb），并列出各自的规则。
+- 🔄 **工具与服务**：同步工具（utils）和异步服务（services）的定义及其区别。
+- 🖥️ **文件命名敏感性**：强调小写和 kebab-case 命名以避免跨平台问题。
+- 🛠️ **测试建议**：推荐使用 Vitest、Testing Library 等工具进行集成测试，避免测试实现细节。
+- 📚 **UI 测试与文档**：建议使用 Storybook 记录和展示 UI 组件。
+- 🎨 **样式分离**：建议将样式与标记分离，使用 CSS 模块或类似方法。
+- 🚀 **总结与建议**：LRS 通过简洁和专注的设计，帮助团队高效开发和维护 React 应用。
+
+## 工具
+
+### [GitHub - jnsahaj/tweakcn：shadcn/ui组件的可视化无代码主题编辑器](https://github.com/jnsahaj/tweakcn)
+
+**原文标题**: [GitHub - jnsahaj/tweakcn: A visual no-code theme editor for shadcn/ui components](https://github.com/jnsahaj/tweakcn)
+
+一个为 shadcn/ui 组件提供的可视化无代码主题编辑器工具，支持 Tailwind CSS，旨在帮助用户定制独特的 UI 风格。
+
+- 🌟 **项目简介**: tweakcn 是一个针对 shadcn/ui 组件的可视化主题编辑器，提供预设主题和高级定制功能。  
+- 🎯 **开发动机**: 解决使用 shadcn/ui 构建的网站风格雷同的问题，帮助用户打造独特组件。  
+- 🚀 **当前状态**: 测试版，目前支持 Tailwind CSS 主题编辑，未来计划扩展至所有 shadcn/ui 组件。  
+- 📌 **功能与路线图**: 完整功能列表和开发路线图可在官网查看。  
+- 💻 **本地运行**: 需要 Node.js 18+，支持 npm/yarn/pnpm，提供详细的安装和启动步骤。  
+- 👥 **社区与贡献**: 欢迎提交 Pull Request 参与贡献，项目已有 1.5k Stars 和 68 Forks。  
+- 📊 **技术栈**: 主要使用 TypeScript（占比 99.2%）。
+
+### [GitHub - chuanqisun/react-agent-hooks: 将 React 钩子转化为 LLM 工具](https://github.com/chuanqisun/react-agent-hooks)
+
+**原文标题**: [GitHub - chuanqisun/react-agent-hooks: Turn React hooks into LLM tools](https://github.com/chuanqisun/react-agent-hooks)
+
+本文介绍了 `react-agent-hooks` 这一工具库，它将 React Hooks 转化为 LLM（大型语言模型）工具，使开发者能够轻松构建与 AI 代理交互的 React 应用。通过提供类似 React Hooks 的语义、安全的状态管理、渐进式采用和高度可组合性，该工具库为开发者提供了灵活且未来兼容的解决方案。
+
+- 🪝 **熟悉性**：与 React Hooks 相同的语义，降低学习成本。  
+- 🤝 **共生性**：人类界面和代理界面共享同一状态。  
+- 🛡️ **安全性**：开发者控制代理状态变更的模式（schema）。  
+- ➕ **渐进式采用**：可按需使用，无需全量迁移。  
+- 📦 **可组合性**：与经典 React Hooks 完全兼容。  
+- 🔮 **未来兼容**：支持 MCP 和 `llms.txt` 等未来技术。  
+- ⚠️ **测试阶段**：当前为 Beta 版本，可能存在破坏性变更。  
+- 🛠️ **功能示例**：  
+  - 通过 `useAgentState` 管理代理状态。  
+  - 通过 `useAgentTool` 定义代理可调用的工具。  
+  - 动态控制状态和工具的可见性（`enabled` 选项）。  
+- 🌐 **上下文管理**：通过 `AgentContext` 分层组织状态和工具，避免命名冲突。  
+- 🚀 **自定义代理**：支持通过 `useAgentContext` 构建自定义代理逻辑。  
+- 🔜 **未来计划**：支持渲染到 MCP 服务器和生成 `llms.txt` 文件。
+
+### [Tailwind CSS 速查表](https://kombai.com/tailwind/cheat-sheet/)
+
+**原文标题**: [Tailwind CSS Cheat Sheet](https://kombai.com/tailwind/cheat-sheet/)
+
+概述了 CSS 布局与定位相关的多种实用工具类，涵盖宽高比、列布局、断点控制、盒模型、显示模式、浮动清除、层叠控制、对象适配、溢出处理、滚动行为、定位方式及可见性等核心功能。
+
+## 更新
+
+### [Prisma ORM 6.6.0：ESM 支持、D1 迁移与 Prisma MCP 服务器](https://www.prisma.io/blog/prisma-orm-6-6-0-esm-support-d1-migrations-and-prisma-mcp-server)
+
+**原文标题**: [Prisma ORM 6.6.0: ESM Support, D1 Migrations & Prisma MCP Server](https://www.prisma.io/blog/prisma-orm-6-6-0-esm-support-d1-migrations-and-prisma-mcp-server)
+
+Prisma ORM 6.6.0 版本发布，包含多项新功能和改进，如 ESM 支持、Cloudflare D1 和 Turso 迁移的早期访问支持、MCP 服务器等，旨在提升开发者的工作流程和数据库管理体验。
+
+- 🚀 **ESM 支持**：新的 `prisma-client` 生成器支持 ESM 和 CommonJS，提供更灵活的项目配置和更好的兼容性。  
+- 🔧 **现代化生成器**：移除对 `node_modules` 的依赖，生成纯 TypeScript 代码，提升对 monorepo、Next.js 等环境的支持。  
+- 🤖 **MCP 服务器预览**：集成 AI 工具（如 Cursor、Windsurf 等），支持通过 LLM 管理 Prisma Postgres 数据库，包括创建实例、设计数据模型等。  
+- ☁️ **Cloudflare D1 & Turso 迁移支持**：新增 `prisma db push`、`prisma db pull` 等命令，支持直接操作远程 D1/Turso 数据库（早期访问）。  
+- 🛠️ **`prisma init --prompt` 选项**：快速初始化 Prisma 项目并部署到 Prisma Postgres 实例，支持别名 `--vibe`。  
+- 📅 **未来计划**：包括拆分生成文件以提升编辑器性能、移除 Accelerate 扩展依赖等，更多功能详见 3 个月路线图。  
+
+### [Astro 5.7 | Astro](https://astro.build/blog/astro-570/)
+
+**原文标题**: [Astro 5.7 | Astro](https://astro.build/blog/astro-570/)
+
+Astro 5.7 发布，带来了一系列新功能和改进，包括实验性字体 API、稳定的会话 API、SVG 组件支持以及配置导入功能。
+
+- 🌟 **实验性字体 API**：提供统一的字体管理，支持本地和第三方字体服务，自动优化性能并生成备用字体。  
+- 🔒 **稳定的会话 API**：支持服务器端存储用户数据，适用于购物车、表单状态等，无需客户端 JavaScript。  
+- 🖼️ **SVG 组件支持**：直接导入 SVG 文件作为组件，支持传递属性如宽度、高度和颜色。  
+- ⚙️ **配置导入功能**：通过`astro:config`虚拟模块安全访问配置信息，支持客户端和服务器端使用。  
+- 🛠️ **升级工具**：提供`@astrojs/upgrade` CLI 工具或手动升级命令，方便项目升级到最新版本。  
+- 🐞 **错误修复**：修复了自 5.6 版本以来的多个问题，详细内容参见更新日志。  
+- 👏 **社区贡献**：感谢核心团队和众多社区成员的贡献，推动了 Astro 5.7 的发布。
+
+### [GitHub - tc39/proposal-enum: ECMAScript 枚举提案](https://github.com/tc39/proposal-enum)
+
+**原文标题**: [GitHub - tc39/proposal-enum: Proposal for ECMAScript enums](https://github.com/tc39/proposal-enum)
+
+ECMAScript 枚举提案概述，旨在引入与 TypeScript 兼容的枚举声明，提供有限域的常量值集合，用于区分类型、操作等场景。
+
+- 🚀 **提案状态**: 目前处于 Stage 0 阶段，由 Ron Buckton 担任 Champion。
+- 📜 **许可证**: 使用 BSD-3-Clause 许可证。
+- 🌟 **动机**: 解决 ECMAScript 中缺乏枚举类型的问题，兼容 TypeScript 的枚举特性。
+- 🔍 **语法**: 支持数字、字符串、Symbol 和 BigInt 值的枚举成员，允许自引用。
+- 🔄 **迭代**: 通过 Symbol.iterator 方法支持枚举成员的迭代。
+- 🛠️ **语义**: 枚举对象为普通对象，成员不可写且不可配置。
+- 📌 **限制**: 不支持 TypeScript 的自动初始化、声明合并和反向映射。
+- 🔮 **未来方向**: 可能支持代数数据类型 (ADT) 枚举、装饰器和自动初始化器。
+- ⚠️ **注意事项**: 与 TypeScript 的枚举存在差异，如不支持 const enum 和 export default。
+- 📚 **参考资料**: 提供了TypeScript、C++、C#和Java等语言的枚举实现作为参考。
+
+### [WebStorm 2025.1：JetBrains AI 重大改进、增强的 Angular 支持及更优的 Monorepo 支持 | WebStorm 博客](https://blog.jetbrains.com/webstorm/2025/04/webstorm-2025-1/)
+
+**原文标题**: [WebStorm 2025.1: Major Improvements to JetBrains AI, Enhanced Angular Support, and Better Monorepo Support | The WebStorm Blog](https://blog.jetbrains.com/webstorm/2025/04/webstorm-2025-1/)
+
+WebStorm 2025.1 发布，带来多项重大改进，包括 AI 增强、Angular 支持优化、Monorepo 支持提升以及用户体验改进。
+
+- 🚀 **AI 增强**：AI Assistant 和 Junie 提供免费层级，支持更多前沿 LLM，改进了 Web 框架的 AI 补全功能。  
+- 🔧 **Angular 改进**：支持 Angular 17.2 信号查询，优化了响应式表单支持和属性建议。  
+- 📂 **Monorepo 优化**：支持每个子项目的 Prettier 配置，改进了路径别名支持和自动导入功能。  
+- 🎨 **用户体验提升**：新增 Next.js 自动运行配置、浮动工具栏、项目窗口中创建新文件等功能。  
+- 🤖 **支持更多 LLM**：新增 Claude 3.7 Sonnet 和 Claude 3.5 Haiku 支持，并可通过 Ollama 和 LM Studio 连接本地模型。  
+- 🛠️ **框架和技术改进**：包括 Next.js、Vue、Tailwind CSS 4 的优化支持。  
+- 📝 **GraphQL 和 Prisma 增强**：改进了 GraphQL 标记模板的支持和 Prisma 的 ULID 识别及多行注释功能。  
+- 🔄 **自动插件更新**：新增选项可设置插件自动更新，提升使用便捷性。  
+- 📊 **调试体验优化**：调试工具窗口支持自定义工具栏，改进了标记文本的格式化显示。
+
+## 设计
+
+### [包容性深色模式：为所有用户设计无障碍深色主题 — Smashing Magazine](https://www.smashingmagazine.com/2025/04/inclusive-dark-mode-designing-accessible-dark-themes/)
+
+**原文标题**: [Inclusive Dark Mode: Designing Accessible Dark Themes For All Users — Smashing Magazine](https://www.smashingmagazine.com/2025/04/inclusive-dark-mode-designing-accessible-dark-themes/)
+
+概述  
+本文探讨了如何设计包容性深色模式，以确保所有用户都能获得良好的体验。深色模式不仅是一种时尚美学，还能减少眼睛疲劳，但若设计不当，可能对视觉障碍用户造成阅读困难。文章提供了设计高对比度、易读且用户友好的深色主题的实用策略，并强调了用户自定义的重要性。
+
+- 🌑 深色模式需兼顾美观与可访问性，避免纯黑背景，改用深灰色（如#121212）以减少眼睛疲劳。  
+- 👁️ 高对比度（至少 4.5:1）对可读性至关重要，尤其对视觉障碍用户（如散光或低对比敏感度用户）。  
+- 📝 选择无衬线字体并调整字号/字重，确保深色背景下的文本清晰易读。  
+- 🎨 避免高饱和色，使用对比检查工具（如 WebAIM）验证配色，适配色盲或低视力用户需求。  
+- 🔄 提供深色/浅色模式切换选项，并通过 CSS 媒体查询（如`prefers-color-scheme`）自动适配系统设置。  
+- 🤖 保持语义化 HTML 和结构一致性，提升机器可读性（如屏幕阅读器和自动化工具兼容性）。  
+- 🛠️ 真实环境测试及用户反馈迭代，覆盖多种视觉障碍场景（如青光眼、夜盲症等）。  
+- ✨ 示例：Slack 通过预设视觉辅助选项，显著提升用户友好度。
+
+## AI
+
+### [codex](https://github.com/openai/codex)
+
+OpenAI Codex CLI 是一个轻量级的终端编程助手，支持通过自然语言指令生成、执行和迭代代码。它基于 OpenAI 的 API，提供交互式开发体验，并支持沙盒安全模式。  
+
+### [stagehand](https://github.com/browserbase/stagehand)
+
+Stagehand 是一个专为生产环境设计的 AI 浏览器自动化框架，结合了代码（如 Playwright）与自然语言指令的灵活性，提供高效、可控的自动化解决方案。  
+
+- 🚀 **混合编程模式**：开发者可自由选择代码（Playwright）或自然语言（AI）编写自动化流程，适应不同场景需求。  
+- 🔍 **动作预览与缓存**：支持预览 AI 生成的动作，并缓存重复操作以节省时间和计算资源。  
+- 🤖 **一键集成先进模型**：通过一行代码即可调用 OpenAI 或 Anthropic 的计算机使用模型。

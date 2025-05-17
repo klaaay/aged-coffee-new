@@ -1,0 +1,147 @@
+---
+title: 2024-第五十周
+date: '2024-12-03'
+tags: ['WEEKLY-2024']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [⭐️避免在 useEffect 中使用带有回调的 refs](https://tkdodo.eu/blog/avoiding-use-effect-with-callback-refs)
+
+这篇文章介绍了在 React 中如何使用 refs 来获取 DOM 节点并进行操作。作者首先介绍了在大多数情况下，使用 useRef 和 useEffect 来控制 DOM 节点的焦点管理，然后详细讲解了通过回调 refs 来实现更好的 DOM 节点操作方式。同时，还解释了如何使用 useCallback 来优化回调 refs 的性能，并提供了实际应用的示例。文章强调了在需要直接操作 DOM 节点时，应该优先考虑使用回调 refs 而不是直接使用 useRef 和 useEffect。
+
+- Refs 在 React 中通常用于获取 DOM 节点，并且可以通过使用回调 refs 来在节点渲染后执行操作。
+- 使用 useCallback 可以确保回调 refs 只在需要时执行，避免不必要的函数创建和执行。
+- 回调 refs 可以被绑定到 DOM 节点的生命周期，而不是组件的生命周期，使其成为处理 DOM 操作的有效方式。
+
+### [How To Improve INP: React⚛️](https://kurtextrem.de/posts/improve-inp-react)
+
+这篇文章详细介绍了如何在使用 React 时改善交互至下一次绘制（INP）。它涵盖了并发渲染、延迟渲染、事件处理、无控输入、CSS 反馈、替代同步 useEffects、中止冗余工作、使用门户等多个方面，并提供了许多实际的代码示例和工具建议。文章还指出了升级到 React 18 的重要性，以及其他框架和工具对 INP 的影响。
+
+- React 18 提供了并发渲染和新的渲染/水合 API，以改善 Interaction-to-Next-Paint（INP），从而提高用户体验。
+- 通过使用 transition API、`<Suspense>`、useAfterPaintEffect 等技术，可以在 React 中实现并发渲染和选择性水合，以降低渲染成本并改善用户交互体验。
+- 通过优化事件处理、使用 CSS 反馈用户交互、中止冗余工作、以及使用 portals 等技术，可以进一步优化 React 应用的交互性能，提高 INP。
+
+### [译：使用 TanStack Router 加载数据：react-query](https://sorrycc.com/tanstack-router-data-loading-2/)
+
+这篇文章介绍了 TanStack Query 和 TanStack 路由的使用方式，并重点讨论了在 React 应用程序中如何加载和管理数据。文章涵盖了使用 react-query 进行数据管理的方法，以及如何通过预获取来提高数据加载性能。同时还介绍了如何处理组件级数据获取和用户体验，并探讨了如何通过 react-query 更新数据。最后，文章提供了一些琐碎的技巧和注意事项，总的来说，旨在帮助读者更好地使用 TanStack 查询和路由功能。
+
+- TanStack Query（react-query）允许我们在客户端进行数据查询管理，包括智能重新运行查询和在客户端缓存中跟踪查询结果。
+- 通过使用预获取功能和 useDeferredValue 钩子，可以优化查询性能，避免瀑布式数据加载，以及实现数据延迟状态处理。
+- 使用 react-query 进行数据管理时，可以有效地重复使用同一个查询在不同的路由中，同时通过一次性清除缓存条目或使用 invalidateQueries 功能进行数据更新和管理。
+
+### [译：使用 TanStack Router 加载数据：入门](https://sorrycc.com/tanstack-router-data-loading-1/)
+
+本文介绍了 TanStack Router 提供的数据加载功能，包括内置钩子、上下文函数、以及如何使用加载器加载数据。文章详细解释了如何在路由中和页面中使用加载器函数，并讨论了数据更新和缓存失效的方法。同时，还提到了 TanStack Router 的服务器端渲染功能和未来可能的发展方向。文章强调了加载器的并行执行、如何将数据添加到上下文中以及如何使用 react-query 来处理数据加载。
+
+- TanStack Router 是一个完整的客户端应用程序框架，支持高级路由和数据加载钩子，同时具有深度类型安全性，为现代 Web 开发提供了强大的功能和可靠性基础。
+- 通过 TanStack Router 提供的加载器函数，路由器可以并行加载数据，并且具有灵活的缓存管理功能，包括设置缓存保留时间和失效时间，以及在数据更新后强制重新加载缓存等能力。
+- TanStack Router 与 react-query 集成紧密，可以轻松地使用 react-query 来处理数据加载和管理，从而提高数据加载的效率和适应复杂数据交互的能力。
+
+### [React 数据获取模式](https://www.robinwieruch.de/react-data-fetching-patterns/)
+
+这篇文章主要介绍了在构建 React 应用程序时，不同的数据获取模式。重点讨论了顺序数据获取、并行数据获取、React 中的数据预取和初始数据获取等不同的模式，以及它们在客户端和服务器端的应用。文章强调了理解不同数据获取模式之间的权衡和选择最适合特定用例的模式的重要性。
+
+- 不同的数据获取模式：文章介绍了在 React 组件中常见的数据获取模式，包括顺序获取、并行获取和预取数据等。
+- 顺序数据获取和意外的顺序数据获取：文章讨论了顺序数据获取的常见模式以及如何将意外的顺序数据获取模式转变为并行获取模式。
+- 服务器组件和客户端组件的初始数据获取：文章描述了如何在服务器组件中获取数据并在客户端组件中使用初始数据，以提高应用的感知性能。
+
+### [Expo 中的实时字体管理](https://medium.com/@valentineminer27/real-time-font-management-in-expo-2dc107fc89d1)
+
+这篇文章讨论了在 React Native 应用中添加字体的问题，并介绍了使用'expo-dynamic-fonts'来解决这个问题的三种方法：Text 组件、自定义组件和 useFont 钩子。文章强调了这些方法的灵活性，以满足开发者不同的需求，并强调了这些方法的目的是让应用设计与代码更加简单，摆脱字体相关的烦恼。
+
+- React Native 应用中添加字体一直是个麻烦，但使用 'expo-dynamic-fonts' 可以简化这个过程，让开发者更轻松地使用 Google Fonts。
+- 'expo-dynamic-fonts' 提供了多种方式来使用自定义字体，包括直接在 Text 组件中指定、创建自定义字体组件以及使用 hook 来手动管理字体加载状态。
+- 开发者可以根据自己的需求选择使用 'expo-dynamic-fonts' 提供的不同方式来管理字体，从快速开始、到简化常用字体的使用、再到手动控制加载状态，都可以根据实际情况选择合适的方法。
+
+### [在移动设备上，通过 interactive-widget 来控制视口的缩放和调整行为](https://www.htmhell.dev/adventcalendar/2024/4/)
+
+本文讨论了移动端的视口单位在虚拟键盘出现时的问题，介绍了动态视口单位及其对应的小视口高度单位和大视口高度单位。提到了布局视口和视觉视口的变化，以及通过设置 viewport meta 标签的 interactive-widget 属性来控制虚拟键盘出现时的视口调整行为。文章由比利时的网络开发者 Bramus 撰写，并包含了一些相关的链接和进一步阅读建议。
+
+- 移动设备上的视窗单位（viewport units）在显示虚拟键盘时不会自动调整大小，需要使用新的 viewport meta 标签中的 interactive-widget 属性来控制视窗的调整行为。
+- 使用 interactive-widget 属性可以让布局视窗（Layout Viewport）在虚拟键盘显示时也自动调整大小，从而使视窗单位（viewport units）的值发生变化。
+- Chrome 108+ 和 Firefox 132+ 已经支持 interactive-widget 属性，可以通过设定不同的值来控制虚拟键盘显示时的视窗调整行为。
+
+### [以特征为基础的 React 架构](https://www.robinwieruch.de/react-feature-architecture/)
+
+这段文字讨论了如何在 React 中创建基于特性的架构，以便构建和维护大型应用程序。它强调了在 React 组件和数据获取函数中保持特性聚焦的重要性，并展示了如何通过拆分组件和数据获取功能来实现特性化的架构。同时，还介绍了如何通过并行数据获取和组件组合来提高性能，最终实现易于维护和扩展的可扩展 React 应用程序。
+
+- React 的全栈框架发展趋势表现为引入 React Server Components 和 Server Actions，实现了从数据库读取数据到数据库写入数据的完整链路。
+- 基于特性的架构设计使得 React 应用能够以特性为单位解耦，从而保持组件和数据获取函数的独立性和聚焦性，降低复杂度。
+- 通过组件分解和数据获取函数的聚焦，可以建立易于维护和扩展的可伸缩 React 应用，同时通过组件组合实现了并行数据获取，提升性能。
+
+### [React Island 的结构解析](https://swizec.com/blog/the-anatomy-of-a-react-island/?utm_source=newsletter.reactdigest.net&utm_medium=referral&utm_campaign=a-perfect-modal-dialog)
+
+这段文字讲述了 React Islands 是如何将 React 组件或整个应用程序嵌入到静态渲染的网页项目中的技术，以及它的工作原理和使用方法。作者介绍了 React Island 的核心思想、构建步骤和调用方式，并解释了为什么在现有基础设施中采用这种技术。文章还涉及了维护传统网页和引入现代化 React 组件之间的平衡，并强调了逐步更新和持续交付的重要性。文章以作者的个人经验和建议结尾，并提供了相关的链接和资源。
+
+- React Islands 是一种将 React 组件甚至整个应用注入到静态渲染的 Web 项目中的技术，可用于现代化传统的单体 web 代码库。
+- 通过声明 React Islands、构建代码和调用 Islands 的方式，可以将 React 组件集成到现有的静态网页项目中，实现局部动态交互，同时保留其他部分的传统渲染方式。
+- React Islands 既能提供多页面应用 (MPA) 的特性，又能拥有单页面应用 (SPA) 的优势，是一种有效的逐步改造大型 Web 项目的技术方案。
+
+### [对 RSCs 进行的组件测试](https://storybook.js.org/blog/component-testing-rscs/)
+
+这篇文章介绍了 React Server Components (RSCs) 的重要性和测试难题，并提出了利用 Storybook 组件测试来解决这一难题。通过使用 Storybook 组件测试，可以在浏览器中运行集成测试，模拟复杂应用状态，如认证和直接数据库访问。文章还展示了如何使用 Storybook 组件测试快速、有效地测试 RSC 应用，并介绍了在 Vercel 的 Notes 演示应用中如何模拟内存数据库和认证。最后，文章还提到了未来在 Storybook 中测试方面的改进和发展方向。
+
+- React 服务器组件（RSC）是一种新的构建 React 应用的方式，它们模糊了传统前端和后端代码之间的界限，并可以通过 Storybook 组件测试进行快速、全面的测试。
+- 通过 Storybook 组件测试，可以模拟复杂的应用状态（如认证和直接数据库访问），并在浏览器中执行完整的应用程序，从而填补了目前 RSC 测试的空白。
+- Storybook 组件测试可以显著加快测试速度，降低测试的不稳定性，并提供对整个项目中前端和后端代码的 87% 行覆盖率和 73% 分支覆盖率。
+
+## 工具
+
+### [skia-canvas](https://github.com/samizdatco/skia-canvas)
+
+一个为 Node.js 提供图形处理加速的 2D 环境，利用 GPU 技术提升性能
+
+### [nodegui](https://github.com/nodegui/nodegui)
+
+一个可以用 Node.js 和 CSS 来构建跨平台原生桌面应用程序的库 🚀
+
+## 更新
+
+### [React v19](https://react.dev/blog/2024/12/05/react-19)
+
+React 19 是一个重大更新，提供了多项新功能和改进，包括 Actions、Context 提供者、样式表支持、异步脚本支持等。此外，还更新了错误处理、支持自定义元素，以及对文档元数据和资源预加载的更好支持。详细的升级指南提供了升级到 React 19 的详细步骤和重大变化清单。
+
+- React 19 引入了 Actions 概念，使得在处理数据变化时能够自动处理 pending 状态、错误处理和乐观更新，简化了数据变化时的状态管理和交互更新。
+- 新增的 hook 和 API，如 useActionState、useOptimistic、use、`<form>` Actions 等，让开发者能够更便捷地处理表单提交、数据乐观更新，以及在渲染中处理资源。
+- React 19 支持对文档元数据、样式表、异步脚本和资源预加载等功能的更好集成，使得开发者能够更轻松地管理和优化页面加载性能。
+
+### [Prisma 6：提升性能，增强灵活性与类型安全的 SQL](https://www.prisma.io/blog/prisma-6-better-performance-more-flexibility-and-type-safe-sql)
+
+Prisma ORM 的最新版本 v6 带来了性能提升和更多灵活性。在过去的一年里，Prisma ORM 不断改进查询性能，并支持新的 Node.js 驱动程序、Edge 环境和多个数据库。此外，Prisma ORM 还增加了有关模式拆分、创建多个记录的新查询选项，以及一种类型安全的原始 SQL 查询功能。最新推出的 Prisma Postgres 是与 Prisma ORM 最佳配合的数据库，提供了托管的 PostgreSQL 服务和无冷启动的优势。感谢社区的支持和反馈，Prisma 团队致力于不断改进产品，并鼓励用户通过调查分享他们对 Prisma ORM 的体验。
+
+- Prisma ORM v6 增加了 JOIN 策略选择，对查询性能进行了优化，使得用户能根据不同的使用情境选择最适合的 JOIN 策略。
+- 在嵌套创建操作中，Prisma ORM v6 通过优化，在单次数据库往返中将多个嵌套创建操作的 INSERT 查询批量发送至数据库，提升了性能。
+- Prisma ORM v6 还增加了对新的 Node.js 驱动程序、Edge 环境的支持，以及对多个模式文件的分割、Prisma 客户端 API 的灵活性等功能，使其更加灵活和易于使用。
+
+### [Astro 5.0](https://astro.build/blog/astro-5/)
+
+Astro 5.0 是一个用于构建内容驱动网站的 Web 框架，提供了 Astro Content Layer 和 Server Islands 等强大新功能。Astro Content Layer 可以从任何来源加载内容，并提供统一的、类型安全的 API 来定义、加载和访问内容。Server Islands 则允许在同一页面上结合高性能静态 HTML 和动态服务端生成组件。此外，Astro 5.0 还引入了简化的预渲染、类型安全的环境变量、Vite 6 和实验性功能等。
+
+- Astro 5.0 推出了内容层和服务器岛，使得网站可以从任何来源加载内容，并将静态内容与动态个性化内容结合在一起，大大提高了性能和灵活性。
+- 内容层为 Astro 项目提供了一种灵活的方式来管理内容，统一、类型安全地定义、加载和访问内容，无论内容来自何处，都可以轻松应用到网站中。
+- 通过服务器岛，用户可以在同一页上结合高性能的静态 HTML 和动态服务器生成的组件，灵活管理不同类型的内容缓存策略，提高了网页的交互体验和性能。
+
+## 其他
+
+我爱那些渴望不可能的人。
+
+—— 歌德
+
+---
+
+内部平台效应（inner-platform effect）指的是，程序员倾向于创建一个可定制的内部系统，成为他们正在使用的外部软件的复制品，而且通常是一个糟糕的复制品。
+
+-- 维基百科
+
+---
+
+我通常不愿意对技术做出预测，但我感到相当有信心的是，因为 AI 如此善于写文章，几十年后懂得如何写文章的人一定不会很多。
+
+-- 保罗·格拉汉姆，硅谷创业导师

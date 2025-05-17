@@ -1,0 +1,252 @@
+---
+title: 2025-第十四周
+date: '2025-04-02'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [拆解 JavaScript 中的循环依赖](https://www.bryanbraun.com/2025/03/29/breaking-down-circular-dependencies-javascript/)
+
+本文探讨了 JavaScript 中的循环依赖问题，分析了其成因、表现及解决方案，并通过实验逐步拆解了错误发生的机制。
+
+- 🔄 **循环依赖的定义**：当多个文件通过`import`语句形成引用闭环时（如 A→B→A），可能导致代码异常。
+- ❓ **为何难以察觉**：JavaScript 没有内置的循环依赖报错机制，错误常表现为`ReferenceError`等间接提示，与其他语言（如 Python、Go）的直接报错不同。
+- 🌐 **底层原因**：JS 模块的动态加载特性使其无法预先分析依赖树，导致运行时可能遇到未初始化的值。
+- ⚠️ **典型错误场景**：若循环依赖中的模块在未完成初始化前被调用，会触发`Cannot access 'a' before initialization`错误。
+- ✅ **无报错的情况**：通过函数延迟执行或“动态绑定”机制，部分循环依赖可能不会引发错误（但仍有隐患）。
+- 🛠️ **解决方案**：
+  - 使用第三方工具（如`madge`、`eslint-plugin-import`）静态检测循环依赖。
+  - 优化代码结构，明确层级关系。
+- 🔧 **不同环境的差异**：
+  - 浏览器/Node（ESM）/打包工具（如 Webpack）均可能产生类似错误。
+  - Node 的 CommonJS 模块会明确警告循环依赖，但行为与 ESM 不同。
+
+### [懦弱的默认设置与勇敢的覆盖：现代 CSS](https://cloudfour.com/thinks/cowardly-defaults-and-courageous-overrides-with-modern-css/)
+
+文章讨论了 CSS 工具类的使用挑战及现代解决方案，重点介绍了如何平衡工具类的灵活性与样式优先级问题。
+
+- 🛠️ **工具类的局限性**：传统工具类（如`.border-thick`）在设置边框时可能因继承或冲突导致效果不佳。
+- 🔄 **样式优先级问题**：默认样式（如边框颜色）可能与其他组件冲突，需权衡哪些样式应坚持或退让。
+- ⏳ **历史解决方案**：
+  - 🧩 **Sass 的`!default`**：仅适用于预处理，无法解决浏览器中的冲突。
+  - 🔗 **类链技术**：通过重复类名提高特异性，但维护成本高（如`.button.button`）。
+  - ⚠️ **`!important`标志**：简单但可能与其他关键样式冲突。
+- 🎯 **现代方法**：
+  - ✨ **`:where()`选择器**：零特异性应用默认样式，确保关键样式（如`border-width`）优先。
+  - 🏗️ **级联层（Cascade Layers）**：通过分层管理样式优先级（如`base`层 defer 到`utility`层）。
+- 🌟 **扩展工具类**：使用属性选择器（如`[class^='border-']`）批量设置默认样式，减少手动维护。
+
+### [在 React 中使用 Dash.js 的自适应视频流媒体](https://www.smashingmagazine.com/2025/03/adaptive-video-streaming-dashjs-react/)
+
+HTML `<video>` 是嵌入视频内容的首选元素，但其存在性能限制，特别是在慢速网络下。自适应比特率流（ABR）通过将视频分割成不同比特率和分辨率的片段，解决了这一问题。本文提供了从编码视频文件到实现 DASH 兼容视频播放器的完整指南。
+
+- 🎥 **HTML5 `<video>` 的局限性**：默认行为是线性下载视频文件，导致慢速网络下播放卡顿。
+- 🔄 **自适应比特率流（ABR）**：动态切换不同质量的视频片段，适应网络和设备条件。
+- 📜 **流媒体协议对比**：MPEG-DASH 和 HLS 是常见的 ABR 协议，本文重点介绍 DASH。
+- 🛠️ **实现步骤**：
+  - 使用 FFmpeg 转码视频为多分辨率版本。
+  - 生成 MPD 清单文件。
+  - 通过服务器或云存储提供文件。
+  - 使用 Dash.js 构建 React 播放器。
+- ⚡ **性能优势**：ABR 通过分段加载优化播放体验，减少缓冲时间。
+- 📱 **兼容性注意**：DASH 不支持苹果设备，需提供备用 MP4 源。
+
+### [React i18next 提示和技巧](https://www.mensurdurakovic.com/react-i18next-tips-and-tricks/)
+
+i18next 和 react-i18next 为 React 应用提供强大的多语言支持，包含高级功能如 TypeScript 集成、命名空间管理、回退机制、动态键值、上下文感知翻译、复数处理、ICU 格式化和自定义验证。
+
+- 🛠️ **TypeScript 支持**：通过类型定义确保翻译安全，提供自动补全和错误检查
+- 📂 **命名空间管理**：按功能/模块拆分翻译文件，提升可维护性
+- 🧩 **动态键值处理**：支持运行时生成的翻译键（如 API 响应数据）
+- 🔀 **回退机制**：提供多级回退策略（键级/语言级/命名空间级）
+- 👥 **上下文感知**：同一键值根据不同上下文返回不同翻译
+- 🔢 **智能复数处理**：自动适配各语言复数规则（如克罗地亚语的复杂变位）
+- 🌍 **ICU 集成**：支持国际化标准格式（日期/数字/性别敏感词等）
+- ✨ **自定义格式化**：可扩展插值逻辑（如自动货币转换）
+- ✅ **翻译验证**：自动化检测缺失/过期的翻译项
+- ⚛️ **React 深度集成**：提供专用 hooks 和组件简化多语言开发
+
+### [使用 Zustand 和 Immer 构建强大的 React 应用程序](https://zwit.link/posts/20250301173228-building-robust-react-apps-with-zustand-and-immer/)
+
+作者长期回避 React 和 JavaScript，偏好静态站点生成工具（如 Zola），但近期因时间限制和生态优势转向 React，并发现其成熟度显著提升（如 Hooks 和 TypeScript 支持）。重点推荐了状态管理库 Zustand 和不可变更新工具 Immer，展示它们如何简化复杂应用开发流程。
+
+- 🚀 **从静态工具转向 React**：作者曾使用 Pelican、Jekyll 等静态生成工具，最终选择 Zola（Rust 编写），但因 React 生态和效率转向现代 JavaScript 开发。
+- 🔍 **React 的成熟与改进**：Hooks 系统和 TypeScript 支持使 React 更易用，减少了早期类组件的复杂性。
+- 🧩 **Zustand 的极简状态管理**：对比 Redux，Zustand 减少模板代码，通过`create`函数封装状态和逻辑（如计数器示例）。
+- ✨ **Immer 简化不可变更新**：避免手动展开嵌套状态，通过`produce`函数以可变风格编写不可变逻辑（如复杂计数器示例）。
+- 🎨 **实战案例：交互式画布**：结合 Zustand 和 Immer 处理异步加载状态（如模拟 10 秒服务器请求），保持 UI 响应性。
+- 🔗 **工具协同优势**：Zustand 管理状态，Immer 处理嵌套更新，两者结合减少代码错误并提升开发效率。
+- 🌟 **总结与推荐**：虽无法完全复现 Rust/Elm 的强类型保障，但 TypeScript+ 现代工具链（如 Zustand+Immer）能显著提升 React 应用质量。
+
+## 工具
+
+### [milkdown](https://github.com/Milkdown/milkdown)
+
+🍼 插件驱动的所见即所得 Markdown 编辑器框架。
+
+### [gitdiagram](https://github.com/ahmedkhaleel2004/gitdiagram)
+
+GitDiagram 是一个工具，能够将任何 GitHub 仓库快速转换为交互式系统架构图，帮助用户直观理解代码结构。它支持即时可视化、交互导航、自定义生成和 API 集成，适用于开源贡献者或开发者快速熟悉大型代码库。
+
+- **🚀 核心功能**
+
+  - 👀 即时可视化：将 GitHub 仓库结构转为系统设计图
+  - 🎨 交互性：点击图表组件跳转至源码或目录
+  - ⚡ 快速生成：基于 Claude 3.5 Sonnet 实现高效解析
+  - 🔄 自定义：通过指令修改并重新生成图表
+  - 🌐 API 访问：提供公共 API（开发中）
+
+- **⚙️ 技术栈**
+
+  - 前端：Next.js、TypeScript、Tailwind CSS
+  - 后端：FastAPI、Python、PostgreSQL（Drizzle ORM）
+  - AI 模型：OpenAI o3-mini（原 Claude 3.5）
+  - 部署：Vercel（前端）、EC2（后端）
+
+- **🔒 私有仓库支持**
+
+  - 通过 GitHub 个人访问令牌（repo 权限）生成私有仓库图表
+  - 支持本地自托管，分离前后端部署
+
+- **🛠️ 本地开发指南**
+
+  - 克隆仓库 → 安装依赖 → 配置 `.env` 文件
+  - 使用 Docker 启动后端和数据库（Postgres）
+  - 前端运行于 `localhost:3000`，可调整限流设置
+
+- **📈 未来计划**
+  - 添加字体图标支持
+  - 开发类似 star-history.com 的嵌入式渐进更新图表功能
+
+### [state-in-url](https://github.com/asmyshlyaev177/state-in-url)
+
+在查询参数中存储任何用户状态；想象一下浏览器 URL 中的 JSON，同时保持数据的类型和结构，例如，数字将被解码为数字而不是字符串。具有 TS 验证。共享状态与 URL 状态无缝同步，无需麻烦或样板代码。支持 Next.js@14-15 和 react-router@6-7。
+
+### [dcm](https://github.com/ajnart/dcm)
+
+DCM（Docker Compose Maker）是一个社区驱动的工具，用于快速生成 Docker Compose 配置文件，支持多种自托管应用，简化部署流程。
+
+- 🌟 **社区驱动项目**：DCM 旨在成为 Docker Compose 配置的首选资源，鼓励用户分享喜爱的自托管工具。
+- 🛠️ **功能简介**：通过简单点击选择容器，生成即用型`docker-compose.yaml`文件，内置最佳实践和默认配置。
+- 🔧 **使用步骤**：选择容器→使用模板→调整设置→生成配置→部署（支持复制粘贴、下载文件或 Portainer 等工具）。
+- 🚀 **部署选项**：支持命令行、Portainer Stacks 及其他兼容 Docker Compose 的工具，需注意环境变量设置。
+- 🌐 **快速开始**：提供在线版本（含分析）或通过 Docker 一键运行，支持多平台（amd64/arm64/armv7）。
+- 📦 **支持工具**：涵盖媒体管理（Jellyfin/Sonarr）、仪表盘（Homarr）、下载工具（qBittorrent）、数据库（MySQL）等。
+- 🧪 **测试与开发**：使用 Bun 进行测试，支持从源码构建（推荐 Bun 环境）。
+- 🖼️ **模板库**：预置常见用例模板（如媒体服务器、开发环境），可组合使用。
+
+### [BilibiliHistoryFetcher](https://github.com/2977094657/BilibiliHistoryFetcher)
+
+获取 b 站历史记录，保存到本地数据库，可下载对应视频及时存档，生成详细的年度总结，自动化任务部署到服务器实现自动同步，以及自动发送日志邮件，下面链接是对应前端
+
+## 更新
+
+### [RFC: Deployment Adapters API](https://github.com/vercel/next.js/discussions/77740)
+
+Next.js 计划引入部署适配器以支持更灵活的部署方式，确保在不同平台（包括无服务器环境）上实现统一体验。Vercel 将与其他平台使用相同的适配器 API，保证部署输出的一致性。
+
+- 🚀 **背景**
+
+  - Next.js 自 2016 年起支持自托管，但无服务器平台（如 Netlify）因定制需求难以兼容。
+  - 新适配器 API 旨在简化部署平台的维护，并确保 Vercel 与其他平台输出格式一致。
+
+- 🔍 **痛点**
+
+  - 缺少后台任务（如缓存更新）完成的通知机制。
+  - 无法动态修改 `next.config` 配置，需依赖非官方环境变量或手动封装。
+  - 构建时缺乏稳定接口获取配置和入口信息，需依赖未文档化的清单文件。
+  - 执行入口需加载完整 `next-server`，影响冷启动速度和控制灵活性。
+
+- ✨ **解决方案**
+
+  - **构建输出变更**：
+    - 入口点（含中间件）将暴露统一签名，无需依赖 `next-server`。
+    - 新增 `waitUntil` 回调，支持跟踪后台任务完成状态。
+  - **适配器 API**：
+    - 提供 `modifyConfig` 钩子，支持构建前修改配置。
+    - 通过 `onBuildComplete` 回调获取构建输出详情（路由、资源、函数配置等）。
+    - 适配器可通过 `next.config` 或环境变量 `NEXT_ADAPTER_PATH` 配置。
+
+- 🤝 **合作与推广**
+
+  - 已与 Netlify、Cloudflare 等平台成立工作组，共同设计 API。
+  - Vercel 适配器将作为首个参考实现，稳定后提供官方文档和开源仓库。
+  - 符合标准的平台将被列入 Next.js 官方部署文档。
+
+- ⚠️ **非目标**
+  - 当前不计划通过适配器 API 支持自定义运行时。
+
+### [vike-server](https://vike.dev/blog/vike-server)
+
+Joël、Dani 和 Rom 开发了新的 Vike 扩展 vike-server，支持将 Vite 与任意服务器（如 Express.js、Hono 等）和部署环境（如 VPS、Netlify 等）集成，现已发布稳定版 1.0.0。
+
+- 🚀 **核心功能**：vike-server 通过 Vite 转译服务器代码，告别 ts-node/tsx/vavite，支持`import.meta.env`等 Vite 工具。
+- ⚡ **零配置集成**：自动添加 Vike 至服务器，无需手动配置。
+- 🔄 **HMR 支持**：修改服务器文件时局部更新代码，减少全量重启（实验性功能）。
+- 🌟 **生产就绪**：经过数月测试，1.0.0 版本稳定可用。
+- 🔄 **灵活选择**：完全预渲染（SSG）或特殊需求场景可不使用 vike-server，遵循 Vike“扩展可选”哲学。
+- 📝 **代码示例**：支持 Express.js 等框架，通过`apply()`和`serve()`简化多环境部署（如 Node.js/Cloudflare）。
+- 🛠 **未来优化**：1.0.0 版本前将完善类型安全路由等，注重稳定性和开发者体验。
+- 🔗 **生态共享**：计划与其他 Vite 框架及部署提供商合作，避免重复造轮子。
+- 📚 **相关资源**：集成指南见[Integration > Server](https://vike.dev/server)，更多背景参考[Vite 6 发布说明](https://vitejs.dev/blog/announcing-vite6)。
+
+### [React Email 4.0](https://resend.com/blog/react-email-4)
+
+React Email 4.0 发布，新增多项实用功能，包括链接检查、垃圾邮件评分、兼容性检测、响应式预览及新组件，同时社区数据显著增长。
+
+- 🚀 **React Email 4.0 发布**：包含 Linter、垃圾邮件评分、兼容性检查器、响应式预览和 8 个新组件。
+- 📦 **安装更新**：通过 `npm i react-email@latest` 升级至最新版本。
+- 📊 **社区增长**：npm 周下载量达 422,541（增长 56%），GitHub 星标 15,509，154 位贡献者参与。
+- 🔍 **Linter 工具**：检查链接有效性（HTTPS/200 状态码）和图片优化（大小 ≤1MB、含 alt 文本）。
+- 🚫 **垃圾邮件评分**：基于 SpamAssassin，检测敏感词（如药品、诈骗）和异常链接数量。
+- 📱 **兼容性检查器**：依托 Can I Email，验证 HTML/CSS 在主流邮件客户端（如 Gmail、Outlook）的支持情况。
+- 📲 **响应式预览**：支持自定义设备尺寸，预览移动端和桌面端显示效果。
+- 🧩 **新增组件**：包括 Bento 网格、定价表格、功能列表、评分等 8 个可直接复用的组件。
+
+### [React 19.1](https://github.com/facebook/react/releases/tag/v19.1.0)
+
+React 及其相关技术的最新更新和修复内容，包括 Owner Stack 的开发调试功能、Suspense 边界的增强支持、React DOM 的改进、use-sync-external-store 的更新以及 React Server Components 的新特性等。
+
+- 🐛 **Owner Stack** - 开发模式下用于调试的组件追踪字符串，帮助识别渲染特定组件的责任链。
+- 🔧 **Suspense 增强** - 支持客户端、服务器端和水合过程中的 Suspense 边界，优化渲染优先级和垃圾回收。
+- 🛠 **React 修复** - 修复了键警告、CSS 选择器格式、开发模式警告等问题，并改进了与 Google Closure Compiler 的兼容性。
+- 🌐 **React DOM 改进** - 修复了 href 属性警告、HTML 注释容器支持，并优化了响应式图片预加载。
+- 📦 **use-sync-external-store** - 更新了 package.json 以支持多入口点。
+- 🚀 **React Server Components** - 新增实验性 API、流式支持、错误处理改进，并集成了 Parcel 打包工具。
+
+### [captureOwnerStack](https://react.dev/reference/react/captureOwnerStack)
+
+`captureOwnerStack` 用于开发环境下获取当前 Owner Stack 信息，返回字符串或 `null`，仅适用于 React 控制的上下文（如渲染、Effects 等）。
+
+- 📌 **功能**：读取当前 Owner Stack，开发环境下返回字符串，否则返回 `null`。
+- 🔧 **使用场景**：组件渲染、Effects、React 事件/错误处理程序。
+- ⚠️ **注意事项**：
+  - 非开发环境始终返回 `null`。
+  - 需通过命名空间导入（如 `import * as React`）避免生产环境报错。
+- 🔄 **与 Component Stack 区别**：Owner Stack 仅包含“创建”节点的组件，忽略转发/兄弟节点。
+- 🛠️ **应用示例**：增强错误覆盖层，拦截 `console.error` 并附加 Owner Stack。
+
+### [Express@5.1.0: Now the Default on npm with LTS Timeline](https://expressjs.com/2025/03/31/v5-1-latest-release.html)
+
+Express v5.0.0 于去年 9 月 9 日发布，但未立即设为 npm 最新版本。团队过去一年致力于项目复兴，解决遗留问题后，现正式推进 v5 成为默认版本。
+
+- 📅 **版本发布延迟**：v5.0.0 发布时存在未完善内容，团队优先修复后才标记为最新。
+- 📚 **文档更新**：社区贡献者协助更新了 v5 文档和迁移指南，修复了陈旧内容。
+- 🔄 **迁移支持**：推出自动化工具（codemod）简化 v4 到 v5 的迁移，但部分变更仍需手动调整。
+- 🌐 **生态兼容性**：确保中间件和文档适配 v5，特别关注新手用户的无缝过渡。
+- ⏳ **长期支持策略**：提出 LTS 三阶段（CURRENT/ACTIVE/MAINTENANCE），v4 维护期延长至 2026 年。
+- 🚀 **v5.1.0 更新**：支持 Uint8Array、优化依赖管理、新增 ETag 功能等，详情见更新日志。
+- 💡 **未来计划**：成立性能工作组，提升 TypeScript 体验，v6 讨论已启动。
+
+## AI
+
+### [agent-starter-pack](https://github.com/GoogleCloudPlatform/agent-starter-pack)
+
+一套为 Google Cloud 构建的生产就绪生成 AI 代理模板。它通过提供全面的、生产就绪的解决方案，加速开发，解决构建和部署 GenAI 代理时常见的挑战（部署与运营、评估、自定义、可观察性）。

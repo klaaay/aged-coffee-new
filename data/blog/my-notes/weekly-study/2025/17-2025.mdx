@@ -1,0 +1,357 @@
+---
+title: 2025-第十七周
+date: '2025-04-21'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [构建离线友好的图片上传系统——Smashing Magazine](https://www.smashingmagazine.com/2025/04/building-offline-friendly-image-upload-system/)
+
+本文介绍了如何利用 PWA 技术（如 IndexedDB、Service Worker 和 Background Sync API）构建一个离线友好的图片上传系统，以解决网络不稳定时的用户体验问题。文章详细阐述了系统的工作流程、实现步骤以及相关的注意事项和限制。
+
+- 🌐 利用 PWA 技术（IndexedDB、Service Worker 和 Background Sync API）构建离线友好的图片上传系统
+- 📊 系统流程图：用户选择图片 → 检查网络 → 存储到 IndexedDB（离线时） → 网络恢复后上传 → 删除本地存储
+- 📥 用户可通过文件输入框或拖放界面选择图片，提升用户体验
+- 🔧 实现步骤：注册 Service Worker → 检查网络连接 → 注册同步事件 → 存储图片到 IndexedDB → 网络恢复后上传 → 清理存储
+- ⚠️ 注意事项：网络检测不可靠、Background Sync API 仅限 Chromium 浏览器、IndexedDB 存储策略限制
+- 🚀 提升用户体验：通过通知、状态指示器等 UI 元素反馈上传状态
+- 📌 总结：PWA 技术可显著提升网络不稳定情况下的应用可靠性
+
+### [了解 Vite 如何处理你的 node_modules](https://dev.to/jinjiang/understanding-how-vite-deals-with-your-nodemodules-3pdf)
+
+文章探讨了 Vite 在不同模式和场景下处理项目依赖（node_modules）的机制，包括 CJS/ESM 转换、依赖预构建、SSR 模式配置等核心问题。
+
+- ⚡️ **Vite 简介**：现代前端构建工具，开发时基于浏览器原生 ES 模块，生产环境使用 Rollup 打包，已成为前端开发的事实标准。
+- 📦 **node_modules 挑战**：Vite 能高效处理混乱的 node_modules，包括 CJS/ESM/UMD 等混合模块，但存在边缘情况需手动处理。
+- 🔄 **依赖预构建**：
+  - 通过 `optimizeDeps` 配置优化边界（如强制包含/排除特定依赖）。
+  - 生成 `node_modules/.vite/deps` 缓存文件，将 CJS 转换为 ESM 以支持浏览器。
+- 🖥️ **SSR 模式**：
+  - 默认外部化（`ssr.external`）纯 JS 依赖，需通过 `ssr.noExternal` 内联非纯资源（如含 CSS 的模块）。
+  - CJS 依赖需同时配置 `ssr.optimizeDeps.include` 预构建为 ESM。
+- ⚠️ **注意事项**：
+  - `resolve.alias` 可能破坏 SSR 下的 CJS 外部化，优先使用 `resolve.dedupe` 确保单例。
+  - 嵌套依赖需显式配置 `noExternal` 和 `optimizeDeps`。
+- 🔮 **未来改进**：Vite 6+ 将引入 `environments.ssr` 替代旧配置，Rolldown 集成可能简化现有逻辑。
+
+### [后开发者时代](https://www.joshwcomeau.com/blog/the-post-developer-era/)
+
+AI 并未终结前端开发，人类开发者仍不可或缺。过去两年，AI 工具虽被广泛采用，但更多是辅助而非替代开发者。当前就业市场严峻主要受经济环境和 AI 误解影响，而非 AI 取代人力。未来，AI 与开发者协作将成主流，但需警惕过度依赖 AI 导致技能退化。
+
+- 🤖 作者两年前质疑“AI 将取代前端开发者”的预测，认为 AI 是辅助工具而非替代品，如今观点仍被验证。
+- 🏢 企业虽采用 AI 工具（如谷歌 25% 代码由 AI 生成），但实际由人类开发者主导，AI 仅作为辅助工具。
+- � 初创公司 Devin 等 AI 开发工具表现不佳，真实案例显示其仅能完成少量简单任务，复杂场景仍需人工干预。
+- 🛠️ 作者亲测 AI 编程工具（如 Cursor+Claude）效率提升显著，但仍需人工纠错和指导，完全依赖会导致代码质量失控。
+- 📉 当前就业市场低迷主因宏观经济、大厂裁员及企业对 AI 的误解（误以为 AGI 即将取代人力），而非 AI 实际替代效应。
+- 🔮 未来 AI 将持续迭代（如 Gemini 2.5），但进步趋于渐进式，开发者需平衡 AI 辅助与主动学习以避免“氛围编程”陷阱。
+- ⚠️ 需警惕政治经济环境（如美国政策变动）对行业的影响，以及过度依赖 AI 导致的新手开发者技能空心化。
+- 🌟 作者鼓励新人开发者：AI 时代掌握编程技能仍具高价值，人机协作将催生“开发者复兴”。
+
+### [不可能的组合件——过度反应](https://overreacted.io/impossible-components/)
+
+文章探讨了如何通过 React Server Components 实现前后端逻辑的封装与组合，构建自包含的“不可能组件”。核心思想是将数据加载（后端）与交互逻辑（前端）拆分为独立但协作的模块，通过自上而下的数据流无缝整合。以下是关键要点：
+
+- 🧩 **组件拆分**：将组件分为后端部分（如`GreetingBackend`处理文件读取）和前端部分（如`GreetingFrontend`管理状态），通过 props 传递数据。
+- 🔄 **数据流模型**：后端作为父组件优先执行，将数据注入前端子组件，形成单次往返的完整交互，而非传统的前端主动请求。
+- 🎨 **动态交互示例**：通过`ExpandingSection`组件展示如何将后端数据（如文章首句）与前端状态（展开/折叠）结合，实现无额外请求的交互。
+- 📂 **自包含数据加载**：如`PostPreview`自动读取 Markdown 文件并统计字数，逻辑封装在组件内部，复用时无需外部协调。
+- 🔍 **组合式功能**：通过`SortableList`复用实现可排序/过滤的列表，支持任意内容（如文件列表或博客预览），保持前后端逻辑隔离。
+- 🌐 **跨栈组合**：强调前后端不应割裂，而应通过组件化设计（如`<PostPreview slug="...">`）统一用户体验，映射直观的 UI 抽象。
+- ⚡ **性能优势**：静态构建时预取数据，避免运行时加载闪烁，动态应用亦可局部更新而不破坏现有状态。
+
+### [Tailwind 与 Linaria 性能对比研究](https://www.developerway.com/posts/tailwind-vs-linaria-performance)
+
+本文对比了 Tailwind 和 Linaria 在性能方面的表现，重点关注初始加载和交互性能。通过实际测量和分析，作者发现两者在性能上的差异并不显著，但 Tailwind 在某些交互场景下表现稍逊。最终建议开发者根据个人偏好和项目需求选择框架，而非单纯基于性能考量。
+
+- 🔍 **调查背景**  
+  作者对 Tailwind 和 Linaria 进行性能对比，旨在验证 Tailwind 是否如传闻中在性能上优于其他 CSS 解决方案。
+
+- 🛠️ **工具与方法**  
+  使用真实应用（非合成示例）进行测试，测量初始加载（LCP）和交互性能（INP），并在不同渲染模式（CSR/SSR）下进行对比。
+
+- 📊 **测量结果**
+
+  - CSS 文件大小：Tailwind 比 Linaria 小 13%。
+  - HTML 文件大小（SSR 模式）：Tailwind 在某些页面上比 Linaria 大 70%-162%。
+  - JavaScript 文件大小：Tailwind 比 Linaria 大 3%。
+
+- ⚡ **初始加载性能**  
+  在 CSR 和 SSR 模式下，Tailwind 和 Linaria 的 LCP 时间几乎相同，压缩技术抵消了文件大小的差异。
+
+- 🖱️ **交互性能**  
+  Tailwind 在某些交互（如打开下拉菜单）中表现稍差，原因是其内置的通用选择器（如`*`、`::before`）导致样式计算时间更长。
+
+- 🎯 **结论与建议**  
+  Tailwind 和 Linaria 在性能上差异不大，选择框架时应优先考虑开发体验、维护性等因素，而非仅关注性能。
+
+## 工具
+
+### [asdf](https://github.com/asdf-vm/asdf)
+
+可扩展的版本管理器，支持 Ruby、Node.js、Elixir、Erlang 等更多语言。
+
+### [GitHub - upstash/jstack: 构建极速、轻量且端到端类型安全的 Next.js 应用](https://github.com/upstash/jstack)
+
+JStack 是一个基于 Next.js 15、Hono、Tailwind 和 Drizzle ORM 构建的快速、轻量级且端到端类型安全的 Next.js 应用开发工具。
+
+- 🚀 **快速开发**：基于 Next.js 15 构建，支持高效开发。
+- 🔒 **类型安全**：提供端到端的类型安全支持。
+- 🛠️ **技术栈**：结合 Hono、Tailwind 和 Drizzle ORM 等现代工具。
+- 🌐 **文档与功能**：详细功能与文档可访问[jstack.app](https://jstack.app/)。
+
+### [GitHub - jdalrymple/gitbeaker: 🦊🧪 一个全面且类型化的 Gitlab SDK，适用于 Node.js、浏览器、Deno 和 CLI](https://github.com/jdalrymple/gitbeaker)
+
+一个全面的、类型化的 GitLab SDK，支持 Node.js、浏览器、Deno 和 CLI 使用。
+
+- 🦊 项目名称：GitBeaker，一个功能全面的 GitLab SDK
+- 🧪 支持环境：Node.js、浏览器、Deno 和 CLI
+- 📜 功能覆盖：完整支持 GitLab API v16.5 的所有功能
+- 🔧 核心包：@gitbeaker/core，提供 GitLab 资源支持
+- 💻 主要使用包：@gitbeaker/rest，基于原生 fetch，适用于 Node.js、Deno 和现代浏览器
+- 📟 CLI 工具：@gitbeaker/cli，提供命令行接口
+- 🏷️ 类型支持：所有库都有详细的 TypeScript 声明
+- ✅ 测试覆盖：所有库测试覆盖率超过 80%
+- 🌟 社区支持：162 位贡献者，1.6k 星标，304 次 fork
+
+### [GitHub - dpskvn/express-sse：一个用于快速简便实现服务器发送事件的Express中间件](https://github.com/dpskvn/express-sse)
+
+express-sse 是一个 Express 中间件，用于快速简便地实现服务器发送事件（SSE）功能。
+
+- 🚀 **功能概述**：express-sse 是一个简化服务器发送事件（SSE）的 Express 中间件，适合需要快速实现 SSE 的场景。
+- 📦 **安装方式**：通过 npm 或 yarn 安装，命令分别为 `npm install --save express-sse` 或 `yarn add express-sse`。
+- ⚙️ **使用方法**：
+  - 服务器端：引入模块后，通过 `sse.init` 初始化路由，使用 `sse.send` 发送内容，支持自定义事件名称和 ID。
+  - 客户端：通过 `EventSource` 监听事件流，支持 `onmessage` 和自定义事件监听。
+- 🔧 **配置选项**：支持 `isSerialized`（控制初始数据发送方式）和 `initialEvent`（设置初始事件名称）等参数。
+- 📜 **开源协议**：采用 MIT 许可证，代码开源且可自由使用。
+- 🌟 **项目数据**：GitHub 上获得 115 颗星、26 次分叉，有 5 位贡献者，代码以 JavaScript 编写。
+- 🔄 **更新维护**：提供 `updateInit` 和 `serialize` 方法，支持动态更新初始数据和序列化事件发送。
+
+### [disable-devtool](https://github.com/theajack/disable-devtool)
+
+禁用 F12 按钮、右键和浏览器菜单中的网页开发者工具
+
+### [partial-json-parser-js](https://github.com/promplate/partial-json-parser-js)
+
+`partial-json` 的轻量级库，用于解析不完整的 JSON 字符串，特别适用于流式传输数据的场景。它支持自定义允许的部分解析类型，并提供了详细的 API 和示例。
+
+- 📦 **功能简介** - `partial-json` 是一个 JavaScript 库，用于解析不完整或流式的 JSON 数据，支持部分字符串、数组、对象等类型的解析。
+- 🛠️ **安装方式** - 可通过 npm、pnpm、bun 或 yarn 安装：`npm i partial-json`，同时提供 CommonJS 和 ESM 版本。
+- 📝 **基本用法** - 通过 `parse` 函数解析完整或不完整的 JSON 字符串，支持通过 `Allow` 枚举指定允许的部分解析类型。
+- 🔧 **自定义解析** - 使用 `Allow` 的常量（如 `STR | OBJ`）控制哪些类型可以部分解析，未允许的类型需完整才能被解析。
+- ⚠️ **错误处理** - 若 JSON 字符串格式错误，`parse` 会抛出异常。
+- 📚 **API 参考** - `parse(jsonString, [allowPartial])` 支持多种部分解析选项，如字符串、数字、数组、对象等。
+
+### [Frimousse — React 表情选择器](https://frimousse.liveblocks.io/)
+
+Frimousse 是一个轻量级、无样式且可组合的 React 表情符号选择器。
+
+- 🚀 **轻量级与可组合**：Frimousse 是一个无样式的 React 表情符号选择器，支持高度自定义和组合。
+- 🛠 **安装方式**：可通过 npm 安装 (`npm i frimousse`)，也支持通过 shadcn CLI 安装为预构建组件。
+- 🎨 **样式自定义**：支持 Tailwind CSS、CSS-in-JS 或原生 CSS 进行样式定制，各部分可通过 `[frimousse-*]` 属性进行定位。
+- 🔍 **功能组件**：包含搜索框 (`EmojiPicker.Search`)、视口 (`EmojiPicker.Viewport`)、列表 (`EmojiPicker.List`) 等组件，支持加载和空状态显示。
+- 📱 **响应式设计**：支持动态调整尺寸，无需固定宽高，适合移动端和桌面端。
+- 🌈 **皮肤色调选择**：内置皮肤色调选择器 (`EmojiPicker.SkinToneSelector`)，支持自定义表情符号作为视觉标识。
+- 🎭 **活跃表情符号跟踪**：通过 `useActiveEmoji` 钩子或 `EmojiPicker.ActiveEmoji` 组件可跟踪当前选中的表情符号。
+- 📚 **多语言支持**：支持通过 `locale` 属性设置语言，默认为英语 (`"en"`)。
+- 🔗 **集成示例**：可与 shadcn/ui、Radix UI 等库集成，支持弹出框等交互形式。
+- 🧩 **虚拟化列表**：使用虚拟化技术优化性能，支持动态加载和滚动。
+
+## 更新
+
+### [React Router v7.5+ 中的更快懒加载 | Remix](https://remix.run/blog/faster-lazy-loading)
+
+React Router v7.5+ 引入了更细粒度的懒加载 API，优化了路由代码的加载性能，并支持即将推出的中间件功能。
+
+- 🚀 **React Router v7.5+ 发布**：新增细粒度懒加载 API，支持中间件并提升性能。
+- 💤 **原有懒加载方式**：通过 `route.lazy()` 动态导入路由模块，但存在并行加载限制。
+- ⚠️ **中间件挑战**：旧 API 无法高效支持中间件，导致不必要的性能损耗。
+- 🔧 **新 API 改进**：引入对象形式的 `route.lazy`，可单独懒加载路由属性（如 `loader`、`Component`）。
+- 📂 **代码拆分优化**：支持将路由属性拆分到不同文件，减少不必要的代码加载。
+- ⏱️ **性能提升**：中间件和加载器/动作可并行解析，避免全局等待。
+- 🌟 **额外优化**：跳过客户端导航中的 `HydrateFallback`，减少初始加载代码量。
+- 🔄 **兼容性**：框架模式用户已自动使用新 API，数据模式用户可手动升级。
+
+### [oRPC v1 公告 - 类型安全 API，简单实现 🪄](https://orpc.unnoq.com/blog/v1-announcement)
+
+oRPC v1 是一个基于 TypeScript 的类型安全 API 构建工具，旨在简化开发流程并提供强大的功能支持。其设计理念强调“强大的简洁性”，允许开发者像编写普通函数一样定义 API 端点，同时自动获得端到端的类型安全、OpenAPI 规范生成等特性。
+
+- 🪄 **oRPC 简介**：一个类型安全的 API 构建工具，可作为 tRPC、ts-rest 等库的替代方案。
+- 🚀 **开发背景**：作者在失业后决定追求“独立开发者”梦想，因对现有工具的不满而创建了 oRPC。
+- 💡 **核心目标**：通过简化工具设计，解决开发者在构建 API 时遇到的常见问题。
+- 📅 **开发历程**：从 2024 年 9 月开始，经过多次重构，最终在 2024 年底发布稳定版本。
+- 💰 **关键转折**：一位赞助者的 100 美元支持促使作者全职投入 oRPC 开发。
+- 🏆 **V1 发布**：核心功能稳定，适合生产环境使用，具备类型安全、OpenAPI 支持等特性。
+- 🔧 **主要功能**：
+  - 端到端类型安全（包括错误处理）
+  - 内置 OpenAPI 规范生成
+  - 支持多框架集成（如 TanStack Query、Next.js 等）
+  - 原生支持多种数据类型（如 Date、File 等）
+  - 插件和中间件扩展能力
+- ⚖️ **与 tRPC 对比**：oRPC 在类型检查速度、运行时性能、资源占用等方面表现更优。
+- 🔄 **与其他工具对比**：解决了 ts-rest 在中间件和数据类型处理上的不足，提供了比 next-safe-action 更完整的 RPC 体验。
+
+### [发布 pnpm 10.9 · pnpm/pnpm · GitHub](https://github.com/pnpm/pnpm/releases/tag/v10.9.0)
+
+pnpm 是一个流行的 JavaScript 包管理工具，最新版本 v10.9.0 引入了新功能和修复了一些问题。
+
+- 🚀 新增支持安装 JSR 包，语法为 `pnpm add jsr:<pkg_name>`，安装后会自动转换格式以兼容 npm 和其他包管理器。
+- ⚠️ 新增 `dangerouslyAllowAllBuilds` 设置，允许自动运行依赖项的脚本而无需手动批准。
+- 🐛 修复了 `verifyDepsBeforeRun` 在 `nodeLinker: hoisted` 情况下的误报问题。
+- ⚠️ 明确不再支持 `nodeLinker: pnp` 与 `verifyDepsBeforeRun` 的组合使用，并会发出警告。
+
+### [React 编译器 RC 版本 - React](https://react.dev/blog/2025/04/21/react-compiler-rc)
+
+React 团队发布了 React Compiler RC 版本，为稳定版做准备，并分享了相关更新和优化。
+
+- 🚀 **React Compiler RC 发布**：首个候选版本，接近稳定版，可用于生产环境测试。
+- 🔧 **工具整合**：将`eslint-plugin-react-compiler`合并至`eslint-plugin-react-hooks`，简化配置。
+- ⚡ **性能优化**：支持可选链和数组索引依赖，减少重复渲染，提升 UI 响应速度。
+- 🛠️ **构建支持**：新增对`swc`的实验性支持，并与`oxc`合作实现无 Babel 构建。
+- 📦 **安装方式**：提供`npm`、`pnpm`、`yarn`的安装命令，支持 React 17 及以上版本。
+- ⚠️ **兼容性调整**：默认关闭`ref-in-render`验证（因误报问题），后续版本将改进后重新启用。
+- 📝 **文档与反馈**：详细使用文档已更新，鼓励用户试用并通过 GitHub 提交反馈。
+- 🔄 **升级建议**：推荐通过端到端测试确保兼容性，或固定编译器版本以避免意外行为。
+- 🗺️ **稳定版路线图**：RC 收集反馈后推出稳定版，未来计划持续优化自动记忆化和新特性。
+
+## AI
+
+### [rowboat](https://github.com/rowboatlabs/rowboat)
+
+Rowboat 基于 OpenAI 的 Agents SDK，支持通过自然语言描述生成多智能体系统，并提供 HTTP API 和 Python SDK 两种集成方式。
+
+- ✨ **快速构建工作流**  
+  通过自然语言描述（如“为食品配送公司构建处理配送状态和缺失物品的助手”），Rowboat 可自动生成多智能体工作流。  
+
+- 🌐 **连接 MCP 服务器**  
+  在设置中添加 MCP 服务器，并将工具导入 Rowboat 平台。  
+
+- 📞 **灵活集成方式**  
+  支持通过 HTTP API 或 Python SDK 将智能体集成到应用中，需从设置中获取项目 ID 和 API 密钥。  
+
+- ⚡ **快速启动指南**  
+  1. 设置 OpenAI API 密钥：`export OPENAI_API_KEY=your-key`  
+  2. 克隆仓库并启动 Docker：`git clone` + `docker-compose up`  
+  3. 访问本地应用：`http://localhost:3000`  
+
+- 🔧 **集成示例**  
+  - **HTTP API**：使用`curl`调用本地 API 端点，传递消息和认证信息。  
+  - **Python SDK**：通过`Client`类初始化会话，支持状态化聊天或低级 API 调用。  
+  
+Summarized by https://chrome.google.com/webstore/detail/cbgecfllfhmmnknmamkejadjmnmpfjmp
+
+### [mcp-gateway](https://github.com/mcp-ecosystem/mcp-gateway)
+
+MCP Gateway 是一款轻量级、高可用的网关服务，可将现有 API 快速转换为符合 MCP 协议的服务，无需修改代码，仅需配置即可实现。支持多种部署方式，并提供内置管理界面，适合个人和组织快速集成。
+
+### [mcp-server-weread](https://github.com/freestylefly/mcp-server-weread)
+
+微信读书 MCP
+
+### [markdownify-mcp](https://github.com/zcaceres/markdownify-mcp)
+
+一个将几乎所有内容转换为 Markdown 的模型上下文协议服务器
+
+### [什么是 llms.txt，你需要关注它吗？](https://ahrefs.com/blog/what-is-llms-txt/)
+
+文章探讨了 llms.txt 文件的用途、现状及其实用性，指出目前尚无主流大型语言模型（LLM）提供商支持该标准，并分析了其潜在价值与局限性。
+
+- 🔍 **llms.txt 简介**：llms.txt 是一种提议的标准，旨在帮助大型语言模型（LLM）更有效地访问和解析网站的结构化内容，如 API 文档、产品分类等。
+- 🚀 **当前支持情况**：目前没有主流 LLM 提供商（如 OpenAI、Anthropic、Google 等）正式采用 llms.txt 标准，它仍处于提议阶段。
+- ⚠️ **与 robots.txt 的区别**：虽然 llms.txt 的理念类似于 robots.txt，但前者尚未被广泛认可，而后者对搜索引擎爬虫行为有直接影响。
+- 📄 **文件结构与示例**：llms.txt 采用 Markdown 格式，通过 H2 标题分类资源链接，例如文档、政策和产品信息，并需托管在网站根目录下。
+- 🌍 **实际采用情况**：少数公司（如 Mintlify、Anthropic）已发布 llms.txt 文件，但主要 LLM 爬虫并未遵循或解析该文件。
+- ❓ **实用性质疑**：作者认为 llms.txt 目前缺乏实际效用，既未证明能提升 AI 内容检索效果，也无主流平台支持，类似于“关键词元标签”的历史争议。
+- ⏳ **潜在价值**：若未来 LLM 提供商采纳该标准，早期部署可能带来优势，但目前设置成本极低且无风险。
+- 🤖 **行业观点**：Google 的 John Mueller 指出，AI 服务并未使用 llms.txt，直接爬取网站内容仍是更高效的方式。
+
+### [[RFC] 098 - DB Schema visualization](https://github.com/lobehub/lobe-chat/discussions/6952)
+
+本文介绍了将 Drizzle ORM 与数据库架构可视化工具结合的四种方法，重点推荐使用 Drizzle DBML Generator 生成 DBML 格式文件，并通过 VS Code 扩展或在线工具进行可视化，同时提供了自动化集成建议。
+
+- 🛠️ **方法一：Drizzle DBML Generator + 可视化工具**  
+  安装`drizzle-dbml-generator`生成 DBML 文件，支持 VS Code 扩展或`dbdiagram.io`在线工具可视化。
+
+- 🌐 **DBML 可视化选项**
+
+  - VS Code 扩展：安装`DBML Live Preview`或`DBML Entity-Relationship Diagrams`。
+  - 在线工具：通过`dbdiagram.io`导入 DBML 文件。
+
+- 📊 **方法二：Atlas 可视化**  
+  使用 Atlas CLI 直接集成 Drizzle 架构，通过`atlas schema inspect`命令生成浏览器可视化图表。
+
+- 🔄 **方法三：DBML CLI 转换 SQL 迁移文件**  
+  通过`sql2dbml`将 SQL 文件转为 DBML 格式，再用可视化工具展示。
+
+- ⚙️ **方法四：dbdiagram.io 直接导入 SQL**  
+  支持上传 SQL 迁移文件自动生成可视化架构图。
+
+- 🤖 **自动化集成建议**  
+  在`package.json`中添加`postmigrate`钩子，每次迁移后自动更新架构图。
+
+- ✅ **最终推荐方案**
+  - **首选**：Drizzle DBML Generator + VS Code 扩展/`dbdiagram.io`（简单易用，易自动化）。
+  - **备选**：Atlas（适合复杂项目和企业级需求）。
+
+## 其他
+
+个人能力很重要，应该鼓励，但不能指望它，否则软件质量将不一致，没有可持续性。一旦顶级程序员跳槽，公司就会陷入困境。
+
+企业应该努力改进工作流程，而不是努力改进人员，始终坚持流程优先于人员。
+
+-- 《创作系统，而不是创造英雄》
+
+---
+
+我喜欢软件，因为软件可以创造无限可能性和一种非凡的民主。
+
+-- Hacker News 读者
+
+---
+
+### [线上故障应急处理：4 年多 on call 经验总结](https://jt26wzz.com/posts/0007-online-firefighting-real-world-lessions-from-4-years-on-call/)
+
+故障处理黄金法则的实践经验总结
+
+- 🚑 **故障止血是最高优先级**  
+  应急时首要任务是恢复功能而非追究根因，如同急救先止血再诊断。
+
+- 🔍 **最快止血手段是定位触发变量**  
+  系统变更（如版本/配置）常是诱因，建立变更监控中心可加速排查。
+
+- ⚠️ **止血方案执行需谨慎**  
+  避免雪上加霜（如回滚引发新问题）或执行困难（如全网进程清理），需灰度验证。
+
+- 🗣️ **高效沟通是应急核心**  
+  明确应急负责人（一号位），研发需清晰同步排查思路并敢于判断，减少无效讨论。
+
+- 🛠️ **提升应急能力的四要素**  
+  1️⃣ **基本功**：深入技术细节；  
+  2️⃣ **业务熟悉度**：手绘系统流程图强化记忆；  
+  3️⃣ **工具沉淀**：预置脚本工具，避免临时搜索；  
+  4️⃣ **流程复盘**：个人回顾排查卡点，持续优化。
+
+- 🏗️ **功能开发三大铁律**  
+  确保「可灰度、可监控、可回滚」，拒绝妥协，从流程上强制落实。
+
+- 📚 **学习优秀故障案例**  
+  如 Cloudflare 透明复盘博客，借鉴共性问题解决方案。
+
+- 💆 **心态调整关键**  
+  故障非个人考试，团队协作优先；背锅后聚焦成长而非自责。
+
+- 📝 **故障复盘要点**  
+  精确时间线追溯、根因多问「为什么」、用制度保障 Action 执行，避免依赖个人。
+
+- ⚖️ **定责的务实态度**  
+  绩效影响难免，但需平衡责任与心理压力，从系统性改进中汲取教训。
+
+- 😅 **On Call 的辛酸与成长**  
+  突发故障伴随生活干扰，但经历沉淀为专业能力与黑色幽默回忆。

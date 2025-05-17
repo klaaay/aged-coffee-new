@@ -1,0 +1,199 @@
+{
+  "main": {
+    "id": "ec33048a27ce3ba3",
+    "type": "split",
+    "children": [
+      {
+        "id": "2140b3eda8f253ad",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e3954e9d085b0549",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "my-notes/weekly-study/2024/4-2024.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "78d351462e9f7c7e",
+    "type": "split",
+    "children": [
+      {
+        "id": "e7fae85ec9ab62c6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a089344f5d245228",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "92617ae1f6cba3b4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0cd72bf1dd44b34f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "638b2f41f2296358",
+    "type": "split",
+    "children": [
+      {
+        "id": "ecea6fe8b8bc454a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4979c01dc436209b",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "my-notes/weekly-study/2024/4-2024.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "0b3ef3cb00b22814",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "my-notes/weekly-study/2024/4-2024.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "9516a76800d9aff5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "ea77644c864eac15",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "my-notes/weekly-study/2024/4-2024.md"
+              }
+            }
+          },
+          {
+            "id": "3d7fc27313dbc867",
+            "type": "leaf",
+            "state": {
+              "type": "smart-connections-view",
+              "state": {}
+            }
+          },
+          {
+            "id": "38ef1d12fbfcfdc2",
+            "type": "leaf",
+            "state": {
+              "type": "smart-connections-chat-view",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "mermaid-tools:Open Mermaid Toolbar": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "smart-connections:Open: View Smart Connections": false,
+      "smart-connections:Open: Smart Chat Conversation": false
+    }
+  },
+  "active": "e3954e9d085b0549",
+  "lastOpenFiles": [
+    "my-notes/weekly-study/2022/1-2022.md",
+    "photo-gallery/photos.md",
+    "photo-gallery/2023/ao-men.md",
+    "my-notes/moth-notes/2024/6.md",
+    "my-notes/moth-notes/2024/5.md",
+    "my-notes/moth-notes/2024/4.md",
+    "my-notes/moth-notes/2024/3.md",
+    "my-notes/moth-notes/2024/1.md",
+    "my-notes/moth-notes/2023/all.md",
+    "my-notes/moth-notes/2023/12.md",
+    "my-notes/moth-notes/2023/11.md",
+    "my-notes/moth-notes/2023/10.md",
+    "life/zou-zou-ting-ting.md",
+    "life/subscription.md",
+    "life/schedule.md",
+    "smart-chats",
+    "tech-blog/yuan-gou-jian-gong-ju-vite-chu-tan.md",
+    "my-notes/yearly-notes/2024/index.md",
+    "read-note/zhe-cai-shi-xin-li-xue.md",
+    "tech-blog/jotai-user-guide.md",
+    "tech-blog/jotai-zustand-rtk-overview.md",
+    "tech-blog/zustand-rtk-single-store-or-multi.md",
+    "my-notes/weekly-study/2024/25-2024.md",
+    "my-notes/weekly-study/2024/24-2024.md",
+    "my-notes/weekly-study/2024/28-2024.md",
+    "my-notes/weekly-study/2024/26-2024.md",
+    "my-notes/weekly-study/2024/27-2024.md"
+  ]
+}

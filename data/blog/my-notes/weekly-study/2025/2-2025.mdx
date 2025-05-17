@@ -1,0 +1,237 @@
+---
+title: 2025-第二周
+date: '2025-01-07'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [⭐️2024 JavaScript Rising Stars](https://risingstars.js.org/2024/en)
+
+### [Balancing Text In CSS](https://ishadeed.com/article/balancing-text-css/)
+
+这段文字讨论了在网页设计中如何处理文本的换行和平衡排版的问题，包括在设计工具和浏览器中的不同解决方案，以及使用 CSS 中的 text-wrap 属性进行文本平衡的示例和实际运用。同时也提出了对 CSS 中新属性 text-wrap-ratio 的设想。
+
+- 文章介绍了 CSS 中的 text-wrap 属性，探讨了 text-wrap: balance 和 text-wrap: pretty 对文本布局的影响，以及它们的应用场景和效果。
+- 作者通过实际示例展示了如何使用 text-wrap 属性来平衡标题、卡片内容、模态框标题等不同类型的文本，以及在实际网站设计中的运用。
+- 文章提出了对 text-wrap: pretty
+
+### [17 Tips from a Senior React Developer](https://www.frontendjoy.com/p/17-tips-from-a-senior-react-developer)
+
+这段文字是一份关于 React 编程的指南，内容包括学习 JavaScript、阅读 React 文档、早期项目构建、使用可信赖的库、避免不必要的库、优化代码包大小、简化组件、解决多样化问题、学习好的编程模式、阅读大量的 React 代码、尽早使用 TypeScript、避免过早的抽象、优先使用 React 内置状态管理、谨慎追随在线建议、进行代码重构，以及仅在必要时使用框架。文章还包括一个寻找错误的游戏以及作者的联系方式。
+
+- React 开发者应先学习扎实的 JavaScript 基础，避免在学习 React - 时混淆不清。
+- 阅读 React 文档是学习 React 的有效方式，不需要花费大量金钱和时间去学习。
+- 在开发过程中，避免盲目跟随在线建议，而要结合团队讨论和具体场景进行评估。
+
+### [A Deep Dive into React 19: New Features, Improvements, and Best Practices](https://blog.alexcloudstar.com/a-deep-dive-into-react-19-new-features-improvements-and-best-practices)
+
+React 19 是一次重大更新，引入了许多创新功能，包括 Actions API、新的 Hooks、服务器组件、改进的混合以及上下文 API 优化等。此外，React 19 还增强了对自定义元素的支持。对于迁移到 React 19 的项目，文章提供了一些建议和最佳实践。文章总结了 React 19 的重要性，并鼓励开发人员尽快开始尝试这些新功能，以释放现代 React 开发的全部潜力。
+
+- React 19 带来了多项创新功能，包括 Actions API 简化异步 UI 状态管理，大幅简化开发流程。
+- 新增的 Hooks 提供了更灵活的功能，如 useOptimistic 简化乐观 UI 更新，useActionState 跟踪操作状态。
+- 引入 Server Components 可以将部分渲染工作转移到服务器端，减少客户端 JavaScript 量，提高性能和页面加载速度。
+
+### [使用 Next.js 实现可组合的缓存机制](https://nextjs.org/blog/composable-caching)
+
+这篇文章介绍了 Next.js 中一个新的简单而强大的缓存模型，即'use cache'指令。它使应用程序通过按需缓存数据或组件而变得更快。文章讨论了'use cache'的 API 设计和优势，并说明了它与传统缓存函数的区别。同时还介绍了如何处理序列化和非序列化输入值，以及如何使用标记和失效功能。最后强调了'use cache'的目标是使缓存逻辑的编写变得简单且强大。
+
+- 'use cache' 是 Next.js 中的一个指令，可以通过静态分析和运行时缓存数据或组件，使应用程序更快速。
+- 'use cache' 可以处理闭包中的依赖关系，自动包含在缓存键中，避免了缓存关键错误或缺失的问题。
+- 通过定义缓存生命周期和标记缓存以及使缓存更简单和强大，'use cache' 在简化缓存逻辑的同时也保持了强大的功能。
+
+### [使用 React 进行表单验证](https://www.robinwieruch.de/react-form-validation/)
+
+本文介绍了在全栈 React 应用中采用服务器端优先的形式验证表单的方法。作者首先强调了服务器端验证的重要性，包括提供端到端的实现、公共 API 的结构化反馈以及验证规则在整个堆栈中的一致性。接着讨论了客户端验证的必要性，包括即时反馈和减轻服务器负载等优势。文章还提到了使用表单库的好处，以及如何在团队中建立共同的表单处理基础。最后，文章详细介绍了如何在 React 中进行服务器端和客户端表单验证的步骤，并建议在需要更复杂验证规则、自定义错误消息或更好的用户体验时使用表单库。
+
+- 采用服务器端优先的表单验证方法，建立端到端的实现，提供用户反馈和公共 API，确保验证规则一致性，为全栈 React 应用构建坚实基础。
+- 客户端表单验证能够提供即时反馈和减轻服务器负载，但需注意原生 HTML 验证的局限性并进行客户端 JavaScript 控制。
+- 使用表单库可获得更复杂的验证规则、自定义错误信息和更好的用户体验，但对于简单的表单可能并不需要表单库。服务器端反馈对于全栈应用至关重要，构建坚实的基础后可以轻松扩展客户端验证。
+
+### [Epoch 语义版本管理](https://antfu.me/posts/epoch-semver)
+
+![I81BE1](https://cdn.jsdelivr.net/gh/klaaay/pbed1@master/uPic/I81BE1.png)
+
+这段文字讨论了软件版本号的重要性以及目前常见的语义化版本号规范（SemVer），作者提出了自己对版本号的独特见解，并提出了一种名为"Epoch Semantic Versioning"的新的版本号方案。作者认为这种新方案可以更好地传达版本变化的规模和重要性，同时也向读者征求了对这一想法的反馈意见。
+
+- 版本号不一定代表软件是否适合生产环境，而是作为代码快照的标记，帮助沟通变化。
+- 语义化版本规范（SemVer）的三部分（MAJOR, MINOR, PATCH）规则简单明了，但人们对版本号的感知却可能存在偏差。
+- 提出了“Epoch Semantic Versioning”版本方案，通过扩展现有版本号结构以提供更精细的变化信息。
+
+### [关于在 React 编译器时代如何看待状态管理库的思考](https://blog.axlight.com/posts/thoughts-on-state-management-libraries-in-the-react-compiler-era/?__readwiseLocation=)
+
+这篇文章探讨了三个 React 状态管理库（Zustand、Jotai 和 Valtio）在 React 编译器和 React 服务器组件时代的未来前景。作者对全局状态库的核心问题可能消失表示担忧，但也认为这些库在新时代仍具有价值。文章还分析了每个库在新时代中的风险和优势，并提出了应对未来挑战的建议。
+
+- React 编译器和服务器组件的出现可能会减少全局状态管理库的必要性，但这些库仍然在组织、组合和连接状态方面具有价值。
+- Zustand、Jotai 和 Valtio 三个全局状态管理库在新时代仍然具有各自的特点和优势，但可能需要适应新的发展方向来保持生存力。
+- 全局状态管理库需要关注未来的发展趋势，扩展功能以使客户端状态可以无缝地与服务器状态协作，从而在长期内保持有效性。
+
+### [React 设计模式：实例化 Hook 模式](https://iamsahaj.xyz/blog/react-instance-hook-pattern/)
+
+这篇文字介绍了 React 中的一种设计模式，即实例钩子模式（Instance Hook Pattern）。该模式通过将组件的状态和行为绑定到自定义钩子上，实现了在组件内外控制状态的灵活性。文章还介绍了如何在使用实例钩子模式时增强灵活性，以及如何处理多个组件实例的复杂交互。同时还讨论了如何将使用钩子模式的组件设计得更加灵活和可复用。
+
+- "实例化钩子模式"允许将组件的状态和行为与自定义钩子绑定，从而实现灵活的外部控制。
+- 该模式使得组件可以通过特定的 API 与用户交互，创建清晰的边界，避免混乱和意外行为。
+- 通过向组件传递实例钩子，可以管理多个实例，并利用它们的状态创建复杂的交互，提高组件的可重用性和灵活性。
+
+### [Next.js 如何颠覆 React 的基本概念（实例分析）](https://ondrejvelisek.github.io/how-nextjs-breaks-react-fundamentals/)
+
+这篇文章讨论了在前端开发中，性能与开发体验之间的平衡以及 Next.js 框架中的一些设计缺陷。作者认为当前的 React Server Components (RSC) 实现破坏了一些基本的组件设计原则，导致开发者在实践中遇到诸多问题。文章提出了对于 Next.js 框架设计的更好方案，并呼吁开发者思考如何提升开发体验，并邀请读者就新框架的设计提出想法。
+
+- 当前的 Next.js API 设计在追求性能的同时，忽略了开发者体验，导致开发过程中出现了多个不利于开发的情况。
+- Next.js 的 React 服务器组件（RSC）的实现破坏了一些基本前端框架应具备的重要属性，如组件的定位、封装性和可组合性。
+- 文章提出了一种更好的方法，即通过自动推断组件的运行环境，使其能够灵活地在不同的运行时环境中执行，从而提高开发体验并且不影响性能。
+
+### [提升 React 中 INP 性能的 5 个实用技巧](https://calendar.perfplanet.com/2024/5-tips-to-effectively-optimize-inp-in-react/)
+
+这篇文章介绍了针对使用 React 构建的网站进行优化的几种技术。重点关注了交互到下一个渲染的优化（INP）指标，提出了减少 DOM 大小、将组件分为简单和扩展版本、使用`<Suspense>`标签、注意 hydration 错误和 useEffect() 函数等优化技巧。文章强调了即使使用 React 构建的网站也需要进行优化，并提供了具体的优化建议。
+
+- 优化 React 网站的关键是减少 DOM 大小，采用懒加载和简化组件结构。
+- 将组件分为简单和扩展版本，通过分阶段加载来优化页面渲染和交互。
+- 使用 `<Suspense>` 标签来分割页面的重要和不重要部分，同时需要注意处理 hydration 错误和 useEffect() 的使用。
+
+### [React Router 7 教程](https://www.robinwieruch.de/react-router/)
+
+本文介绍了如何在 React 应用中使用 React Router 7 进行路由管理。通过示例代码演示了如何设置路由、导航、布局路由、动态嵌套路由、相对链接、声明式和编程式导航以及搜索参数等功能。通过 React Router，开发者可以实现在客户端进行路由管理，包括嵌套路由、动态路由、导航、搜索参数等功能，使得 React 应用的页面管理更加灵活和功能丰富。
+
+- 使用 React Router 可以轻松实现在 React 应用中的客户端路由和导航，通过 Link 组件和 Route 组件的配合来实现页面间的跳转和渲染。
+- 可以通过嵌套的 Route 组件实现页面布局路由，避免组件重复渲染，同时利用 Index Route 和 No Match Route 处理默认路由和 404 页面显示。
+- 使用 React Router 还可以实现动态路由和查询参数功能，通过 useParams Hook 获取动态路由参数，通过 useSearchParams Hook 处理查询参数的读取和写入，实现更丰富的 URL 导航和搜索功能。
+
+### [使用 Node.js 进行的 1 亿行数据处理挑战](https://jackyef.com/posts/1brc-nodejs-learnings)
+
+这段文字介绍了一个基准实现以及针对其性能的改进过程。首先，通过分析时间消耗，发现了性能瓶颈，并采取了一系列优化措施。其中包括减少字符串分割操作的调用、优化缓冲区到数字的转换，以及通过多线程并行处理来充分利用多核处理器。最终，经过一系列改进，实现的性能得到了显著提升。文章也分享了在优化过程中的一些探索和教训，以及一些关键的技术启示。
+
+- 基准实现：使用 Node.js 实现文件逐行读取、解析和聚合数据，并通过标准输出打印结果，但执行时间较长，需要改进。
+- 优化改进：通过减少字符串分割操作和优化缓冲区读取方式，大幅提升了执行速度，并对数字转换函数进行定制化优化。
+- 并行化处理：利用 Node.js 的 worker_threads 模块，将文件处理任务分配给多个线程并行执行，从而显著提高了处理速度，实现了约 30 倍的性能提升。
+
+### [RSC 与服务器操作的整合实践](https://github.com/orgs/web-infra-dev/discussions/23)
+
+这篇文章介绍了 React 中的 RSC (React Server Components) 和 Server Action 的构建实践，包括它们的概念、渲染方法、在 webpack 中的打包过程，以及 Turbopack 如何在一个模块图中捆绑多个环境模块。文章详细讨论了 RSC 的渲染过程、CSS 的处理、SSR 的功能和 HMR 的处理，以及 Server Action 的定义和打包方法。同时，文章还介绍了 Turbopack 如何在一个编译中完成 RSC 的打包。
+
+- RSC（React Server Components）和 Server Action 是 React 中的新构建实践，可以将组件分为 Server Component 和 Client Component，并在服务器端进行渲染和调用后端 API。
+- 利用 webpack 构建 RSC 的时候，需要满足四个要求，包括识别 "use client" 指令、理解 package.json 中的 "react-server" 导出、设置代码拆分点、提供 Client 模块的 ID 和其他元数据。
+- 使用 Turbopack 在一次编译中完成不同环境的绑定，包括生成客户端引用模块和相关元信息，并且能够在同一编译中获取其他环境模块的更多信息，实现更好的树摇效果
+
+### [如果 GPU 这么强大，为什么我们还要继续使用 CPU 呢？](https://codingstuff.substack.com/p/if-gpus-are-so-good-why-do-we-still)
+
+这篇文章介绍了 CPU 和 GPU 的区别，以及它们在处理顺序和并行程序时的不同优势。CPU 在处理复杂逻辑和适应变化条件方面表现优异，而 GPU 则擅长并行处理。文章还解释了现代芯片（如苹果的 M3 芯片）如何结合了 CPU 的灵活性和 GPU 的计算能力。文章强调了 CPU 和 GPU 在计算任务中的独特优势，以及它们在现代计算机系统中的重要性。
+
+- CPU 和 GPU 在处理程序时有不同的优势，CPU 擅长处理复杂逻辑和适应变化，而 GPU 则擅长并行处理大量重复运算。
+- 程序可以分为顺序程序和并行程序，顺序程序需要按照指定顺序一步步执行，而并行程序可以同时执行多个指令因为它们不依赖彼此的结果。
+- 现代芯片如苹果的 M3 结合了 CPU 的灵活性和 GPU 的计算能力，实现了在处理图形渲染等任务时的高效处理。
+
+## 工具
+
+### [fancy](https://github.com/danielpetho/fancy)
+
+这是一个日益丰富的华丽有趣的 React 组件和微交互库，旨在让网页体验重新充满乐趣。完全免费并且开源。
+
+### [tagify](https://github.com/yairEO/tagify)
+
+一种轻便高效的标签输入组件，可在 Vanilla JS、React、Angular 和 Vue 中使用。
+
+### [todoctor](https://github.com/azat-io/todoctor)
+
+🐍 这个命令行工具可以帮助你分析和报告 JavaScript 及 TypeScript Git 仓库里的 TODO 注释，让代码管理更高效。
+
+### [react-textarea-autosize](https://github.com/Andarist/react-textarea-autosize)
+
+一个适用于 React 的 textarea 组件，它会根据输入内容的多少自动调整大小。
+
+### [monolith]https://github.com/Y2Z/monolith
+
+⬛️ CLI 工具可以将整个网页保存为一个 HTML 文件
+
+### [sitefetch](https://github.com/egoist/sitefetch)
+
+下载整个网站并将其保存为文本文件（供 AI 模型使用）。
+
+### [typed-search](https://github.com/egoist/typed-search)
+
+一个非常简单且类型安全的 URLSearchParams 解析器。
+
+## 更新
+
+### [Node.js 现在默认可以使用 TypeScript 了](https://www.totaltypescript.com/typescript-is-coming-to-node-23)
+
+这篇文章介绍了 Node 23 将能够无需额外配置即可运行 TypeScript 文件的功能。该功能由 Marco Ippolito 推动，通过解除--experimental-strip-types 标志来实现。文章还回答了一些常见问题，涉及了 Node 应用、库和 monorepos 中的 TypeScript 支持。同时提到了未来 TS 5.8 版本可能会增加与 Node 的 TS 支持更轻松的兼容标志。
+
+- Node 23 可以直接运行 TypeScript 文件，无需额外配置，提高开发效率。
+- 在 Node 23 中，运行 TypeScript 文件时不会进行类型检查，而是需要在本地使用 tsc --watch 命令进行类型检查。
+- 对于部署到服务器或发布到 NPM 的 Node 应用、库和 monorepos，仍需将 TypeScript 转译为 JavaScript，以提高性能和便利性。
+
+### [pnpm 10.0.0](https://github.com/pnpm/pnpm/releases/tag/v10.0.0)
+
+这是有关 pnpm 软件包管理器的更新日志，其中包括了主要和次要的变化。主要变化包括默认情况下不再执行依赖的生命周期脚本、更新了安全哈希算法为 SHA256、改进了全局存储机制等。次要变化包括支持了一种新类型的配置性依赖、新增了一些设置和命令的改进等。
+
+- 安全性增强：默认情况下，安装时不再执行依赖项的生命周期脚本，需在 package.json 的 pnpm.onlyBuiltDependencies 字段中列出特定依赖项。
+- SHA256 安全哈希：将各种哈希算法更新为 SHA256，包括 node_modules/.pnpm 中的长路径、锁定文件中的长 peer 依赖哈希以及其他相关哈希。
+- 其他重要变化：更新全局存储版本、支持配置性依赖、新增验证依赖设置、加速重复安装、pnpm add 与默认工作区目录集成等。
+
+### [Astro 5.1](https://astro.build/blog/astro-510/)
+
+Astro 5.1 发布了，新增了实验性的会话功能、远程图像缓存和 Action 路径获取助手。会话功能类似于 Rails 或 Laravel 中的会话，可以安全地存储临时数据。远程图像缓存可以减少重复下载和转换图像的需求。同时，新增了获取 Action 路径的助手函数。此外，修复了自发布以来的一系列问题。
+
+- Astro 5.1 发布了新的实验性会话功能，可以在页面、组件、API 端点和中间件中存储和访问用户特定的临时数据。
+- 新的远程图像缓存功能可以缓存远程图像，减少重复下载和转换图像的需求，提高网站性能。
+- 引入了新的 getActionPath 辅助函数，可以在调用 Astro Actions 时提供更大的灵活性，例如自定义请求头或使用 API。
+
+### [深层次的不可变数据结构](https://sanjeettiwari.com/notes/deeply-immutable-structures)
+
+这段文字介绍了 TC39 团队提出的 JavaScript 提案，引入了两种新的数据结构 - Record 和 Tuple。它们是基于原始数据类型的深度不可变的数据结构，具有超级力量，能够深度比较并执行类似对象和数组的操作。这些新的数据结构可以帮助开发人员避免常见的编程错误，并且在未来可能会成为 JavaScript 标准的一部分。当前提案处于 TC39 流程的第二阶段，尚未在 JavaScript 引擎中得到广泛实现，但可以通过 polyfill 进行尝试。
+
+- JavaScript 的 TC39 团队提出了两种新的数据结构 - 记录（Record）和元组（Tuple），它们都是深度不可变的复合基本类型，可用于实现深度比较和避免常见编程错误。
+- 记录和元组可以像对象和数组一样进行操作，但由于它们只包含原始数据类型，因此在操作上具有更强的不可变性，避免了深层克隆等繁琐操作。
+- 目前该提案已进入 TC39 流程的第二阶段，尚未在 JavaScript 引擎中实现，但可以通过 polyfill 进行尝试，未来这两种新数据结构将对 JavaScript 的不可变性带来革命性变化。
+
+## 设计
+
+### [Flexoki](https://stephango.com/flexoki)
+
+Flexoki 是一种适用于文学和代码的墨色调色方案，旨在在数字屏幕上阅读和编写时提供舒适的体验。该方案以模拟墨水和暖色调的纸张为灵感，采用了极简高对比度的设计。色彩经过校准，确保在不同设备和从明亮模式到暗黑模式的切换时保持易读性和感知平衡。Flexoki 是以 MIT 许可证开源的，可在众多应用程序中使用。配色方案包括基本颜色、强调色和扩展调色板，适用于语法高亮和基本颜色方案。Flexoki 的颜色值采用了暖色的单色基调，在明亮和暗黑模式下各有 8 个值。同时，配色方案通过对 CIELAB 和 Oklab 颜色空间的引用，努力保持在光谱的浅色和深色端的视知觉关系，以在数字屏幕上展现出色料的活力和饱满感。
+
+- Flexoki 是一种用于文学和代码的墨色调配方案，旨在在数字屏幕上进行阅读和写作，灵感来源于模拟墨水和暖色的纸张。
+- Flexoki 的颜色经过校准，以在不同设备和在浅色和深色模式之间切换时保持易读性和知觉平衡。
+- Flexoki 是一种开源配色方案，适用于多种应用程序，并可用于多种应用程序和工具。
+
+### [AI 工作流生成动态新年表情](https://moonvy.com/blog/post/2024/AI%E8%A1%A8%E6%83%85%E5%8C%85%E5%B7%A5%E4%BD%9C%E6%B5%81/)
+
+这段文字介绍了利用 AI 技术生成个性化新年表情包的工作流程，包括选择主角角色、使用 Whisk AI 转换图像、创建动态效果、添加文字与装饰，最终导入微信表情包的步骤。同时强调了 AI 技术的高效和创意性，让人们能够轻松制作属于自己的表情包。
+
+- 利用多种 AI 工具，将静态图转换为具有 3D 质感的动态图像，实现个性化的新年表情包制作。
+- 选择经典动画角色或自行设计的图像作为表情包的主角，增加创意和趣味性。
+- 借助视频剪辑工具添加文字和装饰，最终将制作的动态视频设置为微信表情包，与朋友分享新年祝福。
+
+## AI
+
+### [用 AI 做绘本](https://baoyu.io/blog/ai-picture-book-creation)
+
+关于作者尝试利用人工智能来制作一本绘本的过程。作者首先提供了一个故事，然后利用人工智能工具生成了针对每个场景的绘画提示。这些提示以卡通漫画的形式描述了故事的情节和角色，弱化了直接的暴力细节并保持了幽默夸张的氛围。同时，还提到了使用提示的方式，以避免作品被审查机制拦截的可能性，保持作品的卡通漫画趣味性。
+
+- 故事情节包括兔子和老狼之间的多次冲突，以及兔子学会应对老狼的策略。
+- 整篇故事通过卡通漫画风格描述，强调幽默夸张的氛围，避免直接的暴力描写，保持儿童读物和幽默漫画的感觉。
+- 通过合理使用英文 Prompt，作者成功避开平台审查，保持了作品的卡通漫画趣味性，最大程度还原了故事情节。
+
+## 其他
+
+很多游客乘坐 116 路公交车去公园，周围居民意见很大。每趟车都挤满了游客，本地居民反而挤不上去。
+
+居民们想了一个办法，让市议会出面，要求谷歌地图和苹果地图删除 116 路公交车。
+
+这招非常有效，从此以后，就几乎没有外地人乘坐这辆车了，座位都空出来了。
+
+这反映了一个现实，在如今这个年代，如果你不存在于数字世界，对于外人来说，你就是真的不存在。
+
+---
+
+人类所有的问题，都源于人无法独自安静地坐在房间里。
+
+-- 帕斯卡尔，法国哲学家

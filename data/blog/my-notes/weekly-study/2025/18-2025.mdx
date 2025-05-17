@@ -1,0 +1,309 @@
+---
+title: 2025-第十八周
+date: '2025-05-01'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [⭐️"use client" 有什么用？](https://overreacted.io/what-does-use-client-do/)
+
+React Server Components 中的 `'use client'` 和 `'use server'` 指令通过模块系统抽象了客户端与服务器的交互，使开发者能够将跨环境的应用视为单一程序。
+
+- 🚪 `'use server'`：标记服务器端函数，允许客户端通过异步调用直接触发 HTTP 请求，替代传统 `fetch` 的字符串化操作。
+- 🔄 `'use client'`：标记客户端组件，使服务器能通过引用生成 `<script>` 标签并传递初始数据，实现无缝渲染。
+- 🌐 **双向通信**：两个指令分别在模块系统中建立客户端与服务器的语法连接，支持类型检查和工具链集成。
+- 🧩 **组合抽象**：允许创建跨网络的复用逻辑，如封装前后端交互的独立组件，无需全局 API 设计。
+- ⚡ **性能优化**：支持服务端预渲染 HTML，同时保留客户端交互性，平衡加载速度与用户体验。
+- 🔮 **超越 React**：本质是模块级的 RPC 实现，可能影响未来 JavaScript 全栈开发范式。
+
+核心思想是将分布式应用建模为「单程序多环境」，通过语法糖弥合网络鸿沟。
+
+### [分类你的依赖项](https://antfu.me/posts/categorize-deps)
+
+项目依赖分类的探讨与实践，以及 pnpm catalogs 的创新应用。
+
+- 📦 项目依赖分为`dependencies`（生产环境）和`devDependencies`（开发环境），前者为运行必需，后者仅用于开发和构建阶段。
+- 🔄 依赖分类最初为 Node.js 库设计，但随着生态发展，项目类型多样化（如应用、库、内部包），原有分类方式显得不足。
+- 🎭 工具如 Vite 和构建工具对依赖分类有不同解读，导致`dependencies`和`devDependencies`的用途变得模糊。
+- 🗂️ 提出更细分的依赖分类建议，如测试、构建、前端、后端等，以更精确描述依赖用途。
+- ✨ 介绍 pnpm 的 catalogs 功能，支持通过命名分类管理依赖版本，特别适合 monorepo 项目。
+- 🛠️ 列举相关工具支持，如 VS Code 扩展、版本检查和更新工具，提升开发体验。
+- 🔮 展望未来，依赖分类可优化构建工具配置、增强代码审查和安全性管理。
+- 💡 鼓励尝试 pnpm catalogs，探索更优的依赖管理实践。
+
+### [React Query 中的并发乐观更新 | TkDodo 的博客](https://tkdodo.eu/blog/concurrent-optimistic-updates-in-react-query)
+
+乐观更新是 React Query 中的一种技术，通过预先模拟服务器行为来提升用户体验，但在实际应用中可能面临复杂逻辑和并发更新的挑战。
+
+- 🔄 **乐观更新的优势**：通过预先更新 UI，使应用响应更快，提升用户体验，例如切换按钮状态的即时反馈。
+- ⚙️ **客户端逻辑复现**：需要准确预测服务器行为并在客户端实现，简单场景（如布尔切换）容易处理，复杂场景（如列表过滤）则更具挑战性。
+- 🧩 **复杂更新逻辑**：例如列表项分类更新时，需处理过滤条件，避免因乐观更新导致 UI 不一致。
+- ⏳ **并发更新的问题**：多个同时进行的更新可能导致中间状态不一致，例如第二个更新开始时第一个更新尚未完成。
+- 🛠️ **解决方案**：通过`queryClient.cancelQueries`取消冲突请求，并使用`queryClient.isMutating()`跳过不必要的无效化，确保最终一致性。
+- 🔍 **精细化控制**：通过`mutationKey`标记相关更新，限制无效化范围，避免过度跳过更新。
+
+### [在人工智能时代避免技能退化](https://addyo.substack.com/p/avoiding-skill-atrophy-in-the-age)
+
+本文探讨了 AI 编程助手在提升效率的同时可能导致的技能退化问题，强调了开发者需警惕过度依赖 AI 而丧失核心编程能力，并提出了平衡使用 AI 与保持技能敏锐的具体策略。
+
+- 🤖 **AI 助手的双重影响**：提升效率但可能导致技能退化（如调试、架构设计等核心能力）
+- 🧠 **认知卸载的风险**：过度依赖 AI 会削弱独立解决问题和批判性思维能力
+- 📉 **技能退化的表现**：跳过文档阅读、依赖 AI 调试、代码理解肤浅、基础语法遗忘
+- ⚖️ **效率与知识的权衡**：AI 提供快速答案但可能牺牲深度理解，需警惕“表面学习”
+- 🚨 **长期职业隐患**：过度依赖可能导致应对突发问题能力下降，团队协作和知识传承受阻
+- 🔍 **解决方案：有意识使用 AI**
+  - ✅ **验证 AI 输出**：主动测试代码、理解原理，而非盲目复制
+  - 🚫 **保留“无 AI”时间**：定期手动编码以巩固基础技能
+  - 💡 **先自行尝试**：遇到问题先独立思考，再借助 AI 补充
+  - 👥 **人工代码审查**：将 AI 生成代码视为同事提交，严格审核
+  - 📚 **主动学习**：通过追问 AI 解释、记录知识缺口来深化理解
+- 🛠️ **未来建议**：将 AI 视为协作工具而非替代品，保持人类直觉与创造力的核心地位
+
+### [在 React 中序列化一个 promise](https://twofoldframework.com/blog/you-can-serialize-a-promise-in-react)
+
+React Server Components 提供了一种在服务器和客户端之间序列化 Promise 的巧妙模式，通过流式传输实现数据共享。
+
+- 🚀 **服务器创建 Promise**：在服务器组件中创建一个 Promise，通过 `Suspense` 和客户端组件传递。
+- 🔄 **流式序列化**：使用 `ReadableStream` 序列化 Promise，标记其生命周期（创建和解析）。
+- 🌐 **网络共享**：流可以通过 `Response` 和 `fetch` 在服务器和客户端之间传输。
+- 🔧 **反序列化 Promise**：客户端通过解析流中的标记消息重新创建 Promise。
+- ⚛️ **React 内置支持**：React 19 的 `react-server` 和 `react-client` 包内置了流式序列化机制，支持多种数据类型。
+- 📦 **广泛的数据类型**：React 可以序列化原始类型、非原始类型、React 特定类型甚至异步迭代器和流。
+- 🔗 **无缝数据传递**：React Server Components 使服务器和客户端之间的数据传递变得简单，提升了组件的组合能力。
+
+## 工具
+
+### [pad.ws](https://github.com/pad-ws/pad.ws)
+
+将白板作为 IDE，在浏览器中绘图和编码
+
+### [GitHub - sindresorhus/pretty-bytes：将字节转换为易读的字符串：1337 → 1.34 kB](https://github.com/sindresorhus/pretty-bytes)
+
+这是一个名为 `pretty-bytes` 的开源项目，用于将字节数转换为人类可读的字符串格式。
+
+- 📦 **项目功能**: 将字节数转换为易读的字符串（例如：1337 → 1.34 kB）。
+- 🔧 **安装方式**: 通过 `npm install pretty-bytes` 安装。
+- 📝 **基本用法**: 导入 `prettyBytes` 函数并传入数字即可转换。
+- ⚙️ **选项配置**: 支持多种选项，如显示正负符号、以比特为单位、使用二进制前缀、本地化输出等。
+- 🌍 **本地化支持**: 可以指定语言环境来格式化数字和分隔符。
+- 📊 **小数位数控制**: 可设置最小和最大小数位数。
+- ❓ **常见问题**: 解释了为什么使用 `kB` 而不是 `KB`（遵循国际单位制标准）。
+- 🔗 **相关项目**: 提供了类似功能的 CLI 工具和其他相关模块。
+
+### [GitHub - dbismut/draggable-slider: 使用 StackBlitz ⚡️ 创建](https://github.com/dbismut/draggable-slider/)
+
+这是一个名为“draggable-slider”的公开项目，由 dbismut 创建，主要功能是实现可拖拽的轮播组件。
+
+- 🚀 **项目创建**：使用 StackBlitz 平台开发，基于 Vite 技术栈。
+- 🌟 **受欢迎程度**：获得 71 个星标和 2 个分支。
+- 📂 **文件结构**：包含多种配置文件（如.gitignore、package.json 等）和示例页面（React、Vue、Vanilla 等）。
+- 🔗 **相关资源**：项目介绍和演示链接可在 Twitter 和 StackBlitz 上查看。
+- 📊 **技术栈**：主要使用 TypeScript（占比 84.3%），辅以 HTML、CSS、Vue 和 JavaScript。
+
+### [GitHub - Temzasse/react-modal-sheet: 基于 Motion 构建的灵活底部面板组件，提供丝滑用户体验，同时兼顾无障碍性 🪐](https://github.com/Temzasse/react-modal-sheet)
+
+一个基于 Motion 构建的灵活底部弹窗组件，专注于流畅用户体验和可访问性。
+
+- 🌟 项目亮点：943 星标 | 91 复刻 | MIT 许可
+- 🛠️ 技术栈：React + Motion 动画库（需单独安装）
+- 🪄 核心特性：支持平滑拖拽、自适应高度、多档位吸附点（snapPoints）
+- 🧩 组件化设计：通过 Container/Header/Content/Backdrop 等子组件自由组合
+- 📱 移动优化：自动处理触摸设备滚动冲突，支持虚拟键盘场景
+- ♿️ 无障碍支持：可与 React Aria 等无障碍工具链集成
+- 🎨 深度定制：支持自定义样式/头部/动画参数（如 iOS 模态效果）
+- ⚠️ 已知问题：StrictMode 下动画可能异常（Motion 库限制）
+- 🌐 示例演示：temzasse.github.io/react-modal-sheet/
+
+### [GitHub - DigitecGalaxus/next-yak: 🦀 由 Rust 驱动的零运行时 CSS-in-JS。编写 styled-components 语法，实现构建时 CSS 提取和完整的 RSC 兼容性](https://github.com/DigitecGalaxus/next-yak)
+
+next-yak 是一个专为 Next.js 设计的 CSS-in-JS 解决方案，结合了 styled-components 的语法和 Rust 驱动的零运行时 CSS 提取功能，提供高效的构建时 CSS 处理和完整的 RSC 兼容性。
+
+- 🦀 **Zero-runtime CSS-in-JS**：基于 Rust 实现，支持 styled-components 语法，构建时提取 CSS，兼容 RSC。
+- 🚀 **Next.js 兼容性**：无缝支持 React 服务器和客户端组件。
+- ⚡ **构建时 CSS**：利用 Next.js 内置 CSS 模块功能，减少加载时间。
+- 🎨 **标准 CSS 语法**：支持熟悉的 CSS 写法，易于使用。
+- 🔧 **动态样式**：支持运行时切换 CSS 类，不影响性能。
+- 📦 **原子 CSS 集成**：轻松结合 Tailwind CSS 等框架，扩展设计选项。
+- 🛠️ **安装简单**：通过 npm 安装，并配置 next.config.mjs 即可使用。
+- 🌟 **动态属性**：使用 CSS 变量实现运行时属性修改，保持构建时提取。
+- 🔄 **组件目标**：支持同一文件内组件间的 CSS 选择器直接引用。
+- 🏗️ **嵌套支持**：通过 postcss-nested 插件支持 CSS 嵌套。
+- 📊 **性能优化**：通过 postcss 实现静态提取和优化，提升性能。
+- 🤝 **社区支持**：感谢多个开源项目的贡献和灵感，如 Styled-Components、Linaria 等。
+
+### [GitHub - antiwork/shortest: 通过自然语言 AI 测试进行问答](https://github.com/antiwork/shortest)
+
+这是一个名为 Shortest 的 AI 驱动的自然语言端到端测试框架，基于 Playwright 构建，支持 GitHub 集成和邮件验证等功能。
+
+- 🚀 **项目概述**：Shortest 是一个 AI 驱动的自然语言端到端测试框架，基于 Playwright 构建，支持 GitHub 集成和邮件验证。
+- 🔧 **主要功能**：
+  - 使用 Anthropic Claude API 进行 AI 驱动的测试执行
+  - 支持 GitHub 2FA 登录
+  - 提供邮件验证功能（通过 Mailosaur）
+- 📦 **安装与使用**：通过`npx @antiwork/shortest init`命令快速安装和配置项目。
+- ⚙️ **配置**：通过`shortest.config.ts`文件配置测试入口和 Anthropic API 密钥。
+- 🧪 **测试编写**：支持自然语言编写测试用例，并可结合回调函数和生命周期钩子进行扩展。
+- 🔗 **测试链**：支持灵活的测试链模式，可以组合多个测试流程。
+- 🌐 **API 测试**：支持使用自然语言测试 API 端点。
+- 🏗️ **CI/CD集成**：支持在 CI/CD 管道中运行测试（需配置 Anthropic API 密钥）。
+- 🔐 **GitHub 2FA 设置**：提供详细的 GitHub 2FA 登录设置指南。
+- 🛠️ **开发指南**：包含本地开发环境设置、服务配置（如 Clerk、Vercel Postgres、Stripe 等）和运行说明。
+
+## 更新
+
+### [React 服务器 DOM Vite 作者：jacob-ebey · Pull Request #31768 · facebook/react · GitHub](https://github.com/facebook/react/pull/31768#issuecomment-2823466684)
+
+该内容是关于 React 团队与 Vite 社区合作开发`react-server-dom-vite`包的讨论，旨在为 Vite 打包工具提供 React Server Components（RSC）支持。主要围绕 API 设计、模块加载、CSS 处理等技术细节展开，并探讨如何标准化协议以适配不同打包工具。
+
+- 🚀 **项目目标**：开发`react-server-dom-vite`包，实现 Vite 对 RSC 的支持，并与 React 核心团队协作优化协议设计。
+- 🔧 **技术差异**：与 Webpack 等实现不同，Vite 版本不强制规定清单格式，而是通过 API 将客户端引用编码和加载细节交由插件作者控制。
+- 📦 **API 设计**：提出`runtime-manifest`概念，通过`ServerManifest`和`ClientManifest`接口让插件作者管理模块加载和元数据解析。
+- 🤔 **争议点**：React 团队希望方案更“官方化”且内聚，而社区倾向于灵活、解耦的 API 以适应 Vite 生态的多样性。
+- ⏳ **时间线**：Vite 计划基于 Rolldown 重构后（预计 Q3 2025 稳定）再深度集成 RSC，当前可通过临时方案（如`react-server-dom-webpack`）过渡。
+- 💡 **替代方案**：社区成员提出基于`import queries`或`setRequireModule`等简化 API，以平衡灵活性与标准化需求。
+- 🔗 **协作进展**：最终由 Vite 团队主导后续实现，原 PR 关闭，期待新提案。
+
+### [Prisma 6.7.0 版本发布 · prisma/prisma · GitHub](https://github.com/prisma/prisma/releases/tag/6.7.0)
+
+Prisma 发布了 6.7.0 稳定版本，引入了多项新功能和改进，包括早期访问的 TypeScript 查询编译器、对 better-sqlite3 驱动器的支持、多文件 Prisma 模式的生产就绪以及生成的输出文件的拆分优化。
+
+- 🎉 Prisma 6.7.0 稳定版发布，包含多项新功能和改进。
+- 🔄 早期访问：Prisma ORM 现在支持 TypeScript 查询编译器，替代了原有的 Rust 引擎，适用于 PostgreSQL 和 SQLite。
+- 📦 新增对 better-sqlite3 JavaScript 驱动器的支持，可通过 driverAdapters 预览功能使用。
+- 📂 多文件 Prisma 模式现已生产就绪，允许用户将模式拆分为多个文件进行组织。
+- ✂️ 新 prisma-client 生成器将生成的输出拆分为多个文件，优化大型模式的性能。
+- 📚 公司新闻：Prisma 团队还发布了与 Vercel Marketplace 的 Postgres 集成、前端安全访问 Prisma Postgres 的早期访问以及 Prisma 的 MCP 服务器。
+
+### [3.13 版本发布 | GSAP ](https://gsap.com/blog/3-13/)
+
+GSAP 3.13 版本发布，宣布 GSAP 及其所有插件（包括 SplitText 和 MorphSVG 等）现在完全免费，甚至可用于商业用途。团队将继续维护和创新，同时与 Webflow 合作开发下一代交互功能。SplitText 插件进行了全面重写，新增多项功能并优化了性能。此外，GSAP 3.13 还支持动画到 CSS 变量，并简化了在 Webflow 中的安装流程。
+
+- 🎉 GSAP 及其所有插件（包括 SplitText、MorphSVG 等）现在完全免费，可用于商业用途。
+- 🛠️ GSAP 团队（Jack、Cassie 和 Rodrigo）将继续维护和创新，并与 Webflow 合作开发新功能。
+- 📥 所有插件已添加到 GSAP Github 仓库和 NPM 包，可直接从 gsap.com 下载。
+- 💌 Club GSAP 会员无需再使用私有仓库，可直接从公共 NPM 仓库安装，社区徽章将在论坛更新。
+- 🔧 SplitText 插件完全重写，新增 14 项功能，包括屏幕阅读器支持、响应式重新分割、嵌套元素处理等。
+- ⚠️ SplitText v3.13 有一些不常见的破坏性变更，如移除了`position: "absolute"`和`lineThreshold`。
+- 🆕 GSAP 3.13 支持动画到 CSS 变量，如`gsap.to(".target", {color: "var(--my-color)"})`。
+- 🌐 Webflow 用户现在可以直接在设置中启用 GSAP 及其插件，安装更加便捷。
+
+### [使用 pnpm 和 Yarn 添加 JSR 包](https://deno.com/blog/add-jsr-with-pnpm-yarn)
+
+**原文标题**: [Add JSR packages with pnpm and Yarn](https://deno.com/blog/add-jsr-with-pnpm-yarn)
+
+JSR 现在支持通过 pnpm 和 Yarn 直接安装包，并且可以处理带有 JSR 依赖的 npm 包，同时也支持发布带有 JSR 依赖的 npm 包。
+
+- 📢 **JSR 支持 pnpm 和 Yarn**  
+  现在可以通过 pnpm 和 Yarn 直接安装 JSR 包，并且支持处理带有 JSR 依赖的 npm 包。
+
+- 📦 **pnpm 安装方法**  
+  从 pnpm v10.9 开始，支持通过 `pnpm add jsr:<scope>/<pkg_name>` 安装 JSR 包，并自动更新 `package.json`。
+
+- 🧶 **Yarn 安装方法**  
+  从 Yarn v4.9.0 开始，支持通过 `yarn add jsr:<scope>/<pkg_name>` 安装 JSR 包，并自动更新 `package.json`。
+
+- 🔗 **更多功能与社区**  
+  JSR 是一个现代的 JavaScript 和 TypeScript 注册表，提供更多功能，并欢迎开发者加入 Discord、Twitter、Bluesky 或 YouTube 社区交流。
+
+- 🚀 **未来计划**  
+  JSR 将分享更多关于模块作者发布带有 JSR 依赖的包的信息，并定期举办双周办公时间讨论路线图和解答问题。
+
+### [Express@5.1.0：现作为 npm 默认版本并提供 LTS 支持时间线](https://expressjs.com/2025/03/31/v5-1-latest-release.html)
+
+Express v5.0.0 发布后未立即设为 npm 默认版本，现公布 LTS 时间线及未来规划
+
+- 🚀 Express v5.0.0 于去年 9 月发布，但未立即设为 npm 的 `latest` 版本，现通过 v5.1.0 完成过渡并启动 LTS 计划
+- 📚 文档与迁移支持：更新了 v5 文档和迁移指南，新增自动化工具（codemod）辅助从 v4 升级，部分破坏性变更仍需手动调整
+- 🔄 生态系统兼容性：预留时间让中间件和教程适配 v5，特别关注新手用户避免版本混淆
+- ⏳ LTS 三阶段支持策略：
+  - **CURRENT**（新版本初期，至少 3 个月）：接收所有更新，推荐尝鲜
+  - **ACTIVE**（稳定期，至少 12 个月）：设为 npm 默认版本，全面支持
+  - **MAINTENANCE**（维护期，12 个月）：仅安全修复，强烈建议升级
+- 📅 拟议时间表：
+  - v4 进入维护期（2025-04-01），EOL 不早于 2026-10-01
+  - v5 为当前活跃版本（2025-03-31 起），EOL 取决于 v6 发布时间
+- ✨ v5.1.0 改进：支持 `Uint8Array`、依赖版本范围优化、ETag 功能增强等
+- 🤝 社区合作：与 HeroDevs 合作支持企业升级，呼吁通过 PR 或 OpenCollective 资助项目
+- 🔜 未来计划：性能优化工作组、TypeScript 体验提升、v6 前期讨论启动
+
+### [发布 v3.0.0 · koajs/koa · GitHub](https://github.com/koajs/koa/releases/tag/v3.0.0)
+
+Koa v3.0.0 是一个主要版本发布，包含多项重大变更、新功能和修复。
+
+- 🚨 **重大变更**: 最低要求 Node.js v18，移除 `.redirect('back')` 并新增 `.back(fallback_url)`
+- 🔄 **移除功能**: 不再支持生成器，移除 `createAsyncCtxStorageMiddleware`
+- 🛠 **修复与改进**: 修复 `req.origin` 对齐 CORS 的 `Origin` 头部，修复 `ctx.throw` 格式要求
+- 📂 **文件处理**: 移除特殊 `ENOENT` 支持，需适配 404 处理逻辑
+- 🆕 **新功能**: 支持自定义流和 WHATWG 响应体，新增 `app.currentContext` 通过 `asyncLocalStorage` 获取当前上下文
+- 🐞 **问题修复**: 修复响应时 socket 不可写、`Content-Length` 与 `Transfer-Encoding` 冲突等问题
+- ♻️ **重构**: 使用 `URLSearchParams` 替代 Node.js 查询字符串
+
+### [发布 electron v36.0.0 · electron/electron · GitHub](https://github.com/electron/electron/releases/tag/v36.0.0)
+
+Electron v36.0.0 发布，包含 Chromium、Node 和 V8 的版本升级，新增多项功能并修复了大量问题。
+
+- 🚀 **核心升级**：Chromium 升级至 136.0.7103.48，Node 升级至 22.14.0，V8 升级至 13.6。
+- ⚠️ **破坏性变更**：废弃了 `NativeImage.getBitmap()`，移除了 `systemPreferences.isAeroGlassEnabled()` API，并调整了部分 API 的行为。
+- ✨ **新增功能**：
+  - 添加了 `BrowserWindow.isSnapped()` 以检测窗口是否已通过 Snap 排列。
+  - 引入了 `ServiceWorkerMain` 类以在主进程中与服务工作者交互。
+  - 支持 Windows 上的圆角窗口 (`roundedCorners`)。
+- 🛠️ **修复与改进**：
+  - 修复了多个崩溃问题，包括 `shell.readShortcutLink` 和 OSR 渲染问题。
+  - 优化了 ASAR 完整性检查及桌面捕获性能。
+  - 解决了 Linux 和 macOS 上的多个窗口管理和打印问题。
+- 📜 **文档与通知**：更新了文档并结束了对 Electron 33.x.y 的支持。
+
+## AI
+
+### [agent-squad](https://github.com/awslabs/agent-squad)
+
+灵活强大的框架，用于管理多个 AI 代理和处理复杂对话。
+
+### [beeai-platform](https://github.com/i-am-bee/beeai-platform)
+
+
+BeeAI 是一个基于开源协议（Agent Communication Protocol, ACP）的平台，旨在实现跨框架的 AI 智能体发现、运行与编排。它由 Linux 基金会支持，强调开放治理和社区协作，提供多框架兼容、生命周期管理、工作流编排等核心功能，并支持多种 LLM 集成与容器化部署。
+
+- **🌐 开源平台** - BeeAI 是首个基于 ACP 协议的开源平台，支持跨框架 AI 智能体通信。  
+- **🔄 核心功能** - 提供智能体发现、本地运行、工作流编排，兼容多种 LLM 提供商（如 OpenAI、Anthropic）。  
+- **📚 资源丰富** - 包含智能体目录、文档和快速入门指南，支持 Web UI 和 CLI 双界面操作。  
+- **⚙️ 技术亮点** - ACP 原生支持、容器化部署、生命周期管理，确保高性能与隔离性。  
+
+
+### [icip-cas](https://github.com/icip-cas)
+
+
+本文列出了五个热门的开源项目，涵盖从演示生成、多轮对话数据集到知识增强推理和基础模型训练优化等多个领域。以下是各项目的关键信息：  
+
+- 🎤 **PPAgent**：一个超越传统文本转幻灯片的演示生成与评估工具，使用 Python 开发，获得 1.2k 星和 144 次复刻。  
+- 💬 **多轮对话数据集**：基于 Alpaca 指令的多轮对话语料库，Python 实现，拥有 170 星和 16 次复刻。  
+- � **StructRAG**：通过推理时混合信息结构化增强大语言模型的知识密集型推理能力，Python 项目，获 131 星和 12 次复刻。  
+- 📚 **可扩展自动对齐论文集**：收集了关于可扩展自动对齐的研究论文，目前有 89 星和 7 次复刻。  
+- 🔍 **搜索 - 验证 - 反馈范式**：通过验证器工程推动基础模型的下一个训练范式，项目获 57 星和 2 次复刻。
+
+### [deepwiki-open](https://github.com/AsyncFuncAI/deepwiki-open)
+
+开源深度维基：用于 GitHub/Gitlab/Bitbucket 仓库的 AI 驱动维基生成器
+
+## 其他
+
+### [工程师在沟通中常犯的错误](https://newsletter.posthog.com/p/what-engineers-get-wrong-about-communication)
+
+工程师在沟通中常犯的错误及改进方法
+
+- 🎯 **忽视用户需求**：工程师常陷入技术细节，而忽略了解决用户最痛点和最有价值的问题。沟通应始终围绕用户问题或用户体验展开。
+- 🐿️ **信息囤积（松鼠模式）**：囤积信息会导致沟通障碍、重复工作和信任缺失。解决方案是公开记录信息并默认共享。
+- 💡 **缺乏明确观点**：模糊的意见容易被忽视。形成有证据支持的观点并自信表达，能推动更快决策和行动。
+- 📊 **缺少上下文**：低上下文的沟通会增加接收者的负担。应包含数据、用户反馈和具体问题背景，帮助对方高效解决问题。
+- 🕰️ **缺乏结构化沟通**：过度或不足的沟通都会影响效率。通过固定仪式（如周会、冲刺计划）确保信息有序流动。
+- 🚀 **沟通缺乏行动导向**：避免冗长流程，明确责任人、下一步和截止时间，确保沟通直接推动实际进展。
+
+通过避免这些错误，可以建立高效、透明的沟通文化，提升团队协作和产品交付效率。

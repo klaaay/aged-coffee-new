@@ -1,0 +1,265 @@
+---
+title: 2025-第七周
+date: '2025-02-09'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [⭐️2024 年 React 现状调查报告](https://2024.stateofreact.com/en-US)
+
+### [⭐️教程：如何使用 TypeScript 发布基于 ESM 的 npm 包](https://2ality.com/2025/02/typescript-esm-packages.html)
+
+文章详细介绍了如何设置现代 TypeScript 项目的文件结构、配置和构建过程。  
+文章解释了如何配置 package.json 以支持 ESM 模块和包导出，以及如何使用 npm 脚本来构建、测试和发布包。  
+文章提供了关于开发依赖、文档生成、包检查工具等方面的建议和最佳实践。
+
+这段文字主要讨论了在现代 TypeScript 和 Node.js 环境中设置和开发 npm 包的最佳实践。主要内容包括：
+
+1. 文件系统布局：描述了一个典型 npm 包的目录结构。
+2. 配置文件：讨论了.gitignore、tsconfig.json 和 package.json 的设置。
+3. 单元测试：建议将单元测试文件放在源代码旁边。
+4. TypeScript 编译：解释了 tsc 的输出文件及其用途。
+5. 包导出和导入：讨论了如何在 package.json 中定义导出和导入。
+6. 包脚本：提供了一些有用的 npm 脚本示例。
+7. 开发依赖：列出了常用的开发依赖包。
+8. 文档生成：介绍了使用 TypeDoc 生成 API 文档的方法。
+9. 代码检查：提到了一些用于检查 npm 包和模块的工具。
+10. 兼容性考虑：讨论了 ESM 和 CommonJS 的互操作性。
+
+总的来说，这篇文章提供了一个全面的指南，涵盖了从项目结构到发布的各个方面，旨在帮助开发者创建现代、高质量的 TypeScript npm 包。
+
+### [如何使用 GitHub Copilot 重构代码](https://github.blog/ai-and-ml/github-copilot/how-to-refactor-code-with-github-copilot/)
+
+这段文字介绍了使用 GitHub Copilot 对代码进行重构的方法。首先，重构代码之前需要理解代码的功能。可以使用 Copilot Chat 来解释代码的功能，或者添加注释来提高代码的可读性。然后，可以使用 Copilot 提供的建议进行代码改进。建议可以通过提供更具体的上下文来指导，以获得更符合预期的结果。在重构代码时，应该有一个计划，例如使代码更加可读、移除冗余代码等。文章最后给出了一个使用 Copilot 重构代码的实际例子，涉及创建初始模块、添加新类、封装等步骤。文章的目的是鼓励开发人员使用 Copilot 来帮助重构代码，使代码更加模块化、可维护和易于理解。
+
+- 代码重构是指对代码进行优化和改进，使其更加高效、易维护和可读性更强，而不改变其外部行为，常见的重构方式包括简化复杂的条件判断、提取重复的逻辑、改善变量和函数名等。
+- 在进行代码重构之前，需要弄清楚代码的功能和工作原理，这对于理解代码和判断重构后的代码是否改变了核心功能非常重要，GitHub Copilot 可以帮助开发者理解代码并提供重构建议。
+- GitHub Copilot 是一个基于 AI 的代码辅助工具，可以帮助开发者更快、更有效地进行代码重构，使用 Copilot 时，需要提供具体的指令和上下文，以便 Copilot 能够更好地理解需求并生成符合预期的结果。
+
+### [利用 CSS 层叠层来整理设计系统中的组件模式](https://css-tricks.com/organizing-design-system-component-patterns-with-css-cascade-layers/)
+
+文章介绍了使用 CSS 层叠层 (Cascade Layers) 来组织和管理组件样式的模式。  
+作者展示了如何通过嵌套层叠层来为按钮组件创建默认样式、状态样式和修改样式。  
+文章强调了使用 CSS 变量和低特异性选择器来实现可扩展和可维护的 CSS 代码。
+
+这段文字主要讨论了使用 CSS Cascade Layers 来组织和编写可定制、高效且易于理解的组件样式。主要内容包括：
+
+1. 介绍了 CSS Cascade Layers 的概念和优势。
+2. 以按钮组件为例，展示了如何使用嵌套的 cascade layers 来组织样式。
+3. 将按钮样式分为三个层:elements(基本样式)、modifiers(修饰样式) 和 states(状态样式)。
+4. 使用 CSS 变量来定义和修改按钮的各种属性，如背景色、边框等。
+5. 演示了如何创建不同类型的按钮 (如成功按钮、幽灵按钮) 以及处理悬停和焦点状态。
+6. 讨论了这种方法的优点，包括代码组织性好、可维护性高、可扩展性强。
+7. 指出这种方法可能对小项目来说过于复杂，但对于大型项目或组件库很有价值。
+8. 强调了这种方法能够有效管理和控制 CSS 层叠。
+
+### [利用大语言模型和 React 来设计背景](https://www.vigilant.run/blog/designing-backgrounds-with-llms-and-react)
+
+使用大语言模型 (LLM) 和 React 可以轻松创建引人注目的交互式背景设计。  
+LLM 在生成特殊语法 (如 CSS、正则表达式等) 方面表现出色，可以简化复杂设计的实现过程。  
+虽然 LLM 不会完全取代设计师，但它们在复制独立组件和创建动态设计方面非常有用。
+
+这篇文章主要讨论了使用大型语言模型 (LLMs) 和 React 来设计网页背景的经验和见解：
+
+1. 作者通过 LLMs 和 React 轻松创建了一个受好评的交互式背景。
+2. 使用 AI 设计艺术组件很合适，因为它们是独立的，不会造成严重问题，且易于验证。
+3. 与传统设计方法相比，使用 LLMs 可以更轻松地实现精美的美学效果。
+4. 文章展示了几个例子，包括倾斜网格线、点状网格、虚线网格和星空背景等。
+5. LLMs 在处理特殊语法 (如 CSS) 方面表现出色。
+6. 虽然 LLMs 不会完全取代设计师，但它们在复制独立组件方面很有效。
+7. 在代码中设计可以创造出更生动、独特的效果，这是静态设计工具难以实现的。
+8. 总的来说，LLMs 为网页设计带来了新的可能性，使得创造动态、独特的设计变得更加容易。
+
+### [React 中最常用的设计模式](https://www.mensurdurakovic.com/the-most-common-react-design-patterns/)
+
+React 中有多种设计模式可以用来实现代码复用和状态管理，包括高阶组件、渲染属性、容器 - 展示组件模式、复合组件和自定义 Hook。  
+每种设计模式都有其优缺点，需要根据具体场景选择合适的模式使用。  
+Hook 是 React 中最新和最强大的模式，它解决了之前模式存在的许多问题，使组件逻辑更加简洁和灵活。
+
+这段文字主要讨论了 React 中的几种常见设计模式及其优缺点：
+
+1. 高阶组件 (HOC):通过包装组件来增加功能，但可能导致 props 冲突和代码难读。
+2. 渲染属性 (Render Props):通过函数 prop 传递功能，避免了 HOC 的一些问题，但可能导致嵌套结构复杂。
+3. 容器 - 展示模式：将逻辑和 UI 分离，提高可维护性。
+4. 复合组件：创建相互关联的灵活 UI 元素。
+5. 自定义 Hooks:直接在组件内共享状态和逻辑，避免了 HOC 和 Render Props 的缺点。
+
+文章认为每种模式都有其适用场景，目的都是为了使复杂 UI 开发更直观、可读和可维护。选择模式时应根据具体问题，而不是强行套用。
+
+### [LangChain: 在 JavaScript 中实现流式结构化输出](https://www.robinwieruch.de/langchain-javascript-stream-structured/)
+
+文章介绍了如何使用 LangChain 在 JavaScript 中实现结构化输出的流式传输，从后端到前端构建聊天机器人应用。  
+后端使用 Server-Sent Events (SSE) 来实现结构化数据的流式传输，前端则使用@microsoft/fetch-event-source 库来处理 SSE。  
+文章提供了后端和前端的代码示例，展示了如何实现结构化输出的流式传输功能。
+
+这段文字主要介绍了如何使用 JavaScript 和 LangChain 来构建一个能够从后端向前端流式传输结构化输出响应的聊天机器人应用。主要内容包括：
+
+1. 使用 Next.js 作为前后端框架。
+2. 后端需要使用 Server-Sent Events (SSE) 来实现结构化数据的流式传输。
+3. 提供了后端 API 端点的代码示例，展示如何使用 LangChain 和 OpenAI API 生成响应。
+4. 前端需要使用@microsoft/fetch-event-source 库来处理 SSE。
+5. 提供了前端代码示例，展示如何使用 fetchEventSource 函数来接收和处理来自服务器的事件。
+6. 整个过程涉及到 LangChain、OpenAI API、SSE 等技术的综合应用。
+7. 文章最后鼓励读者进一步学习 LangChain 的官方文档。
+
+### [在 React Router 中如何加载动态样式表](https://sergiodxa.com/tutorials/load-dynamic-stylesheets-in-react-router)
+
+可以通过创建动态路由来生成和提供基于用户偏好的 CSS 样式。  
+可以使用 LoaderFunction 和 MetaFunction 组合来根据条件动态加载预定义的静态 CSS 文件。  
+可以为每个用户生成唯一的 CSS 文件，并通过动态 URL 进行访问和加载。
+
+这段文字主要讨论了在 Remix 框架中动态加载 CSS 样式的几种方法：
+
+1. 根据需求动态生成 CSS:
+
+   - 创建一个路由来生成和提供 CSS
+   - 在根组件中加载这个动态生成的 CSS
+   - 在路由配置中注册这个 CSS 路由
+
+2. 动态加载静态 CSS 文件：
+
+   - 使用 LoaderFunction 和 MetaFunction 结合
+   - 根据用户偏好选择加载不同的预定义 CSS 文件
+
+3. 使用动态 URL 生成 CSS:
+   - 为每个用户创建唯一的 CSS URL
+   - 设置路由来动态生成个性化的 CSS
+   - 在根组件中加载用户特定的样式表
+   - 在路由配置中注册动态 CSS 路由
+
+这些方法允许开发者根据用户偏好、组织设置或其他动态因素来灵活加载样式，从而实现更个性化的用户界面。
+
+### [利用 Intersection Observer 的 ScrollMargin 简化懒加载](https://frontendmasters.com/blog/simplify-lazy-loading-with-intersection-observers-scrollmargin/)
+
+Intersection Observer API 新增了 scrollMargin 属性，解决了在滚动容器内使用 rootMargin 的问题。  
+scrollMargin 属性可以实现更好的懒加载效果，让内容在滚入视图前就开始加载。  
+目前只有 Chrome 和 Edge 支持 scrollMargin,Safari 尚未支持，这可能会导致可访问性问题。
+
+这段文字主要讨论了 Intersection Observer API 的新属性 scrollMargin。主要内容如下：
+
+1. 2023 年 12 月，Chrome 和 Edge 120 版本引入了 scrollMargin 属性。
+2. 介绍了 Intersection Observer API 的基本功能和 rootMargin 属性的作用。
+3. 指出了在特定情况下使用 rootMargin 的问题，尤其是在滚动容器内观察元素时。
+4. scrollMargin 属性的引入解决了这个问题，允许在计算交叉时扩展每个滚动容器。
+5. 描述了 scrollMargin 的典型用例，特别是在懒加载数据方面的应用。
+6. 通过视频示例展示了有无 scrollMargin 时懒加载的效果差异。
+7. 讨论了浏览器支持情况，目前仅 Chrome 和 Edge 支持，Safari 尚未支持。
+8. 警告不要将 scrollMargin 作为渐进增强使用，因为在 Safari 中可能导致可访问性问题。
+9. 呼吁 web 开发者推动浏览器互操作性，支持 scrollMargin 属性的广泛实现。
+
+### [学习如何使用 useEffect 进行订阅，这里我们采用了简化版的 Jotai 实现](https://newsletter.daishikato.com/p/learning-subscription-with-useeffect-from-a-simplified-jotai-implementation)
+
+Jotai 目前不使用 useSyncExternalStore，而是使用 useEffect 来处理订阅。  
+在 useEffect 中立即调用 callback 是为了确保在外部存储可能在渲染和效果执行之间发生变化时，atom 值能够更新。  
+虽然 useSyncExternalStore 是现在推荐的订阅方法，但了解 useEffect 的这种用法仍然有助于理解代码。
+
+这段文字主要讨论了以下几点：
+
+1. Jotai 目前并不使用 useSyncExternalStore。
+2. 文章介绍了如何使用 useEffect 处理订阅，并展示了 Jotai 的简化实现。
+3. 代码中使用 WeakMap 来跟踪 atom 的状态，避免内存泄漏。
+4. useAtom 钩子返回当前值和更新函数。
+5. 在 useEffect 中立即调用 callback 是一种常见技巧，用于处理外部存储在 effect 触发前可能发生的变化。
+6. 虽然 useEffect 可以用于订阅，但 React 现在推荐使用 useSyncExternalStore 钩子，因为它能处理更多边缘情况。
+7. 尽管在大多数情况下不需要使用 useEffect 进行订阅，但了解其工作原理仍然很有价值。
+
+### [Git 合并与变基：该如何选择及其适用场景](https://spin.atomicobject.com/git-merge-rebase/)
+
+Git 的分支功能允许多人同时开发不同特性，但有时需要通过合并或变基来更新分支。  
+合并 (merge) 简单易用，保留完整历史，适合多人协作；变基 (rebase) 可创建线性历史，使代码更易读，但可能导致冲突。  
+选择合并还是变基取决于具体情况，单人开发时可以使用变基，多人协作时最好选择合并。
+
+这段文字主要讨论了 Git 中合并 (merge) 和变基 (rebase) 两种更新分支的策略：
+
+1. 合并：
+
+   - 简单易用，创建合并提交
+   - 保留完整历史，便于多人协作
+   - 可能导致历史混乱
+
+2. 变基：
+
+   - 重写分支历史，使其线性化
+   - 可以清理和重组提交
+   - 提高可读性，便于代码审查
+   - 具有破坏性，不适合多人协作的分支
+
+3. 选择建议：
+
+   - 个人分支使用变基
+   - 多人协作分支使用合并
+
+4. 两种方法各有优缺点，选择取决于具体情况和个人偏好。
+
+## 工具
+
+### [cursify](https://github.com/ui-layouts/cursify)
+
+适用于 React 和 Next.js 的光标动画库
+
+### [hookcn](https://github.com/strlrd-29/hookcn)
+
+从 shadcn/ui 获取灵感，轻松复制和使用的 React Hooks
+
+### [style-observer](https://github.com/LeaVerou/style-observer)
+
+一个用于观察 CSS 样式变化的 JavaScript 库
+
+### [@playcanvas/react](https://github.com/playcanvas/react/tree/main)
+
+利用 React 创建 3D 应用程序
+
+### [ai-chatbot](https://github.com/vercel/ai-chatbot)
+
+由 Vercel 开发的一个功能强大且可自定义的 Next.js AI 聊天机器人开发模板
+
+### [macos](https://github.com/dockur/macos)
+
+在 Docker 容器中运行的 OSX (macOS)
+
+## 更新
+
+### [Astro 5.3](https://astro.build/blog/astro-530/)
+
+Astro 5.3 已经发布，带来了更快的页面渲染、更易设置的实验性会话存储、更多 Netlify 捆绑绑定控制等改进。新版本中，通过社区贡献者 MatthewLymer 的努力，Astro 现在只有在组件实际包含异步函数调用时才会异步渲染组件，从而实现了对同步组件的渲染加速。此外，Astro 5.3 还引入了对实验性会话存储 API 的自动设置支持，使开发者可以更轻松地管理服务器上的用户会话。此外，Netlify adapter 现已支持 includeFiles 和 excludeFiles 选项，使用户可以更好地控制捆绑过程。最后，API 端点现在将自动处理 HEAD 请求，如果定义了 GET 处理程序。此版本还修复了许多错误，感谢所有为 Astro 做出贡献的人。
+
+- 增加了更快的页面渲染功能，通过优化异步函数的使用，提高了服务器端渲染（SSR）的响应速度，使得静态构建时间和复杂页面的渲染时间都有了明显的提高。
+- 支持自动配置会话存储，使用支持的适配器时，会自动设置会话存储，方便开发者管理用户会话，同时也可以手动配置自己偏好的会话存储驱动。
+- 在 Netlify 适配器中添加了 includeFiles 和 excludeFiles 选项，使开发者能够更好地控制需要包含或排除在打包中的文件，提高了打包效率和减小了打包大小。
+
+## 设计
+
+### [Figma Plugins](https://pavellaptev.github.io/)
+
+Figma 插件
+
+## AI
+
+### [人工智能模型的对比分析](https://countless.dev/)
+
+### [deepseek-free-api](https://github.com/LLM-Red-Team/deepseek-free-api)
+
+🚀 DeepSeek-V3 R1 大模型逆向 API【特长：良心厂商】（官方贼便宜，建议直接走官方），支持高速流式输出、多轮对话，联网搜索，R1 深度思考，零配置部署，多路 token 支持，仅供测试，如需商用请前往官方开放平台。
+
+## 其他
+
+### [复习一下，使用 Cursor 读 Radash 源码](https://github.com/i5ting/radash)
+
+---
+
+### Agent & Workflow
+
+![B5IwOX](https://cdn.jsdelivr.net/gh/klaaay/pbed1@master/uPic/B5IwOX.png)
+
+---
+
+程序员们不再互相提问，AI 回答了大部分问题。
+
+-- 《AI 的数周相当于人类的几十年》，自从 AI 大模型问世后，问答网站 StackOverflow 日益冷清

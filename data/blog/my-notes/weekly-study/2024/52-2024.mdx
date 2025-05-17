@@ -1,0 +1,99 @@
+---
+title: 2024-第五十二周
+date: '2024-12-17'
+tags: ['WEEKLY-2024']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [⭐️state of js 2024](https://2024.stateofjs.com/zh-Hans/)
+
+### [介绍 TanStack Start](https://frontendmasters.com/blog/introducing-tanstack-start/)
+
+这篇文章主要介绍了 TanStack Start 的特点和优势，以及服务器渲染的重要性。它解释了客户端渲染和服务器端渲染的区别，以及 TanStack Start 如何通过 isomorphic loaders 和 react-query 集成来解决数据加载和渲染的问题。文章强调了 TanStack Start 在提高性能和简化开发方面的优势。
+
+- 服务器渲染带来初始页面加载性能提升：通过服务器渲染，用户能够立即看到完整的页面内容，而不是等待脚本加载和数据请求完成。
+- TanStack Start 通过服务器处理加载数据的方式有效避免了其他 Web 框架存在的问题：其采用了 isomorphic loaders 的机制，实现了服务器端和客户端加载数据的统一处理。
+- 集成了 react-query 的 TanStack Start 能够实现组件级数据获取，同时保持服务器端加载和数据流式处理的便利性，为 Web 应用性能优化提供了简单而有效的解决方案。
+
+### [全面了解 Node.js 中的 CommonJS 和 ES 模块](https://blog.appsignal.com/2024/12/11/a-deep-dive-into-commonjs-and-es-modules-in-nodejs.html)
+
+这段文字介绍了 Node.js 生态系统中对 ES 模块（ESM）的逐渐转变，以及对比了 CommonJS 和 ES 模块的核心区别。它强调了 ES 模块的优势，包括更广泛的兼容性、更好的性能以及与现代 JavaScript 开发实践的一致性。文章还探讨了 Node.js 如何同时支持两种模块系统，并提出了在从 CommonJS 过渡到 ES 模块时需要考虑的一些问题。
+
+ES 模块（ESM）是 JavaScript 中的官方和标准模块化方式，具有更广泛的兼容性和性能优势，且与现代 JavaScript 开发实践更加一致。
+Node.js 通过支持 .mjs 和 .cjs 文件扩展名、package.json 中的 "type" 属性以及新的 --experimental-require-module 标志，实现对 CommonJS 和 ES 模块的双重支持和相互操作性。
+在从 CommonJS 迁移到 ES 模块的过程中，需要注意模块导出、导入的语法差异、文件扩展名的要求、JSON 模块导入的实验性质，以及循环依赖的处理方法等。
+
+### [全新发布的 Express v5：Node.js 框架迎来新的时代](https://expressjs.com/2024/10/15/v5-release.html)
+
+这篇文章介绍了 Express v5 发布的重要消息，包括了长达十年的开发过程、对旧 Node.js 版本的支持终止、路径匹配和正则表达式的变化、Promise 支持的添加、Body Parser 的改变以及移除的过时方法签名等。文章强调了新版本的稳定性和安全性，并呼吁开发者尽快升级至现代的 Node.js 版本。同时，还提到了详细的迁移指南和安全建议。最后，强调了项目未来的规划和愿景，鼓励支持该项目和维护者。
+
+- Express v5 发布的主要目标是稳定和安全，通过删除旧版 Node.js 支持、更新路由匹配和正则表达式、添加 Promise 支持和修改 Body Parser 等方式来实现。
+- 为了确保安全，发布 v5 版本的过程中进行了安全审计和补丁工作，并计划提供长期支持计划。同时，强烈建议用户尽快升级到现代的 Node.js 版本。
+- Express v5 发布后，提供了详细的迁移指南以帮助开发者顺利升级，并且加强了威胁模型的工作，以确保框架在用户输入验证和安全实践方面表现出色。
+
+### [Ref Callbacks, React 19 and the Compiler](https://tkdodo.eu/blog/ref-callbacks-react-19-and-the-compiler)
+
+这篇文章探讨了在 React 中使用回调引用（ref callbacks）和 useCallback 的最佳实践。作者指出了在使用 useCallback 时可能出现的问题，并提供了一些解决方案。此外，还介绍了 React 19 中回调引用的新功能，并探讨了何时使用回调引用和 useEffect。文章还提到作者的第一篇关于回调引用的文章，并对其进行了一些修正和补充。
+
+- useCallback 的使用不应该成为代码的必要依赖，而应当仅被视为性能优化，需要在代码移除后仍然正常运行。
+- 当需要访问节点时，可以优先选择使用 ref callbacks，尤其是当能够将函数提取出组件外部时。
+- Ref callbacks 可以用于具有清理需求的操作，且在 React 19 中还可以返回清理函数，因此在某些情况下可以代替 useEffect。
+
+### [Catching Flaky Tests Before It’s Too Late](https://about.codecov.io/blog/catching-flaky-tests-before-its-too-late/)
+
+本文介绍了测试不稳定性的问题，强调了它对测试可靠性的影响以及如何检测和修复测试不稳定性。作者提到了测试不稳定性的根本原因，以及如何利用工具来检测和跟踪产品中的不稳定测试。作者还分享了如何使用 Codecov 的 Test Analytics 来检测和修复测试不稳定性，并提供了具体的操作步骤和示例。
+
+- 测试不稳定性的根源可以隐藏在系统的各个层面，包括测试编写方式、测试设置、使用的工具，甚至硬件，因此需要全面检测。
+- 测试不稳定性往往被忽视，导致团队信任度下降，测试效果减弱，甚至可能放弃端到端测试，因此需要重视并及时解决测试不稳定性问题。
+- 使用测试分析工具如 Codecov 的 Test Analytics 可以帮助及时发现和追踪测试不稳定性，提供详细的测试报告和指标，帮助团队修复问题并保持测试的可靠性和稳定性。
+
+## 工具
+
+### [go-cursor-help](https://github.com/yuaotian/go-cursor-help)
+
+解决 Cursor 在免费订阅期间出现以下提示的问题：Too many free trial accounts used on this machine. Please upgrade to pro. We have this limit in place to prevent abuse. Please let us know if you believe this is a mistake.
+
+### [frpc-desktop](https://github.com/luckjiawei/frpc-desktop)
+
+frp 跨平台桌面客户端，可视化配置，轻松实现内网穿透！支持所有 frp 版本
+
+## 更新
+
+### [Bun v1.1.39](https://bun.sh/blog/bun-v1.1.39)
+
+这段文字介绍了一次 Bun 软件的更新发布，其中包括了对 61 个 bug 的修复，新增了 bun.lock，以及改进了多项功能和性能。同时，还介绍了系统工程师的招聘信息，以及对新格式 bun.lock 的详细介绍。除此之外，还有对 Node.js 兼容性、插件 API、CSS 解析、内存分析、依赖升级、以及多项 bug 修复等方面的改进和修复。
+
+- 本次更新增加了 bun.lock 这种文本锁定文件格式，使得版本控制和工具如 Dependabot、Renovate 等能更好地运行。
+- 引入了 fetch() 请求主体流的支持，使得客户端能够发送 fetch() 请求主体作为流。
+- 对 Node.js 的 string_decoder、punycode 和 querystring 进行了全面兼容，修复了多个 bug，并提升了性能。
+
+### [Astro 5.1](https://astro.build/blog/astro-510/)
+
+Astro 5.1 发布了，包含了新的实验性会话功能、远程图片缓存、以及一个新的 Astro Actions 工具。会话功能允许在服务器端存储用户数据，而远程图片缓存则减少了重复下载和转换远程图片的需求。同时，新增了一个 getActionPath 辅助函数，用于更灵活地调用 Astro Actions。此外，修复了自发布 Astro 5 以来的一些问题。
+
+- Astro 5.1 发布了新的实验性功能——会话（Sessions），允许在服务器端存储用户数据，如登录状态、Flash 消息或购物车信息，而无需在客户端存储，提高了数据安全性。
+- Astro 5.1 新增了远程图像缓存功能，通过条件请求和缓存验证，对远程图像进行缓存，降低重复下载和转换图像的需求，提高了网站性能。
+- 引入了新的 getActionPath 帮助函数，使得在调用 Astro Actions 时更加灵活，可以获取到 Action 的 URL，以便进行自定义请求或使用各种 API。
+
+## AI
+
+### [assistant-ui](https://github.com/Yonom/assistant-ui)
+
+用于 AI 聊天的 React 组件 💬 🚀
+
+## 其他
+
+### [This page is under construction](https://localghost.dev/blog/this-page-is-under-construction/)
+
+这篇文章主要是鼓励读者建立自己的个人网站，作为独立网络上的一个小家园。文章回顾了早期网络时代 individua l 性和独特性的设计和内容，并批评了当今许多商业化的网站看起来都一样。文章还讨论了社交媒体平台如何利用用户数据进行广告定向，以及个人网站如何让读者拥有自己的内容。文章的核心信息是，建立个人网站可以让你在网上有一个真正属于自己的空间，可以自由发挥创造力，并与他人连接。
+
+个人网站的重要性：作者鼓励每个人都建立自己的网站，让它成为独立网络上的一个小家，反映自己的个性和兴趣。
+商业化网络的问题：作者指出当今网络上许多商业化的网站看起来都一样，内容也大同小异，缺乏个性化和创造性，同时也存在隐私和数据安全方面的问题。
+个人网站建设的自由和乐趣：作者认为，个人网站建设可以给个人带来自由和乐趣，可以自由地尝试新技术和创意，不用为商业目的而限制自己。

@@ -1,0 +1,199 @@
+---
+title: 2024-第四十八周
+date: '2024-11-18'
+tags: ['WEEKLY-2024']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [是否是受控组件：这取决于你的视角](https://buildui.com/posts/uncontrolled-vs-controlled-a-matter-of-perspective)
+
+这段文字讨论了在 React 中的两种组件状态管理方式：无控制组件（uncontrolled component）和受控组件（controlled component）。通过输入框和计数器的例子，解释了它们之间的区别和如何判断一个组件是属于哪种类型。同时强调了组件是否具有内部状态和是否从父组件传入 props 决定了其类型，最终指出判断一个组件是无控制还是受控取决于使用者的角度。
+
+- React 中的组件状态分为受控组件和非受控组件，受控组件把状态委托给了 React，而非受控组件的状态完全由 DOM 管理。
+- 组件的状态是由组件内部状态（内部 state）还是外部 props 控制决定的，有内部状态的组件被认为是非受控组件，而由 props 控制的则是受控组件。
+- 组件的受控或非受控状态取决于组件的使用方式，当组件从内部状态渲染时，它是非受控组件，而从 props 渲染时，则是受控组件。
+
+### [React 是一种编程语言，其基本规则是语法规范。](https://buildui.com/posts/react-is-a-programming-language-and-its-rules-are-its-syntax)
+
+这篇文章讨论了在 React 服务器组件中无法使用 refs 的原因。它解释了 JavaScript 词法作用域和 React 对 UI 交互的保证，以及为何需要遵循 React 的规则和约束。作者强调了理解 React 的设计初衷对于有效使用框架的重要性，并将 React 视为一种用于 UI 的编程语言，需要学习并遵循其规则以获得最佳效果。
+
+- React 服务器组件中无法使用 refs，因为服务器端没有 DOM 节点，而 React 通过 JavaScript 变量和词法作用域提供强大的语言特性和反馈。
+- React 服务器组件的约束和规则确保了 UI 的一致性和可预测性，例如通过状态和条件渲染来处理内容的显示和隐藏，避免了导致 React 创建的 UI 不一致性的问题。
+- 要成功使用 React 并享受其带来的益处，开发者需要理解 React 设计时所面对的问题，学会遵循其规则和约束，并将 React 视作 UI 的编程语言，从而获得更高的生产力和满足感。
+
+### [如何在 Playwright 中避免不可靠的测试](https://semaphoreci.com/blog/flaky-tests-playwright)
+
+这篇文章介绍了 Playwright 中的不稳定测试（flaky test）现象，以及造成这种现象的主要原因。文章提出了一些避免编写不稳定测试的最佳实践，包括在提交测试之前运行和调试测试、使用定位器（locator）而不是选择器、避免使用固定的等待时间、配置自动重试、设置适当的超时时间等策略。此外，文章还介绍了如何使用 Playwright 的调试工具、如何处理不稳定测试以及如何通过检查跟踪和视频来解决测试失败问题。
+
+- 什么是 Playwright 中的 flaky test：flaky test 是指在相同 commit SHA 下多次运行结果不一致的测试，尤其在 CI 系统中会导致不可预测性的失败。
+- 导致测试 flaky 的原因：诸如竞态条件、应用程序运行缓慢、测试脚本中的问题等因素可能导致测试 flaky。
+- 避免编写 flaky 测试的最佳实践：包括在本地运行和调试测试、使用合适的定位策略、避免硬等待、配置自动重试等方法。
+
+### [这种奇特的语法可以帮助你获取数组中元素的类型](https://www.totaltypescript.com/get-the-type-of-an-array-element)
+
+这段文字介绍了在 TypeScript 中使用 Array[number] 这个技巧，可以从数组类型中提取出数组元素的类型。通过示例和解释，说明了这种方法的语法和应用场景，还强调了从值中派生类型的强大概念。
+
+- TypeScript 中的 Array[number] 语法可以用来提取数组中元素的类型，进而进行类型推断和操作。
+- Array[number] 是一种索引访问类型，可以从对象中提取具有数字键的属性，适用于从数组中提取特定类型的元素。
+- 这种技巧在库代码编写和从数组构建枚举等场景中特别有用，可以帮助开发者更高效地利用 TypeScript 的类型推断能力。
+
+### [溢出剪辑 - Overflow Clip](https://ishadeed.com/article/overflow-clip/#increase-margin-for-a-list-of-tags)
+
+这篇文章介绍了 CSS 属性 overflow 中的 clip 值的用法和作用。它解释了当我们想要在网站设计中实现针对性的剪裁时，如何使用 overflow: clip 来达到预期效果，并提供了几个实际示例。文章还介绍了 overflow-clip-margin 属性以及一些额外的用例和资源链接。整体而言，文章详细介绍了如何使用 overflow: clip 来解决特定的网页设计需求。
+
+- overflow 属性的 clip 值可以在特定情况下只在一个轴上进行裁剪，避免默认情况下两个轴都被裁剪。
+- 使用 overflow-clip-margin 属性可以控制裁剪后元素内容的边距，进一步优化裁剪效果。
+- clip 值在处理网页设计中的特定场景下非常有用，如英雄区、装饰元素裁剪和条件性装饰添加等。
+
+### [利用 OGL 技术创建 ASCII 着色器](https://tympanus.net/codrops/2024/11/13/creating-an-ascii-shader-using-ogl/)
+
+文章介绍了如何使用着色器创建生成艺术和动画效果，以及如何将一个着色器的输出作为另一个着色器的输入，实现有趣的效果。作者通过创建项目、编写简单着色器、生成 Perlin 噪声、将噪声输出传递给 ASCII 着色器，并添加控制按钮来调整数值，最终构建了一个漂亮的着色器效果。文章还提到了 ASCII 艺术的历史渊源和对 OGL 渲染引擎的使用建议，并分享了一些着色器编写过程中的常见问题和解决方法。
+
+- 本文介绍了如何使用着色器创建复杂效果，包括生成 Perlin 噪声并将其作为 ASCII 着色器的输入，为艺术创作和动画效果提供强大的工具。
+- 文中展示了从头开始设置项目、创建简单着色器和生成 Perlin 噪声的步骤，以及如何将噪声着色器的输出传递给 ASCII 着色器，实现有趣的效果。
+- 通过实时调整控制旋钮的方式，文中还介绍了如何调整着色器的值，展示了着色器在浏览器中实时更新的效果，为读者提供了对着色器进行互动调整的方法。
+
+### [深入了解 JavaScript 符号的应用与特性](https://www.trevorlasn.com/blog/symbols-in-javascript)
+
+这段文字介绍了 JavaScript 中的 Symbols，它们是一种独特的原始类型，能够解决一些与字符串和数字不同的问题。Symbols 的独特性和在对象中作为属性键的特性使它们在特定的使用情境下非常强大，同时介绍了 well-known Symbols 和 Symbol.for() 的使用方法。文章还提到了 Symbols 的限制和一些注意事项，并指出了 Symbols 的适用情况。
+
+- JavaScript 中的 Symbol 是一种独特的原始类型，能够保证唯一性，在对象中作为属性键使用时不会与现有属性冲突，适用于创建对象特定行为和元数据。
+- Symbol 通过 Symbol.for() 方法可以创建全局共享的符号常量，使得在不同模块间共享符号成为可能，而普通的 Symbol 则保持唯一性。
+- Symbols 还可以通过 well-known Symbols 来控制对象在不同情况下的行为，比如使用 Symbol.iterator 使得对象可以被迭代，使用 Symbol.toPrimitive 控制对象的转换为原始值的方式，以及使用 Symbol.species 控制特定数组的派生操作返回的类型。
+
+### [12 种现代 CSS 一行代码的提升技巧](https://moderncss.dev/12-modern-css-one-line-upgrades/?__readwiseLocation=)
+
+这段文字介绍了 12 个 CSS 属性，分为稳定升级、稳定增强和渐进增强三类。稳定升级属性包括 aspect-ratio、object-fit 和 margin-inline；稳定增强属性包括 text-underline-offset、outline-offset、scroll-margin、color-scheme、accent-color 和 width: fit-content；渐进增强属性包括 overscroll-behavior、text-wrap 和 scrollbar-gutter。这些属性可以提升应用的 CSS，减少技术债务，消除 JavaScript，并为用户体验带来便利。
+
+- 学习并应用 12 种 CSS 属性，包括稳定升级、稳定增强和渐进增强，以改善应用的用户体验和减少技术债务。
+- 利用稳定升级的属性如 aspect-ratio 和 object-fit，替换旧的技术和解决问题，同时提升性能和用户体验。
+- 运用渐进增强的属性如 overscroll-behavior 和 text-wrap，提供更先进的体验，而不会影响不支持这些属性的浏览器，从而避免引入额外的技术债务。
+
+## 工具
+
+### [⭐️react-scan](https://github.com/aidenybai/react-scan)
+
+检查 React 的性能问题，解决应用中出现的缓慢渲染情况
+
+### [gridstack.js](https://github.com/gridstack/gridstack.js)
+
+只需几分钟即可创建互动式仪表盘。
+
+### [mp4box.js](https://github.com/gpac/mp4box.js)
+
+GPAC 的 MP4Box 工具的 JavaScript 版本
+
+### [screenity](https://github.com/alyssaxuu/screenity)
+
+一款免费且保护隐私的屏幕录制软件，使用没有任何限制 🎥
+
+### [ant-design/x](https://github.com/ant-design/x)
+
+构建 Copilot 应用的理想合作伙伴
+
+### [shadcn-chatbot-kit](https://github.com/Blazity/shadcn-chatbot-kit)
+
+🤖 采用 shadcn/ui 精心设计的聊天机器人组件，外观优雅。
+
+### [tartak](https://github.com/mieszkosabo/tartak)
+
+Tartak 是一种函数式编程语言，可以将代码转换成 TypeScript 的类型定义。
+
+## 更新
+
+### [React Router v7](https://remix.run/blog/react-router-v7)
+
+React Router v7 发布稳定版本，回归 Remix 的特性。升级到 v7 可以获得更多特性和类型安全支持，同时为 React 18 和 19 进行平滑过渡。对于 React Router v6 用户，提供了框架模式，为 Remix v2 用户则带来了类型安全改进和路由支持。新应用可以选择作为框架或库来使用 React Router v7，提供了各种模板和指南来快速上手。
+
+- React Router v7 将 Remix 的多项功能整合到 React Router 中，使其成为一个全面的框架，为用户提供了丰富的特性和支持。
+- 对于 React Router v6 用户和 Remix v2 用户，升级到 React Router v7 可以获得更好的类型安全性、服务器渲染、静态页面预渲染等众多改进。
+- React Router v7 提供了两种新应用程序构建方式的指南，用户可以选择将其作为框架或库来使用，并提供了多种模板和内置部署管道，方便用户快速构建新的应用程序。
+
+### [在性能面板中直接对痕迹进行标注](https://developer.chrome.com/blog/devtools-annotations?hl=en#annotated_time_ranges)
+
+2024 年 11 月 13 日发布的文章介绍了在性能面板中添加注释的新功能。开发人员现在可以直接在性能面板中添加注释，包括标记时间范围、标记条目和连接条目之间的关系。这些注释可以帮助开发人员调试性能问题、与同事快速分享发现以及合作优化性能。同时，文中还介绍了如何保存和加载带有注释的跟踪文件，以及如何删除或隐藏注释。这一新功能为开发流程带来了更高效的方式，消除了对外部工具的需求。
+
+- 现在可以在性能面板中直接添加注释，包括标记时间范围、条目标签和条目连接，使得调试性能和与同事快速协作变得更加高效便捷。
+- 注释可以帮助开发者在调试过程中准确定位关键时刻，增加个性化的上下文和见解，从而简化分析过程，便于分享和协作进行性能优化。
+- 添加的注释和其他性能面板的自定义设置可以保存在跟踪文件中，使得跟踪文件变得更具有交互性和可协作性，而不仅仅是静态的截图。
+
+### [Payload 3.0：首个可直接集成到任何 Next.js 应用的内容管理系统（CMS）](https://payloadcms.com/blog/payload-30-the-first-cms-that-installs-directly-into-any-nextjs-app)
+
+这段文字介绍了一个名为 Payload 的 Next.js CMS 的重大升级版本 3.0，它在 Headless CMS 领域做出了很多创新和改进。新版本的 Payload 支持 Next.js 原生安装，无需第三方 SaaS 服务，具有更好的可移植性和更多功能特性。此外，文章还介绍了 3.0 版本的一些主要结构性变化、新功能和改进，并展望了未来版本的发展方向。
+
+- Payload 3.0 是一款基于 Next.js 的 Headless CMS，可以直接安装在应用程序文件夹中，无需第三方 SaaS 服务，具有开源特性。
+- 结构上的重大改变包括 Next.js 原生支持、稳定的 PostgreSQL 和 Lexical、采用 ECMAScript Modules、以及服务器组件和服务器函数的支持。
+- 新功能包括更复杂的数据库架构支持、选择性加载 API、Lexical 编辑器的增强功能、完全功能的作业队列、批量上传支持以及稳定的实时预览等，同时还有许多其他改进和优化。
+
+### [Ionic 8.4 发布](https://ionic.io/blog/announcing-ionic-8-4)
+
+Ionic 8.4 推出了对核心组件的更新，包括 Alert、Select 和 Segment，增强了可访问性，并改进了开发体验。新增了两个组件和增强功能，包括模态界面选择、可滑动的片段内容，以及菜单事件处理和警报可访问性的改进。此外，还包含了其他一系列改进，如增强了辅助功能，解决了 Bug，更新了选项卡组件等。
+
+- Ionic 8.4 增加了 Select 组件支持模态界面，提供了灵活性，使用户与 Select 菜单交互更加多样化。
+- 引入了 Segment View 和 Segment Content 两个新组件，与 Segment 组件无缝集成，实现了可滑动内容，使构建类似选项卡的体验更加轻松。
+- 在可访问性、开发人员体验和功能方面进行了多项改进，包括增强了屏幕阅读器支持、解决了 Vue 中的导航问题，并使 Tabs 和 Tab Bar 组件在 Vue 和 React 中能够独立运行，简化了集成过程。
+
+## AI
+
+### [黄仁勋两万字访谈实录：希望英伟达拥有 5 万名员工和 1 亿个 AI 助手](https://www.ifanr.com/1604046)
+
+黄仁勋指出，未来的计算世界将高度依赖机器学习和人工智能，并且将有智能体来协助人类使用各种应用程序。他强调了现代化改造旧基础设施和构建新的 AI 工作负载的重要性。此外，他提到了人工智能助手将会在不久的将来出现，并且会不断进化。他还谈到了对基础设施的现代化改造，以适应未来 AI 工作负载的需求。
+
+- 英伟达公司通过重新定义计算技术栈，致力于构建一个无处不在的计算平台，该平台将大量依赖机器学习和智能体来帮助人们使用各种应用程序。
+- 黄仁勋认为，未来的计算世界将高度依赖于机器学习和 AI，而英伟达在现代化改造的基础设施和 AI 工厂架构上已做出了巨大的努力。这种现代化的数据中心架构与 AI 工厂架构是相同的，这为公司未来的发展提供了巨大的潜力。
+- 机器学习和 AI 将大大影响未来的工作方式，公司把目标锁定在创造一个完整的 AI 基础设施上，以迎接未来机器学习和 AI 在各行各业带来的深远影响。
+
+### [AI SDK 4.0](https://vercel.com/blog/ai-sdk-4-0)
+
+AI SDK 4.0 发布，新增功能包括 PDF 支持、计算机使用支持和新的 xAI Grok 提供程序。PDF 支持可以从 PDF 文档中提取信息、分析内容并回答问题。计算机使用支持可实现对鼠标、键盘、屏幕截图和文本文件的控制。另外，新增的 xAI Grok 提供程序也可以使用。AI SDK 还增加了持续生成文本的支持，并对其他提供程序进行了更新。更新的 AI Chatbot 模板提供了生产级 AI 应用的起点。AI SDK 4.0 还包括自动迁移工具，方便用户升级。
+
+- AI SDK 4.0 引入了对 PDF 文档的支持，可以从 PDF 中提取信息、分析内容，并基于文档内容回答问题，为 AI 应用处理 PDF 格式提供了重要功能。
+- Anthropic 的最新模型 Claude Sonnet 3.5 支持与计算机的自然交互，可以控制鼠标、键盘，进行截图和执行终端命令，为构建自然交互的应用开启了新的自动化和辅助机会。
+- AI SDK 4.0 引入了持续支持功能，能够检测生成是否完成并在多个步骤中继续响应，生成长文本输出，并在多个步骤中保持一致性，为生成长篇内容的 AI 应用提供了便利。
+
+### [multi-agent-orchestrator](https://github.com/awslabs/multi-agent-orchestrator)
+
+一个灵活而强大的框架，旨在管理多个 AI 代理并应对复杂的对话场景。
+
+### [通过电话与 ChatGPT 进行对话](https://www.assemblyai.com/blog/talk-to-chatgpt-on-a-phone-call/)
+
+这篇文章介绍了如何利用 Twilio 进行语音通信、AssemblyAI 进行语音转文本、以及 OpenAI 的 GPT-4 生成人类化的文本回复来创建语音呼叫机器人。文章讨论了如何整合这些技术，以构建能够通过语音呼叫与用户进行交互、理解其口头查询并以对话方式回应的应用程序。同时强调了 AssemblyAI 的高准确性语音转文本服务和 OpenAI 的文本生成技术的重要性。
+
+- 教程介绍了如何利用 Twilio 进行语音通信、AssemblyAI 进行语音转文本转换、以及 OpenAI 的 GPT-4 生成人类化文本响应，从而构建语音呼叫机器人。
+- 通过 Node.js、Twilio、AssemblyAI 和 OpenAI 等技术，实现了一个能够通过电话与 ChatGPT 进行对话的语音呼叫机器人。
+- 教程强调了如何安装环境、设置 API 密钥、建立 webhook 以及编写处理语音呼叫的后端代码，为搭建语音呼叫机器人提供了详细的指导和步骤。
+
+### [documind](https://github.com/DocumindHQ/documind)
+
+一个开源平台，利用 AI 技术从文档中提取结构化数据
+
+### [让 Al 替代 50% 的工作 ——1. AI 辅助编程基础](https://kaiyi.cool/blog/marscode-1)
+
+本文介绍了 AI 辅助编程的现状和原理，讨论了大型语言模型的特点和优劣势，以及如何应用 AI 进行编程辅助。文章指出 AI 虽然具有辅助作用，但并非银弹，需要程序员合理利用其优势并对其不完美有清醒认识。。
+
+- AI 辅助编程的原理是基于大模型通过概率预测下一个最可能的词或代码，在多数领域达到入门级以上的能力。
+- 大模型可以通过微调适应特定任务或领域，但仍然是一个辅助工具，不具备真正的智能，需要人类审查其产出的代码。
+- 程序员应该明确 AI 的辅助定位，善用其优势，将任务进行合理分工，从而最大程度地利用 AI 提高工作效率。
+
+### [Airbnb 利用生成式 AI 技术，通过 Vision Transformer 提供了一种全新的照片导览体验。](https://medium.com/airbnb-engineering/airbnbs-ai-powered-photo-tour-using-vision-transformer-e470535f76d4)
+
+这篇文章介绍了爱彼迎如何利用人工智能技术改进了其照片浏览功能，从预训练、多任务学习、集成学习到知识蒸馏，详细描述了他们采取的方法和技术。通过这些方法，他们显著提高了模型的准确性，并最终成功推出了 AI 驱动的照片浏览产品。文章还特别感谢了参与项目的成员以及相关团队的支持。
+
+- 通过预训练、多任务学习、集成学习和知识蒸馏等方法，成功提高了摄影之旅产品的模型准确性，为用户提供更好的体验。
+- 通过黄金评价严格评估流程，最终成功将错误率降低到了 5.28%，并在 Airbnb 内部评估标准下通过，推出了 Photo Tour 产品。
+- 基于 Airbnb 列表照片的预训练提供了坚实的基础，而多任务学习使模型能够更好地解释不同视觉效果，最终实现了高效的部署并保持了模型的准确性。
+
+## 其他
+
+我遇到一个程序员，他完全不想使用 AI。因为他用过一次，发现错误很多，就不想再用了，也不想了解。
+
+这件事令我很困惑。我理解 AI 被过度炒作了，可能对你正在做的事情没有用处。我不理解的是，在 2024 年，你怎么可能成为一名程序员，却对一项据说会从根本上改变我们未来编程方式的技术一点也不好奇。
+
+-- 《他们都使用它》

@@ -1,0 +1,99 @@
+---
+title: 2024-第四十九周
+date: '2024-11-25'
+tags: ['WEEKLY-2024']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [⭐️译：关于 RSC 对 SPA 的意义的思考](https://sorrycc.com/thoughts-on-what-rsc-means-for-spas/)
+
+这篇文章讨论了 React 服务器组件（RSC）及其对单页应用程序（SPA）的影响。作者认为，RSC 提供了序列化能力，可以在构建时对组件进行渲染和序列化，并将其作为静态文件提供，从而减少 JS 包的大小。作者还探讨了在具有 SPA 的 API 服务器中使用 RSC 的可能性，以及路由库对整合 RSC 的重要性。文章指出，RSC 对 SPA 具有潜在的好处，但也需要权衡和进一步的探索。
+
+- RSC（React 服务器组件）即使在没有运行时服务器的情况下，也可以通过序列化能力减少 SPA 的 JS 包大小，从而为单页应用程序带来好处。
+- 当与带有 SPA 的 API 服务器结合时，使用 RSC 负载可以发送已渲染的组件和数据，并允许流式传输数据，避免了发送 JS 包来渲染组件。
+- 路由库的整合将对 RSC 能力的应用起着重要作用，它们提供了面向用户的 API 并隐藏了 RSC 的一些复杂性，使其更易于使用。
+
+### [⭐️React 的设计哲学](https://ssshooter.com/react-philosophy/)
+
+这段文字主要介绍了 React 的渲染机制、性能优化、函数式组件的优势以及副作用处理的方式。其中涵盖了 React Fiber 的作用、函数式组件与类组件的对比、Hook 的引入以及副作用处理等内容。文章还提到了未来的发展方向，以及 React 团队对于组件缓存和优化的计划。
+
+- React 的渲染机制通过引入 Fiber，实现了渲染流程的暂停和中止，极大地提高了系统响应速度。
+- 函数式组件的优势在于更简洁的写法和方便抽取公共逻辑的基础，但需要注意函数式组件必须是纯函数，没有副作用。
+- 使用 useMemo 和 useCallback 可以对函数和计算结果进行缓存，而 React.memo 函数可以缓存整个组件的运行结果，从而提高性能。
+
+### [在使用 useSyncExternalStore 时请务必谨慎](https://www.nico.fyi/blog/be-careful-with-usesyncexternalstore)
+
+本文讲述了作者在使用自定义的 useLocalStorage 钩子时遇到的问题，并解决了无限渲染循环的困扰。作者发现 local storage 只能存储字符串，无法直接存储对象，因此使用了 superjson 库来实现对象的序列化和反序列化。最终，作者通过对代码进行调整和添加迁移函数，解决了问题，并邀请读者尝试并反馈意见。
+
+- 本文介绍了在使用 useLocalStorage 自定义 hook 时遇到的问题以及解决方案，其中包括在 local storage 中存储对象时可能引发的无限渲染循环。
+- 作者通过使用 superjson 库来序列化和反序列化数据，解决了 JSON.stringify 和 JSON.parse 在处理非原始值时的类型安全性和准确性问题。
+- 文中还提到了为了处理遗留数据，作者添加了一次性的迁移函数来将旧数据转换为新的存储格式，以确保数据在使用新的 hook 时能正常工作。
+
+### [利用 background-clip border-area 创建独特的边框设计](https://webkit.org/blog/16214/background-clip-border-area/?__readwiseLocation=)
+
+这段文字介绍了如何使用 CSS 中的 background-clip 属性来创建边框效果，包括使用图片或渐变填充边框、控制边框的样式和背景属性，以及展示了多种示例和潜在的未来改进。同时还讲解了如何在文本中应用背景图像或渐变，以及一些技巧和注意事项。
+
+- CSS 的新特性 background-clip: border-area 让我们可以轻松地使用背景图像或渐变来创建元素的边框效果。
+- 通过在边框上应用背景图像，并结合 background-size 和 background-origin 属性，我们可以创建多样化的边框效果，包括利用背景图像填充整个边框。
+- 除了创建边框效果外，还可以利用 background-clip 属性实现文本填充背景图像的效果，为网页设计提供更多可能性。
+
+## 工具
+
+### [spoiled](https://github.com/molefrog/spoiled)
+
+🪄 隐藏重要信息。一个适用于 React.js 的真实感 `<Spoiler />` 组件
+
+### [react-tag-autocomplete](https://github.com/i-like-robots/react-tag-autocomplete)
+
+⚛️ 这是一个简单且易用的标记组件，可以轻松集成到你的 React 项目中（全新仓库）
+
+### [0x](https://github.com/davidmarkclements/0x)
+
+🔥 一键生成火焰图性能分析 🔥
+
+## 更新
+
+### [TypeScript 5.7](https://devblogs.microsoft.com/typescript/announcing-typescript-5-7/)
+
+这篇文章介绍了 TypeScript 5.7 的新功能和改进。其中包括对从未初始化的变量进行检查、相对路径的重写、支持新的 ECMAScript 2024 目标和 V8 编译缓存等功能。此外，还介绍了编辑器中项目所有权的搜索改进、用于复合项目的更快项目所有权检查、--module nodenext 中对 JSON 导入的验证，以及对于类中的非文字方法名生成索引签名的一致行为等内容。文章还强调了需要注意的行为变化和下一步的计划。
+
+- TypeScript 5.7 增加了对从未初始化的变量进行检查，使得程序在使用未初始化变量时能够及时报错，有助于提高代码的可靠性。
+- 新增了对相对路径进行重写的编译器选项 --rewriteRelativeImportExtensions，使得 TypeScript 代码在需要生成 JavaScript 文件时能够更便捷地进行调试和迁移。
+- TypeScript 5.7 支持了 --target es2024 和 --lib es2024，使得开发者能够在新的 ECMAScript 2024 运行时环境中使用一些新的特性和 API。
+
+### [Vite 6.0​](https://vite.dev/blog/announcing-vite6.html)
+
+Vite 6.0 发布了，标志着 Vite 生态系统的持续发展。自 Vite 5 发布以来，Vite 的下载量大幅增长，各大公司和新框架也纷纷加入了 Vite 生态系统。ViteConf 大会也取得了巨大成功，展示了新的开发工具和框架。Vite 6 引入了新的环境 API，使得框架作者可以更灵活地提供开发体验。此外，还有一些主要变化和迁移指南，以及对贡献者和合作伙伴的感谢。
+
+- Vite 6.0 发布，引入了实验性环境 API，使得框架作者可以为开发者提供更接近生产环境的开发体验。
+- Vite 生态系统持续增长，受到越来越多的用户和公司的青睐，包括一些知名公司和新的前端框架加入。
+- Vite 6.0 还带来了许多改进，包括对 Node.js 的支持、默认值设置、HTML 元素中资源引用的扩展支持等，对于大多数项目来说，升级到 Vite 6.0 应该是比较顺利的。
+
+### [AWS Lambda 现已支持 Node.js 22 运行环境](https://aws.amazon.com/cn/blogs/compute/node-js-22-runtime-now-available-in-aws-lambda/)
+
+这篇文章介绍了 AWS Lambda 现在支持 Node.js 22 运行时环境，这意味着开发人员可以在 AWS Lambda 上开发 Node.js 22 Lambda 函数。Node.js 22 引入了多项语言更新和功能，包括对 ES 模块的支持、WebSocket 支持以及性能改进。文章还提到了使用 Node.js 22 的性能注意事项以及从早期 Node.js 运行时迁移的建议。最后，文章总结了如何在 AWS Lambda 中使用 Node.js 22 运行时，并强调了 Node.js 22 运行时对开发人员构建高效、强大和可扩展的无服务器应用的帮助。
+
+- Node.js 22 引入了多项语言更新和功能，包括支持使用 require() 加载 ECMAScript 模块，原生支持 WebSocket，以及性能提升。
+- 新版本的 Node.js 还实验性地支持将 TypeScript 语法转换为 JavaScript 代码，但目前函数入口仍需使用 JavaScript 文件。
+- Lambda Node.js 22 运行时基于 Amazon Linux 2023，使用 microdnf 作为包管理器，提供更高效的开发和部署体验。
+
+## 其他
+
+### [花束般的恋爱](https://ssshooter.com/we-made-a-beautiful-bouquet/)
+
+这段文字主要是对日本电影《分手神作》的观后感和心得的描述。作者在文中表达了对影片情节、人物行为和现实问题的看法，同时也对影片中的情感表达和分手主题进行了思考和探讨。最后，作者推荐了这部电影，并分享了自己的观影体会。
+
+- 电影《分手大师》通过简单的剧情和细腻的表达，揭示了现代社会中工作与恋爱的矛盾冲突，呈现了现实问题。
+- 影片突出展现了主人公因工作压力导致与伴侣走向分歧的情况，反映了现代社会中个人生活与工作之间的挣扎与矛盾。
+- 电影通过绢无法接受以后生活不如之前的表现，表达了现代人对于永远热恋期的渴望，深刻揭示了现实与梦想之间的冲突。
+
+---
+
+请记住，每天你一醒来，时间就在一分一秒流逝，你不知道自己的精力能维持多久。你需要做的，就是问自己：在你无法保持专注之前，能做多少事情？
