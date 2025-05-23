@@ -48,7 +48,115 @@ Next.js 应用中的 JSON-LD 结构化数据实现指南
 - ⚠️ **注意事项**
   - 需确保 JSON-LD 数据与页面内容一致，避免误导性标记。
 
+### [现代滚动阴影：利用滚动驱动动画实现 | CSS-Tricks](https://css-tricks.com/modern-scroll-shadows-using-scroll-driven-animations/)
+
+现代滚动驱动动画技术通过 CSS 的`animation-timeline`属性实现滚动阴影效果，无需 JavaScript 即可为水平滚动元素添加边缘渐隐效果。
+
+- 🌟 通过 CSS 的`mask`属性和线性渐变实现滚动元素的边缘渐隐效果
+- 🛠️ 使用`@property`定义自定义属性`--left-fade`和`--right-fade`，并指定其语法和初始值
+- 🎨 创建`scrollfade`关键帧动画，控制左右边缘的渐隐效果
+- 📜 将动画与滚动位置绑定，使用`animation-timeline`属性实现滚动驱动动画
+- 📱 技术适用于水平滚动表格、轮播图等场景，且不受背景或内容影响
+- ⚠️ 目前部分浏览器（如 Safari）尚未支持`animation-timeline`，但不影响基本功能
+- 🚀 展示了 CSS 技术的进步，实现了实用且美观的交互效果
+
+### [高度之谜 - 揭开 CSS 中基于百分比的高度的神秘面纱](https://www.joshwcomeau.com/css/height-enigma/)
+
+本文探讨了 CSS 中高度百分比设置失效的原因及其解决方案，解释了宽度和高度的计算差异，并提供了使用 Flexbox 和 Grid 布局的实用建议。
+
+- 🧩 **CSS 高度百分比失效的原因**：当父元素高度依赖于子元素时，设置子元素高度百分比会导致循环计算，浏览器会忽略该声明。
+- 🔄 **宽度与高度的计算差异**：默认情况下，块级元素的宽度基于父元素计算，而高度基于子元素计算。
+- 📏 **固定高度解决百分比问题**：为父元素设置明确高度（如`height: 300px`或`height: 24rem`）可使子元素的百分比高度生效。
+- 🌐 **根元素`<html>`的特殊性**：设置`html { height: 100% }`会基于视口高度计算，从而支持嵌套百分比高度。
+- ⚠️ **`min-height`的陷阱**：使用`min-height`无法解决百分比高度问题，因为父元素高度仍依赖于子元素。
+- 🎯 **Flexbox 与 Grid 布局的解决方案**：通过`display: grid`或`flex: 1`强制子元素填充父空间，避免高度计算冲突。
+
+### [理解 StructuredClone：JavaScript 中的现代深拷贝方法 | ClarityDev 博客](https://claritydev.net/blog/javascript-structured-clone-deep-copying)
+
+JavaScript 中深度复制的现代方法：structuredClone() 的全面解析
+
+- 🚀 `structuredClone()`是 JavaScript 中深度复制对象的现代解决方案，解决了传统方法的诸多痛点
+- 🔄 传统深度复制方法包括 JSON.parse/stringify（丢失函数/日期等）、递归克隆（不处理循环引用）和 Lodash 库（需外部依赖）
+- 🎯 `structuredClone()`优势：原生支持、处理复杂数据结构（循环引用/Map/Set 等）、性能更优
+- ⚠️ 局限性：无法克隆函数、DOM 节点、类实例的原型链、错误对象的堆栈信息和属性描述符
+- 🛠️ 适用场景：嵌套应用状态管理、含循环引用的数据、API 响应快照、实现撤销/重做功能
+- 🌐 兼容性：主流浏览器（Chrome 98+/Firefox 94+）和 Node.js（17.0.0+）均支持
+- 💡 实践建议：数据与行为分离、错误处理、性能权衡、类实例自定义克隆方法
+- 📅 对比传统方法：比 JSON 方式更可靠，比递归克隆更简单，比 Lodash 更轻量（无需依赖）
+
+### [React 内部机制：哪个 useEffect 会先运行？ – Frontend Masters 博客](https://frontendmasters.com/blog/react-internals-which-useeffect-runs-first/)
+
+概述了 React 中`useEffect`的执行顺序及其内部机制，通过示例和 React Fiber 架构的解释说明了子组件的 effect 为何先于父组件执行。
+
+- 🧠 React 的`useEffect`执行顺序：子组件的 effect 先于父组件执行，这与渲染顺序相反。
+- 🔄 React 生命周期分为三个阶段：触发（Trigger）、渲染（Render）、提交（Commit）。
+- 🌳 React 内部使用 Fiber 树结构来管理组件和更新，每个节点包含子节点、兄弟节点和父节点信息。
+- 🚶♂️ Fiber 树的遍历采用深度优先算法，每个节点会被访问两次，分别用于渲染和提交。
+- ⚙️ 提交阶段（Commit Phase）负责实际的 DOM 操作和 effect 的执行，effect 的执行顺序由遍历顺序决定。
+- 📚 理解这些机制有助于避免复杂组件结构中的潜在问题。
+- ❓ 文章解答了读者关于渲染和 effect 执行顺序的疑问，并提供了代码示例验证。
+
+### [复杂 React/Next.js 应用的健壮数据获取架构](https://www.trevorlasn.com/blog/fetching-data-for-complex-next-and-react-apps)
+
+本文介绍了在 React 和 Next.js 应用中采用"三层数据架构"模式来避免常见问题、技术债务并提升性能的方法。以下是关键要点：
+
+- 🚀 **初始数据获取问题**：许多项目开始时简单使用`useEffect`和`fetch`，但随着复杂度增加，会出现重复请求、状态管理混乱等问题。
+- 🔍 **常见问题列举**：包括重复网络请求、过度重新渲染、缓存失效、竞态条件、内存泄漏等 11 个常见问题。
+- 🏗️ **三层架构解决方案**：将数据获取分为服务器组件（初始数据）、React Query（客户端缓存）和乐观更新（即时 UI 反馈）三层。
+- 💡 **架构优势**：分离关注点，使应用更易维护、测试和扩展，尤其适合复杂应用。
+- 📂 **目录结构示例**：展示了如何组织三层架构的代码，包括 API 路由、React Query 钩子和上下文提供者。
+- 🔄 **数据流动**：从服务器组件获取初始数据，React Query 管理客户端状态，乐观更新处理用户操作。
+- ⚡ **乐观更新**：通过`useMutation`实现即时 UI 反馈，处理创建和删除等操作。
+- 🧩 **上下文整合**：使用上下文提供者集中管理数据，避免属性钻取，保持组件简洁。
+- ⚠️ **注意事项**：三层架构对简单应用可能过于复杂，但适合大型应用，且可应用于其他框架如 Vue.js 和 Svelte。
+
 ## 工具
+
+### [GitHub - TanStack/db：用于构建同步超快应用的反应式客户端存储](https://github.com/TanStack/db)
+
+TanStack DB 是一个反应式客户端存储库，用于构建快速同步的应用程序，扩展了 TanStack Query 的功能，提供集合、实时查询和乐观更新等功能。
+
+- 🚀 **快速查询引擎**：支持亚毫秒级实时查询，适用于复杂查询和聚合操作。
+- 🎯 **细粒度反应性**：最小化组件重新渲染，提升性能。
+- 💪 **强大的事务支持**：支持乐观更新，带有同步和生命周期管理功能。
+- 🌟 **数据规范化**：简化后端数据处理。
+- 🔥 **后端无关**：支持 REST API、GraphQL、轮询等多种后端数据源。
+- 📚 **文档丰富**：提供使用指南、示例和核心概念说明。
+- 🧱 **核心概念**：包括集合（Collections）、实时查询（Live Queries）和事务性更新（Transactional Mutators）。
+
+### [GitHub - NickvanDyke/eslint-plugin-react-you-might-not-need-an-effect: ESLint 插件，用于检测不必要的 React useEffect 钩子，使代码更易理解、运行更快且减少错误。](https://github.com/NickvanDyke/eslint-plugin-react-you-might-not-need-an-effect)
+
+这是一个 ESLint 插件，用于检测 React 中可能不必要的 useEffect 钩子，旨在提升代码可读性、运行效率并减少错误。
+
+- 🚀 **安装要求**：需 ESLint >= v7.0.0 和 Node >= 14，支持 npm 或 yarn 安装。
+- 🔧 **配置方式**：支持传统配置（.eslintrc）和扁平化配置（eslint.config.js），需添加插件及规则。
+- 🔎 **规则功能**：检测无效 useEffect 场景（如仅使用内部状态、派生状态等），并推荐更优模式，但会忽略涉及外部状态等复杂情况。
+
+### [GitHub - isaacs/node-glob: 为 node.js 提供的 glob 功能](https://github.com/isaacs/node-glob)
+
+node-glob 是一个用于 Node.js 的 glob 功能实现库，支持文件匹配模式，类似于 shell 中的模式匹配。
+
+- 🌟 **功能概述**：node-glob 提供了异步和同步的文件匹配功能，支持多种 glob 模式。
+- 📦 **安装方式**：通过 npm 安装 `glob` 包，而非已废弃的 `node-glob`。
+- 🔍 **基本用法**：支持 `glob`、`globSync`、`globStream` 等方法，可以匹配文件路径。
+- ⚙️ **选项配置**：提供丰富的选项，如 `ignore`、`cwd`、`nodir` 等，用于定制匹配行为。
+- 🚀 **高级功能**：支持 `Glob` 类，允许复用设置和缓存，提高多次匹配的效率。
+- 📂 **路径处理**：支持返回 `Path` 对象，提供更多文件系统信息。
+- ⚠️ **注意事项**：在 Windows 上应使用 `/` 作为路径分隔符，除非设置 `windowsPathsNoEscape`。
+- 🏆 **性能比较**：与 `fast-glob` 和 `globby` 相比，node-glob 更注重与 Bash 行为的一致性。
+
+### [GitHub - harrisiirak/cron-parser: 用于解析 crontab 指令的 Node.js 库](https://github.com/harrisiirak/cron-parser)
+
+一个用于解析和操作 cron 表达式的 JavaScript 库，支持时区、夏令时处理和迭代功能。
+
+- ⏰ Node.js 库，用于解析 crontab 指令
+- 🛠️ 支持时区和夏令时处理
+- 🔄 提供迭代器功能
+- 📅 支持多种 cron 表达式格式和特殊字符
+- ⚙️ 提供严格模式验证
+- 🌍 使用 Luxon 处理时区
+- 🎲 支持随机值（H 字符）
+- 📂 支持 crontab 文件操作
 
 ### [stagewise](https://github.com/stagewise-io/stagewise)
 
@@ -65,9 +173,56 @@ Stagewise 是一个浏览器工具栏，可将前端 UI 与代码编辑器中的
 
 ## 更新
 
-## 设计
+### [JavaScript 的新超能力：显式资源管理 · V8](https://v8.dev/features/explicit-resource-management)
 
-## AI
+JavaScript 新增显式资源管理功能，通过确定性方式管理资源生命周期，提升代码健壮性和可维护性。
+
+- 🚀 新增 `using` 和 `await using` 声明，自动在作用域退出时调用资源的 `[Symbol.dispose]()` 或 `[Symbol.asyncDispose]()` 方法
+- 🔧 引入 `[Symbol.dispose]` 和 `[Symbol.asyncDispose]` 符号用于资源清理操作
+- 📚 新增全局对象 `DisposableStack` 和 `AsyncDisposableStack`，支持聚合多个可释放资源并按添加顺序反向释放
+- 🚨 新增 `SuppressedError` 错误类型，解决资源释放过程中错误被掩盖的问题
+- 🔄 示例展示如何用 `using` 自动释放 `ReadableStreamDefaultReader` 的锁，避免手动 `try...finally` 的繁琐
+- 🧩 `DisposableStack` 提供 `use()`、`adopt()`、`defer()` 和 `move()` 方法，灵活管理资源生命周期
+- 🌐 兼容性：Chrome 134+ 和 Firefox 134+ 已支持，Safari 和 Node.js 暂不支持，Babel 提供转译支持
+
+### [RFC：统一的命令式查询方法 · TanStack/query · 讨论 #9135 · GitHub](https://github.com/TanStack/query/discussions/9135)
+
+overview summary  
+TanStack Query 提出了一个 RFC（请求评论），旨在统一其命令式查询方法。当前存在多个功能相似但用途不同的 API（如 `fetchQuery`、`prefetchQuery` 和 `ensureQueryData`），导致开发者困惑。提案建议合并为单一的 `queryClient.query(options)` 方法，并通过选项控制行为（如错误处理、缓存策略）。同时引入 `staleTime: 'static'` 标记静态查询，避免无效缓存更新。
+
+- 🚀 **背景与问题**
+
+  - 历史原因导致多个功能重叠的 API（如 `fetchQuery`、`prefetchQuery`），命名和行为不一致，开发者难以选择。
+  - 示例：`prefetchQuery` 在每次数据过期时都会重新请求，与“预取”字面含义不符。
+
+- 🔍 **当前 API 的问题**
+
+  - 命名混淆：`fetchQuery` 可能不实际发起请求，`prefetchQuery` 会重复执行。
+  - 使用场景模糊：路由加载器推荐 `ensureQueryData`，SSR 推荐 `prefetchQuery`，但功能差异不明显。
+
+- 💡 **提案解决方案**
+
+  - 统一为 `queryClient.query(options)` 和 `queryClient.infiniteQuery(options)`。
+  - 通过选项控制行为（如 `throwOnError: false` 替代 `prefetchQuery` 的静默错误）。
+  - 新增 `staleTime: 'static'` 标记完全静态的查询（即使手动失效也不更新）。
+
+- ⚠️ **注意事项**
+
+  - SSR 中需避免直接使用返回数据，推荐 `void queryClient.query()` 或流式传输。
+  - 移除 `revalidateIfStale` 功能，改为显式组合调用。
+
+- 📅 ** rollout 计划**
+
+  - v5 版本中逐步弃用旧 API，新版本中移除。
+
+- ❓ **社区反馈**
+
+  - 支持简化 API，但对错误处理方式（`throwOnError` vs `.catch(noop)`）存在讨论。
+  - 其他建议：统一 Suspense 和无限查询的 Hook 选项（如 `useQuery({ suspense: true })`）。
+
+- 🔄 **相关讨论**
+  - 突变（mutation）与查询的差异仍将保留，因其语义不同（副作用 vs 幂等操作）。
+  - 未来可能优化 Suspense 集成（如通过 React 的 `use()` Hook）。
 
 ### [NLWeb](https://github.com/microsoft/NLWeb)
 
@@ -115,8 +270,34 @@ NLWeb 是一个旨在简化网站自然语言交互接口开发的开源项目�
 
 ## 其他
 
+### [政企产品经理 AI 工作流分享：需求->产品的敏捷实现（深度长文）](https://mp.weixin.qq.com/s/QRfmnJsBdvkSsWQsSskB_g)
+
+Ben 分享的基于 AI 的「需求直达产品」敏捷工作流，适用于政企行业解决方案架构师、售前、产品经理等角色，旨在通过 AI 工具快速将用户需求转化为可体验的产品原型，解决定制化项目中需求模糊、反复修改的痛点
+
+- 🎯 **适用人群**：售前、解决方案架构师、产品经理等需快速转化需求的角色
+- 🏛️ **背景痛点**：政府定制化项目中需求不明确→反复修改→开发延期→项目烂尾
+- 💡 **核心思路**：通过 AI 工具快速生成 MVP 原型，提前收集用户反馈，避免后期大改
+- 🔄 **工作流四阶段**：
+  - **需求阶段** 📝：通义转录会议+Google/秘塔搜索补充信息→归档钉钉/飞书文档
+  - **设计阶段** 🎨：
+    - ChatGPT/DeepSeek生成方案→Lovable/v0.dev等工具快速生成原型
+    - 多工具并行生成，仅构建前端原型（模拟数据增强真实感）
+  - **工程化实现** 💻：
+    - 下载原型代码→用 Cursor/Windsurf 等 AI 增强 IDE 修改
+    - 关键技巧：学习 AI 修改的参数（如 CSS 属性）提升指令精准度
+  - **交付部署** 🚀：
+    - 公网部署：GitHub+Netlify/Vercel 一键上线
+    - 本地演示：ngrok 生成临时外网链接
+    - PRD 生成：Cursor 分析代码自动输出需求文档
+- 🌟 **优势总结**：
+  - 从需求到 MVP 周期大幅缩短
+  - AI 辅助降低技术门槛（非程序员可操作）
+  - 版本控制（GitHub）+ 自动化部署提升效率
+- ✨ **关键建议**：清晰指令 + 小步迭代 + 保持耐心，实践中学习技术概念
+- 📜 **结语**：引用陆游诗句强调实践重要性，欢迎交流优化（附联系方式）
+
+---
+
 除非你参与过历史遗留项目，否则你不能自称高级工程师。
 
 -- infobip.com
-
----
