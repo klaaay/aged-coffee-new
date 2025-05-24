@@ -12,6 +12,28 @@ summary: ''
 
 ## 技术
 
+### [ESLint v9.0.0：回顾与展望 - ESLint - 可插拔的 JavaScript 代码检查工具](https://eslint.org/blog/2025/05/eslint-v9.0.0-retrospective/)
+
+ESLint v9.0.0 的发布回顾了其开发历程、成功与挑战，并总结了关键经验教训。尽管新配置系统经过五年开发并提供了详细文档，但发布初期仍面临用户负面反馈和生态适配缓慢的问题。团队通过工具开发和错误信息优化逐步改善了升级体验，并认识到未来应减少重大变更的捆绑、优先提供工具支持，并加强生态沟通。
+
+- 🚀 **发布概览**：ESLint v9.0.0 是近三年来的首个重大版本，主打新配置系统，但发布初期因兼容性问题遭遇用户批评。
+- 📅 **开发时间线**：从 2019 年提案到 2024 年正式发布，历时五年，包含多次测试版迭代和生态适配。
+- ✅ **成功之处**：
+  - 📜 首次明确版本支持政策，与 HeroDevs 合作维护旧版。
+  - 🔧 提供六个月 v8.x 兼容性更新，并优化多分支发布流程。
+  - 📚 发布全面文档（迁移指南、博客系列），同步更新内容。
+  - 🛠️ 快速响应问题，推出兼容性工具（如 Config Migrator）。
+- ❌ **不足之处**：
+  - 🔄 捆绑过多破坏性变更（如配置系统与规则 API），导致问题定位困难。
+  - 📖 文档过载但工具不足，用户更倾向直接求助而非阅读指南。
+  - 🐢 生态适配滞后，插件作者对双配置支持需求未提前预见。
+- 🎓 **经验总结**：
+  - ⚡ 未来减少重大变更捆绑，采用更频繁的小版本迭代。
+  - 🔨 优先开发自动化工具（如代码转换器），降低用户升级成本。
+  - 💡 优化错误提示，直接引导用户至解决方案。
+  - 🤝 加强生态沟通，探索更有效的协作方式。
+- 🌟 **未来展望**：团队将持续改进发布策略与用户体验，感谢社区反馈。
+
 ### [Next.js 服务器操作是对外公开的 API 端点](https://growl.dev/blog/nextjs-server-actions/)
 
 Next.js 的 Server Actions 实际上是公开的 API 端点，开发者无需自行创建 API 端点即可通过用户交互执行服务器端代码。尽管官方文档强调了安全性，但缺乏详细示例。本文通过实验展示了 Server Actions 的工作原理及潜在风险。
@@ -39,6 +61,45 @@ Next.js 的 Server Actions 实际上是公开的 API 端点，开发者无需自
 
 ## 工具
 
+### [GitHub - astracompiler/cli: 🚀 快速、可靠且易于使用的 js 转 exe 编译器](https://github.com/astracompiler/cli)
+
+Astra 是一个快速、可靠且易于使用的 JavaScript 到可执行文件的编译器，支持将 Node.js 应用编译为独立的可执行文件，特别适用于服务器和 CLI 工具。
+
+- 🚀 **项目特点**：Astra 是一个新型的 JavaScript/TypeScript 编译器，采用不同于 pkg 或 nexe 的方法。
+- ⚡ **性能优势**：平均生成的 exe 文件大小为 70-80MB，使用 upx 可压缩至约 30MB。
+- 🖥️ **平台支持**：目前仅支持 Windows，正在开发 macOS 和 Linux 版本。
+- 🔥 **快速构建**：基于 esbuild，提供最快的编译速度。
+- 📦 **现代支持**：支持最新 Node.js 版本和 ECMAScript 模块（ESM）。
+- 🛠️ **开发者体验**：集成 signale、inquirer 和 chalk，优化开发流程。
+- 📌 **独立可执行文件**：生成包含所有依赖的单一.exe 或二进制文件。
+- 🎨 **自定义元数据**：可修改生成的 exe 的图标、名称、版本等信息。
+
+### [GitHub - zumerlab/snapdom: snapDOM 以超快速度和精准度将 HTML 元素捕获为图像](https://github.com/zumerlab/snapdom)
+
+snapDOM 是一个快速且精准的 DOM 转图像工具，专为 Zumly（基于缩放的视图过渡框架）设计。它能将任何 HTML 元素捕获为可缩放的 SVG 图像，支持多种导出格式和功能。
+
+- 📸 **功能全面**：支持捕获完整 DOM，包括样式、伪元素、字体和阴影 DOM。
+- 🎨 **样式保留**：内嵌样式、背景图像和字体，确保图像与原始元素一致。
+- 🖼️ **多格式导出**：支持导出为 SVG、PNG、JPG、WebP 或 Canvas。
+- ⚡ **高效快速**：无依赖，基于标准 Web API，性能卓越。
+- 📦 **安装灵活**：支持 NPM/Yarn、CDN、本地脚本和 ES 模块导入。
+- 🔧 **API 丰富**：提供多种快捷方法和配置选项，满足不同需求。
+- 🚀 **预加载支持**：通过 `preCache()` 提前加载外部资源，优化复杂元素的捕获效率。
+- ⚠️ **局限性**：不支持 iframe，外部图像需 CORS 访问，Safari 上 WebP 会回退为 PNG。
+- 📊 **性能优势**：基准测试显示，snapDOM 比其他库快数倍至上百倍。
+
+### [GitHub - kepano/defuddle: 从网页中提取主要内容](https://github.com/kepano/defuddle)
+
+Defuddle 是一个用于从网页中提取主要内容的工具，通过移除非必要元素（如评论、侧边栏、页眉页脚等）来生成简洁易读的 HTML 文档。它专为 Obsidian Web Clipper 设计，可作为 Mozilla Readability 的替代方案，并提供更一致的输出格式。
+
+### [typescript-sdk](https://github.com/modelcontextprotocol/typescript-sdk)
+
+Model Context Protocol 服务器和客户端的官方 TypeScript SDK
+
+### [ioredis](https://github.com/redis/ioredis)
+
+ioredis 是一个高性能、功能丰富的 Node.js Redis 客户端，支持 Redis 2.6.12 及以上版本，完全兼容 Redis 7.x。它被阿里巴巴等大型公司广泛使用，提供了集群、哨兵、流、管道、Lua 脚本等高级功能。虽然维护是尽力而为，但对于新项目，官方推荐使用 node-redis 客户端库。ioredis 提供了友好的 API、透明的键前缀、TLS 支持、离线队列、错误处理策略等特性，并支持 TypeScript。
+
 ### [GitHub - jellydn/next-validations: NextJS API 验证工具，支持 Zod、Yup、Fastest-Validator、Joi 等](https://github.com/jellydn/next-validations)
 
 next-validations 是一个支持多种验证库的 NextJS API 验证工具，兼容 Zod、Yup、Fastest-Validator、Joi 等，提供灵活的验证模式和 TypeScript 集成。
@@ -58,6 +119,23 @@ next-validations 是一个支持多种验证库的 NextJS API 验证工具，兼
 
 ## 更新
 
+### [微软社区中心宣布：VS Code 中推出全新的 PostgreSQL IDE](https://techcommunity.microsoft.com/blog/adforpostgresql/announcing-a-new-ide-for-postgresql-in-vs-code-from-microsoft/4414648)
+
+微软宣布在 VS Code 中推出全新的 PostgreSQL 扩展公开预览版，旨在简化 PostgreSQL 数据库管理和开发流程。该扩展集成了智能辅助工具和 GitHub Copilot 代理，提升开发效率。
+
+- 🚀 **新扩展发布**：VS Code 的 PostgreSQL 扩展进入公开预览，集成 IntelliSense 和 GitHub Copilot 代理。
+- ⏱️ **解决开发痛点**：减少任务切换和调试时间，提供统一开发和管理体验。
+- 📊 **关键功能**：
+  - **模式可视化**：通过右键菜单轻松查看数据库结构。
+  - **AI 辅助**：GitHub Copilot 提供实时指导和自然语言交互。
+  - **简化连接**：支持本地和云数据库，集成 Entra ID 认证。
+  - **数据库资源管理器**：管理数据库对象，查看查询历史。
+- 🔍 **独特优势**：
+  - 提升生产力，简化入门流程，增强安全性，无缝云集成。
+- 📥 **安装步骤**：在 VS Code 扩展市场中搜索并安装 PostgreSQL 扩展。
+- 💬 **反馈支持**：欢迎通过 VS Code 内置工具提交反馈。
+- 🔗 **了解更多**：访问[官方文档](https://aka.ms/pg-vscode-docs)获取更多信息。
+
 ### [发布 v1.3.0 · unnoq/orpc · GitHub](https://github.com/unnoq/orpc/releases/tag/v1.3.0)
 
 oRPC 发布了 v1.3.0 版本，新增多项功能与改进，包括消息端口适配器、NestJS 集成、多成功响应支持等，并修复了一些错误。
@@ -72,6 +150,23 @@ oRPC 发布了 v1.3.0 版本，新增多项功能与改进，包括消息端口�
 ## 设计
 
 ## AI
+
+### [介绍 Claude 4 \ Anthropic](https://www.anthropic.com/news/claude-4)
+
+Anthropic 发布了新一代 Claude 模型 Claude 4，包括 Claude Opus 4 和 Claude Sonnet 4，在编码、高级推理和 AI 代理方面设定了新标准。
+
+- 🚀 **Claude Opus 4**：全球最佳编码模型，在复杂、长时间运行的任务和代理工作流中表现卓越，支持持续数小时的工作。
+- 🔍 **Claude Sonnet 4**：Claude Sonnet 3.7 的升级版，编码和推理能力显著提升，响应更精准。
+- 🛠️ **新功能**：支持工具使用（如网络搜索）、并行工具执行、更精准的指令跟随，以及通过本地文件访问提升记忆能力。
+- 💻 **Claude Code 正式发布**：支持 GitHub Actions、VS Code 和 JetBrains 集成，提供无缝配对编程体验。
+- 🔧 **API 新能力**：新增代码执行工具、MCP 连接器、Files API 和提示缓存功能，助力开发者构建更强大的 AI 代理。
+- 💰 **定价**：Opus 4 为 15/75 美元每百万 token（输入/输出），Sonnet 4 为 3/15 美元，免费用户也可使用 Sonnet 4。
+- 📊 **性能领先**：Opus 4 在 SWE-bench（72.5%）和 Terminal-bench（43.2%）上表现优异，Sonnet 4 在 SWE-bench 上达到 72.7%。
+- 🧠 **记忆能力**：Opus 4 通过创建“记忆文件”显著提升长期任务意识和连贯性。
+- 📝 **思维摘要**：引入小模型总结冗长思维过程，仅需 5% 的情况使用。
+- 🔒 **安全性**：通过测试和评估确保安全性，实施 ASL-3 等更高级别的 AI 安全措施。
+
+这些模型为编码、研究、写作和科学发现等领域带来突破，同时提升日常使用场景的性能。
 
 ## 其他
 
