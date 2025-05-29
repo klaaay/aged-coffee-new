@@ -47,13 +47,68 @@ Adam Wathan 分享了他从语义化 CSS 到功能型 CSS 的转变过程，探�
 - 🛠️ 动态生成元素等工具函数中，生成器提供类似数组的解构能力（如`const [el1, el2] = getElements()`）。
 - 🤔 作者承认生成器并非万能，但认可其重构问题解决思路的长期价值。
 
+### [6 种方式：Slack、Notion 和 VSCode 如何提升 Electron 应用性能 | Palette 文档](https://palette.dev/blog/improving-performance-of-electron-apps)
+
+Electron 应用性能优化的六个关键策略，通过 Slack、Notion 和 VSCode 等案例展示了如何解决启动慢和交互卡顿问题。
+
+- 🚀 **使用打包工具替代 require()**  
+  避免同步阻塞的`require()`，采用 Webpack/Vite 等打包工具，显著提升启动速度（如 Atom 案例中减少模块加载时间）。
+
+- ⏳ **延迟非关键代码加载**  
+  通过路由级代码拆分（如 React 的`lazy+Suspense`）和异步导入，将启动时间从 10 秒缩短至 3 秒。
+
+- 🏗️ **迁移计算密集型任务到 WebAssembly/Native 模块**  
+  Notion、Figma 等应用通过 WASM 或原生模块（如 1Password 加密）优化性能，实现确定性高性能。
+
+- 📸 **利用 V8 快照加速初始化**  
+  使用`electron-link`生成快照（如 Atom 启动提速 50%），避免动态值且适用于框架初始化阶段。
+
+- 📊 **监控生产环境用户体验指标**  
+  收集点击/滚动延迟等感知性能数据（如 Slack 内置监控工具），VSCode 通过输入延迟追踪版本回归。
+
+- 🔥 **端到端 JavaScript 性能分析**  
+  Notion 借助 Palette 平台分析生产环境代码瓶颈，定位 15% 输入延迟问题，缩短故障排查周期 3-4 周。
+
 ## 工具
+
+### [livestore](https://github.com/livestorejs/livestore)
+
+LiveStore 是一个基于响应式 SQLite 和内置同步引擎的下一代状态管理框架
 
 ### [Extract2MD](https://github.com/hashangit/Extract2MD)
 
-Extract2MD 是一个强大且多功能的 AI 驱动客户端 JavaScript 库，用于从 PDF 文件中提取文本并将其转换为 Markdown。
+Extract2MD 是一个强大且多功能的 AI 驱动客户端 JavaScript 库，用于从 PDF 文件中提取文本并将其转换为 Markdown
 
 ## 更新
+
+### [发布 v14.0.0 · tj/commander.js · GitHub](https://github.com/tj/commander.js/releases/tag/v14.0.0)
+
+commander.js 发布了 v14.0.0 版本，要求 Node.js v20 或更高版本，新增了功能组支持和未转义负数参数解析，修复了一些问题，并进行了内部重构。
+
+- 🚀 新增了对选项和命令组支持，通过 `.helpGroup()`、`.optionsGroup()` 和 `.commandsGroup()` 方法 (#2328)  
+- 🔢 支持未转义的负数作为选项参数和命令参数 (#2339)  
+- 🛠 TypeScript 中为 `Argument` 类添加了 `parseArg` 属性 (#2359)  
+- 🐛 修复了帮助信息中默认值无描述时的多余空格问题 (#2348)  
+- 🔄 `.configureOutput()` 现在复制设置而非原地修改，避免副作用 (#2350)  
+- ⚠️ 重大变更：Commander 14 需要 Node.js v20 或更高版本  
+- 🔧 内部重构了 `Help` 类，新增 `formatItemList()` 和 `groupItems()` 方法 (#2328)  
+- 🎉 发布版本 v14.0.0，包含上述更新和修复
+
+### [Node.js — Node v22.16.0（长期支持版）](https://nodejs.org/en/blog/release/v22.16.0)
+
+Node.js v22.16.0 (LTS) 版本发布，包含多项功能更新、性能优化和错误修复。
+
+- 🚀 **重要更新**：时区数据更新至 2025b 版本，确保日期和时间处理的准确性。
+- 📚 **文档改进**：新增 Dario Piotrowicz 为协作者，并修复多处文档错误和格式问题。
+- ⚡ **ESM 增强**：支持`import.meta`属性的正式毕业，提升模块系统的稳定性。
+- 🛠 **SQLite 功能扩展**：新增`StatementSync.prototype.columns()`方法，增强数据库操作能力。
+- 🔧 **配置支持**：引入`node.config.json`作为默认配置文件，简化应用配置管理。
+- 🧩 **新 API**：新增`worker.getHeapStatistics()`方法，提供工作线程堆内存统计信息。
+- 🐞 **错误修复**：修复跨领域`SharedArrayBuffer`验证和`ArrayBuffer`检查问题，提升安全性。
+- ⚙️ **性能优化**：改进断言和工具模块的深层对象比较性能，提升执行效率。
+- 📦 **依赖更新**：升级 zstd 至 1.5.7，zlib 至 1.3.0.1，确保依赖库的最新功能和安全性。
+- 🔄 **流处理改进**：在`finished()`中保留 AsyncLocalStorage 上下文，确保异步操作的连续性。
+- 📊 **测试增强**：新增多个测试用例，覆盖 SQLite、REPL 和 HTTP/2 等模块，提升代码质量。
 
 ## 设计
 
