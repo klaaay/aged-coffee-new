@@ -12,6 +12,33 @@ summary: ''
 
 ## 技术
 
+### [醒来，Remix！](https://remix.run/blog/wake-up-remix#react-router-is-really-good)
+
+在 React Conf 上宣布 Remix 将进入“休眠”状态，并将 Remix v2 的核心功能合并到 React Router v7 中。现在，React Router v7 已成为一个稳定且强大的工具，支持 RSC（服务器组件），并被多家大型公司采用。Remix v3 将重新出发，专注于简化、性能和模块化，脱离对 React 的依赖，基于 Preact 构建，并遵循一系列开发原则，如模型优先、基于 Web API、避免依赖等。
+
+🛌 Remix 进入休眠：Remix v2 功能合并到 React Router v7，项目简化。
+🚀 React Router v7 发布：支持 RSC，提供稳定平台，被 Shopify、X.com 等广泛使用。
+🔄 Remix 重新出发：Remix v3 将脱离 React，基于 Preact 构建，追求轻量化和高性能。
+🧩 模块化设计：Remix v3 将提供模块化工具包，支持独立使用或组合。
+📜 开发原则：包括模型优先、基于 Web API、避免依赖、强调组合性等。
+🎸 社区参与：邀请开发者参与 Remix Jam，共同探讨未来方向。
+
+### [TanStack Router 之美 | TkDodo 的博客](https://tkdodo.eu/blog/the-beauty-of-tan-stack-router)
+
+TanStack Router 是一款专为 TypeScript 设计的现代化路由解决方案，提供出色的开发者体验和类型安全支持。以下是其主要特点：
+
+- 🚀 **类型安全路由**：完全基于 TypeScript 设计，提供高度类型推断，避免手动类型断言，确保路由参数和链接的类型安全。
+- 🔍 **严格或宽松参数获取**：通过 `useParams` 的 `strict` 和 `from` 参数，灵活控制路由参数的获取方式，兼顾类型安全和复用性。
+- 🔗 **类型安全的链接**：`<Link>` 组件自动验证目标路由和参数，避免无效导航。
+- 📊 **搜索参数状态管理**：支持搜索参数的验证和类型化，通过 `validateSearch` 和标准 schema 库（如 `arktype`）实现。
+- ⚡ **细粒度订阅**：通过选择器（selectors）优化性能，避免不必要的重新渲染，类似状态管理库的订阅机制。
+- 📂 **文件式路由支持**：支持代码式和文件式路由配置，便于快速定位和维护路由逻辑。
+- ⏳ **内置 Suspense 支持**：自动包裹路由组件，简化异步数据加载和错误边界处理。
+- 🔄 **React Transitions 限制**：目前因 `useSyncExternalStore` 的限制，对并发特性的支持有限。
+- 🛠 **更多功能**：包括路由上下文、嵌套路由、查询集成等，全面提升开发效率。
+
+TanStack Router 结合了类型安全和开发者友好性，是 React 生态中路由方案的佼佼者。
+
 ### [构建你自己的 TanStack Query](https://mugglim.github.io/build-your-own-tanstack-query/)
 
 从头开始重写以深入学习 TanStack Query。
@@ -47,13 +74,147 @@ Adam Wathan 分享了他从语义化 CSS 到功能型 CSS 的转变过程，探�
 - 🛠️ 动态生成元素等工具函数中，生成器提供类似数组的解构能力（如`const [el1, el2] = getElements()`）。
 - 🤔 作者承认生成器并非万能，但认可其重构问题解决思路的长期价值。
 
+### [6 种方式：Slack、Notion 和 VSCode 如何提升 Electron 应用性能 | Palette 文档](https://palette.dev/blog/improving-performance-of-electron-apps)
+
+Electron 应用性能优化的六个关键策略，通过 Slack、Notion 和 VSCode 等案例展示了如何解决启动慢和交互卡顿问题。
+
+- 🚀 **使用打包工具替代 require()**  
+  避免同步阻塞的`require()`，采用 Webpack/Vite 等打包工具，显著提升启动速度（如 Atom 案例中减少模块加载时间）。
+
+- ⏳ **延迟非关键代码加载**  
+  通过路由级代码拆分（如 React 的`lazy+Suspense`）和异步导入，将启动时间从 10 秒缩短至 3 秒。
+
+- 🏗️ **迁移计算密集型任务到 WebAssembly/Native 模块**  
+  Notion、Figma 等应用通过 WASM 或原生模块（如 1Password 加密）优化性能，实现确定性高性能。
+
+- 📸 **利用 V8 快照加速初始化**  
+  使用`electron-link`生成快照（如 Atom 启动提速 50%），避免动态值且适用于框架初始化阶段。
+
+- 📊 **监控生产环境用户体验指标**  
+  收集点击/滚动延迟等感知性能数据（如 Slack 内置监控工具），VSCode 通过输入延迟追踪版本回归。
+
+- 🔥 **端到端 JavaScript 性能分析**  
+  Notion 借助 Palette 平台分析生产环境代码瓶颈，定位 15% 输入延迟问题，缩短故障排查周期 3-4 周。
+
+### [构建一个 Hold to Delete 按钮组件](https://emilkowal.ski/ui/building-a-hold-to-delete-component)
+
+这篇文章介绍了一个通过长按按钮触发渐变过渡效果的组件设计方法，以下是关键要点：
+
+- 🚀 **组件受欢迎**：作者在 X 平台上分享了这个组件，获得了大量喜爱。
+- � **基础结构**：初始是一个简单样式的按钮，包含默认单色版和渐变揭示版两个版本。
+- 🎨 **覆盖层设置**：使用绝对定位的`.hold-overlay`覆盖按钮，并通过`clip-path: inset(0px 100% 0px 0px)`隐藏右侧内容。
+- ✨ **揭示效果**：通过`:active`伪类和`clip-path`属性实现长按时从左向右的渐变显示（2 秒线性过渡）。
+- ⚡ **优化交互**：释放按钮时过渡更快（200ms 缓出），按压时保持慢速（2 秒线性）以增强确认感。
+- 🔍 **细节打磨**：添加按压时按钮轻微缩放（`scale(0.97)`）的动画，提升交互反馈。
+- 📚 **扩展学习**：该组件源自作者的网页动画课程，涵盖从基础 CSS 到复杂 Framer Motion 的动画设计。
+
 ## 工具
 
 ### [fuji-recipes](https://github.com/thecuvii/fuji-recipes)
 
 一个用于从 EXIF 制造商备注中提取富士相机配方数据的 TypeScript 库
 
+### [traceperf](https://github.com/thelastbackspace/traceperf)
+
+TracePerf 是一个用于 Node.js 应用程序的高级性能跟踪和执行监控工具，支持浏览器环境，提供统一的 API 和丰富的功能。
+
+### [errsole/errsole.js：用单一模块收集、存储和可视化日志](https://github.com/errsole/errsole.js)
+
+Errsole.js 是一个开源的 Node.js 日志工具，提供日志收集、存储和可视化功能，内置日志查看器，支持多种存储方式和高级配置。
+
+- 📦 **开源日志工具** - Errsole.js 是一个用于 Node.js 应用的开源日志工具，内置日志查看器。
+- 🚀 **简单集成** - 只需引入模块，无需额外服务器或复杂配置。
+- 📝 **高级日志功能** - 自动收集控制台日志，支持多级别日志和元数据附加。
+- 💾 **灵活存储** - 支持文件、SQLite、MySQL、PostgreSQL、MongoDB 等多种存储方式。
+- 🔍 **可视化查看** - 提供 Web 仪表盘，支持日志过滤和搜索，具备安全认证功能。
+- 🚨 **错误通知** - 应用崩溃或关键错误时发送通知，包含错误详情和直接访问链接。
+- ⚡ **高性能** - 比 Elasticsearch 和 Amazon CloudWatch 处理更多请求。
+- 🔧 **多环境支持** - 开发环境推荐 SQLite，生产环境支持 MySQL、PostgreSQL 等。
+
+### [tiagorangel1/cap: Cap 是一款轻量级、现代的开源 CAPTCHA 替代方案，采用 SHA-256 工作量证明设计](https://github.com/tiagorangel1/cap)
+
+Cap 是一个轻量级、现代的开源 CAPTCHA 替代方案，基于 SHA-256 工作量证明（proof-of-work）设计，注重隐私和性能。
+
+- 🌐 **开源项目** - Cap 是完全开源的，采用 Apache 2.0 许可证。
+- 🚀 **轻量高效** - 核心组件 `@cap.js/widget` 仅 12KB（压缩后），比传统 CAPTCHA 方案更小。
+- 🔒 **隐私优先** - 使用工作量证明机制，无需追踪或收集用户数据。
+- ⚙️ **模块化设计** - 包含多个组件：前端控件 (`widget`)、服务端验证 (`server`)、CLI 工具 (`cli`) 和 WASM 支持 (`wasm`)。
+- 🐳 **多语言支持** - 通过 Docker 提供独立模式，支持非 JavaScript 环境。
+- 🎨 **高度可定制** - 支持自定义前端样式和服务端逻辑。
+- 🤖 **反机器人机制** - 适用于 API 防护、表单防垃圾、登录防爆破等场景。
+- 🔄 **无依赖** - 可在 Bun/Node.js/Deno 等 JS 环境中运行，也可通过 REST API 集成。
+- 🆚 **替代方案** - 相比 reCAPTCHA/hCaptcha，采用计算验证而非行为追踪。
+
+### [react-teleporter](https://github.com/gregberge/react-teleporter)
+
+`react-teleporter` 是一个用于在 React 树中传送组件的工具，适用于复杂应用中跨组件配置的场景，类似于 `react-helmet` 的哲学。
+
+- 🚀 **功能**：在同一个 React 树中传送组件，支持动态配置布局。
+- 📦 **安装**：通过 `npm install react-teleporter` 安装。
+- 🎯 **核心方法**：`createTeleporter` 创建传送器，包含 `Target`（目标位置）和 `Source`（源内容）。
+- 🔄 **示例**：将 `Page` 组件的“Loading...”内容传送到 `Header` 组件的 `StatusBar.Target` 位置。
+- ❓ **用途**：解决复杂应用中跨组件配置的问题，如动态修改布局或状态。
+- 🛠️ **高级用法**：
+  - 自定义目标标签（如 `as="footer"`）。
+  - 向目标传递属性（如 `onClick`）。
+  - 使用 `useTargetRef` 创建自定义目标引用。
+  - 支持多源内容注入（通过 `multiSources: true` 配置）。
+  - 子组件为函数时，可访问目标元素（如触发事件）。
+- 📖 **API**：仅暴露 `createTeleporter` 方法，返回包含 `Target`、`Source` 和 `useTargetRef` 的对象。
+
+### [livestore](https://github.com/livestorejs/livestore)
+
+LiveStore 是一个基于响应式 SQLite 和内置同步引擎的下一代状态管理框架
+
+### [Extract2MD](https://github.com/hashangit/Extract2MD)
+
+Extract2MD 是一个强大且多功能的 AI 驱动客户端 JavaScript 库，用于从 PDF 文件中提取文本并将其转换为 Markdown
+
 ## 更新
+
+### [Docusaurus 3.8](https://docusaurus.io/blog/releases/3.8)
+
+Docusaurus 3.8 发布，优化了构建性能，引入新功能和"Future Flags"以支持 Docusaurus 4 的过渡。升级简单，遵循语义化版本控制，无破坏性变更。
+
+- 🚀 **构建性能提升**：通过多项优化和新增的"Docusaurus Faster"选项显著加快构建速度。
+- ⚡ **Docusaurus Faster**：实验性功能，启用后大幅提升构建效率，建议通过`experimental_faster: true`一键开启。
+- 🔄 **持久化缓存**：Rspack 持久化缓存支持，二次构建速度提升 2-5 倍，需保留`./node_modules/.cache`目录。
+- 🧵 **工作线程池**：静态站点生成使用 Worker Threads，速度提升约 2 倍，需启用`ssgWorkerThreads`标志。
+- 🛠️ **其他优化**：包括并行化 macOS 浏览器启动、Git 命令队列管理、SVG 精灵优化等，减少构建时间和内存占用。
+- 🔥 **实测效果**：React Native 网站冷构建速度提升 3.8 倍，热重建提升 7 倍；Docusaurus.io 类似显著改进。
+- 🚧 **Future Flags**：新增 v4 未来标志（如 CSS 层叠、`postBuild`变更），支持渐进式适配 Docusaurus 4。
+- 🌐 **多语言支持**：补充土耳其语、波兰语、中文、日语等主题翻译。
+- 🔧 **维护更新**：兼容 Node.js 24 和 TypeScript 5.8，移除废弃依赖（如`react-dev-utils`），内部化未维护包。
+- 📦 **功能增强**：文档版本下拉菜单支持自定义版本、Bun 包管理器标签支持、更稳定的 CSS 类名等。
+
+### [发布 v14.0.0 · tj/commander.js · GitHub](https://github.com/tj/commander.js/releases/tag/v14.0.0)
+
+commander.js 发布了 v14.0.0 版本，要求 Node.js v20 或更高版本，新增了功能组支持和未转义负数参数解析，修复了一些问题，并进行了内部重构。
+
+- 🚀 新增了对选项和命令组支持，通过 `.helpGroup()`、`.optionsGroup()` 和 `.commandsGroup()` 方法 (#2328)
+- 🔢 支持未转义的负数作为选项参数和命令参数 (#2339)
+- 🛠 TypeScript 中为 `Argument` 类添加了 `parseArg` 属性 (#2359)
+- 🐛 修复了帮助信息中默认值无描述时的多余空格问题 (#2348)
+- 🔄 `.configureOutput()` 现在复制设置而非原地修改，避免副作用 (#2350)
+- ⚠️ 重大变更：Commander 14 需要 Node.js v20 或更高版本
+- 🔧 内部重构了 `Help` 类，新增 `formatItemList()` 和 `groupItems()` 方法 (#2328)
+- 🎉 发布版本 v14.0.0，包含上述更新和修复
+
+### [Node.js — Node v22.16.0（长期支持版）](https://nodejs.org/en/blog/release/v22.16.0)
+
+Node.js v22.16.0 (LTS) 版本发布，包含多项功能更新、性能优化和错误修复。
+
+- 🚀 **重要更新**：时区数据更新至 2025b 版本，确保日期和时间处理的准确性。
+- 📚 **文档改进**：新增 Dario Piotrowicz 为协作者，并修复多处文档错误和格式问题。
+- ⚡ **ESM 增强**：支持`import.meta`属性的正式毕业，提升模块系统的稳定性。
+- 🛠 **SQLite 功能扩展**：新增`StatementSync.prototype.columns()`方法，增强数据库操作能力。
+- 🔧 **配置支持**：引入`node.config.json`作为默认配置文件，简化应用配置管理。
+- 🧩 **新 API**：新增`worker.getHeapStatistics()`方法，提供工作线程堆内存统计信息。
+- 🐞 **错误修复**：修复跨领域`SharedArrayBuffer`验证和`ArrayBuffer`检查问题，提升安全性。
+- ⚙️ **性能优化**：改进断言和工具模块的深层对象比较性能，提升执行效率。
+- 📦 **依赖更新**：升级 zstd 至 1.5.7，zlib 至 1.3.0.1，确保依赖库的最新功能和安全性。
+- 🔄 **流处理改进**：在`finished()`中保留 AsyncLocalStorage 上下文，确保异步操作的连续性。
+- 📊 **测试增强**：新增多个测试用例，覆盖 SQLite、REPL 和 HTTP/2 等模块，提升代码质量。
 
 ## 设计
 
@@ -78,6 +239,10 @@ MoneyPrinterTurbo 是一款全自动短视频生成工具，用户只需提供�
 - 🚀 **便捷部署**：提供 Docker、Colab 及一键启动包
 - 📅 **持续更新**：计划增加更多配音、转场效果和素材来源
 
+### [GeminiImageApp](https://github.com/0xsline/GeminiImageApp)
+
+基于 Google Gemini AI 的全功能图像处理应用
+
 ## 其他
 
 ### [中国 AI 应用的终局：AI RaaS 和 AI 包工头模式](https://mp.weixin.qq.com/s?__biz=Mzg5NTc0MjgwMw==&mid=2247516258&idx=1&sn=09aec44e46b8e7bf0dc995e0919a0444)
@@ -99,3 +264,25 @@ AI 应用付费模式的核心在于价值呈现，尤其是 RaaS（结果即服
 - 🌍 **冲击传统行业**：案例包括矿山无人运输、AI 客服 Sierra、特斯拉 Robotaxi 等，均以结果付费重构商业模式。
 
 AI 包工头模式或成中国 SaaS 转型最后机遇，需聚焦垂直、人机结合、快速执行。
+
+---
+
+### [arwaal](https://github.com/tigerabrodi/arwaal)
+
+Arwaal 是一个用 TypeScript 从头构建的类 React 库，旨在通过实践学习 React 的核心原理，实现了包括 Fiber 协调、虚拟 DOM 和 Hooks 在内的关键功能。
+
+---
+
+把 AI 当作工具，而不是拐杖，那些 2019 年时被认为有价值的基础工程技能，值得你继续投资。
+
+-- 《不要让 AI 加速我们的无能》
+
+---
+
+最有害的建议之一就是不要重新发明轮子。
+
+这种建议会导致一种抑制好奇心和探索的氛围。现代生活的很多重要发明，都来自那些不听从这个建议的人们。
+
+重新发明轮子就是一种学习，并且学习过程中，你可能会做出更好的版本。
+
+-- 《重新发明轮子》

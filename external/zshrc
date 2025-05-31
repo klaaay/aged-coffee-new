@@ -161,7 +161,8 @@ alias cpwd="pwd | pbcopy"
 
 # -------------------------------- #
 
-alias crm="create-mr"
+alias crm="eevee mr create"
+alias mrm="eevee mr merge"
 
 alias qg="quick-gen"
 alias qgu="quick-gen uno"
@@ -169,10 +170,12 @@ alias qgn="quick-gen name-input"
 alias qgd="quick-gen direct"
 alias qgp="quick-gen package-update"
 
-alias qc="quick-commit --mode auto"
-alias qcm="quick-commit"
-alias qce="quick-commit --locale en --mode auto"
-alias qca="quick-commit -ap true -a create-mr"
+alias qc="eevee ai commit --mode auto"
+alias qcm="eevee ai commit"
+alias qce="eevee ai commit --locale en --mode auto"
+alias qca="eevee ai commit -ap true -a create-mr"
+
+alias uno="eevee ai uno"
 
 # -------------------------------- #
 
