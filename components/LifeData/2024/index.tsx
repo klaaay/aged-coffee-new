@@ -41,6 +41,21 @@ const getChangeColor = (change: string, type: TableType): string => {
   return 'black'
 }
 
+const getRowBackgroundColor = (changes: string[], type: TableType): string => {
+  let hasRed = false
+  let hasGreen = false
+
+  changes.forEach((change) => {
+    const color = getChangeColor(change, type)
+    if (color === '#ef4444') hasRed = true
+    if (color === '#22c55e') hasGreen = true
+  })
+
+  if (hasRed) return '#fef2f2'
+  if (hasGreen) return '#f0fdf4'
+  return 'transparent'
+}
+
 const Table: React.FC<TableProps> = ({ headers, months, type }) => {
   const changes = calculateChanges(months)
   const averageData = calculateAverage(months)
@@ -56,7 +71,15 @@ const Table: React.FC<TableProps> = ({ headers, months, type }) => {
       </thead>
       <tbody>
         {months.map((month, monthIndex) => (
-          <tr key={monthIndex}>
+          <tr
+            key={monthIndex}
+            style={{
+              backgroundColor:
+                monthIndex > 0 && changes[monthIndex - 1]
+                  ? getRowBackgroundColor(changes[monthIndex - 1], type)
+                  : 'transparent',
+            }}
+          >
             <td>{month.month}</td>
             {month.data.map((cell, cellIndex) => (
               <td key={cellIndex}>
