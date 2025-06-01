@@ -74,6 +74,9 @@ module.exports = () => {
     },
     images: {
       domains: ['cdn.jsdelivr.net'],
+      dirs: ['app', 'components', 'layouts', 'scripts'],
+    },
+    images: {
       remotePatterns: [
         {
           protocol: 'https',
