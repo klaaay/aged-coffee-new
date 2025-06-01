@@ -8,12 +8,40 @@ import {
   sleepData,
 } from './helper'
 
+type TableType = 'sleep' | 'diet-exercise' | 'books-media'
+
 interface TableProps {
   headers: string[]
   months: MonthData[]
+  type: TableType
 }
 
-const Table: React.FC<TableProps> = ({ headers, months }) => {
+const getChangeColor = (change: string, type: TableType): string => {
+  const numericValue = parseFloat(change.replace('+', ''))
+
+  if (isNaN(numericValue) || change === '-') {
+    return 'black'
+  }
+
+  switch (type) {
+    case 'sleep':
+      if (numericValue >= 30) return '#22c55e'
+      if (numericValue <= -30) return '#ef4444'
+      break
+    case 'diet-exercise':
+      if (numericValue >= 10) return '#22c55e'
+      if (numericValue <= -10) return '#ef4444'
+      break
+    case 'books-media':
+      if (numericValue >= 3) return '#22c55e'
+      if (numericValue <= -3) return '#ef4444'
+      break
+  }
+
+  return 'black'
+}
+
+const Table: React.FC<TableProps> = ({ headers, months, type }) => {
   const changes = calculateChanges(months)
   const averageData = calculateAverage(months)
   return (
@@ -34,7 +62,9 @@ const Table: React.FC<TableProps> = ({ headers, months }) => {
               <td key={cellIndex}>
                 {cell}
                 {monthIndex > 0 && changes[monthIndex - 1][cellIndex] && (
-                  <sup>{changes[monthIndex - 1][cellIndex]}</sup>
+                  <sup style={{ color: getChangeColor(changes[monthIndex - 1][cellIndex], type) }}>
+                    {changes[monthIndex - 1][cellIndex]}
+                  </sup>
                 )}
               </td>
             ))}
@@ -54,13 +84,25 @@ const Table: React.FC<TableProps> = ({ headers, months }) => {
 }
 
 export const SleepTable2024: React.FC = () => {
-  return <Table headers={sleepData.headers} months={sleepData.months} />
+  return <Table headers={sleepData.headers} months={sleepData.months} type="sleep" />
 }
 
 export const DietAndExerciseTable2024: React.FC = () => {
-  return <Table headers={dietAndExerciseData.headers} months={dietAndExerciseData.months} />
+  return (
+    <Table
+      headers={dietAndExerciseData.headers}
+      months={dietAndExerciseData.months}
+      type="diet-exercise"
+    />
+  )
 }
 
 export const BooksAndMediaTable2024: React.FC = () => {
-  return <Table headers={booksAndMediaData.headers} months={booksAndMediaData.months} />
+  return (
+    <Table
+      headers={booksAndMediaData.headers}
+      months={booksAndMediaData.months}
+      type="books-media"
+    />
+  )
 }
