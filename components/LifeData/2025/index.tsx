@@ -6,6 +6,7 @@ import {
   dietAndExerciseData,
   MonthData,
   sleepData,
+  sleepDataApp,
 } from './helper'
 
 interface TableProps {
@@ -55,6 +56,10 @@ const Table: React.FC<TableProps> = ({ headers, months }) => {
 
 export const SleepTable2025: React.FC = () => {
   return <Table headers={sleepData.headers} months={sleepData.months} />
+}
+
+export const SleepTableApp2025: React.FC = () => {
+  return <Table headers={sleepDataApp.headers} months={sleepDataApp.months} />
 }
 
 export const DietAndExerciseTable2025: React.FC = () => {
