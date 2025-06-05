@@ -1,0 +1,69 @@
+---
+title: 2025-第二十三周
+date: '2025-06-03'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [JavaScript 流式写入文件](https://blog.rxliuli.com/p/4163a2afe21f4cbe907a7beeccd7730c/)
+
+文章介绍了如何通过浏览器扩展 IDBPort 实现 IndexedDB 数据的跨域名迁移，重点探讨了流式写入和读取大型数据文件（如二进制图像）的技术方案，以避免内存占用过高的问题。
+
+- 🚀 **背景与需求**：因域名到期需迁移 IndexedDB 数据，开发了浏览器扩展 IDBPort，支持跨域名数据迁移，需处理包含二进制数据的大文件。  
+- 💾 **流式写入方案**：使用 Blob+Response 组合实现流式写入，避免内存爆炸（如数百 MB 至 GB 级数据），关键 API 包括 Blob、Response、TransformStream 和 TextEncoderStream。  
+- ⚙️ **写入流程**：通过 TransformStream 构建管道，结合 TextEncoderStream 转换数据格式，最终生成 Blob 并触发流式写入，代码示例仅需 10 行。  
+- 📥 **流式读取挑战**：使用 Blob.stream() 读取数据时需处理数据块截断问题，通过自定义 LineBreakStream 确保按行分割，依赖 TextDecoderStream 和 TransformStream。  
+- 🔍 **代码验证**：提供完整代码示例演示流式读取 Blob 文件，确保不规则数据块（如截断文本）仍能正确解析为完整行。  
+- 🌐 **应用场景**：虽属小众需求，但现代浏览器能高效处理超大文件（如数十 GB），适用于在线压缩工具等场景。
+
+### [每次导航一次往返](https://overreacted.io/one-roundtrip-per-navigation/)
+
+网页导航与数据请求的演变：从传统 HTML 到现代组件化方案  
+
+- 🌐 **基础导航**：传统网页导航只需一次请求获取 HTML，所有数据已嵌入其中（如文章、评论），无需额外 API 调用。  
+- 🔄 **REST API 时代**：客户端崛起后，数据通过多个 REST 端点获取（如文章和评论分开请求），导致效率下降和潜在瀑布式请求问题。  
+- 🧩 **组件化数据请求**：将数据逻辑与 UI 组件耦合（如`useEffect`或 React Query），虽提升模块化，但加剧了请求分散和性能问题。  
+- 🚀 **集中式 Loader**：通过路由级`loader`函数（如 React Router）合并数据请求，减少客户端瀑布流，但牺牲了数据与组件的就近性。  
+- ⚡ **服务端 Loader**：将`loader`移至服务端（如 Next.js 的`getServerSideProps`），利用服务端优化（缓存、低延迟）实现单次高效数据返回。  
+- 🔗 **服务端函数（RPC）**：如 TanStack Server Functions，通过隐式 API 简化调用，但未解决请求分散问题，性能仍依赖客户端实现。  
+- 📊 **GraphQL 方案**：通过组件级片段声明数据需求，自动生成聚合查询，兼顾就近性与单次高效请求（如 Apollo）。  
+- ⚛️ **React 服务端组件（RSC）**：服务端组件直接加载数据并向下传递，结合了服务端 Loader 的效率与组件化的模块性，实现单次请求 + 流式渲染。  
+- 🔄 **权衡与未来**：RSC 类似传统 HTML 的高效性，但以 React 组件为抽象层，无需额外 API，平衡了性能与开发体验。
+
+### [在 JavaScript 项目中处理路由](https://www.seancdavis.com/posts/handling-routes-in-javascript-projects/)
+
+现代 JavaScript 框架常使用基于文件的路由，但缺乏统一的路由引用系统。以下是关键实践总结：
+
+- 🚀 **避免硬编码路由**：通过常量管理路由，减少拼写错误和重构风险。  
+- 🔄 **动态路由处理**：使用函数生成动态路径，适应复杂项目需求（如用户 ID 参数）。  
+- 🛠️ **TypeScript 增强**：用类型约束确保路由配置一致性，如`RoutesConfig`类型。  
+- 📂 **路由分组策略**：按功能（静态/查看/编辑）或 CRUD 分组，提升可维护性（如`RouteGroup`）。  
+- ⚖️ **灵活选择模式**：根据项目复杂度调整方案，但始终确保移除视图层的硬编码。  
+
+示例代码结构：  
+```typescript
+// 常量文件定义路由
+export const ROUTES = {
+  static: { root: "/" },
+  users: { view: (id) => `/users/${id}` }
+};
+```  
+核心原则：**建立统一路由系统，提升代码健壮性与可扩展性**。
+
+## 工具
+
+## 更新
+
+## 设计
+
+## AI
+
+## 其他
+
