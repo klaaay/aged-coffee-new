@@ -1,0 +1,55 @@
+---
+title: 2025-第二十四周
+date: '2025-06-09'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+## 工具
+
+### [mcp-server-chart](https://github.com/antvis/mcp-server-chart)
+
+一个基于 TypeScript 的 MCP 服务器，支持通过 AntV 生成多种图表，并可在 Dify 等平台使用，提供 SSE/Streamable 传输协议及私有化部署选项。
+
+- 📊 **功能概述**：支持 15+ 图表类型（如折线图、柱状图、词云等），生成后返回图片 URL。  
+- 🖥️ **桌面应用集成**：提供 Mac/Windows 系统配置示例，支持 Claude、VSCode 等工具调用。  
+- 🌐 **云端与协议**：适配阿里云、ModelScope 等平台，支持 HTTP/SSE 协议传输。  
+- ⚙️ **运行方式**：全局安装后可通过 SSE 或 Streamable 协议启动，默认端口 1122。  
+- 🔧 **CLI 选项**：自定义传输协议（stdio/sse/streamable）、端口及端点路径。  
+
+### [theme-toggle-effect](https://github.com/rudrodip/theme-toggle-effect)
+
+本文介绍了如何使用视图过渡 API（View Transitions API）实现主题切换效果，并提供了简洁的代码示例和 CSS 动画效果。  
+
+- 🌟 **主题切换效果**：使用视图过渡 API 轻松实现主题切换动画。  
+- 🛠️ **核心代码**：仅需两行 JavaScript 即可触发过渡效果。  
+- 🎨 **CSS 自定义**：通过`::view-transition`伪元素自定义动画效果（如圆形遮罩过渡）。  
+- ⚡ **动画示例**：提供了缩放和模糊效果的 CSS 代码片段。  
+
+## 更新
+
+## 设计
+
+## AI
+
+### [The /llms.txt file](https://llmstxt.org/)
+
+大型语言模型（LLMs）在处理网站信息时面临上下文窗口过小的限制，且 HTML 转纯文本效果不佳。为此，提出通过`llms.txt`文件和`.md`扩展链接提供 LLM 友好的结构化内容，兼顾人类与机器可读性。
+
+- 🖥️ **背景问题**：LLMs 处理完整网站时受限于上下文窗口，且 HTML 转换复杂低效。  
+- 📝 **核心提案**：网站添加`/llms.txt`文件（含项目概述和 Markdown 链接）及`.md`版本页面（如`index.html.md`）。  
+- 🔧 **技术实现**：`llms.txt`需包含 H1 标题、摘要、详细说明和 H2 分区的文件列表（链接 + 可选注释）。  
+- 🌟 **应用场景**：适用于开发文档、企业架构、电商政策、教育资料等，如 FastHTML 和 nbdev 项目已实践。  
+- 📂 **文件规范**：根目录放置，Markdown 格式，支持程序化解析（如`llms_txt2ctx`工具生成`llms-ctx.txt`）。  
+- 🤝 **兼容标准**：与`sitemap.xml`、`robots.txt`互补，侧重为 LLMs 提供按需的精选内容。  
+- 📋 **示例模板**：含标题、描述、文档/示例分区（可选区块标记可跳过的次要信息）。  
+
+## 其他
+
