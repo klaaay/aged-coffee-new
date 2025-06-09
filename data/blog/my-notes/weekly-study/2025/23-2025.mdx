@@ -12,6 +12,68 @@ summary: ''
 
 ## 技术
 
+### [指令序言与 JavaScript 的暗物质](https://macwright.com/2025/04/29/directive-prologues-and-javascript-dark-matter)
+
+TypeScript/JavaScript中的指令序言、魔法注释和编译指示是一些特殊的语法，用于影响代码的解释或转译行为。这些语法被TypeScript、V8等引擎或转译器读取，并用于改变输出或行为。  
+
+- 🧙 **JSX 编译指示**  
+  - 例如 `/** @jsx h */` 告诉转译器将 JSX 语法转换为 `h()` 函数。  
+  - 必须是 C 风格注释（`/* */`），且必须位于文件开头。  
+  - 其他类似编译指示包括 `jsxFragmentFactory`、`jsxImportSource` 等。  
+
+- 📜 **指令序言**  
+  - 如 `"use strict";` 是 ECMA 标准中的语法，用于启用严格模式。  
+  - React 中的 `"use client"` 和 `"use server"` 也使用类似语法，但功能不同。  
+  - 其他提案指令包括 `"hide source"` 和已废弃的 `"use asm"`。  
+
+- ✨ **魔法注释**  
+  - 如 `//# sourceMappingURL=<url>` 用于指定源映射。  
+  - V8 提出的 `//# allFunctionsCalledOnLoad` 用于提前编译函数。  
+  - 早期源映射语法使用 `//@` 而非 `//#`。  
+
+- 🌌 **非标准化语法**  
+  - 只有指令序言是 ECMAScript 标准的一部分，而编译指示和魔法注释未被标准化。  
+  - 这些语法是 JavaScript 中的“暗物质”，常被使用但鲜为人知其名称或原理。
+
+### [CSS 聚光灯效果 - Frontend Masters 博客](https://frontendmasters.com/blog/css-spotlight-effect/)
+
+Amit Sheen 分享了一种使用 CSS 和少量 JavaScript 实现的鼠标跟随聚光灯效果，通过 CSS 自定义属性和滤镜实现动态交互。
+
+- 🎨 **基本设置**  
+  - 使用 JavaScript 将鼠标坐标传递给 CSS 自定义属性 `--clientX` 和 `--clientY`。  
+  - 通过 `radial-gradient` 创建透明圆形聚光灯，跟随鼠标移动。  
+
+- 🖱️ **交互优化**  
+  - 添加 `pointer-events: none` 避免遮挡页面元素。  
+  - 使用 `em` 单位实现效果的比例缩放。  
+
+- 🌟 **进阶效果**  
+  - 结合 `filter: blur()` 和 `contrast()` 实现“粘性”模糊效果。  
+  - 通过 `mix-blend-mode` 控制背景混合模式（如 `darken` 或 `lighten`）。  
+
+- 🎨 **颜色与主题**  
+  - 支持深色/浅色模式切换，使用 `light-dark()` 函数动态调整颜色。  
+  - 可自定义聚光灯颜色（如紫色或青色），但需注意混合模式的影响。  
+
+- 📱 **移动端适配**  
+  - 通过 `@media (hover: hover)` 仅在有鼠标的设备上启用效果。  
+  - 监听 `touchstart` 事件动态禁用效果，确保触屏用户正常浏览。  
+
+- 🛠️ **扩展创意**  
+  - 叠加多个渐变或网格图案创造复杂动态效果。  
+  - 利用鼠标坐标控制其他 CSS 属性（如模糊度或大小）。  
+
+- 🔍 **无障碍优化**  
+  - 键盘导航时禁用效果（通过 `:focus-visible` 检测）。  
+  - 提供区域悬停关闭功能（如 `.reveal:hover`）。  
+
+- 🚀 **完整示例**  
+  - 结合上述技术实现可滚动页面中的动态聚光灯，支持主题切换和移动端回退。  
+
+- 💡 **进一步探索**  
+  - 实验不同渐变、滤镜或混合模式。  
+  - 引入更多 JavaScript 数据（如鼠标速度）增强交互。  
+
 ### [JavaScript 流式写入文件](https://blog.rxliuli.com/p/4163a2afe21f4cbe907a7beeccd7730c/)
 
 文章介绍了如何通过浏览器扩展 IDBPort 实现 IndexedDB 数据的跨域名迁移，重点探讨了流式写入和读取大型数据文件（如二进制图像）的技术方案，以避免内存占用过高的问题。
@@ -57,13 +119,170 @@ export const ROUTES = {
 ```  
 核心原则：**建立统一路由系统，提升代码健壮性与可扩展性**。
 
+### [bridging-commonjs-and-esm-in-nodejs](https://github.com/joyeecheung/talks/blob/master/webhackfest_2025/bridging-commonjs-and-esm-in-nodejs.pdf)
+
 ## 工具
+
+### [PicSharp](https://github.com/AkiraBit/PicSharp)
+
+一个简单、高效且灵活的跨平台桌面图像压缩应用程序。
+
+### [opossum](https://github.com/nodeshift/opossum)
+
+Opossum 是一个 Node.js 的熔断器库，用于执行异步函数并监控其执行状态。当错误发生时，它会快速失败并支持回退函数。适用于网络请求、磁盘操作等可能失败的操作，并提供丰富的配置选项和事件监听功能。
+
+- 🐾 **功能概述** - Opossum 是一个 Node.js 熔断器，用于处理异步函数的执行和错误管理，支持快速失败和回退机制。  
+- 📜 **许可证** - 采用 Apache-2.0 许可证。  
+- 📖 **文档** - 详细文档可在 [nodeshift.dev/opossum/](https://nodeshift.dev/opossum/) 查看。  
+- 🐛 **问题追踪** - 问题提交和追踪地址为 [GitHub Issues](https://github.com/nodeshift/opossum/issues)。  
+- ⚙️ **引擎要求** - 需要 Node.js 版本 >= 20。  
+
+- 💡 **基本用法** - 通过包装可能失败的异步函数（如网络请求），配置超时、错误阈值和重置时间。  
+- 🛑 **AbortController 支持** - 支持通过 AbortController 中止超时请求。  
+- 🔄 **自动更新 AbortController** - 提供选项自动更新 AbortController，确保其在半开或关闭状态下可重用。  
+- 🛠️ **回退函数** - 可设置回退函数，在熔断器打开时执行，并通过事件监听回退操作。  
+
+- 🔄 **状态管理** - 支持熔断器状态的初始化和持久化，适用于无服务器环境（如 AWS Lambda）。  
+- 📊 **统计信息** - 可以获取和导入熔断器的统计信息，如失败次数、超时次数等。  
+- 🌐 **浏览器支持** - 可在浏览器中使用，保护 AJAX 调用免受网络故障影响。  
+
+- 🔊 **事件监听** - 提供丰富的事件（如 `success`、`failure`、`open`、`close` 等）用于监控熔断器状态和行为。  
+- 🔄 **Promise 与回调** - 支持 Promise 和回调函数，可通过 `util.promisify` 转换 Node.js 风格的回调。  
+
+- 📈 **错误阈值计算** - 错误阈值基于失败次数与调用次数的比率，可配置滚动计数窗口调整统计周期。  
+- 🔗 **请求合并** - 支持合并短时间内相同的请求，提高性能并减少资源消耗。  
+
+- 📊 **指标导出** - 提供 Prometheus 和 Hystrix 的指标导出模块，方便监控和告警。  
+- ⚠️ **故障排查** - 可能遇到 EventEmitter 监听器过多的问题，可通过调整监听器数量或关闭熔断器解决。
+
+
+### [sqlite-js](https://github.com/sqliteai/sqlite-js)
+
+SQLite-JS 是一个强大的扩展，为 SQLite 添加了 JavaScript 功能，支持通过 JavaScript 代码创建自定义函数、聚合、窗口函数和排序规则，实现灵活的数据操作。
+
+- 🚀 **功能概述**：SQLite-JS 允许在 SQLite 中使用 JavaScript 定义标量函数、聚合函数、窗口函数和自定义排序规则。  
+- 📥 **安装方式**：支持从预构建二进制文件（Linux/macOS/Windows/Android/iOS）下载或通过 SQL 命令加载扩展。  
+- 🔧 **标量函数**：处理单行数据并返回单个值，适用于数据转换和计算（如计算年龄）。  
+- 📊 **聚合函数**：处理多行数据并返回聚合结果（如计算中位数或标准差）。  
+- 🖼️ **窗口函数**：支持访问完整数据集而不折叠结果（如移动平均值或百分位排名）。  
+- 🔠 **排序规则**：定义自定义文本排序逻辑（如不区分大小写的自然排序）。  
+- 🔄 **跨设备同步**：结合 `sqlite-sync` 可自动同步自定义函数到 SQLite Cloud 集群。  
+- 💡 **JavaScript 执行**：直接在 SQL 中执行 JavaScript 代码（如数学计算或日期格式化）。  
+
+### [trunker](https://github.com/migliorelli/trunker)
+
+Trunker 是一个轻量级的 Express.js 中间件，用于实现功能标志管理。它支持静态和动态标志评估，可基于标志限制路由访问，并集成环境变量和 TypeScript。  
+
+- 🚀 **功能简介**：轻量级中间件，帮助管理功能标志，支持同步和异步评估。  
+- 🛠️ **核心功能**：提供简单的 API 定义标志，支持静态/动态评估、路由限制、环境变量集成和 TypeScript。  
+- 📥 **安装**：通过 npm 或 yarn 安装，快速集成到 Express 项目。  
+- 🧩 **基础用法**：通过 `createTrunker` 创建实例，定义标志并限制路由访问。  
+- 🔒 **路由限制**：使用 `restrict` 中间件限制路由，支持单标志或多标志组合。  
+- 🌍 **环境变量**：通过 `fromEnv` 从 `TRUNKER_` 前缀的环境变量加载配置。  
+- 🔄 **动态标志**：支持异步逻辑（如检查用户订阅状态）动态启用/禁用功能。  
+- 🛑 **手动检查**：通过 `isFlagActive` 在路由中手动验证标志状态。  
+- ✏️ **自定义错误**：可配置错误响应的格式、状态码和提示模板。  
+- 📚 **API 文档**：提供 `createTrunker`、`fromEnv`、`isFlagActive` 等方法，支持 TypeScript 类型扩展。  
+
+### [philschmid/clipper.js: HTML 转 Markdown 转换器与爬虫工具](https://github.com/philschmid/clipper.js)
+
+Clipper.js 是一个 Node.js 命令行工具，用于从网页抓取内容并转换为 Markdown 格式，支持本地开发和爬取功能。
+
+- 🚀 **功能概述**：Clipper.js 是一个基于 Node.js 的工具，能够将网页内容转换为 Markdown 或 JSON 格式，适用于内容归档和笔记记录。
+- 📥 **安装方式**：通过 `npm install -g @philschmid/clipper` 全局安装，需额外安装 Playwright 以支持爬取功能。
+- 🛠️ **使用方法**：
+  - 从 URL 抓取内容：`clipper clip -u <url>`
+  - 从文件或目录抓取内容：`clipper clip -i <file/directory>`
+  - 支持输出为 Markdown 或 JSON 格式。
+- ⚠️ **爬取警告**：爬取功能可能对目标网站造成负担，需谨慎使用。
+- 📄 **PDF 转换**：支持通过 Poppler 将 PDF 转换为 HTML，再转换为 Markdown。
+- 🏗️ **本地开发**：提供详细的本地测试和构建指令，支持开发环境下的 CLI 测试。
+- 📜 **依赖库**：使用 Mozilla Readability 解析内容，Turndown 转换 HTML 为 Markdown，Crawlee 进行网站爬取。
+
+### [toolwind/anchors: Tailwind CSS 锚点定位工具，提供简洁 API 实现灵活声明式定位，支持自定义锚点相对位置。](https://github.com/toolwind/anchors)
+
+这是一个关于 Tailwind CSS 插件 "Anchors for Tailwind CSS" 的概述，该插件提供了对 CSS 锚点定位 API 的声明式支持。
+
+- 🚀 **功能概述**：插件为 Tailwind CSS 提供了 CSS 锚点定位 API 的支持，包括定义锚点（`anchor-name`）和相对于锚点定位元素（`position-anchor`、`position-area` 等）。
+- 📦 **安装方式**：通过 npm 安装 `@toolwind/anchors` 并在 Tailwind 配置文件中引入。
+- 🛠️ **使用方法**：
+  - 使用 `anchor/{name}` 定义锚点。
+  - 使用 `anchored/{name}` 将元素附加到锚点。
+  - 使用 `anchored-{position}` 指定元素的定位区域。
+- 🔄 **视图过渡集成**：每个 `anchored/{name}` 类包含 `view-transition-name`，支持使用浏览器原生视图过渡 API 进行动画处理。
+- 📚 **额外资源**：提供了 MDN 指南、CSS Tricks 文章和规范链接，帮助用户更好地理解和使用 CSS 锚点定位。
+- 🌟 **特点**：声明式锚点定位、完全支持原生 CSS 属性、易于控制的偏移量、内置视图过渡支持、完全 JIT 兼容无需运行时。
+
+### [toss/es-git: 专为 Node.js 打造的现代 Git 库，凭借 N-API 驱动，实现极速安装与坚如磐石的稳定性。](https://github.com/toss/es-git)
+
+es-git 是一个为 Node.js 构建的现代 Git 库，通过 N-API 提供极速安装和稳定性能，支持跨操作系统的高效 Git 操作。
+
+- 🚀 **项目简介**：es-git 是一个基于 Node.js 的现代 Git 库，提供简单直观的接口，支持复杂的 Git 操作，内置 TypeScript 类型确保开发效率。  
+- ⚡ **高性能**：通过 napi-rs 和 git2-rs 编译原生模块，绑定 libgit2，实现跨操作系统的高性能 Git 功能。  
+- 📦 **便捷安装**：提供预构建的原生模块，无需依赖 node-gyp 或本地编译，安装快速无忧。  
+- 📚 **示例代码**：支持克隆仓库等基础操作，例如 `cloneRepository` 可直接从远程仓库克隆代码。  
+- 🌐 **多语言支持**：文档提供英文和韩文版本，方便不同开发者使用。  
+- 🔧 **开发友好**：内置 TypeScript 类型，集成测试和构建工具（如 Vitest、Rustfmt）。  
+
 
 ## 更新
 
-## 设计
+### [Babel 8 测试版发布 · Babel](https://babel.dev/blog/2025/05/30/babel-8-beta)
+
+Babel 8 Beta 版本正式发布，标志着经过近两年的开发，所有计划中的破坏性变更已完成，并清理了大量技术债务。团队呼吁用户在实际项目中测试该版本以发现问题。
+
+- 🎉 Babel 8 Beta 发布：完成所有破坏性变更，大幅减少技术债务
+- 🧪 需实际项目测试：团队自 Alpha 阶段已内部使用，但需更多用户反馈
+- 📚 升级资源完备：提供用户迁移指南、API 开发者指南及临时文档网站
+- ⚡ ESM 专属包：Babel 8 仅支持 ESM，借助 Node.js 20 的 `require(esm)` 实现
+- 🔍 详细变更记录：GitHub 可查看各 Alpha 版本的完整更新日志
+- 🚧 后续计划：与主流项目协作适配、分离 Babel 7/8 代码分支、修复已知问题
+- 🐞 呼吁参与：鼓励用户测试并提交 GitHub Issue 反馈问题
+
+### [宣布 Rolldown-Vite | 归零](https://voidzero.dev/posts/announcing-rolldown-vite)
+
+Rolldown-Vite 是一个基于 Rust 的新一代打包工具，旨在提升 Vite 的性能，现已达到与当前 Vite 版本的功能对等，可作为直接替代方案使用。早期测试显示，生产构建时间减少了 3 倍至 16 倍，内存使用量降低了高达 100 倍。未来，Rolldown 将成为 Vite 的默认打包工具。
+
+- 🚀 **性能提升**：Rolldown-Vite 作为 Vite 的替代方案，可显著减少构建时间和内存使用。
+- 🔧 **简单替换**：通过修改 `package.json` 中的别名或覆盖依赖，即可轻松切换到 Rolldown-Vite。
+- ⚙️ **兼容性优先**：已通过 Vite 生态系统的兼容性测试，但部分高级用例可能存在兼容性问题。
+- 🛠️ **插件支持**：插件作者可立即测试其插件，部分插件可能需要调整以兼容或优化性能。
+- 📊 **实际效果**：早期用户报告构建时间大幅减少，如 GitLab 从 2.5 分钟降至 40 秒，内存使用减少 100 倍。
+- 🔮 **未来计划**：包括开发全捆绑模式的开发服务器，进一步优化性能，并分三个阶段将 Rolldown 整合到 Vite 中。
 
 ## AI
 
+### [Cursor 1.0](https://www.cursor.com/cn/changelog/1-0)
+
+Cursor 1.0 版本带来了多项新功能，包括 BugBot 自动代码审查、Background Agent 全面开放、Jupyter Notebook 支持、记忆功能测试版、一键安装 MCP 服务器、更丰富的聊天响应以及新的设置和仪表板界面。
+
+- 🐛 **BugBot 自动代码审查**：自动检查 PR 中的潜在问题，并通过 GitHub 评论提供修复建议。  
+- ☁️ **Background Agent 全面开放**：远程编码代理功能现已对所有用户开放，可通过云图标或快捷键启动。  
+- 📊 **Jupyter Notebook 支持**：Agent 可直接在 Jupyter 中创建和编辑多单元格，提升数据科学任务效率（仅支持 Sonnet 模型）。  
+- 🧠 **记忆功能（测试版）**：Cursor 能记住对话内容并在未来引用，支持按项目管理。  
+- ⚡ **一键安装 MCP 服务器**：简化 MCP 服务器设置，支持 OAuth 认证，提供官方服务器列表。  
+- 📊 **更丰富的聊天响应**：支持在聊天中渲染 Mermaid 图表和 Markdown 表格。  
+- ⚙️ **新设置与仪表板**：优化界面，新增使用分析、团队统计和网络诊断功能。  
+- ⌨️ **快捷键改进**：Cmd/Ctrl+E 可快速打开 Background Agent 控制面板。  
+- 🔗 **功能增强**：支持 PDF 解析、并行工具调用加速响应、折叠工具调用等。  
+- 👥 **团队管理**：企业版限制稳定版本访问，管理员可禁用隐私模式并查看 API 用量数据。  
+- 🤖 **模型更新**：Gemini 2.5 Flash 现已支持 Max 模式。
+
+
 ## 其他
 
+在机器大量生产平庸之作的这个时代，自己动手做点什么吧。让它不完美。让它粗糙。就这么去做。
+
+- 《这个时代，没人在乎你写了什么》
+
+---
+
+习惯使用 AI 大模型的下一代人，将不知道图书馆的用途。
+
+- Benjamin Breen
+
+---
+
+我们生命中最美好的时刻，并非是那些接受给予、放松享受的时刻，而是那些为了完成一件困难而有价值的事情，自愿将身心发挥到极限的时刻。
+
+- 米哈里·契克森米哈赖，"心流"（flow）概念的提出者
