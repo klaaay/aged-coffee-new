@@ -14,7 +14,12 @@ import {
   DietAndExerciseTable2024,
   BooksAndMediaTable2024,
 } from './LifeData/2024/index'
-import { BooksAndMediaTable2025, DietAndExerciseTable2025, SleepTable2025 } from './LifeData/2025'
+import {
+  BooksAndMediaTable2025,
+  DietAndExerciseTable2025,
+  SleepTable2025,
+  SleepTableApp2025,
+} from './LifeData/2025'
 
 export const components: MDXComponents = {
   Image,
@@ -31,6 +36,7 @@ export const components: MDXComponents = {
   DietAndExerciseTable2024,
   BooksAndMediaTable2024,
   SleepTable2025,
+  SleepTableApp2025,
   DietAndExerciseTable2025,
   BooksAndMediaTable2025,
 }
