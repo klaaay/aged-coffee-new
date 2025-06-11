@@ -12,28 +12,82 @@ summary: ''
 
 ## 技术
 
+### [Immaculata.dev - Node.js 中原生的 HMR（技术解析）](https://immaculata.dev/blog/native-nodejs-hmr.html)
+
+Node.js 中原生实现 HMR（热模块替换）的技术方案，通过模块钩子和依赖树管理实现高效的状态更新。
+
+- 🚀 **快速开发关键**：最小化状态丢弃，避免全量重启，仅使变更模块及其依赖树失效。
+- 🔄 **传统方案缺陷**：使用 `node:vm` 创建次级模块系统，导致逻辑重复且与原生模块隔离。
+- 🛠️ **新方案核心**：通过 `node:module` 原生钩子实现，直接操作模块加载与解析流程。
+- 📂 **文件树管理**：`FileTree` 类内存缓存文件内容，监听变更并标记版本（`?ver=${timestamp}` 自动失效）。
+- ⚡ **依赖追踪**：利用模块钩子动态注册依赖关系，父模块随子模块更新自动失效。
+- 💡 **代码示例**：
+  ```js
+  const tree = new FileTree('src', import.meta.dirname)
+  registerHooks(useTree(tree))
+  tree.watch().on('filesUpdated', async () => {
+    /* 模块按需重执行 */
+  })
+  ```
+- 🧩 **扩展应用**：结合 `moduleInvalidated` 事件清理资源（如 Shiki 高亮库的 `dispose` 调用）。
+- 🌟 **优势总结**：无冗余加载、依赖感知、内存高效，且完全基于原生 Node.js 机制。
+
+### [构建 gRPC Node.js API - Honeybadger 开发者博客](https://www.honeybadger.io/blog/building-apis-with-node-js-and-grpc/)
+
+构建更快、更可靠、可扩展且高效的 API 需要选择合适的框架和工具。通信协议对 API 的效能和速度有重要影响。gRPC 是一个强大的远程过程调用（RPC）框架，适用于多种环境，其高性能和低延迟特性使其成为构建 API 的热门选择。
+
+- 🚀 **gRPC 简介**：由 Google 于 2015 年发布的开源 RPC 框架，使用 Protocol Buffers 作为接口定义语言，支持双向流和流量控制，适合微服务架构。
+- 🔧 **工作原理**：客户端通过 RPC 调用远程服务器函数，抽象网络通信复杂性，使用 Protocol Buffers 序列化数据，确保高效传输和强类型。
+- 📡 **HTTP/2支持**：利用 HTTP/2 的多路复用、流量控制和头部压缩，提升性能并降低延迟。
+- 📜 **Protocol Buffers**：高效的数据序列化机制，通过.proto 文件定义数据结构，生成多语言代码，支持前后兼容性。
+- 📚 **示例项目**：构建一个基于 gRPC 的书店 API，包含创建、读取、更新和删除书籍的功能。
+- 🛠️ **设置 Node.js 项目**：安装 Node.js 和 gRPC 依赖，创建 proto 文件定义服务结构和数据格式。
+- 💻 **创建服务器和客户端**：服务器处理数据请求，客户端调用服务方法，演示了创建、读取、更新和删除书籍的操作。
+- ⚖️ **gRPC vs REST vs GraphQL**：gRPC 适合高性能和微服务，REST 易于集成，GraphQL 适合复杂数据模型和客户端灵活性。
+- ✔️ **优点**：高性能、可扩展、强类型、多语言支持。
+- ❌ **缺点**：学习曲线陡峭、兼容性限制、浏览器支持有限。
+- 🌍 **实际应用**：gRPC 适合构建微服务和分布式系统，但不完全替代 REST，需根据项目需求选择协议。
+
 ## 工具
 
 ### [mcp-server-chart](https://github.com/antvis/mcp-server-chart)
 
 一个基于 TypeScript 的 MCP 服务器，支持通过 AntV 生成多种图表，并可在 Dify 等平台使用，提供 SSE/Streamable 传输协议及私有化部署选项。
 
-- 📊 **功能概述**：支持 15+ 图表类型（如折线图、柱状图、词云等），生成后返回图片 URL。  
-- 🖥️ **桌面应用集成**：提供 Mac/Windows 系统配置示例，支持 Claude、VSCode 等工具调用。  
-- 🌐 **云端与协议**：适配阿里云、ModelScope 等平台，支持 HTTP/SSE 协议传输。  
-- ⚙️ **运行方式**：全局安装后可通过 SSE 或 Streamable 协议启动，默认端口 1122。  
-- 🔧 **CLI 选项**：自定义传输协议（stdio/sse/streamable）、端口及端点路径。  
+- 📊 **功能概述**：支持 15+ 图表类型（如折线图、柱状图、词云等），生成后返回图片 URL。
+- 🖥️ **桌面应用集成**：提供 Mac/Windows 系统配置示例，支持 Claude、VSCode 等工具调用。
+- 🌐 **云端与协议**：适配阿里云、ModelScope 等平台，支持 HTTP/SSE 协议传输。
+- ⚙️ **运行方式**：全局安装后可通过 SSE 或 Streamable 协议启动，默认端口 1122。
+- 🔧 **CLI 选项**：自定义传输协议（stdio/sse/streamable）、端口及端点路径。
 
 ### [theme-toggle-effect](https://github.com/rudrodip/theme-toggle-effect)
 
-本文介绍了如何使用视图过渡 API（View Transitions API）实现主题切换效果，并提供了简洁的代码示例和 CSS 动画效果。  
+本文介绍了如何使用视图过渡 API（View Transitions API）实现主题切换效果，并提供了简洁的代码示例和 CSS 动画效果。
 
-- 🌟 **主题切换效果**：使用视图过渡 API 轻松实现主题切换动画。  
-- 🛠️ **核心代码**：仅需两行 JavaScript 即可触发过渡效果。  
-- 🎨 **CSS 自定义**：通过`::view-transition`伪元素自定义动画效果（如圆形遮罩过渡）。  
-- ⚡ **动画示例**：提供了缩放和模糊效果的 CSS 代码片段。  
+- 🌟 **主题切换效果**：使用视图过渡 API 轻松实现主题切换动画。
+- 🛠️ **核心代码**：仅需两行 JavaScript 即可触发过渡效果。
+- 🎨 **CSS 自定义**：通过`::view-transition`伪元素自定义动画效果（如圆形遮罩过渡）。
+- ⚡ **动画示例**：提供了缩放和模糊效果的 CSS 代码片段。
 
 ## 更新
+
+### [Jest 30：更快、更精简、更出色 · Jest](https://jestjs.io/blog/2025/06/04/jest-30)
+
+Jest 30 发布，带来显著性能提升、内存优化及多项新功能，同时包含部分破坏性变更和未来发展规划。
+
+- 🚀 **Jest 30 发布**：重大版本更新，优化性能并减少内存占用，未来计划更频繁发布主版本。
+- ⚠️ **破坏性变更**：
+  - 放弃对 Node 14/16/19/21的支持
+  - 升级`jsdom`至 v26，TypeScript 最低版本要求 5.4
+  - 移除部分`expect`别名，默认排除不可枚举对象属性
+- 📊 **性能提升**：模块解析优化，实测某大型应用测试速度提升 37%，内存占用降低 77%。
+- 🧹 **全局变量清理**：新增警告机制检测未清理的全局变量，未来将自动清理以提升性能。
+- ✨ **新功能亮点**：
+  - 增强 ESM/TypeScript 支持（含`.mts`/`.cts`文件）
+  - 新增`expect.arrayOf`数组匹配器
+  - 支持`using`语法自动恢复 spy
+  - 可配置测试重试策略（延迟或立即重试）
+- 🔧 **实验性 API**：新增`jest.unstable_unmockModule()`和`jest.onGenerateMock()`等高级控制功能。
 
 ## 设计
 
@@ -43,13 +97,12 @@ summary: ''
 
 大型语言模型（LLMs）在处理网站信息时面临上下文窗口过小的限制，且 HTML 转纯文本效果不佳。为此，提出通过`llms.txt`文件和`.md`扩展链接提供 LLM 友好的结构化内容，兼顾人类与机器可读性。
 
-- 🖥️ **背景问题**：LLMs 处理完整网站时受限于上下文窗口，且 HTML 转换复杂低效。  
-- 📝 **核心提案**：网站添加`/llms.txt`文件（含项目概述和 Markdown 链接）及`.md`版本页面（如`index.html.md`）。  
-- 🔧 **技术实现**：`llms.txt`需包含 H1 标题、摘要、详细说明和 H2 分区的文件列表（链接 + 可选注释）。  
-- 🌟 **应用场景**：适用于开发文档、企业架构、电商政策、教育资料等，如 FastHTML 和 nbdev 项目已实践。  
-- 📂 **文件规范**：根目录放置，Markdown 格式，支持程序化解析（如`llms_txt2ctx`工具生成`llms-ctx.txt`）。  
-- 🤝 **兼容标准**：与`sitemap.xml`、`robots.txt`互补，侧重为 LLMs 提供按需的精选内容。  
-- 📋 **示例模板**：含标题、描述、文档/示例分区（可选区块标记可跳过的次要信息）。  
+- 🖥️ **背景问题**：LLMs 处理完整网站时受限于上下文窗口，且 HTML 转换复杂低效。
+- 📝 **核心提案**：网站添加`/llms.txt`文件（含项目概述和 Markdown 链接）及`.md`版本页面（如`index.html.md`）。
+- 🔧 **技术实现**：`llms.txt`需包含 H1 标题、摘要、详细说明和 H2 分区的文件列表（链接 + 可选注释）。
+- 🌟 **应用场景**：适用于开发文档、企业架构、电商政策、教育资料等，如 FastHTML 和 nbdev 项目已实践。
+- 📂 **文件规范**：根目录放置，Markdown 格式，支持程序化解析（如`llms_txt2ctx`工具生成`llms-ctx.txt`）。
+- 🤝 **兼容标准**：与`sitemap.xml`、`robots.txt`互补，侧重为 LLMs 提供按需的精选内容。
+- 📋 **示例模板**：含标题、描述、文档/示例分区（可选区块标记可跳过的次要信息）。
 
 ## 其他
-
