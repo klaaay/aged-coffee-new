@@ -50,6 +50,25 @@ Node.js 中原生实现 HMR（热模块替换）的技术方案，通过模块�
 
 ## 工具
 
+### [HOTScript](https://github.com/gvergnaud/HOTScript)
+
+HOTScript 是一个用于 TypeScript 类型层级的可组合函数库，提供高阶类型操作、模式匹配、数学运算等功能，支持通过函数式编程风格灵活转换类型。目前仍在开发中，API 可能存在变动。
+
+- 🚀 **核心功能** - 提供类型级高阶函数（如 `Tuples.Map`、`Objects.MapValues`）、模式匹配（`Match`）及数学运算（`Numbers.Add` 等）。
+- 🔧 **开发状态** - 目前为 **🚧 进行中**，API 可能有破坏性变更。
+- 📦 **安装方式** - 通过 npm 安装 HotScript 库。
+- 🔄 **示例场景**
+  - 🔢 **列表转换** - 使用 `Pipe` 链式调用函数处理元组（如数字计算、字符串拼接等）。
+  - 🧩 **自定义函数** - 通过 `Fn` 接口定义类型级 Lambda 函数（如 `Duplicate` 复制元素）。
+  - 🏷 **对象类型转换** - 组合函数实现深层的键名转换（如蛇形命名）、属性过滤等。
+  - 🌐 **路由解析** - 将路径字符串解析为类型安全的结构化对象（如提取参数类型）。
+  - 🎯 **类型安全 DOM** - 实现 `querySelector` 的类型安全版本（处理复杂选择器字符串）。
+- 📚 **API 分类**
+  - 🧠 **核心工具** - `Pipe`、`Call`、`Compose` 等支持函数组合与部分应用。
+  - 📋 **数据结构操作** - 元组（`Tuples`）、对象（`Objects`）、联合类型（`Union`）的映射、过滤、合并等。
+  - 🔤 **字符串处理** - 分割、替换、大小写转换等（如 `SnakeCase`）。
+  - ➕ **数学与逻辑** - 数字运算（`Add`、`Mod`）、布尔逻辑（`And`、`Equals`）。
+
 ### [mcp-server-chart](https://github.com/antvis/mcp-server-chart)
 
 一个基于 TypeScript 的 MCP 服务器，支持通过 AntV 生成多种图表，并可在 Dify 等平台使用，提供 SSE/Streamable 传输协议及私有化部署选项。
