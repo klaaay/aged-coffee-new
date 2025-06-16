@@ -12,6 +12,31 @@ summary: ''
 
 ## 技术
 
+### [使用 Async Local Storage 避免 Next.js 路由处理中的属性透传 | Nico 的博客](https://www.nico.fyi/blog/async-local-storage-to-prevent-props-drilling)
+
+在 Next.js 路由处理程序中使用 Async Local Storage 避免属性传递（props drilling），类似于 React Context 但适用于 Node.js 函数。
+
+- 🔄 Async Local Storage 可以避免在多个函数间手动传递用户对象等参数，简化代码结构。  
+- 🛠️ 创建 Async Local Storage 实例并封装 getUserContext 函数，确保调用时存在上下文。  
+- 🔗 使用 userContext.run() 包装需要访问共享数据的函数，如 getProfile 和 getTransactions。  
+- 🚫 如果未在 userContext.run() 块中调用函数，getUserContext 会抛出错误以防止误用。  
+- ⚠️ 目前缺少编译时检查 userContext.run() 是否存在的 linter 支持，未来可改进。  
+
+### [渐进式 JPEG：它是什么及如何提升网站性能](https://www.hostinger.com/uk/tutorials/what-is-progressive-jpeg-images)
+
+渐进式 JPEG 图像通过分阶段加载提升网站性能，相比基线 JPEG 能更快呈现完整画面并减少资源占用。以下是关键步骤和工具指南：
+
+- 🔍 **渐进式 JPEG 与基线 JPEG 的区别**  
+  基线 JPEG 逐行加载（顶部到底部），而渐进式 JPEG 先显示模糊全图再逐渐清晰。
+
+- ⚡ **渐进式 JPEG 的优势**  
+  提升用户体验（快速预览全图）、减少带宽和磁盘占用，主流浏览器均支持（需注意旧版 IE 兼容性）。
+
+- 🛠️ **转换步骤**  
+  1. **分析现有图片**：用 WebPageTest 检测基线 JPEG；  
+  2. **转换工具推荐**：Optimizilla（在线压缩 + 转换）或 RIOT（Windows 端多功能优化）；  
+  3. **替换图片**：通过文件管理器或 FTP 更新网站图片，保持同名避免技术问题。
+
 ## 工具
 
 ### [mcp-server-chart](https://github.com/antvis/mcp-server-chart)
@@ -33,9 +58,26 @@ summary: ''
 - 🎨 **CSS 自定义**：通过`::view-transition`伪元素自定义动画效果（如圆形遮罩过渡）。  
 - ⚡ **动画示例**：提供了缩放和模糊效果的 CSS 代码片段。  
 
-## 更新
+### [Assortment/darkmodejs：网页暗色模式管理工具包](https://github.com/Assortment/darkmodejs)
 
-## 设计
+darkmodejs 是一个用于管理网页暗色模式的实用工具包，支持通过操作系统偏好自动切换主题，并提供灵活的 API 配置和清理功能。
+
+- 🌐 **功能概述**：利用 `matchMedia` API 和 `prefers-color-scheme` 媒体查询，监听并响应系统暗色/亮色主题切换。
+- 📱 **兼容性**：需操作系统支持（如 macOS 10.14+、Windows 10 等）和浏览器支持 `prefers-color-scheme`（详见 caniuse）。
+- ⚠️ **版本注意**：v2+ 弃用旧版 `addListener/removeListener`，改用 `addEventListener/removeEventListener`。
+- 📦 **安装**：通过 npm 安装 `@assortment/darkmodejs`，支持 ES6 `import` 或 ES5 `require`。
+- 🛠️ **API 配置**：
+  - 提供 `onChange(activeTheme, themes)` 回调函数，返回当前主题（`dark`/`light`/`no-preference`/`no-support`）。
+  - 支持 `removeListeners()` 清理监听器，适用于动态路由或组件卸载场景。
+- 🎨 **示例应用**：结合 Emotion Theming 实现主题切换，[Demo 链接](https://darkmodejs-demo.netlify.com/)。
+
+### [liquid-glass-react](https://github.com/rdev/liquid-glass-react)
+
+苹果的液态玻璃效果用于 React
+
+### [eslint-plugin-fast-import](https://github.com/nebrius/eslint-plugin-fast-import)
+
+一个高性能的 ESLint 插件，具有确保正确使用导入和导出的规则。
 
 ## AI
 
@@ -50,6 +92,3 @@ summary: ''
 - 📂 **文件规范**：根目录放置，Markdown 格式，支持程序化解析（如`llms_txt2ctx`工具生成`llms-ctx.txt`）。  
 - 🤝 **兼容标准**：与`sitemap.xml`、`robots.txt`互补，侧重为 LLMs 提供按需的精选内容。  
 - 📋 **示例模板**：含标题、描述、文档/示例分区（可选区块标记可跳过的次要信息）。  
-
-## 其他
-
