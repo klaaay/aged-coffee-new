@@ -12,7 +12,35 @@ summary: ''
 
 ## 技术
 
+### [在 ES 模块中使用顶层 await - Matt Smith](https://allthingssmitty.com/2025/06/16/using-await-at-the-top-level-in-es-modules/)
+
+ES2022 引入了顶层 await，允许在 ES 模块的顶层直接使用 await，简化了异步代码的编写，但仅适用于模块环境，需注意执行顺序和循环依赖问题。
+
+- 🚀 **顶层 await 的引入**：ES2022 允许在 ES 模块的顶层使用 await，无需包裹在 async 函数中。  
+- 🛠️ **使用场景**：适用于远程配置获取、动态导入、WebAssembly 初始化等异步操作。  
+- ⚠️ **注意事项**：仅支持 ES 模块，CommonJS 和传统`<script>`标签不支持。  
+- 🔄 **循环依赖风险**：顶层 await 可能导致循环依赖时的运行时错误。  
+- 🌐 **环境支持**：现代浏览器和 Node.js v16+ 均支持，需使用`.mjs`或`type="module`。  
+- 🚫 **使用限制**：模块执行会暂停，直到 await 完成，可能影响依赖模块。  
+- 💡 **最佳实践**：适合应用层代码，避免在公共库中使用以防止阻塞下游。  
+- 📌 **尝试方法**：通过`.mjs`文件或`<script type="module">`启用，需 HTTPS 或 localhost 环境。
+
 ## 工具
+
+### [piscinajs/piscina: 高效快速的 Node.js 工作线程池实现](https://github.com/piscinajs/piscina)
+
+Piscina 是一个高效的 Node.js 工作线程池实现，专注于提升多线程任务的执行效率。
+
+- 🚀 **高效线程通信**：支持线程间的快速通信，优化任务处理速度。
+- 🔧 **灵活任务处理**：支持固定任务和可变任务场景，适应不同需求。
+- 📊 **动态线程池大小**：可根据任务负载动态调整线程数量。
+- ⏱️ **异步跟踪集成**：提供完整的异步操作跟踪，便于调试和优化。
+- 📈 **统计监控**：记录任务运行和等待时间的详细统计信息。
+- ❌ **任务取消支持**：允许通过 `AbortController` 或 `EventEmitter` 取消任务。
+- 🧠 **内存资源限制**：支持设置内存使用上限，防止资源耗尽。
+- 📜 **多模块支持**：兼容 CommonJS、ESM 和 TypeScript 模块。
+- 🔄 **自定义任务队列**：允许替换默认的 FIFO 队列为更高效的实现（如 `FixedQueue`）。
+- 🐧 **Linux CPU 调度优先级**：通过 `niceIncrement` 调整线程优先级（需安装 `@napi-rs/nice`）。
 
 ## 更新
 
