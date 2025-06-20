@@ -12,6 +12,22 @@ summary: ''
 
 ## 技术
 
+### [沿着 SVG 路径使用 React 和 Motion 构建无限跑马灯](https://tympanus.net/codrops/2025/06/17/building-an-infinite-marquee-along-an-svg-path-with-react-motion/)
+
+本教程介绍了如何使用 React、Typescript 和 Motion 库创建一个沿自定义 SVG 路径无限滚动的跑马灯效果，并逐步添加交互功能和响应式设计。
+
+- 🛠️ **核心实现**：利用`offset-path`和`offset-distance`属性使元素沿 SVG 路径移动，结合 CSS 动画或 Motion 库实现平滑滚动。  
+- 🎨 **路径设计**：通过 Figma 等工具创建自定义路径，使用 SVG 的`d`属性定义路径形状。  
+- 🔄 **动画控制**：使用 Motion 的`useMotionValue`、`useAnimationFrame`和`useTransform`实现动态位置更新和循环动画。  
+- 📦 **多元素支持**：通过`React.children`和`repeat`属性在路径上重复渲染多个元素，并均匀分布。  
+- 🧩 **Z 轴管理**：动态调整元素的`z-index`以确保路径交叉时的正确层叠顺序。  
+- 🖱️ **交互增强**：悬停时减速、滚动速度影响动画方向及速度，提升用户体验。  
+- 📱 **响应式适配**：通过缩放路径或容器实现不同屏幕尺寸下的适配，推荐使用 D3 库动态调整路径坐标。  
+- ⚠️ **性能注意**：路径复杂度和元素数量可能影响性能，需优化路径简洁性。  
+- 📚 **资源推荐**：提供 Motion 文档、MDN 指南及相关教程链接供深入学习。  
+
+
+
 ### [在 ES 模块中使用顶层 await - Matt Smith](https://allthingssmitty.com/2025/06/16/using-await-at-the-top-level-in-es-modules/)
 
 ES2022 引入了顶层 await，允许在 ES 模块的顶层直接使用 await，简化了异步代码的编写，但仅适用于模块环境，需注意执行顺序和循环依赖问题。
@@ -26,6 +42,17 @@ ES2022 引入了顶层 await，允许在 ES 模块的顶层直接使用 await，
 - 📌 **尝试方法**：通过`.mjs`文件或`<script type="module">`启用，需 HTTPS 或 localhost 环境。
 
 ## 工具
+
+### [modelcontextprotocol/use-mcp](https://github.com/modelcontextprotocol/use-mcp)
+
+一个轻量级的 React Hook，用于连接 Model Context Protocol (MCP) 服务器，简化 AI 系统的认证和工具调用。
+
+- 🦑 **use-mcp**：一个轻量级的 React Hook，用于连接 MCP 服务器，简化认证和工具调用。
+- 📦 **安装方式**：支持 npm、pnpm 和 yarn 安装。
+- 🔄 **功能特性**：自动连接管理、OAuth 认证流程处理、TypeScript 支持、调试日志等。
+- 🚀 **快速开始**：提供简单的 React Hook 接口，支持多种连接状态和工具调用。
+- 🔐 **OAuth 回调设置**：支持 React Router 和 Next.js 设置 OAuth 回调端点。
+- 📚 **API 参考**：详细说明 `useMcp` Hook 的选项和返回值。
 
 ### [piscinajs/piscina: 高效快速的 Node.js 工作线程池实现](https://github.com/piscinajs/piscina)
 
@@ -43,6 +70,17 @@ Piscina 是一个高效的 Node.js 工作线程池实现，专注于提升多线
 - 🐧 **Linux CPU 调度优先级**：通过 `niceIncrement` 调整线程优先级（需安装 `@napi-rs/nice`）。
 
 ## 更新
+
+### [CSS 间隙样式新方法  |  Chrome 开发者博客](https://developer.chrome.com/blog/gap-decorations)
+
+Chrome 和 Edge 139 推出了 CSS 间隙装饰功能，为 Flex、Grid 和多列布局中的间隙提供了新的样式解决方案，无需依赖边框或伪元素等传统技巧。
+
+- 🎨 **CSS 间隙装饰功能**：支持通过`column-rule`和新增的`row-rule`属性直接样式化间隙，提升视觉一致性和可维护性。  
+- 🚀 **优势**：不影响布局、支持`repeat()`语法、无需额外 DOM 元素，并提供更多自定义属性（如`*rule-break`和`gap-rule-paint-order`）。  
+- ⚙️ **试用方式**：在 Chrome 或 Edge 139 中启用实验性功能标志（`edge://flags`或`chrome://flags`），并通过开发者互动演示体验。  
+- 📱 **示例演示**：包括汉堡菜单、笔记本布局和每日 CSS 新闻等案例，展示不同场景下的间隙装饰应用。  
+- 📢 **反馈征集**：开发者可通过提交 Chromium bug 报告分享使用体验，帮助完善功能（目前暂不支持动画和超多网格轨道场景）。  
+- 📜 **许可信息**：内容遵循 Creative Commons 4.0 许可，代码示例采用 Apache 2.0 许可。
 
 ## 设计
 
