@@ -1,0 +1,288 @@
+---
+title: 2025-第二十六周
+date: '2025-06-23'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [多异步本地存储 | Nico 的博客](https://www.nico.fyi/blog/multiple-async-local-storage)
+
+文章概述了如何在 Next.js 中使用多个异步本地存储（Async Local Storage）来避免属性钻取（prop drilling），类似于 React 中的多上下文（context）用法，以保持代码模块化。
+
+- 🚀 异步本地存储可以像 React Context 一样嵌套使用，避免属性钻取问题。  
+- 🔧 通过`request-context.ts`创建请求上下文，存储搜索参数、路径参数和请求体。  
+- 🛠️ 使用`runWithMultipleContexts`函数实现多上下文嵌套，支持模块化代码结构。  
+- 📂 在路由处理器（如`route.ts`）中，结合用户上下文和请求上下文调用主函数（如`getData`）。  
+- 📊 在`getData`函数中，通过`getRequestContext`和`getUserContext`轻松获取上下文数据。  
+- 🔄 这种方法保持了代码的清晰性和可维护性，适用于需要多层数据传递的场景。  
+- 🔖 相关技术栈：Next.js、TypeScript、异步本地存储。
+
+### [CSS 级联层与 BEM 与工具类：特异性控制](https://www.smashingmagazine.com/2025/06/css-cascade-layers-bem-utility-classes-specificity-control/)
+
+CSS 的不可预测性常源于特异性问题，理解特异性比依赖`!important`更有效。本文探讨了 BEM、实用类（Utility Classes）和 CSS 层叠层（Cascade Layers）三种策略的优缺点及适用场景。
+
+- 🎯 **特异性问题**  
+  - CSS 特异性导致样式覆盖困难，`!important`虽能临时解决但带来维护风险。  
+  - 核心原理：浏览器通过层叠算法决定匹配元素的样式优先级。
+
+- 🔍 **开发者困境**  
+  - 项目扩展时，特异性冲突加剧（如`.cart-button`被`.cart-button .sidebar`覆盖）。  
+  - 传统解决方案包括嵌套、BEM、实用类或层叠层。
+
+- ⚖️ **BEM 方法论**  
+  - **优点**：通过命名规范（如`.block__element--modifier`）保持低特异性，易于维护。  
+  - **缺点**：类名冗长、复用性差，命名复杂。  
+  - **适用场景**：设计系统或团队协作中需要明确样式隔离。
+
+- 🧩 **实用类（Atomic CSS）**  
+  - **优点**：每个类仅对应单一属性（如`.p-4`），特异性统一，快速开发。  
+  - **缺点**：HTML 臃肿，全局修改困难，缺乏原生 CSS 的继承性。  
+  - **适用场景**：原型开发或配合 React 等组件框架。
+
+- 🏗️ **CSS 层叠层（@layer）**  
+  - **核心能力**：通过声明层顺序（如`@layer base, components`）覆盖特异性规则。  
+  - **优势**：精准控制优先级，无需`!important`即可管理第三方样式或遗留代码。  
+  - **注意点**：滥用可能导致层数过多，需合理规划结构。
+
+- 🔄 **策略对比与结合**  
+  - **BEM vs 实用类**：BEM 适合长期项目，实用类适合快速迭代。  
+  - **层叠层**：可与 BEM 或实用类结合，作为底层架构（如 Tailwind 内置层）。  
+  - **推荐组合**：实用类 + 层叠层 > BEM，但依项目需求灵活选择。
+
+- 🌟 **结论**  
+  - 层叠层是 CSS 近年最强大的特性，而非方法论。  
+  - 最佳实践：保持低特异性，用层叠层管理优先级，根据场景选择 BEM 或实用类。
+
+
+## 工具
+
+### [zod-antd-form](https://github.com/jinjiebang/zod-antd-form)
+
+基于 antd v5 + react-hook-form + zod 的表单库，支持类型安全和自动校验
+
+### [react-sounds](https://github.com/aediliclabs/react-sounds)
+
+react-sounds 是一个为 React 应用提供数百种即用音效的库，通过简单代码为 UI 增添趣味性，支持懒加载、离线使用和轻量化设计。  
+
+- 🎶 **海量音效**：提供数百种分类音效（如 UI、通知、游戏等），可即时播放。  
+- 🪶 **轻量设计**：仅加载 JS 封装，音频文件按需从 CDN 获取。  
+- 🔄 **懒加载**：音效仅在使用时才被加载，优化性能。  
+- 📦 **离线支持**：内置 CLI 工具支持下载音效并自行托管。  
+- 🎯 **简单 API**：提供直观的钩子和组件（如 `useSound`）。  
+- 🚀 **快速上手**：通过 npm/yarn 安装，几行代码即可为按钮添加音效。  
+- 📚 **完善文档**：官网提供详细文档和高级用法指南。  
+- 🎮 **在线演示**：可访问官网体验交互式演示。  
+- 🔍 **音效浏览**：官网提供全部音效的试听和选择功能。  
+- 🌐 **浏览器兼容**：支持所有现代浏览器（需兼容 Web Audio API）。  
+
+### [clip-js](https://github.com/mohyware/clip-js)
+
+这是一个基于 Next.js、Remotion 和 FFmpeg（WebAssembly 版）构建的在线视频编辑器项目，支持实时预览和高质量渲染。  
+-
+- 🏗️ **项目结构**：包含 app、images、public 等目录，以及.gitignore、README.md 等配置文件。  
+- 🚀 **核心功能**：  
+  - 🎞️ 实时预览编辑效果  
+  - 🧰 支持 FFmpeg（WebAssembly）渲染，最高 1080p 导出  
+  - 🕹️ 交互式时间轴编辑器，支持精确剪辑和媒体控制  
+  - ✂️ 元素工具：拆分、复制和管理媒体层  
+  - 🖼️ 多格式支持：视频、音频、图片和文字混合编辑  
+  - 🛠️ 高级控件：调整位置、透明度、图层顺序和音量  
+  - ⌨️ 快捷键操作：播放、静音、拆分（S）、复制（D）等  
+
+- ⚙️ **安装**：克隆仓库后运行`npm install`和`npm run dev`，访问`http://localhost:3000`。  
+- 📝 **待办事项**：  
+  - 🔧 修复时间轴元素重复/拆分 BUG、字体渲染问题等  
+  - 🖥️ UI 优化：缩放时间轴、响应式设计、侧边栏关闭选项  
+  - 🎨 功能扩展：GPU 加速、离线 PWA 模式、音视频分离、播放速度调整  
+  - 📦 容器化：支持 Docker 自托管  
+  - 📂 示例素材：提供测试项目和演示片段  
+
+
+### [rn-better-dev-tool](https://github.com/LovesWorking/rn-better-dev-tools)
+
+React Native DevTools 是一款增强型开发者工具，支持 React Query 开发工具和设备存储监控，提供美观的原生界面，适用于多种 React 平台。  
+
+- 🔄 **实时 React Query 状态监控**：实时查看和跟踪查询状态。  
+- 💾 **设备存储监控**：支持 MMKV、AsyncStorage 和 SecureStorage 的 CRUD 操作。  
+- 🌐 **环境变量监控**：查看公共环境变量，并可自定义同步私有变量。  
+- 🎨 **原生 macOS 界面**：美观且易用的桌面应用。  
+- 🚀 **自动连接 React 应用**：无需手动配置，自动检测并连接运行中的应用。  
+- 📊 **查询状态可视化**：直观展示查询状态和缓存更新。  
+- 🔌 **Socket.IO 集成**：确保稳定可靠的通信。  
+- ⚡️ **简单安装**：通过 NPM 包快速集成到项目中。  
+- 📱 **跨平台支持**：适用于 React Native、React Web、Next.js、Expo、tvOS 等。  
+- 🛑 **生产环境安全**：自动禁用，无需额外配置。  
+
+### 安装与使用  
+- 📥 **桌面应用（macOS）**：下载最新版本并安装，仅支持 Apple Silicon 芯片（M1/M2/M3）。  
+- 📦 **React 应用集成**：通过 `npm`、`yarn` 或 `pnpm` 安装依赖包，并配置 `useSyncQueriesExternal` 钩子。  
+- 🔒 **生产环境安全**：自动禁用开发工具，避免生产环境泄露敏感信息。  
+
+### 功能亮点  
+- 🔄 **React Query 监控**：实时查看查询状态、缓存和失效情况。  
+- 💾 **存储管理**：支持 MMKV、AsyncStorage 和 SecureStorage 的实时监控与操作。  
+- 🌐 **环境变量跟踪**：方便调试不同环境配置。  
+- 📱 **多平台兼容**：移动端、Web、桌面、TV 和 VR 均支持。  
+
+### 常见问题  
+- 🔌 **连接问题**：确保 DevTools 先启动，检查网络和端口配置。  
+- 📱 **Android 设备连接**：使用真实设备时需设置 `isDevice: true`。  
+- ⚠️ **设备 ID 持久性**：确保 `deviceId` 在应用重启后不变。  
+
+### 未来计划  
+- 🌐 **网络请求监控**：跟踪 API、WebSocket 和 GraphQL 请求。  
+- 🧩 **插件系统**：支持社区扩展功能。  
+- 🗄️ **Drizzle ORM 集成**：数据库管理工具支持。  
+
+
+
+### [is-in-ci](https://github.com/sindresorhus/is-in-ci)
+
+该工具用于检测当前进程是否在持续集成（CI）环境中运行，通过检查特定的环境变量来实现轻量且可靠的判断。
+
+- 🔍 **功能** - 检测是否在 CI 环境中运行，基于`CI`、`CONTINUOUS_INTEGRATION`或`CI_`前缀的环境变量。  
+- 📦 **安装** - 通过`npm install is-in-ci`快速安装。  
+- 💻 **用法** - 导入模块后直接调用，若在 CI 环境则输出提示（示例代码展示基础逻辑）。  
+- ⚙️ **CLI 支持** - 命令行直接调用`is-in-ci`，返回 0（CI 环境）或 1（非 CI 环境）的退出码。  
+- 🔗 **相关工具** - 推荐同作者工具如`is-inside-container`（容器环境检测）、`is-interactive`（交互式终端检测）。
+
+
+## 更新
+
+### [Vite 7.0 正式发布！ | Vite](https://vite.dev/blog/announcing-vite7.html)
+
+Vite 7.0 正式发布！这是自 Evan You 提交首个 Vite 代码库以来的第五年，前端生态系统已发生巨大变化。Vite 现已成为现代前端框架和工具共享的基础设施，每周下载量达 3100 万次，比上次大版本发布后七个月内增长了 1400 万次。
+
+- 🎉 **ViteConf 线下活动**：10 月 9-10 日在阿姆斯特丹举行，由 JSWorld、Bolt、VoidZero 和 Vite 核心团队联合组织。
+- 🚀 **Rolldown 集成**：VoidZero 开发的 Rust 打包工具 Rolldown 现可作为 `rolldown-vite` 包使用，未来将成为 Vite 的默认打包工具，显著减少大型项目的构建时间。
+- 🔧 **Vite DevTools**：Anthony Fu 与 NuxtLabs 合作开发，为基于 Vite 的项目提供更深入的调试和分析功能。
+- 🌍 **多语言支持**：新增波斯语文档，其他语言包括简体中文、日语、西班牙语等。
+- ⚡ **Node.js 支持**：Vite 7.0 要求 Node.js 20.19+ 或 22.12+，不再支持已终止维护的 Node.js 18。
+- 🎯 **默认浏览器目标更新**：从 `modules` 改为 `baseline-widely-available`，确保功能在主流浏览器中稳定支持至少 30 个月。
+- 🧪 **Vitest 兼容**：Vite 7.0 需 Vitest 3.2+ 支持，详情见 Vitest 3.2 发布博客。
+- 🔌 **环境 API 改进**：新增 `buildApp` 钩子，插件可协调环境构建，API 仍处于实验阶段，欢迎反馈。
+- 📦 **迁移指南**：Vite 7.0 移除了已弃用的功能（如 Sass 旧版 API），建议升级前查阅详细迁移指南。
+
+### [工作线程 | Node.js v24.3.0 文档](https://nodejs.org/api/worker_threads.html)
+
+Node.js v24.3.0 文档中关于 Worker Threads 的概述和关键点总结如下：
+
+- 🚀 **Worker Threads 概述**  
+  Worker Threads 模块允许并行执行 JavaScript，适用于 CPU 密集型任务，但不适用于 I/O 密集型操作。与子进程或集群不同，Worker Threads 可以共享内存（通过 `ArrayBuffer` 或 `SharedArrayBuffer`）。
+
+- 🔧 **主要功能**  
+  - 通过 `worker.postMessage()` 和 `parentPort.on('message')` 实现线程间通信。  
+  - 支持传输复杂数据类型（如 TypedArrays、对象循环引用）。  
+  - 提供资源限制配置（如堆内存大小）。  
+
+- 📌 **关键 API**  
+  - `worker.getEnvironmentData()` / `worker.setEnvironmentData()`：线程间环境数据共享。  
+  - `worker.isMainThread`：检测当前是否为主线程。  
+  - `worker.terminate()`：异步终止 Worker。  
+  - `MessageChannel` 和 `MessagePort`：创建自定义通信通道。  
+
+- ⚠️ **注意事项**  
+  - 同步代码可能阻塞 stdio 输出。  
+  - 从预加载脚本启动 Worker 需谨慎，避免递归创建线程。  
+  - 传输 `ArrayBuffer` 会使关联的 `TypedArray` 不可用。  
+
+- 📊 **性能与调试**  
+  - `worker.performance.eventLoopUtilization()` 监控事件循环利用率。  
+  - `worker.getHeapSnapshot()` 获取堆快照用于分析。  
+
+- 🔄 **线程管理**  
+  - 使用 `worker.ref()` 和 `worker.unref()` 控制线程对事件循环的影响。  
+  - 通过 `worker.resourceLimits` 查询资源约束。  
+
+- 🌐 **兼容性**  
+  - 部分 API（如 `markAsUntransferable`）在浏览器中无等效实现。
+
+
+### [发布 v4.8.0 · honojs/hono · GitHub](https://github.com/honojs/hono/releases/tag/v4.8.0)
+
+Hono v4.8.0 版本发布，带来了多项功能增强和新特性，包括路由助手、JWT 自定义头部支持、JSX 流式非对称加密支持等，同时代码体积进一步减小。
+
+- 🚀 **代码体积减小**：`hono/tiny` 包体积减少约 800 字节，现仅约 11 KB（gzip 后 4.5 KB）。  
+- 🛠️ **路由助手**：新增 `matchedRoutes`、`routePath` 等函数，简化路由信息获取。  
+- 🔐 **JWT 自定义头部**：支持从非标准头部（如 `X-Auth-Token`）获取 JWT 令牌。  
+- 🖥️ **JSX 流式 Nonce 支持**：为 CSP 兼容性，流式渲染支持添加 `nonce` 到内联脚本。  
+- 🌐 **CORS 动态方法控制**：根据请求来源动态返回允许的 HTTP 方法。  
+- 🔓 **JWK 匿名访问**：新增 `allow_anon` 选项，允许未认证请求继续处理。  
+- 💾 **缓存状态码选项**：通过 `cacheableStatusCodes` 指定可缓存的状态码（如 200、404）。  
+- 🔥 **Service Worker 改进**：弃用 `app.fire()`，推荐使用新的 `fire()` 函数。  
+- 📦 **SSG 插件系统**：支持自定义插件扩展静态站点生成流程（如生成站点地图）。  
+- 📦 **第三方中间件**：新增 MCP 中间件、UA 拦截器（支持屏蔽 AI 爬虫）和 Zod Validator v4 支持。 
+
+### [轻轻探讨 Chrome 137 中的 CSS if() 函数 | CSS-Tricks](https://css-tricks.com/lightly-poking-at-the-css-if-function-in-chrome-137/)
+
+CSS if() 函数在 Chrome 137 中正式发布，这是 CSS 中一种新的条件语句实现方式，允许在单行中根据多个条件返回结果。
+
+- 🚀 **快速开发**：CSS if() 函数从提案到 Chrome 实现仅用了不到一年时间，速度远超预期。  
+- 🔍 **语法解析**：if() 支持 style()、media() 和 supports() 等条件判断，并可嵌套多个条件语句。  
+- 💡 **基本用法**：通过条件判断返回不同的样式值，例如 `color: if(style(--theme: dark): oklch(52% 0.18 140); else: oklch(65% 0.05 220))`。  
+- 📜 **语法演变**：最初的提案语法较简单，最终实现支持更复杂的多条件分支和默认值（else）。  
+- 🧩 **可读性优化**：多条件嵌套可能导致代码混乱，建议通过换行和缩进提升可读性。  
+- 🌐 **功能扩展**：支持类似 @supports 和 @media 的功能，例如 `supports(backdrop-filter: blur(10px))` 或 `media(width >= 768px)`。  
+- ⚠️ **兼容性限制**：目前仅 Chrome 137+ 支持，其他浏览器尚未跟进。  
+
+### [recharts v3.0.0](https://github.com/recharts/recharts/releases/tag/v3.0.0)
+
+Recharts 3 正式发布
+
+- 🎉 **核心贡献**：@PavelVanecek 主导开发，重写状态管理，新增 3500+ 单元测试  
+- 🚨 **破坏性变更**：移除 `CategoricalChartState`、限制 `<Customized />` 访问内部状态，清理废弃属性（详见迁移指南）  
+- ✨ **新功能**：  
+  - 🧩 支持任意 React 组件嵌入 SVG 结构  
+  - 🖱️ 工具提示（Tooltip）和图例（Legend）支持 Portal 自由定位  
+  - ♿ 默认启用无障碍导航（键盘操作支持）  
+  - 📊 极坐标图新增多轴支持  
+  - ⚙️ 新增 `axisId` 指定工具提示关联轴、Y 轴自动宽度计算（`width="auto"`）  
+- 🐞 **修复与优化**：  
+  - 🎞️ 动画效果增强  
+  - 📜 TypeScript 类型改进  
+  - 🖍️ 饼图点击边框消除、直角坐标系网格背景层渲染顺序修正  
+
+## 设计
+
+## AI
+
+### [译：为不能只凭感觉行事的团队准备的 AI 辅助编码指南](https://sorrycc.com/ai-assisted-coding)
+
+AI 辅助编码：提升工程团队效率与质量的关键策略  
+
+- 🚀 **AI 是效率放大器**：熟练使用 AI 工具可大幅提升开发速度，加速用户反馈循环，打造更优质产品。  
+- ⚠️ **技巧至关重要**：错误使用 AI 可能导致平庸结果或技术债务，需掌握方法避免效率倒退。  
+- 🔧 **工匠精神不可替代**：优秀工程师能通过清晰沟通、系统直觉和扎实基础，最大化 AI 工具价值。  
+- 📝 **精准提示（Prompt）设计**：详细说明需求（如线程安全、边界条件）比模糊指令产出更高质量代码。  
+- 🤖 **元提示技巧**：让 AI 协助优化提示本身，生成技术规格后再执行，实现自我迭代改进。  
+- 🌱 **环境决定 AI 效能**：高质量代码库（良好测试、文档、CI/CD）显著提升 AI 辅助效果，混乱代码同样会困惑 AI。  
+- 🛠️ **工具选择策略**：优先使用顶级编码模型（如 Claude Code/Cursor），配合代理工具实现自动化任务执行。  
+- 📚 **上下文管理**：通过 RULES.md 固化编码标准，仅提供相关文件/文档，避免信息过载。  
+- 🔍 **分阶段开发**：将功能拆解为规划与执行阶段，小步提交，结合技术规格文档提升 AI 理解深度。  
+- 🧠 **持续学习与调试**：用 AI 作为学习工具，快速掌握新技术；调试时提供完整错误上下文与尝试记录。  
+- 📊 **文档自动化**：利用 AI 生成知识库、测试用例分析等，低成本构建团队知识资产。  
+- 🔄 **流程优化**：AI 可快速创建 Mock 服务、运维手册等，消除团队协作摩擦点。  
+- ✂️ **重构开发理念**：减少过度抽象，接受可控重复；原型开发成本降低，但需确保最终代码质量。  
+- ✅ **测试不可妥协**：AI 加速测试生成，但需人工审查断言逻辑。  
+
+### [译：我们如何构建多智能体研究系统](https://sorrycc.com/how-we-built-multi-agent-research-system)
+
+Anthropic 团队开发了基于多 Claude 智能体的 Research 功能，通过并行搜索和动态规划提升复杂研究任务的效率，并分享了系统架构、工具设计和评估方法的实践经验。
+
+- 🔍 多智能体协作：采用主智能体规划 + 子智能体并行搜索的架构，解决开放式研究任务的路径依赖问题  
+- 🚀 性能优势：内部测试显示多智能体系统比单智能体性能提升 90.2%，特别适合广度优先查询  
+- ⚡ 并行加速：子智能体同步执行 + 并行工具调用，使复杂查询耗时减少 90%  
+- 💡 智能体自优化：Claude 4 模型能自我诊断 prompt 问题并改进工具描述，使任务完成时间缩短 40%  
+- 📊 评估创新：采用 LLM-as-judge 结合人工评估，通过终态验证（而非固定路径）应对非确定性特点  
+- 🛠️ 工程挑战：需处理状态持久化、错误恢复、异步协调等难题，采用彩虹部署保障系统更新稳定性  
+- 🔥 高消耗预警：多智能体系统 token 消耗达普通聊天的 15 倍，适合高价值任务场景  
+
+## 其他
+
