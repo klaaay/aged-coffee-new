@@ -16,32 +16,55 @@ summary: ''
 
 本教程介绍了如何使用 React、Typescript 和 Motion 库创建一个沿自定义 SVG 路径无限滚动的跑马灯效果，并逐步添加交互功能和响应式设计。
 
-- 🛠️ **核心实现**：利用`offset-path`和`offset-distance`属性使元素沿 SVG 路径移动，结合 CSS 动画或 Motion 库实现平滑滚动。  
-- 🎨 **路径设计**：通过 Figma 等工具创建自定义路径，使用 SVG 的`d`属性定义路径形状。  
-- 🔄 **动画控制**：使用 Motion 的`useMotionValue`、`useAnimationFrame`和`useTransform`实现动态位置更新和循环动画。  
-- 📦 **多元素支持**：通过`React.children`和`repeat`属性在路径上重复渲染多个元素，并均匀分布。  
-- 🧩 **Z 轴管理**：动态调整元素的`z-index`以确保路径交叉时的正确层叠顺序。  
-- 🖱️ **交互增强**：悬停时减速、滚动速度影响动画方向及速度，提升用户体验。  
-- 📱 **响应式适配**：通过缩放路径或容器实现不同屏幕尺寸下的适配，推荐使用 D3 库动态调整路径坐标。  
-- ⚠️ **性能注意**：路径复杂度和元素数量可能影响性能，需优化路径简洁性。  
-- 📚 **资源推荐**：提供 Motion 文档、MDN 指南及相关教程链接供深入学习。  
-
-
+- 🛠️ **核心实现**：利用`offset-path`和`offset-distance`属性使元素沿 SVG 路径移动，结合 CSS 动画或 Motion 库实现平滑滚动。
+- 🎨 **路径设计**：通过 Figma 等工具创建自定义路径，使用 SVG 的`d`属性定义路径形状。
+- 🔄 **动画控制**：使用 Motion 的`useMotionValue`、`useAnimationFrame`和`useTransform`实现动态位置更新和循环动画。
+- 📦 **多元素支持**：通过`React.children`和`repeat`属性在路径上重复渲染多个元素，并均匀分布。
+- 🧩 **Z 轴管理**：动态调整元素的`z-index`以确保路径交叉时的正确层叠顺序。
+- 🖱️ **交互增强**：悬停时减速、滚动速度影响动画方向及速度，提升用户体验。
+- 📱 **响应式适配**：通过缩放路径或容器实现不同屏幕尺寸下的适配，推荐使用 D3 库动态调整路径坐标。
+- ⚠️ **性能注意**：路径复杂度和元素数量可能影响性能，需优化路径简洁性。
+- 📚 **资源推荐**：提供 Motion 文档、MDN 指南及相关教程链接供深入学习。
 
 ### [在 ES 模块中使用顶层 await - Matt Smith](https://allthingssmitty.com/2025/06/16/using-await-at-the-top-level-in-es-modules/)
 
 ES2022 引入了顶层 await，允许在 ES 模块的顶层直接使用 await，简化了异步代码的编写，但仅适用于模块环境，需注意执行顺序和循环依赖问题。
 
-- 🚀 **顶层 await 的引入**：ES2022 允许在 ES 模块的顶层使用 await，无需包裹在 async 函数中。  
-- 🛠️ **使用场景**：适用于远程配置获取、动态导入、WebAssembly 初始化等异步操作。  
-- ⚠️ **注意事项**：仅支持 ES 模块，CommonJS 和传统`<script>`标签不支持。  
-- 🔄 **循环依赖风险**：顶层 await 可能导致循环依赖时的运行时错误。  
-- 🌐 **环境支持**：现代浏览器和 Node.js v16+ 均支持，需使用`.mjs`或`type="module`。  
-- 🚫 **使用限制**：模块执行会暂停，直到 await 完成，可能影响依赖模块。  
-- 💡 **最佳实践**：适合应用层代码，避免在公共库中使用以防止阻塞下游。  
+- 🚀 **顶层 await 的引入**：ES2022 允许在 ES 模块的顶层使用 await，无需包裹在 async 函数中。
+- 🛠️ **使用场景**：适用于远程配置获取、动态导入、WebAssembly 初始化等异步操作。
+- ⚠️ **注意事项**：仅支持 ES 模块，CommonJS 和传统`<script>`标签不支持。
+- 🔄 **循环依赖风险**：顶层 await 可能导致循环依赖时的运行时错误。
+- 🌐 **环境支持**：现代浏览器和 Node.js v16+ 均支持，需使用`.mjs`或`type="module`。
+- 🚫 **使用限制**：模块执行会暂停，直到 await 完成，可能影响依赖模块。
+- 💡 **最佳实践**：适合应用层代码，避免在公共库中使用以防止阻塞下游。
 - 📌 **尝试方法**：通过`.mjs`文件或`<script type="module">`启用，需 HTTPS 或 localhost 环境。
 
+### [指南：预取 | Next.js](https://nextjs.org/docs/app/guides/prefetching)
+
+Next.js 提供了预取（Prefetching）功能，使应用内的路由导航变得即时。该功能通过提前加载资源来优化用户体验，支持自动和手动预取，并提供了多种配置选项以适应不同场景。
+
+- 🚀 **预取工作原理**：Next.js 在用户导航前提前加载路由资源（如 HTML 和 JavaScript），通过客户端转换实现无缝导航。
+- 🔄 **静态与动态路由**：静态路由默认完全预取，动态路由仅在配置 `loading.js` 时部分预取。
+- ⚙️ **自动预取**：生产环境中，`<Link>` 组件默认预取视口内的链接，可通过 `prefetch={false}` 禁用。
+- 🖱️ **手动预取**：使用 `useRouter().prefetch()` 手动触发预取，适用于视口外或特定交互（如悬停）。
+- 🛠️ **悬停触发预取**：通过扩展 `<Link>` 组件，实现悬停时预取（需自行管理缓存和可访问性）。
+- ❌ **禁用预取**：通过 `prefetch={false}` 完全禁用特定链接的预取，减少资源消耗。
+- 🔧 **预取优化**：Next.js 通过客户端缓存、预取调度和部分预渲染（PPR）优化性能，减少冗余加载。
+- ⚠️ **问题排查**：避免在预取时触发副作用（如分析跟踪），将其移至 `useEffect` 或客户端组件中处理。
+- 📉 **控制预取数量**：对于大量链接（如无限滚动列表），禁用或延迟预取（如悬停触发）以减少资源使用。
+
 ## 工具
+
+### [mattpocock/ai-hero-cli: 一个充满 AI 实验的命令行工具](https://github.com/mattpocock/ai-hero-cli)
+
+AI Hero CLI 是一个基于 AI 和 TypeScript 的实验性命令行工具，提供 TypeScript 配置分析和优化建议。
+
+- 🚀 **功能概述**：通过 AI 分析`tsconfig.json`，提供最佳实践、性能优化和类型安全建议。
+- ⚙️ **快速开始**：无需安装，直接运行`npx ai-hero-cli@latest`，支持 OpenAI、Anthropic 和 Google 的 AI 模型。
+- 📊 **配置分析**：运行`hows-my-tsconfig`获取详细建议、评分和交互式问答。
+- 🔍 **关键建议**：包括启用`strict: true`、设置合适的`target`和`lib`值，以及移除冗余选项。
+- 🌐 **支持模型**：包括 OpenAI 的 GPT-4、Anthropic 的 Claude 和 Google 的 Gemini。
+- 📜 **开源许可**：项目基于 MIT 许可证，拥有 21 个星标但暂无分叉。
 
 ### [modelcontextprotocol/use-mcp](https://github.com/modelcontextprotocol/use-mcp)
 
@@ -71,14 +94,29 @@ Piscina 是一个高效的 Node.js 工作线程池实现，专注于提升多线
 
 ## 更新
 
+### [发布 v4.8.0 · honojs/hono](https://github.com/honojs/hono/releases/tag/v4.8.0)
+
+Hono v4.8.0 版本发布，带来多项功能增强和新特性，包括路由助手、JWT 自定义头支持、JSX 流式非 ce 值支持等，同时代码体积进一步减小。
+
+- 🚀 **代码体积减小** - `hono/tiny` 包体积减少约 800 字节，现仅约 11 KB（gzip 后 4.5 KB）。
+- 🛣️ **路由助手** - 新增 `matchedRoutes`、`routePath` 等助手函数，简化路由信息获取。
+- 🔐 **JWT 自定义头支持** - 支持从非标准头（如 `X-Auth-Token`）获取 JWT 令牌。
+- 🛡️ **JSX 流式非 ce 支持** - 为 CSP 合规性，JSX 流式渲染支持添加 `scriptNonce`。
+- 🌐 **CORS 动态方法控制** - 允许根据请求来源动态返回不同的 `allowedMethods`。
+- 🔓 **JWK 匿名访问支持** - 新增 `allow_anon` 选项，允许未认证请求继续处理。
+- 💾 **缓存状态码选项** - 可指定哪些状态码（如 200、404）应被缓存。
+- 🔥 **Service Worker `fire()` 函数** - 新增独立 `fire()` 函数替代 `app.fire()`。
+- 🧩 **SSG 插件系统** - 静态站点生成支持插件系统，可扩展生成过程（如生成 sitemap）。
+- 📦 **第三方中间件更新** - 新增 MCP 中间件、UA 拦截中间件，并支持 Zod v4 验证器。
+- 👏 **社区贡献** - 感谢多位新贡献者的代码提交和问题修复。
+
 ### [CSS 间隙样式新方法  |  Chrome 开发者博客](https://developer.chrome.com/blog/gap-decorations)
 
 Chrome 和 Edge 139 推出了 CSS 间隙装饰功能，为 Flex、Grid 和多列布局中的间隙提供了新的样式解决方案，无需依赖边框或伪元素等传统技巧。
 
-- 🎨 **CSS 间隙装饰功能**：支持通过`column-rule`和新增的`row-rule`属性直接样式化间隙，提升视觉一致性和可维护性。  
-- 🚀 **优势**：不影响布局、支持`repeat()`语法、无需额外 DOM 元素，并提供更多自定义属性（如`*rule-break`和`gap-rule-paint-order`）。  
-- ⚙️ **试用方式**：在 Chrome 或 Edge 139 中启用实验性功能标志（`edge://flags`或`chrome://flags`），并通过开发者互动演示体验。  
-- 📱 **示例演示**：包括汉堡菜单、笔记本布局和每日 CSS 新闻等案例，展示不同场景下的间隙装饰应用。  
-- 📢 **反馈征集**：开发者可通过提交 Chromium bug 报告分享使用体验，帮助完善功能（目前暂不支持动画和超多网格轨道场景）。  
+- 🎨 **CSS 间隙装饰功能**：支持通过`column-rule`和新增的`row-rule`属性直接样式化间隙，提升视觉一致性和可维护性。
+- 🚀 **优势**：不影响布局、支持`repeat()`语法、无需额外 DOM 元素，并提供更多自定义属性（如`*rule-break`和`gap-rule-paint-order`）。
+- ⚙️ **试用方式**：在 Chrome 或 Edge 139 中启用实验性功能标志（`edge://flags`或`chrome://flags`），并通过开发者互动演示体验。
+- 📱 **示例演示**：包括汉堡菜单、笔记本布局和每日 CSS 新闻等案例，展示不同场景下的间隙装饰应用。
+- 📢 **反馈征集**：开发者可通过提交 Chromium bug 报告分享使用体验，帮助完善功能（目前暂不支持动画和超多网格轨道场景）。
 - 📜 **许可信息**：内容遵循 Creative Commons 4.0 许可，代码示例采用 Apache 2.0 许可。
-
