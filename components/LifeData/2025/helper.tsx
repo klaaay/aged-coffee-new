@@ -105,7 +105,7 @@ export const sleepData: TableData = {
 }
 
 export const sleepDataApp: TableData = {
-  headers: ['清醒时间', '快速眼动睡眠', '快速眼动睡眠', '深度睡眠'],
+  headers: ['平均睡眠时间', '清醒时间', '快速眼动睡眠', '快速眼动睡眠', '深度睡眠'],
   months: [
     {
       month: '1 月',
