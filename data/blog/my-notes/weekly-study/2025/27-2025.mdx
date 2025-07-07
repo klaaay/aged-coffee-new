@@ -1,0 +1,148 @@
+---
+title: 2025-第二十七周
+date: '2025-07-03'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [没时间学（网页）框架 X | 大脑烘焙](https://brainbaking.com/post/2025/06/no-time-to-learn-web-framework-x/)
+
+Keith Cirkel 质疑是否值得花时间学习像 React 这样可能在未来五年内过时的 Web 框架，并建议开发者应专注于可迁移的基础技能，如原生 JavaScript 或现代系统语言。文章探讨了 Web 框架的快速演变、技术选择的困境，以及如何评估学习某项技术的长期价值。
+
+- 🤔 **质疑学习 React 的价值**：Keith Cirkel 认为 React 的钩子等特性是“非可迁移技能”，可能随时间变得无用。  
+- ⏳ **时间投入的权衡**：开发者需判断学习特定框架是否值得，尤其是当技术快速迭代时。  
+- 🏹 **专注基础技能**：建议学习原生 JavaScript、现代系统语言（如 Go）、阅读技术规范（如 HTTP/HTML）或参与开源项目。  
+- 📊 **框架生命周期分析**：通过 Stack Overflow 标签流行度图表显示，大型框架（如 React/Angular）比小型框架（如 Backbone/Knockout）存活更久，但 API 重大变更仍可能使知识过时。  
+- 🔄 **技术迭代的挑战**：框架的频繁重大更新（如 React 每 2 年大版本）迫使开发者重新学习，而编程语言（如 Java/JS）因向后兼容更稳定。  
+- 🚀 **早期采用者的风险**：依赖 0.x 版本的框架或语言（如 Go 2.0 错误处理提案）可能需反复适应变化。  
+- 🍞 **作者观点**：Wouter Groeneveld 以自身经验（如 AngularJS/ExtJS 知识过时）强调基础技术比框架更持久。
+
+### [优先选择间隙而非边距](https://kyleshevlin.com/prefer-gaps-to-margins/)
+
+本文探讨了在网页布局中使用间隙（gaps）与边距（margins）的优劣，主张通过父容器控制子元素间距（gaps）而非依赖子元素边距（margins），并列举了具体理由和代码示例。  
+
+- 🌟 **核心观点**：间隙优于边距，因父容器统一控制间距更高效，减少代码冗余和维护成本。  
+- 🔍 **定义差异**：边距是子元素对外间距策略，间隙是父容器对子元素的内部间距策略。  
+- ⚠️ **边距缺点**：需手动为每个子元素添加类名，调整布局时需频繁修改代码（如响应式设计）。  
+- 💡 **间隙优势**：自动适应子元素数量，无需额外条件判断；代码更简洁（如 Flex/Gap 组合）。  
+- 🔄 **灵活性**：仅需调整父容器属性（如`flex-col`变`flex-row`），即可改变整体布局方向。  
+- 🧩 **组合性**：间隙避免边距塌陷问题，减少覆盖默认样式的冗余代码（如`my-0`）。  
+- 🎯 **结论**：推荐用间隙构建组件系统，结合“无外边距”原则提升健壮性。
+
+### [2025 年现代 Node.js 模式](https://kashw1n.com/blog/nodejs-2025/)
+
+Node.js 在 2025 年的现代模式演进，从 CommonJS 到 ESM 模块化、内置 Web API、测试工具到异步模式优化，全面提升开发体验与性能。
+
+- 📦 **模块系统：ESM 成为新标准**  
+  从 CommonJS 过渡到 ES Modules (ESM)，支持静态分析和`node:`前缀明确核心模块依赖。
+
+- 🌐 **内置 Web API 减少依赖**  
+  原生集成 Fetch API、AbortController 等，替代`axios`等第三方库，支持超时和取消操作。
+
+- 🧪 **内置测试工具**  
+  无需 Jest/Mocha，Node.js 自带测试运行器，支持异步测试、覆盖率统计和监听模式。
+
+- 🔄 **高级异步模式**  
+  Top-level await 简化初始化，结合`Promise.all`并行处理，AsyncIterators 优化事件流处理。
+
+- 🌊 **现代流处理**  
+  增强的 Streams API 与 Web Streams 互通，`pipeline`函数简化错误处理和资源清理。
+
+- 🧵 **Worker Threads 实现并行**  
+  通过工作线程处理 CPU 密集型任务（如斐波那契计算），避免阻塞主线程。
+
+- ⚡ **开发体验升级**  
+  内置`--watch`监听文件变化，`--env-file`加载环境变量，减少`nodemon`和`dotenv`依赖。
+
+- 🔒 **安全与性能监控**  
+  实验性权限模型限制文件/网络访问，内置`perf_hooks`实现基础性能监控。
+
+- 📦 **应用分发优化**  
+  支持单可执行文件 (SEA) 打包，简化 CLI 工具和桌面应用部署。
+
+- 🛠 **结构化错误处理**  
+  扩展`Error`类增强上下文信息，结合诊断通道 (`diagnostics_channel`) 实现精细化监控。
+
+- 🗂 **现代包管理**  
+  `Import` Maps 优化内部模块引用，动态导入 (`dynamic import`) 实现按需加载。
+
+## 工具
+
+### [milkdown](https://github.com/Milkdown/milkdown)
+
+🍼 插件驱动的所见即所得 Markdown 编辑器框架
+
+### [base-ui](https://github.com/mui/base-ui)
+
+用于构建无障碍网页应用和设计系统的无样式 UI 组件。由 Radix、Floating UI 及 Material UI 的创作者打造
+
+### [react-xtermjs](https://github.com/Qovery/react-xtermjs)
+
+React-xtermjs 是一个用于在 React 中集成 Xterm.js 功能的库
+
+### [olliethedev/ui-builder: 一款 React 组件，提供无代码可视化构建用户界面的方式，兼容 shadcn/ui 及自定义组件。](https://github.com/olliethedev/ui-builder)
+
+UI Builder 是一个 React 组件，提供无代码可视化方式来创建用户界面，兼容 shadcn/ui 和自定义组件。它允许非开发人员通过拖放界面构建页面、电子邮件、仪表盘等，同时利用现有的 React 组件库。
+
+- 🧩 UI Builder 是一个无代码可视化编辑器，兼容 shadcn/ui 和自定义组件。
+- 🚀 允许非开发人员通过拖放界面构建页面、电子邮件、仪表盘等。
+- 🔧 布局以 JSON 格式保存，便于版本控制和动态数据渲染。
+- 🛠️ 提供变量绑定功能，使界面可以动态显示个性化内容。
+- 📚 包含详细的文档和示例，帮助用户快速上手。
+- 🔄 支持本地存储持久化，也可通过回调函数与后端集成。
+- 📦 可通过 npm 安装，支持现有项目和新项目初始化。
+- 🛑 目前不支持服务器组件（RSC），但未来可能会添加支持。
+- 📅 开发路线图包括更多文档、React 19 支持、React Native 支持等。
+
+### [create-better-t-stack](https://github.com/AmanVarshney01/create-better-t-stack)
+
+Better-T-Stack 是一个现代化的 CLI 工具，用于快速搭建全栈 TypeScript 项目，支持类型安全和最佳实践。  
+
+- 🚀 **快速开始**：支持 npm、bun 和 pnpm 安装，通过简单命令即可创建项目。  
+- ⚙️ **零配置设置**：提供交互式 CLI 向导，简化项目初始化流程。  
+- 🔒 **端到端类型安全**：基于 tRPC 实现从数据库到前端的全栈类型安全。  
+- 🌐 **现代化技术栈**：集成 React、Hono/Elysia 和 TanStack 等现代库。  
+- 📱 **多平台支持**：支持 Web、移动端（Expo）和桌面应用开发。  
+- 🗃️ **数据库灵活性**：可选择 SQLite（Turso）或 PostgreSQL，支持 Drizzle 或 Prisma ORM。  
+- 🔐 **内置认证**：集成 Better-Auth 提供开箱即用的身份验证功能。  
+- 📲 **PWA 支持**：可选 PWA 功能，支持可安装的 Web 应用。  
+- 🖥️ **桌面应用支持**：通过 Tauri 集成开发跨平台桌面应用。  
+- 🏗️ **Monorepo 架构**：基于 Turborepo 实现高效的代码管理。  
+- 📂 **仓库结构**：包含 CLI 工具和文档网站两部分。  
+- 📖 **文档**：完整文档和示例可在 [better-t-stack.dev](https://better-t-stack.dev) 查阅。  
+- 💻 **开发指南**：支持克隆仓库后使用 bun 安装依赖并启动开发环境。  
+
+
+## 更新
+
+### [宣布 Rspack 1.4 - Rspack](https://rspack.rs/blog/announcing-1-4#next-rspack)
+
+Rspack 1.4 版本发布，带来多项性能优化和新功能，包括浏览器环境运行、更快的 SWC、更小的打包体积、增量构建默认开启等，同时生态系统工具链如 Rsbuild、Rslib、Rspress 等也同步更新。
+
+- 🚀 **Rspack 1.4 发布**：新增多项功能，包括浏览器环境运行、更快的 SWC、更小的打包体积等。
+- 🌐 **浏览器环境运行**：支持 Wasm 目标，可在浏览器和在线平台如 StackBlitz 上运行。
+- ⚡ **更快的 SWC**：JavaScript 解析器速度提升 30%-35%，压缩器速度提升 10%。
+- 📦 **更小的打包体积**：SWC 增强死代码消除能力，结合 Rspack 的 tree shaking，生成更小的包。
+- 🔄 **增量构建默认开启**：显著提升重建速度，HMR 性能提高 30%-40%。
+- 🎨 **新的 CssChunkingPlugin**：实验性插件，专门处理 CSS 代码分割，确保样式加载顺序正确。
+- 🛠 **增强的懒编译**：支持在 MultiCompiler 中独立配置每个编译器的懒编译选项。
+- 📂 **自定义输入文件系统**：允许自定义 compiler.inputFileSystem，支持虚拟模块等场景。
+- 📊 **性能分析工具**：引入基于 perfetto 的精确追踪功能，用于性能分析。
+- 🔗 **依赖升级**：升级了 Zod v4 和 Biome v2 等主要依赖。
+- 🔧 **Rstack 进展**：包括 Rsbuild 1.4、Rslib 0.10、Rspress 2.0 beta 等工具的更新。
+- 🧪 **Rstest 发布**：基于 Rspack 的测试框架，提供 Node.js 和 UI 组件测试支持。
+- 🌍 **生态系统更新**：next-rspack 测试覆盖率提升，Kmi 框架集成 Rspack 带来性能提升。
+- 📘 **升级指南**：包括升级 SWC 插件和懒编译中间件变更等注意事项。
+
+## 其他
+
+2022 年 11 月 30 日是一个永载史册的日子，就像第一颗原子弹爆炸，OpenAI 公司推出了 ChatGPT，从此人类再也没有了未被 AI 污染的新数据。
+
+- - [theregister.com](http://theregister.com/)
