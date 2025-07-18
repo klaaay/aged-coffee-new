@@ -14,6 +14,10 @@ summary: ''
 
 ## 工具
 
+### [spectrum-ui](https://github.com/arihantcodes/spectrum-ui)
+
+Spectrum UI ⭐ 是一套基于 Aceternity UI Magic UI 与 ShadCN UI 构建的可复用组件库，您可以直接复制粘贴到自己的应用中。
+
 ### [jaaz](https://github.com/11cafe/jaaz)
 
 AI 设计助手，Lovart 的本地替代方案。具备设计、编辑及生成图像、海报、故事板等功能的智能代理。
@@ -33,7 +37,37 @@ AI 设计助手，Lovart 的本地替代方案。具备设计、编辑及生成�
 
 OpenCode 是一个基于 Go 开发的终端 AI 助手，专为开发者设计，提供智能编码辅助功能。该项目现更名为 Charm，由原开发者 Kujtim Hoxha 继续维护，目前处于早期开发阶段，功能可能不稳定。支持多模型交互、会话管理、代码工具集成等，适合在终端环境中高效完成开发任务。
 
+### [app-that-builds-apps](https://github.com/EvanBacon/app-that-builds-apps)
+
+一款能够构建真正原生应用和网站的应用及网站平台。基于 Expo Router 与 AI SDK 打造
+
 ## 更新
+
+### [ReactRouter-Middleware](https://reactrouter.com/how-to/middleware)
+
+React Router 的中间件功能目前处于实验阶段，允许在路由处理器执行前后运行代码，支持认证、日志等常见模式，并通过嵌套链式结构执行。  
+
+- 🚧 **实验性功能**：需通过 `future.unstable_middleware` 标志启用，可能包含破坏性变更。  
+- 🔄 **执行顺序**：中间件按父路由→子路由顺序执行（“向下”），再反向返回（“向上”）。  
+- ⚙️ **快速启用**：在 React Router 配置中设置 `unstable_middleware: true`，并更新全局类型声明。  
+- 🔐 **认证示例**：中间件可验证用户会话，未通过时重定向到登录页。  
+- ⏱️ **性能监控**：客户端中间件可测量导航耗时并记录日志。  
+- 🛡️ **错误处理**：捕获并记录错误后重新抛出，由 React Router 处理。  
+- 🔗 **上下文共享**：通过 `unstable_createContext` 实现类型安全的上下文传递，避免命名冲突。  
+- 📡 **服务端 vs 客户端**：服务端中间件处理文档请求，客户端中间件处理浏览器内导航。  
+- 🔄 **条件执行**：支持基于请求方法（如仅 POST 请求）运行特定中间件逻辑。  
+- 🛠️ **迁移指南**：从旧版 `AppLoadContext` 迁移时，需将上下文对象包裹到 `Map` 中并通过 `get` 方法访问。  
+
+### [动画合成 - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-composition)
+
+CSS 的`animation-composition`属性用于指定当多个动画同时影响同一属性时的复合操作方式。
+
+- 🆕 该功能自 2023 年 7 月起在最新设备和浏览器版本中可用，旧版本可能不支持。  
+- 🎨 属性语法支持三种复合操作：`replace`（覆盖默认值）、`add`（叠加效果）、`accumulate`（累积值）。  
+- 🔄 多动画场景下，属性值按`animation-name`顺序循环分配。  
+- 📊 示例展示了不同值对`transform`属性的影响：`replace`会替换基础值，`add`会叠加变换，`accumulate`会合并数值。  
+- 📚 适用于所有元素，不可继承，默认值为`replace`。  
+- 🌐 兼容性需查看最新浏览器支持情况，相关资源包括 CSS 动画教程和其他动画属性。
 
 ## 设计
 
@@ -170,3 +204,8 @@ Agent2Agent (A2A) 协议官方 JavaScript SDK
   - 明确需求、丰富示例、添加验证关卡、定制项目规则（`CLAUDE.md`），并充分利用文档资源。
 
 ## 其他
+
+AI 就是一种新型的操作系统，帮你完成各种任务。这个系统的 CPU 就是大模型，内存就是模型的上下文窗口，窗口越大能完成的任务规模就越大。
+
+-- Andrej Karpathy，著名 AI 科学家
+
