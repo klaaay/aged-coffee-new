@@ -12,6 +12,64 @@ summary: ''
 
 ## 技术
 
+### [在 Next.js 中添加.md URL 以获取原始 Markdown 内容](https://www.bengubler.com/posts/2025-06-14-raw-markdown-urls-nextjs)
+
+本文介绍了如何在 Next.js 博客中通过添加`.md`后缀来获取原始 Markdown 内容，并详细说明了使用 Next.js 重写功能实现这一特性的步骤。
+
+- 🚀 **更新建议**：Vercel CEO 建议使用 Next.js 重写功能替代中间件，提升性能并简化实现。
+- 📝 **功能目标**：在博客文章 URL 后添加`.md`（如`/posts/my-post.md`）以获取原始 Markdown 内容，便于代码分享或内容分析。
+- 🔧 **技术实现**：
+  - 使用`Next.js rewrites`配置 URL 重定向，将`/posts/:slug.md`映射到 API 路由`/api/posts/:slug/raw`。
+  - 通过`Content Collections`库管理内容，支持类型安全和高效开发体验。
+- ⚙️ **配置步骤**：
+  - 初始化 Next.js 项目并安装依赖（如`@content-collections/core`）。
+  - 配置`content-collections.ts`定义文章集合结构和转换逻辑。
+  - 更新`next.config.js`添加重写规则和静态生成参数。
+- 📂 **内容示例**：创建`content/hello-world.mdx`文件，包含元数据和 Markdown 内容。
+- 📄 **页面渲染**：
+  - 首页（`app/page.tsx`）按日期排序展示文章列表，并提供原始 Markdown 链接。
+  - 文章页（`app/posts/[slug]/page.tsx`）渲染 MDX 内容并显示原始 Markdown 选项。
+- 🔄 **API 路由**：`app/api/posts/[slug]/raw/route.ts`返回原始 Markdown 内容，设置缓存头优化性能。
+- ✅ **测试验证**：启动开发服务器后，可通过`/posts/hello-world`（渲染页）和`/posts/hello-world.md`（原始内容）访问。
+- 💡 **应用场景**：适合分享代码示例、调试内容或学习 Markdown 语法，且实现简洁高效。
+
+### [更好的 Promise.all() —— 实用工具类型与函数](https://spin.atomicobject.com/better-promise-all/)
+
+本文介绍了在 TypeScript 中处理嵌套 Promise 的实用工具类型和运行时函数，旨在提升代码的易用性和类型安全性。通过四种核心工具类型（`ShallowPromisify`、`ShallowSettled`、`DeepAwaited`、`DeepSettled`）和两种运行时函数（`deepRecordAll`、`deepRecordAllSettled`），开发者可以更高效地处理浅层/深层的 Promise 结构，同时保持类型推断和错误隔离。
+
+- 🎯 **问题背景**
+
+  - 处理嵌套 Promise 时，传统方法需手动映射类型，代码冗长且易出错。
+
+- 🛠️ **解决方案：工具类型**
+
+  - `ShallowPromisify`：浅层包装值为 Promise，保留原始结构。
+  - `ShallowSettled`：类似浅层包装，但使用`PromiseSettledResult`处理成功/失败状态。
+  - `DeepAwaited`：递归解析所有嵌套 Promise，返回最终结构类型。
+  - `DeepSettled`：仅对 Promise 值应用`PromiseSettledResult`，保留非 Promise 值。
+
+- ⚙️ **运行时函数**
+
+  - `deepRecordAll`：递归解析对象/数组中的所有 Promise，返回完全解析的结构。
+  - `deepRecordAllSettled`：类似但使用`Promise.allSettled`，支持部分失败场景。
+
+- 📌 **实际用例**
+
+  - API 响应处理：自动解析嵌套的异步数据（如用户资料 + 帖子）。
+  - 批量操作：通过`deepRecordAllSettled`实现错误隔离，记录成功/失败结果。
+  - 配置加载：合并多个异步配置源并验证。
+
+- 🛡️ **类型安全优势**
+
+  - 编译时验证、完整的 IDE 智能提示、重构安全性提升。
+
+- ⚡ **性能考量**
+
+  - 深层处理可能影响性能，需权衡使用场景。
+
+- ✨ **核心价值**
+  - 提供类型安全、错误恢复、灵活性和可维护性，适用于复杂异步数据流。
+
 ## 工具
 
 ### [spectrum-ui](https://github.com/arihantcodes/spectrum-ui)
@@ -45,31 +103,29 @@ OpenCode 是一个基于 Go 开发的终端 AI 助手，专为开发者设计，
 
 ### [ReactRouter-Middleware](https://reactrouter.com/how-to/middleware)
 
-React Router 的中间件功能目前处于实验阶段，允许在路由处理器执行前后运行代码，支持认证、日志等常见模式，并通过嵌套链式结构执行。  
+React Router 的中间件功能目前处于实验阶段，允许在路由处理器执行前后运行代码，支持认证、日志等常见模式，并通过嵌套链式结构执行。
 
-- 🚧 **实验性功能**：需通过 `future.unstable_middleware` 标志启用，可能包含破坏性变更。  
-- 🔄 **执行顺序**：中间件按父路由→子路由顺序执行（“向下”），再反向返回（“向上”）。  
-- ⚙️ **快速启用**：在 React Router 配置中设置 `unstable_middleware: true`，并更新全局类型声明。  
-- 🔐 **认证示例**：中间件可验证用户会话，未通过时重定向到登录页。  
-- ⏱️ **性能监控**：客户端中间件可测量导航耗时并记录日志。  
-- 🛡️ **错误处理**：捕获并记录错误后重新抛出，由 React Router 处理。  
-- 🔗 **上下文共享**：通过 `unstable_createContext` 实现类型安全的上下文传递，避免命名冲突。  
-- 📡 **服务端 vs 客户端**：服务端中间件处理文档请求，客户端中间件处理浏览器内导航。  
-- 🔄 **条件执行**：支持基于请求方法（如仅 POST 请求）运行特定中间件逻辑。  
-- 🛠️ **迁移指南**：从旧版 `AppLoadContext` 迁移时，需将上下文对象包裹到 `Map` 中并通过 `get` 方法访问。  
+- 🚧 **实验性功能**：需通过 `future.unstable_middleware` 标志启用，可能包含破坏性变更。
+- 🔄 **执行顺序**：中间件按父路由→子路由顺序执行（“向下”），再反向返回（“向上”）。
+- ⚙️ **快速启用**：在 React Router 配置中设置 `unstable_middleware: true`，并更新全局类型声明。
+- 🔐 **认证示例**：中间件可验证用户会话，未通过时重定向到登录页。
+- ⏱️ **性能监控**：客户端中间件可测量导航耗时并记录日志。
+- 🛡️ **错误处理**：捕获并记录错误后重新抛出，由 React Router 处理。
+- 🔗 **上下文共享**：通过 `unstable_createContext` 实现类型安全的上下文传递，避免命名冲突。
+- 📡 **服务端 vs 客户端**：服务端中间件处理文档请求，客户端中间件处理浏览器内导航。
+- 🔄 **条件执行**：支持基于请求方法（如仅 POST 请求）运行特定中间件逻辑。
+- 🛠️ **迁移指南**：从旧版 `AppLoadContext` 迁移时，需将上下文对象包裹到 `Map` 中并通过 `get` 方法访问。
 
 ### [动画合成 - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-composition)
 
 CSS 的`animation-composition`属性用于指定当多个动画同时影响同一属性时的复合操作方式。
 
-- 🆕 该功能自 2023 年 7 月起在最新设备和浏览器版本中可用，旧版本可能不支持。  
-- 🎨 属性语法支持三种复合操作：`replace`（覆盖默认值）、`add`（叠加效果）、`accumulate`（累积值）。  
-- 🔄 多动画场景下，属性值按`animation-name`顺序循环分配。  
-- 📊 示例展示了不同值对`transform`属性的影响：`replace`会替换基础值，`add`会叠加变换，`accumulate`会合并数值。  
-- 📚 适用于所有元素，不可继承，默认值为`replace`。  
+- 🆕 该功能自 2023 年 7 月起在最新设备和浏览器版本中可用，旧版本可能不支持。
+- 🎨 属性语法支持三种复合操作：`replace`（覆盖默认值）、`add`（叠加效果）、`accumulate`（累积值）。
+- 🔄 多动画场景下，属性值按`animation-name`顺序循环分配。
+- 📊 示例展示了不同值对`transform`属性的影响：`replace`会替换基础值，`add`会叠加变换，`accumulate`会合并数值。
+- 📚 适用于所有元素，不可继承，默认值为`replace`。
 - 🌐 兼容性需查看最新浏览器支持情况，相关资源包括 CSS 动画教程和其他动画属性。
-
-## 设计
 
 ## AI
 
@@ -208,4 +264,3 @@ Agent2Agent (A2A) 协议官方 JavaScript SDK
 AI 就是一种新型的操作系统，帮你完成各种任务。这个系统的 CPU 就是大模型，内存就是模型的上下文窗口，窗口越大能完成的任务规模就越大。
 
 -- Andrej Karpathy，著名 AI 科学家
-
