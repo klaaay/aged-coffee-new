@@ -12,12 +12,185 @@ summary: ''
 
 ## 技术
 
+### [200 行代码实现全功能代理——方法揭秘](https://cthiriet.com/blog/nano-claude-code)
+
+本文介绍了如何用 200 行代码构建一个名为 nano-claude-code 的简化版代码代理工具，类似于 Claude Code 或 OpenAI Codex CLI。作者详细展示了如何通过调用 Claude API、定义工具（如读写文件和执行 bash 命令）、构建循环逻辑以及优化提示工程来实现这一目标。
+
+- 🚀 用 200 行代码构建简化版代码代理工具 nano-claude-code，功能类似 Claude Code 或 OpenAI Codex CLI  
+- 🔧 第一步：使用 Bun 初始化 JavaScript 项目，调用 Claude API 并处理文件读取工具  
+- 📂 定义工具：包括 read_file（读取文件）、write_file（写入文件）和 execute_bash（执行 bash 命令）  
+- 🔄 核心逻辑：通过 while 循环实现代理的持续运行，根据停止原因决定是否继续使用工具或等待用户输入  
+- 📝 提示工程：通过精心设计的 prompt.md 文件指导代理行为，特别是 execute_bash 工具的使用  
+- 🏎️ 代理三要素：强大的 LLM 模型（车）、健壮的代码逻辑（路）和清晰的提示（交通标志）  
+- 🎯 实际应用：演示了如何使用该代理从头开始构建一个小型市场项目
+
+
+### [在 CSS 中设置行长度（以及使文本适应容器）](https://css-tricks.com/setting-line-length-in-css-and-fitting-text-to-a-container/)
+
+本文探讨了文本行长度的定义、最佳实践以及如何通过 CSS 和 JavaScript 技术实现文本自适应容器宽度的方法，同时展望了未来可能的 CSS 新属性。
+
+- 📏 **行长度的定义**：行长度指多行文本容器的宽度，过长会导致阅读困难。  
+- 📜 **WCAG 建议**：西文不超过 80 字符，中文/日文/韩文不超过 40 字符，可用`width: 80ch`实现。  
+- 🔍 **最佳实践**：研究表明 50-75 字符为理想长度，需平衡响应式设计（如使用`clamp()`和`min()`函数）。  
+- ⚙️ **技术实现**：  
+  - 结合`clamp(min(93.75vw, 50ch), 70vw, 75ch)`实现动态调整。  
+  - 字体大小影响容器宽度感知。  
+- 🤖 **JavaScript 适配文本**：通过 SVG 和 3-5 行代码实现文本完全填充容器（如标题）。  
+- 🎨 **纯 CSS 方案**：Roman Komarov 的复杂方案利用容器查询和数学计算，但需重复文本和自定义属性。  
+- 🔮 **未来展望**：  
+  - 可能新增`text-grow`/`text-shrink`属性，支持多行文本适配。  
+  - 争议：部分开发者倾向更简化的`font-size: fit-width`方案。  
+- 💡 **结论**：当前技术已大幅简化行长度控制，但未来仍需标准化解决方案，鼓励开发者参与 GitHub 讨论。
+
+### [font-size-adjust 很有用](https://matklad.github.io/2025/07/16/font-size-adjust.html)
+
+这篇文章探讨了 CSS 中的`font-size-adjust`属性，并提出了与主流观点不同的见解，认为其用途被广泛误解。以下是关键点总结：
+
+- 📏 **字体大小的定义**：`font-size`实际上定义的是包含字形（如字母“m”）的盒子高度，而非字形本身的大小，导致不同字体在相同`font-size`下实际显示大小不一。  
+- 🔍 **字体差异示例**：同一字号下，不同字体的字母“x”实际高度可能显著不同（如示例中的三个字体对比）。  
+- ✨ **`font-size-adjust`的作用**：通过设定`ex-height`比例（如`0.5`），强制统一字体的 x 高度与盒子高度的比例，使不同字体视觉大小一致。  
+- 🤔 **主流观点的局限**：MDN 等文档强调该属性仅用于解决字体回退（fallback）时的显示不一致问题，但作者认为此用途不够关键。  
+- 🛠️ **更实用的建议**：将`font-size-adjust: ex-height 0.53`加入 CSS 重置（如`box-sizing`），直接统一多字体的视觉比例，而非仅应对回退场景。  
+- ❓ **为何选 0.53**：该值基于 Helvetica 的固有比例，但附近数值均可接受，旨在提供一致的排版基准。
+
+### [在约束中构建架构：实用指南](https://www.lorenstew.art/blog/always-architect-with-contraints)
+
+文章探讨了前端项目初始阶段工具选择的重要性，提倡基于项目实际约束而非习惯选择框架，并通过对比不同技术栈实现同一功能的差异，论证了轻量化方案的优越性。
+
+- 🛠️ **默认 SPA 框架的弊端**：习惯性选择 React/Next.js 等重型框架可能导致过度工程化，例如静态页面加载不必要的 JS bundle。  
+- 🎯 **约束优先的架构设计**：应根据页面特性（如静态内容占比、交互隔离性）选择工具，例如 Astro+Web Components 实现按需加载。  
+- ⚡ **轻量化方案性能优势**：Astro+Lit 的 JS 体积比 Next.js 小 93%，比 SvelteKit 小 79%，显著提升加载速度和用户体验。  
+- 🔍 **框架对比案例**：  
+  - Next.js 需区分服务端/客户端组件，隐含复杂性；  
+  - SvelteKit 虽更简洁，但仍有编译后体积开销；  
+  - Astro+Web Components 显式声明交互模块，最契合简单需求。  
+- 📉 **过度工程的代价**：复杂框架引入额外概念（如 hydration、指令）和运行时开销，与简单需求不匹配。  
+- 🧠 **核心启示**：优秀架构应基于问题约束权衡选择工具，而非开发者偏好，强调从「实现功能」到「工程化设计」的思维转变。
+
 ## 工具
 
+### [almadoro/react-just：基于Vite的无框架React服务器组件](https://github.com/almadoro/react-just)
+
+ReactJust 是一个基于 Vite 的 React 服务端组件（RSC）解决方案，无需依赖框架，支持平台无关的现代 React 应用开发。
+
+- 🚀 **项目简介**：ReactJust 允许开发者在不依赖框架的情况下使用 React 服务端组件，直接集成 Vite 构建工具。  
+- ⚠️ **开发状态**：目前处于早期开发阶段，API 可能变动，部分功能（如 `'use server'`）仍在完善中。  
+- 📦 **核心包**：  
+  - `react-just`：Vite 插件及核心客户端/服务端依赖。  
+  - `@react-just/node`：Node.js 运行时支持。  
+  - `rollup-plugin-react-use-client`：处理 `"use client"` 指令的 Rollup 插件。  
+- 🌐 **官网**：[reactjust.dev](https://reactjust.dev)  
+- 📜 **许可证**：MIT 开源协议。  
+- ⭐ **关注度**：72 个 Star，1 个 Fork。  
+- 🛠️ **技术栈**：TypeScript（91.8%）、JavaScript（6.4%）、CSS（1.8%）。  
+
+### [TanStack DB Live Queries](https://tanstack.com/db/latest/docs/live-queries)
+
+TanStack DB 提供了强大的实时查询功能，支持类似 SQL 的链式 API，能够高效地获取、过滤、转换和聚合数据。以下是关键要点总结：
+
+- 🚀 **实时查询**：所有查询默认实时更新，当底层数据变化时自动刷新结果。  
+- 🔗 **链式 API**：采用类似 SQL 的链式方法（如 `from`、`where`、`select`），支持灵活组合查询逻辑。  
+- 📊 **类型安全**：结果类型根据查询结构自动推断，完全支持 TypeScript。  
+- 🔄 **动态订阅**：可订阅数据变更，并支持标准集合方法（如迭代、筛选）。  
+- 🛠️ **高级功能**：  
+  - **连接查询**（`join`）：支持左连接、右连接、内连接等，类似 SQL 的关联操作。  
+  - **子查询**：嵌套查询优化执行，避免重复计算。  
+  - **分组聚合**（`groupBy`）：支持 `count`、`sum`、`avg` 等聚合函数。  
+  - **排序分页**（`orderBy`、`limit`）：控制结果顺序和分页。  
+- ⚡ **性能优化**：查询编译为增量管道执行，支持中间结果缓存和复用。  
+- 💡 **函数式变体**：提供 `fn.select` 和 `fn.where` 等灵活 API，支持复杂 JavaScript 逻辑（但需注意性能权衡）。  
+- 🖇️ **框架集成**：例如 React 的 `useLiveQuery` 钩子，可直接绑定到 UI 组件。  
+
+
+### [glass3d generator](https://glass3d.dev/)
+
+用于创建具有玻璃质感的 3D 效果界面元素
+
+### [on-headers](https://github.com/jshttp/on-headers)
+
+`on-headers` 是一个 Node.js 模块，用于在响应即将写入头信息时执行监听器。它通过 `npm` 安装，提供简单的 API 来添加监听器，并支持多次调用时按相反顺序触发监听器。
+
+- 📦 **安装**：通过 npm 安装模块，命令为 `npm install on-headers`。  
+- 🔧 **API**：使用 `var onHeaders = require('on-headers')` 引入模块，通过 `onHeaders(res, listener)` 添加监听器。  
+- 🔄 **监听器触发**：监听器在头信息发送前触发，且多次调用时按添加的相反顺序执行。  
+- 📝 **示例**：演示如何在服务器响应中自动添加 `X-Powered-By` 头信息（如果未设置）。  
+
+### [TrackWeight](https://github.com/KrishKrosh/TrackWeight)
+
+TrackWeight 是一款 macOS 应用，通过利用现代 MacBook 触控板内置的 Force Touch 压力传感器，将其转变为精确的数字秤。
+
+
+### [busuanzi](https://github.com/soxft/busuanzi)
+
+简易网站统计数据分析工具
+
+### [echarts-mcp](https://github.com/apache/echarts-mcp)
+
+该项目展示了如何实现 Apache ECharts 的 MCP（模型上下文协议）服务器，通过 LLM 获取图表参数并生成云存储的图表图片 URL，支持多种图表类型，并提供了灵活的配置选项。
+
+- 📊 **功能简介**：实现 ECharts 的 MCP 服务器，从 LLM 获取图表类型、数据等参数，生成图表并返回云存储图片 URL。  
+- 🛠️ **支持图表类型**：包括柱状图（'bar'）、折线图（'line'）、饼图（'pie'）、散点图（'scatter'）等 8 种类型。  
+- ⚙️ **环境配置**：需通过`npm install`安装依赖，并配置`.env`文件（参考`.env.example`），需拥有百度云存储（baidubce/bce-sdk-js）账号。  
+- 🚀 **运行命令**：  
+  - 启动 MCP 服务器：`npm run dev`  
+  - 启动检查工具：`npm run inspect`（需另开终端）。  
+- ❓ **常见问题**：  
+  - ☁️ **更换云存储**：修改`src/storage.js`中的实现。  
+  - 🎨 **更改主题**：参考`src/chart.js`中的`registerTheme`和`registerFont`注释。  
+  - ➕ **扩展图表类型**：需修改`src/index.js`的`inputSchema`并标准化`src/chart.js`中的数据。  
+- 🤝 **贡献**：欢迎提交 Pull Request 扩展功能。  
+- 💡 **实现讨论**：  
+  - 三种 LLM 参数传递方式对比：  
+    1️⃣ **全参数模式**：支持所有图表但不稳定；  
+    2️⃣ **预定义参数模式**：可定制主题但参数复杂；  
+    3️⃣ **极简参数模式**（本项目采用）：仅需核心参数，主题由开发者控制，稳定性最佳。
+
 ## 更新
+
+### [http,https: 在 http/https.request 和 Agent 中添加内置代理支持 by joyeecheung · Pull Request #58980 · nodejs/node · GitHub](https://github.com/nodejs/node/pull/58980)
+
+Node.js 在 HTTP/HTTPS 模块中新增了内置代理支持，允许通过环境变量配置代理服务器。
+
+- 🌐 新增 `NODE_USE_ENV_PROXY` 环境变量，启用后会自动解析 `HTTP_PROXY`/`HTTPS_PROXY`/`NO_PROXY` 配置
+- 🔧 `http.Agent` 和 `https.Agent` 新增 `proxyEnv` 选项，支持自定义代理配置对象
+- ⚙️ 代理支持包括 HTTP 直连和 HTTPS 隧道两种模式
+- ⏱️ 隧道建立超时使用请求选项或代理的超时设置
+- 🐛 代理错误会返回特定错误码和超时标记
+- 📊 测试覆盖率达到 90% 以上，大部分现有 HTTP/HTTPS 用例可透明通过代理
+- 📝 文档更新包含新选项和配置示例
+- 🔄 向后兼容，不影响现有不使用代理的功能
 
 ## 设计
 
 ## AI
+
+### [介绍我们的 Dev Mode MCP 服务器：将 Figma 融入您的工作流程](https://www.figma.com/blog/introducing-figmas-dev-mode-mcp-server/)
+
+Figma 推出了 Dev Mode MCP 服务器，通过 Model Context Protocol（MCP）标准将设计上下文引入 AI 编程工具（如 VS Code 的 Copilot、Cursor 等），以提升设计到代码的转换效率和准确性。该服务器支持开发者从 Figma 获取设计意图、组件变量等关键信息，减少 LLM 的冗余搜索，并生成更符合代码库和设计规范的代码。目前处于测试阶段，未来将推出远程服务器功能、更深度的代码库集成等更新。
+
+- 🚀 **MCP 标准应用**：Figma 的 Dev Mode MCP 服务器通过 MCP 标准，将设计上下文（如组件变量、样式）直接传递给 AI 编程工具，优化代码生成。  
+- 🔍 **设计意图传递**：服务器为 LLM 提供设计的高层结构、交互逻辑和元数据，确保代码不仅匹配代码库，还符合设计规范。  
+- 🛠️ **多工具支持**：支持 Copilot、Cursor 等工具，开发者可配置上下文类型（如代码片段、截图、变量定义），灵活适配不同任务需求。  
+- 📸 **截图补充上下文**：通过截图提供交互式内容和高层设计流，帮助 LLM 理解设计意图而非仅复制像素细节。  
+- 💡 **伪代码与变量语法**：提供伪代码和变量代码语法，使 LLM 能快速生成符合现有代码库规范的组件和逻辑。  
+- 🔄 **未来更新计划**：将推出远程服务器、更简化的 Code Connect 集成，并支持注释、Grid 等更多功能。  
+
+
+### [这次领先 Cursor！体验了 Trae 2.0 SOLO 模式，超酷！](https://mp.weixin.qq.com/s/Odp4d5Qj3dnPygbI7fhtXQ)
+
+Trae v2.0 发布了 SOLO 模式，这是一种全新的 AI 驱动开发范式，能够独立完成从需求分析到部署的全过程，为用户带来沉浸式的智能开发体验。
+
+- 🚀 **Trae v2.0 发布**：核心更新为 SOLO 模式，同时优化了视觉设计、AI 对话语音输入和自定义智能体等功能。  
+- 🤖 **SOLO 模式定义**：AI 成为开发主导者，整合编辑器、终端、文档等工具，实现从需求到交付的全流程自动化。  
+- 🎯 **目标**：实现 AI Development，而不仅仅是 AI Coding，弥合想法与实现之间的鸿沟。  
+- � **实战案例**：通过“绘本岛”亲子阅读网站项目，展示 SOLO 模式从需求分析、设计到开发、部署的全过程。  
+- 📝 **需求输入**：用户提供详细需求后，SOLO 首先生成产品需求文档（PRD），确保开发方向与预期一致。  
+- 🔧 **自动化开发**：AI 自主执行创建项目、安装依赖、编写代码、检测修复等操作，无需人工干预。  
+- 👀 **实时预览**：开发完成后，用户可立即在浏览器中查看应用效果，并进行二次修改。  
+- ✨ **选择元素功能**：用户可直接点击页面元素进行修改，提升调试效率和准确性。  
+- ☁️ **一键部署**：支持快速授权并部署到 Vercel，生成可公开访问的链接。  
+- 🔒 **使用限制**：目前 SOLO 模式需邀请码才能体验，内测期间每轮对话消耗 1 个快速请求。  
+- 👥 **适用人群**：开发者、产品经理、设计师、独立开发者及创业者均可受益，快速实现从想法到产品的转化。  
+- 🌟 **总结**：SOLO 模式是一个能够独立完成复杂项目的“AI 工程师”，真正实现了开发全流程的闭环。
 
 ## 其他
