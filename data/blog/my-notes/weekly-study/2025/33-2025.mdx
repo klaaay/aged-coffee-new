@@ -12,7 +12,49 @@ summary: ''
 
 ## 技术
 
+### [一个使用 Web 组件和 CSS 模块脚本的优雅香草应用架构](https://frontendmasters.com/blog/architecture-through-component-colocation/)
+
+构建数字界面时，组件化开发是核心思想，通过组合独立组件（如按钮、卡片、页眉等）来创建界面。JavaScript 框架（如 React、Vue）推动了这一理念，但如今我们能否在不依赖构建工具或框架的情况下实现组件化？答案是接近可行。  
+
+- 🏗️ **组件化开发**：通过独立组件（如按钮、卡片、页眉）构建界面，类似“原子设计”理念。  
+- 🔧 **框架推动**：React、Vue 等框架强化了组件化开发模式。  
+- 🚀 **无框架尝试**：探索无需构建工具或框架的组件化项目，使用原生技术（如 Web Components）。  
+- 📁 **组件结构**：组件按文件夹组织，包含模板、逻辑和 CSS 文件，支持复杂场景（如 GraphQL、测试）。  
+- 💡 **Web Components**：无需框架即可使用，但需 JavaScript 实例化（如 Lit 轻量库）。  
+- 🧩 **CSS 集成问题**：传统依赖打包工具（如 webpack、Vite）注入 CSS，但原生方案有限。  
+- 🌐 **CSS Module Scripts**：原生 JavaScript 方案，支持直接导入 CSS 为可构造样式表，但目前仅 Chrome 兼容。  
+- ⚠️ **兼容性限制**：CSS Module Scripts 的浏览器支持有限（Chrome 可用，Firefox 和 Safari 未支持）。  
+- 📝 **语法示例**：正确导入 CSS 模块的语法为`import sheet from './styles.css' with { type: 'css' };`。  
+- 🛠️ **Lit 应用**：在 Lit 中，可通过`static styles = [sheet];`将 CSS 模块应用到 Web 组件的 Shadow Root。  
+
+
 ## 工具
+
+### [marker](https://github.com/datalab-to/marker)
+
+Marker 是一个高效、多功能的文档转换工具，支持多种格式和功能，适用于研究和个人使用，部分商业用途需遵守许可限制。
+
+- 📄 **格式转换**：支持 PDF、图片、PPTX、DOCX、XLSX、HTML、EPUB 等多种文件格式转换为 Markdown、JSON、HTML 等。  
+- 🏗️ **结构化处理**：提取表格、表单、公式、代码块等，并支持自定义 JSON 结构（Beta）。  
+- 🚀 **性能优势**：比云服务（如 Llamaparse、Mathpix）和其他开源工具更快，批量模式下可达 25 页/秒（H100）。  
+- 🤖 **LLM 增强**：通过 `--use_llm` 标志使用 Gemini 或 Ollama 等模型提升准确性（如表格合并、数学公式处理）。  
+- 🖼️ **图像处理**：提取并保存文档中的图像，支持 OCR 强制处理（`--force_ocr`）。  
+- 💻 **多平台支持**：可在 GPU、CPU 或 MPS 上运行，支持批量处理和分布式多 GPU 转换。  
+- 🌍 **多语言兼容**：支持所有语言的 OCR（基于 Surya），无需 OCR 时无语言限制。  
+- 📊 **商业许可**：研究和个人免费，商业使用需满足收入/融资限制（或购买授权）。  
+- 🛠️ **扩展性**：可自定义处理逻辑、输出格式，支持 API 和 Python 集成。  
+- 📉 **基准测试**：在速度和准确性上优于竞品（如表格提取得分 0.816，LLM 模式提升至 0.907）。  
+- ⚠️ **已知限制**：复杂布局或嵌套表格可能处理不佳，但可通过 LLM 和强制 OCR 缓解。  
+
+
+### [open-lovable](https://github.com/mendableai/open-lovable)
+
+这是一个名为 "open-lovable" 的开源项目，旨在通过 AI 聊天快速构建 React 应用。以下是关键信息：
+
+- 🚀 **项目目标**：通过与 AI 交互即时构建 React 应用，支持克隆并快速重建任何网站为现代化 React 应用。  
+- ⚙️ **技术栈**：基于 TypeScript（占比 98.9%）、Next.js、Tailwind 等，使用 MIT 许可证开源。  
+- 📥 **安装要求**：需配置 E2B（沙盒环境）和 Firecrawl（网页爬取）的 API 密钥，并至少选择一种 AI 服务提供商（如 Anthropic/OpenAI/Groq）。  
+- 🛠️ **快速启动**：克隆仓库后运行 `npm install` 和 `npm run dev` 即可本地开发（端口 3000）。  
 
 ### [activepieces](https://github.com/activepieces/activepieces)
 
@@ -53,3 +95,13 @@ Activepieces 是一个开源的自动化工具，旨在替代 Zapier，提供可
 
 ## 其他
 
+### [管理资深工程师的常见问题](https://emdiary.substack.com/p/common-problems-managing-senior-engineers)
+
+作者分享了管理资深工程师的经验，指出他们虽然技术娴熟，但仍需针对性指导，并归纳了四种常见类型及其应对策略。  
+
+- �️ **资深工程师更需要管理**：与预期不同，资深工程师反而需要更多指导，作者总结了四种常见类型。  
+- 🏗️ **过度设计型**：热衷于复杂方案，需引导回归客户价值，强调简单可行方案并设置约束。  
+- 📝 **跳过设计型**：直接投入开发，需明确设计阶段的价值，鼓励先规划后实施。  
+- ❓ **模糊需求型**：面对模糊需求易迷失，需教会提问和逆向思考（如“如何确保失败？”）。  
+- 🚀 **单打独斗型**：不愿协作，需帮助拆分并行任务并建立团队信任。  
+- 🌟 **总结**：资深工程师的优势可能成为盲点，管理者需通过教练式引导助其成长，从而提升团队整体能力。
