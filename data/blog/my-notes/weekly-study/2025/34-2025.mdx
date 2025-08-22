@@ -12,12 +12,176 @@ summary: ''
 
 ## 技术
 
+### [Covering hidden=until-found](https://css-tricks.com/covering-hiddenuntil-found/)
+
+本文介绍了 HTML 属性`hidden=until-found`的功能、原理、应用场景及浏览器支持情况。该属性允许隐藏内容在页面搜索时被找到并显示，其底层实现依赖于`content-visibility: hidden`，并与`<details>`元素及 Interop 2025 标准的发展密切相关。
+
+- 🔍 **使隐藏内容可被搜索**：`hidden=until-found`属性让元素内的隐藏内容可通过浏览器页面搜索（Ctrl+F）找到并高亮显示。
+- 🛠️ **底层原理**：浏览器通过隐式设置`content-visibility: hidden`来隐藏内容，同时保持内容可被搜索。
+- 🤔 **应用场景**：最初用于模拟手风琴组件，作为`<details>`元素未被广泛支持时的替代方案，现仍适用于需隐藏但需可搜索的内容。
+- 📅 **浏览器支持**：Chrome（2022 年起）、Firefox（139 版本）、Safari（技术预览版 125），并是 Interop 2025 的一部分。
+- ⚠️ **无法简单 polyfill**：无法用纯 CSS 的`content-visibility`模拟，因会破坏搜索功能；Nathan Knowler 提供了基于 Shadow DOM 的解决方案。
+- 🎨 **样式未来**：CSS 规范草案提议`::search-text`伪元素，未来或可自定义搜索高亮样式。
+- 🔮 **后续考虑**：搜索匹配后内容保持可见，未来可能需要新的 HTML 提示来控制行为。
+
+### [构建 React 多标签页同步：使用 BroadcastChannel API 的自定义钩子](https://dev.to/idanshalem/building-react-multi-tab-sync-a-custom-hook-with-the-broadcastchannel-api-c6d)
+
+React 应用在多标签页间状态同步的挑战与解决方案：通过 BroadcastChannel API 构建可靠抽象库的实践总结。
+
+- 🚨 **问题背景**：多标签页 React 应用状态不同步（如登出/筛选器失效），源于传统状态管理盲区  
+- 📡 **技术选型**：浏览器原生 BroadcastChannel API 实现无后端标签页通信  
+- ⚠️ **初期陷阱**：简单 useEffect 实现导致监听泄漏、状态滞后等 React 生命周期问题  
+- 🔄 **分布式难题**：消息重复处理（如双重登出），通过消息 ID+ 来源标记解决  
+- ⏳ **生命周期管理**：支持消息过期时间配置 + 定时清理机制  
+- 🚀 **性能优化**：高频消息（如输入事件）自动批处理，关键操作可豁免  
+- 🕵️ **消息溯源**：来源标记 (source) 实现跨标签调试与定向逻辑  
+- 🗃️ **状态精简**：`keepLatestMessage` 模式仅保留最新消息  
+- 🎛️ **消息过滤**：`registeredTypes` 按需订阅减少无效渲染  
+- 🛠️ **控制工具**：暴露手动清除/查询消息的实用方法  
+- 🧩 **工程化封装**：通过 BroadcastProvider 实现全局频道共享  
+- ✅ **质量保障**：完整测试套件模拟多标签页边缘场景  
+- 🌐 **应用场景**：主题同步、全局登出、实时草稿等跨页交互  
+- 🔜 **未来计划**：库的使用教程与高级配置指南  
+
 ## 工具
 
+### [gemini-testing/looks-same：用于比较图像的Node.js库](https://github.com/gemini-testing/looks-same)
+
+这是一个用于比较 PNG 图像的 Node.js 库，专门为视觉回归测试设计，支持多种比较模式和差异分析功能。
+
+- 📚 纯 Node.js 库，专注于 PNG 图像比较并考虑人类颜色感知
+- ⚡ 提供严格模式和容差设置，可灵活调整比较灵敏度
+- 🖱️ 支持忽略文本光标闪烁和抗锯齿差异的智能比较
+- 🎯 能够获取差异边界和聚类信息，精确定位图像差异区域
+- 🖼️ 内置生成差异图像功能，支持多种图像格式输出
+- 🎨 额外提供颜色比较功能，可直接对比 RGB 颜色值
+
 ## 更新
+
+### [Expo SDK 54 测试版现已发布 - Expo 更新日志](https://expo.dev/changelog/sdk-54-beta)
+
+Expo SDK 54 beta 版本现已发布，包含 React Native 0.81 和 React 19.1.0 的核心升级，重点优化了 iOS 预编译框架以提升构建速度，并引入 iOS 26 Liquid Glass 图标支持、Android 边缘到边缘默认启用等新特性。此版本还改进了 Expo 自动链接机制，增强了更新管理和调试体验，同时标志着对传统架构支持的结束。
+
+- 🚀 **Beta 测试周期**：SDK 54 beta 为期两周，开发者可测试新功能并报告问题，期间会持续发布修复和改进。
+- ⚡ **iOS 预编译框架**：React Native 0.81 引入预编译 XCFrameworks，大幅减少构建时间（大型项目预计有明显提升），并为转向 Swift Package Manager 铺平道路。
+- 🎨 **iOS 26 Liquid Glass 支持**：新增 Icon Composer 工具生成 .icon 文件，支持 Liquid Glass 图标和 Swift UI 修饰符，旧版 iOS 自动回退兼容。
+- 📱 **Android 更新**：默认启用边缘到边缘显示，预测性返回手势在新项目中默认开启，目标 API 提升至 Android 16。
+- 🔄 **Expo 更新与 EAS**：支持运行时覆盖更新请求头，useUpdates() 钩子新增下载进度属性，reloadAsync() 可配置重载界面选项。
+- 🔗 **自动链接改进**：统一 Expo 和 React Native 模块的自动链接行为，支持嵌套依赖链接，提升 monorepo 和隔离安装的兼容性。
+- ⚠️ **传统架构弃用**：SDK 54 是最后一个支持传统架构的版本，SDK 55 将仅支持新架构，多数库已转向新架构。
+- 📦 **新包与稳定功能**：expo-file-system/next API 稳定，新增 expo-app-integrity（应用完整性检查）、expo-blob（二进制大对象处理）、expo-sqlite 支持 localStorage API 和 SQLite 扩展。
+- 🖥️ **Apple/Android TV 支持**：实验性支持 Apple TV，完整支持 Android TV，多个 Expo 包添加 TV 兼容性，利用预编译框架减少构建时间。
+- 🛠️ **Expo CLI 增强**：默认启用导入堆栈跟踪和实验性导入支持，集成 lightningcss 自动前缀，默认启用 React Compiler 和 React Native 所有者堆栈。
+- 🧭 **Expo Router v6**：支持链接预览、原生标签页（测试版）、Web 模态框模拟 iPad/iPhone 行为，新增实验性服务器中间件支持。
+- ❌ **弃用与破坏性变更**：弃用 enableProguardInReleaseBuilds、SafeAreaView 和通知配置字段；移除 JSC 官方支持；Reanimated v4 仅支持新架构；expo-file-system 默认 API 变更。
+- ⚙️ **工具版本要求**：最低 Xcode 16.1，Node.js 20.19.x。
+- 🐛 **已知问题**：iOS 18.4+ 模拟器热键不可靠，部分 require 循环仍失败，0.81.0 预编译框架的 Release 版本暂无法提交商店（0.81.1 修复）。
+- 📥 **体验 Beta**：可通过 create-expo-app 新建项目或升级现有项目，安装 Expo Go 测试版进行测试。
+
+### [una.im | 5 个实用的 CSS 函数：运用全新 `@function` 规则](https://una.im/5-css-functions/)
+
+CSS 自定义函数功能已在 Chrome 139 中实现，通过`@function` 规则可创建动态逻辑函数，提升代码组织性和可维护性，目前仅 Chrome 支持该特性
+- 🎯 反值函数：通过--negate() 函数计算值的负数，简化负值计算
+- 🎨 透明度函数：--opacity() 使用相对颜色语法将任意颜色转换为指定透明度的变体
+- 📱 流式排版函数：--fluid-type() 通过 clamp() 实现响应式文字大小，支持标题和正文不同缩放速率
+- 🔄 条件圆角函数：--conditional-radius() 在元素接近视口边缘时自动移除圆角，避免布局异常
+- 📐 布局侧边栏函数：--layout-sidebar() 创建响应式网格布局，小屏幕全宽度，大屏幕固定侧边栏
+- 🌗 明暗主题函数：--light-dark() 扩展原生 light-dark() 功能，支持非颜色属性的主题切换
+
+### [Node.js v22.18.0 LTS 版本发布](https://nodejs.org/en/blog/release/v22.18.0)
+
+Node.js v22.18.0 LTS 版本发布，主要特性包括默认启用 TypeScript 类型剥离功能，无需额外配置即可直接运行.ts 文件，同时包含多项 ES 模块、文件系统、权限控制等核心模块的功能增强和优化。
+
+- 🚀 默认启用 TypeScript 类型剥离功能，无需配置直接运行.ts 文件
+- ⚠️ 该功能仍为实验性，可通过--no-experimental-strip-types 禁用
+- 🔧 新增 import.meta.main 支持，增强 ES 模块功能
+- 📁 文件系统模块优化异步迭代器的事件处理能力
+- 🔐 权限模块支持在 spawn 时传播权限标志
+- 🗃️ SQLite 模块新增 readBigInts 连接选项支持
+- 🌐 URL 模块新增 fileURLToPathBuffer API
+- 👀 监视模式新增--watch-kill-signal 终止信号配置
+- 🧵 Worker 线程支持异步销毁接口
+- 📦 包含 npm 10.9.3 版本更新及多项安全修复
 
 ## 设计
 
 ## AI
 
+### [sim](https://github.com/simstudioai/sim)
+
+一个用于快速构建和部署 AI 智能体工作流的低代码平台。
+
+- 🚀 **项目简介**: Sim 是一个开源的 AI 智能体工作流构建器，提供轻量级、直观的界面，用于快速构建和部署能与各种工具连接的 LLM 应用。
+- ⭐ **项目热度**: 该项目非常受欢迎，拥有 10.2k 星标，1.2k 复刻（Fork）和 65 位关注者（Watch）。
+- 🛠️ **技术栈**: 项目采用现代技术栈，包括 Next.js (App Router)、Bun 运行时、PostgreSQL（带 pgvector 扩展）、Drizzle ORM、Socket.io 等。
+- 🌐 **部署方式**: 支持多种部署方式，包括云托管（sim.ai）、使用 npx 快速启动、Docker Compose 自托管、开发容器（Dev Containers）以及手动设置。
+- 🤖 **本地模型支持**: 特别提供了通过 Ollama 使用本地 AI 模型（如 Gemma3, Llama3.1）的配置方案，无需依赖外部 API。
+- 📦 **核心要求**: 自托管必须安装 PostgreSQL 并启用 pgvector 扩展，以支持 AI 嵌入（如知识库和语义搜索功能）。
+- 🔑 **API 密钥**: 自托管实例需要使用从 Sim 官方平台生成的 Copilot API 密钥，并配置相应的环境变量。
+
+
+
+### [streamdown](https://github.com/vercel/streamdown)
+
+Streamdown 是一个专为 AI 流式传输设计的 Markdown 渲染库，可作为 react-markdown 的直接替代品，能优雅地处理不完整或未终止的 Markdown 块。
+
+- 🚀 **直接替代**：作为 react-markdown 的替代品，专为 AI 流式内容设计。
+- 🔄 **流式优化**：能够优雅地处理和样式化未完成的 Markdown 块（如粗体、斜体、代码、链接和标题）。
+- 🎨 **功能丰富**：支持 GitHub 风格 Markdown（表格、任务列表、删除线）、LaTeX 数学公式（KaTeX）和代码语法高亮（Shiki）。
+- 🛡️ **安全优先**：基于 harden-react-markdown 构建，提供安全的渲染，并允许配置图像和链接 URL 的前缀白名单。
+- ⚡ **性能优化**：采用记忆化渲染以实现高效的更新。
+- 📦 **易于使用**：通过 npm 安装，并需要更新 Tailwind CSS 配置以包含其样式。
+- 🏗️ **项目结构**：采用 monorepo 结构，包含核心组件库和演示网站。
+
+
+### [iannuttall/claude-agents: 用于 Claude Code 的自定义子代理](https://github.com/iannuttall/claude-agents)
+
+
+这是一个关于 claude-agents 代码仓库的 GitHub 页面，包含用于 Claude Code 的自定义子代理工具集。
+
+- 🛠️ 项目提供 7 种专用代理：代码重构、内容写作、前端设计、PRD 撰写、项目规划、安全审计和编程指导
+- 📦 支持两种安装方式：项目特定安装（.claude/agents/）或全局安装（~/.claude/agents/）
+- ⭐ 项目热度较高：获得 1.6k 星标和 223 个 fork，采用 MIT 开源协议
+- 👥 由 2 位贡献者维护，主要作者为 Ian Nuttall（x.com/iannuttall）
+- 📄 仓库结构简单：包含代理文档、LICENSE 和 README 文件
+- 🔧 安装后 Claude Code 会自动检测并在适当时机使用这些代理工具
+
+
+### [tensorlake](https://github.com/tensorlakeai/tensorlake)
+
+TensorLake 提供文档摄取和数据处理工作流服务，能够快速将非结构化文档转换为 AI 就绪数据，并部署可扩展的无服务器数据处理 API。
+
+- 📄 **文档解析**：支持多种格式（PDF、DOCX、电子表格、演示文稿、图像和原始文本），可转换为 Markdown 或通过先进布局检测和表格识别模型提取结构化数据。
+- ⚙️ **解析定制**：提供丰富的解析选项，可配置分块策略、表格输出模式、签名检测以及图表和表格摘要生成。
+- 🧾 **结构化提取**：支持通过 JSON Schema 或 Pydantic 模型从文档中提取特定字段，如从发票中提取发票号码、总金额等关键信息。
+- 🔄 **无服务器工作流**：使用 Python 中的 Durable Functions 构建和部署数据摄取与编排 API，具备自动扩展、从故障检查点恢复及闲置时缩容至零的特性。
+- 🚀 **工作流快速开发**：支持本地运行测试和云端部署，通过装饰器定义函数并使用 Graph 对象构建工作流，轻松实现复杂数据处理逻辑的编排与执行。
+
+
+### [parlant](https://github.com/emcie-co/parlant)
+
+Parlant 是一个旨在解决 LLM 智能体在真实生产环境中行为不可预测、易产生幻觉等核心痛点的开发框架。它通过自然语言定义行为准则来保证智能体的规则遵循，而非依赖复杂且脆弱的系统提示词。
+
+- 🎯 **核心问题**：传统 AI 智能体在测试中表现良好，但面对真实用户时常常忽略系统提示、产生幻觉且无法稳定处理边缘情况。
+- ⚡ **解决方案**：采用“教导原则而非脚本”的方法，通过 `create_guideline` 函数以自然语言定义条件与行动，确保智能体的行为合规性与可预测性。
+- 🚀 **快速上手**：提供极简的 Python SDK，开发者可通过简单的 pip 安装和几行代码（如定义一个天气查询工具并创建行为准则）在 60 秒内启动一个具备规则保证的智能体。
+- 🛡️ **企业级特性**：内置对话旅程引导、动态准则匹配、可靠工具集成、对话分析、迭代优化、防护栏及完整的决策可解释性等功能。
+- 🌐 **广泛应用**：特别适合对合规性要求高的领域，如金融服务、医疗健康、电子商务和法律科技，已被 5000 多名开发者使用。
+
+
 ## 其他
+
+### [一个半月高强度 Claude Code 使用后感受](https://onevcat.com/2025/08/claude-code/)
+
+六月中旬，作者订阅了 Claude Max，体验了 AI 辅助编程的高效迭代，但也面临使用限制和技术瓶颈的挑战，探索了替代方案后仍认为 Claude Code（CC）目前无可替代。  
+
+- 🚀 **生产力爆炸**：AI 辅助开发让产品迭代速度大幅提升，传统手工打磨方式被快速迭代取代。  
+- 🔄 **编辑器 AI 的局限**：传统编辑器 AI 缺乏全局视野，而命令行工具 CC 能更深入理解整个项目。  
+- 🛠️ **CC 的优势与边界**：擅长代码分析、框架搭建，但不适合精确重构或冷门语言开发。  
+- 📝 **规划与实践的平衡**：Plan Mode 适合经验丰富的开发者，而探索性项目更适合“先干起来”。  
+- 🔧 **小步迭代更优**：一次性生成大量代码易失控，分模块小步推进更可控、易调试。  
+- 🧩 **上下文管理技巧**：任务拆解、Subagent 和手动压缩帮助应对 CC 的 200k 上下文限制。  
+- ⚙️ **高效工具链**：善用 Command、Hooks 和 MCP 扩展 CC 能力，提升开发效率。  
+- 🗣️ **语音输入新体验**：语音转译工具让需求描述更自然，中英文混合处理流畅。  
+- ⏳ **性能与限制**：Opus 模型效果优于 Sonnet，但资源紧张可能导致体验下降，需错峰使用。  
+- 💡 **未来展望**：AI 辅助编程是历史进程，需平衡效率与思考，避免被工具裹挟。
