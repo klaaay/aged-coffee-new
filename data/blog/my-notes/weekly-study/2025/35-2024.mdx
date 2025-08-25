@@ -1,0 +1,43 @@
+---
+title: 2025-第三十五周
+date: '2025-08-25'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [一个不会折断的时钟](https://ethanniser.dev/blog/a-clock-that-doesnt-snap/)
+
+静态预渲染页面在注水（hydration）过程中，依赖请求时信息的 UI 组件（如实时时钟）会因初始状态过时或空白导致显示闪烁。虽然服务端渲染（SSR）能部分解决此问题，但无法处理客户端独有数据（如本地存储）。通过内联脚本标签在 HTML 解析后立即修正元素状态，可避免用户看到错误初始状态，但需注意保持组件与脚本间逻辑同步，并可能需配合 React 状态初始化以避免注水错误。
+
+- ⚡ 静态预渲染页面在注水时，依赖请求时信息的 UI 组件（如时钟）会出现初始状态过时或空白的问题
+- 🚫 服务端渲染（SSR）无法完全解决此问题，因其无法访问客户端独有数据（如 localStorage）
+- 🛠️ 通过内联脚本标签在 HTML 解析后立即修正元素状态，可避免用户看到初始闪烁
+- ⚠️ 需注意 React 注水错误：脚本与组件状态可能存在微小时间差，可通过初始化函数读取 DOM 状态解决
+- 🔄 组件逻辑与脚本逻辑必须严格同步，但无法直接共享函数（脚本标签无法导入模块）
+- 🤔 框架层面可能需提供更优解决方案，目前内联脚本是有效但不够优雅的临时方案
+
+## 工具
+
+### [stork](https://github.com/kevinschaffter/stork)
+
+Stork Tools 提供了一套基于 Zod 模式、类型安全且经过验证的存储包装器集合，为跨平台存储 API 开发带来运行时验证、自动类型推断和更优的开发体验。
+
+- 🛠️ **核心功能**：提供类型安全、运行时验证、严格模式、可配置的错误处理、零运行时开销等，并保持与底层存储相同的 API，支持渐进式采用。
+- 📱 **@stork-tools/zod-async-storage**：专为 React Native 和 Expo 应用设计，包装了 @react-native-async-storage/async-storage。
+- 🌐 **@stork-tools/zod-local-storage**：专为 Web 和浏览器应用设计，包装了浏览器的 localStorage API。
+
+## 更新
+
+## 设计
+
+## AI
+
+## 其他
+
