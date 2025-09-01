@@ -12,6 +12,29 @@ summary: ''
 
 ## 技术
 
+### [认识神级 MCP 工具系列--用 anyquery 和数据库交互](https://wiki.eryajf.net/pages/dc1861/#%E9%99%84%E8%A8%80%E5%89%8D%E7%BD%AE)
+
+本文介绍了 MCP 工具 anyquery，它支持通过 SQL 语法查询多种数据源，并可作为 MCP 服务器与大模型交互，提升 AI 编码和数据操作效率。
+
+- 🛠️ **工具功能**：anyquery 支持 SQL 查询多种数据库和三方数据源，如 MySQL、GitHub 等，并可通过插件扩展。
+- ⚠️ **使用注意**：与 MySQL 交互时性能可能不佳（简单查询需近两分钟），但 SQLite 操作正常。
+- 🖥️ **安装方式**：支持 Mac（brew）、APT 和 YUM/DNF 等多种平台安装。
+- 🔍 **查询演示**：作为独立工具时可直接查询 SQLite 等数据库。
+- 🤖 **MCP 集成**：可作为 MCP 服务器与 Claude Code 或 Cherry Studio 等工具集成，通过自然语言对话实现数据库增删改查。
+- 🚀 **实践案例**：演示了在 Cherry Studio 和 Claude Code 中配置和使用 anyquery 进行数据查询和修改的操作。
+- 💡 **价值总结**：MCP 工具增强了 AI 与数据的交互能力，提升了开发效率和准确性，但需注意数据权限管理。
+
+### [interpolate-size 属性是渐进增强的一个绝佳范例](https://piccalil.li/blog/the-interpolate-size-property-is-a-great-example-of-progressive-enhancement/)
+
+本文讨论了 CSS 新特性 interpolate-size 的当前状态及其应用，重点介绍了如何通过渐进增强实现高度自动过渡动画。
+
+- 🚧 **浏览器支持有限**：interpolate-size 属性目前仅 Chromium 内核浏览器支持，距离全浏览器普及尚需时日
+- 🎯 **解决历史痛点**：该特性实现了开发者期盼 18 年的功能——对 height/width 属性设置 auto 或 min-content 等关键字值的平滑过渡动画
+- 💡 **渐进增强方案**：通过@supports 特性查询和 CSS 层叠机制，现代浏览器展示动画效果，旧版浏览器仍保持基础功能
+- 📐 **智能高度计算**：使用 lh 单位结合自定义属性动态计算闭合状态高度，配合 padding 实现精确尺寸控制
+- 🔧 **代码示例**：提供可直接复用的代码片段，支持多 details 元素的手风琴效果，通过 name 属性实现分组联动
+- 🌐 **优雅降级策略**：非支持浏览器自动获得标准体验，无需额外加载 polyfill，体现 CSS 固有的渐进增强优势
+
 ### [一个不会折断的时钟](https://ethanniser.dev/blog/a-clock-that-doesnt-snap/)
 
 静态预渲染页面在注水（hydration）过程中，依赖请求时信息的 UI 组件（如实时时钟）会因初始状态过时或空白导致显示闪烁。虽然服务端渲染（SSR）能部分解决此问题，但无法处理客户端独有数据（如本地存储）。通过内联脚本标签在 HTML 解析后立即修正元素状态，可避免用户看到错误初始状态，但需注意保持组件与脚本间逻辑同步，并可能需配合 React 状态初始化以避免注水错误。
@@ -25,6 +48,56 @@ summary: ''
 
 ## 工具
 
+### [soundz](https://github.com/kazewaze/soundz)
+
+这是一个名为 Soundz 的 React 声音效果包装库的 GitHub 仓库概览。
+
+- 🎵 一个为 React 构建的、使用 TypeScript 开发并由 Howler.js 驱动的音效包装组件库。
+- ✨ 具备动画效果、轻量、高度可定制、完全可访问且开箱即用。
+- 🚀 提供 `SoundzProvider` 上下文和 `Soundz` 组件，可轻松为元素添加点击、悬停或键盘触发的音效。
+- ⚙️ 支持大量可配置属性，包括预定义音效、自定义音效 URL、悬停音效、键盘快捷键、触觉反馈、工具提示、主题和图标等。
+- 🎧 内置丰富预置音效，如 pop、error、drums、victory 等。
+
+
+
+### [prisma-zod-generator](https://github.com/omar-dulaimi/prisma-zod-generator)
+
+Prisma Zod Generator 是一个为 Prisma 模型自动生成 Zod 验证模式的工具，旨在提供零样板代码的端到端类型安全。
+
+- 📦 自动从 Prisma 模型生成 Zod 模式，支持输入、结果和纯模型等多种变体
+- ⚡ 提供快速最小化模式和选择性过滤功能，以生成所需模式的子集
+- 🔧 支持丰富的配置选项，如 `zodImportTarget` 控制 Zod 导入版本，`dateTimeStrategy` 配置日期时间策略
+- 📚 提供全面的文档、配置参考和示例配方（recipes），方便用户快速上手
+- 🧪 包含完善的测试套件，支持多数据源提供商，确保代码质量和稳定性
+- 🔄 与现代工具链集成，使用 Prettier、ESLint、Husky 等维护代码风格和提交规范
+
+### [lisere](https://github.com/madebyankur/lisere)
+
+Liseré 是一款轻量级且可组合的 React 文本高亮组件。
+
+### [konsta](https://github.com/konstaui/konsta)
+
+一款基于 Tailwind CSS 的精美移动端 UI 组件库，为 React、Vue 和 Svelte 提供了遵循 iOS 和 Material Design 设计规范的开箱即用组件。
+
+### [8bitcn-ui](https://github.com/shadcn/8bitcn-ui)
+
+这是一个名为 8bitcn-ui 的开源 UI 组件库，它复刻自 TheOrcDev 的仓库，提供具有复古风格且易于使用的组件。
+
+### [overtype](https://github.com/panphora/overtype)
+
+OverType 是一个轻量级 Markdown 编辑器库，采用独特的不可见文本区域覆盖技术，实现完美的所见即所得对齐效果。它体积小巧，功能齐全，支持多种框架，并提供出色的移动端体验。
+
+- 👻 **隐形文本区域覆盖** - 在样式化预览层上叠加透明输入层，实现无缝编辑体验
+- 🎨 **全局主题支持** - 内置 Solar（亮色）和 Cave（暗色）主题，适用于所有实例
+- ⌨️ **键盘快捷键** - 支持常用 Markdown 快捷操作（如 Cmd/Ctrl+B 加粗）
+- 📱 **移动端优化** - 响应式设计，包含移动端特定样式
+- 🔄 **DOM 持久化感知** - 可从现有 DOM 恢复（完美兼容 HyperClay 等平台）
+- 🚀 **轻量级** - 压缩后仅约 82KB
+- 🎯 **可选工具栏** - 提供简洁、极简的工具栏，包含所有基本格式化功能
+- ✨ **智能快捷键** - 键盘操作可保留文本选区
+- 📝 **智能列表延续** - GitHub 风格的自动列表延续（按 Enter 键）
+- 🔧 **框架无关** - 可与 React、Vue、原生 JS 等众多框架配合使用
+
 ### [stork](https://github.com/kevinschaffter/stork)
 
 Stork Tools 提供了一套基于 Zod 模式、类型安全且经过验证的存储包装器集合，为跨平台存储 API 开发带来运行时验证、自动类型推断和更优的开发体验。
@@ -35,9 +108,86 @@ Stork Tools 提供了一套基于 Zod 模式、类型安全且经过验证的存
 
 ## 更新
 
-## 设计
+### [feat: add Ant Design to llms.txt hub #134 ](https://github.com/thedaviddias/llms-txt-hub/pull/134)
+
+antd 服务站点支持 llms.txt 资源中心和 llms-full.txt 资源中心
+
+### [RFC: Context selectors 119 ](https://github.com/reactjs/rfcs/pull/119)
+
+该 RFC 提议引入一个新的`useContextSelector`钩子 API，允许用户从 Context 值中选择特定部分而非整个值。当 Context 值变化但所选部分未变时，组件不会更新。这一 API 旨在提升性能、解决并发 React 兼容性问题，并可能替代未发布的`observedBits`机制。它依赖于惰性 Context 传播的改进来实现一致性和性能优化。尽管社区提出了替代方案如`useIsolation`或依赖 React 编译器进行记忆化，但作者认为`useContextSelector`能更直接地解决问题，提供显著的性能提升和更简洁的代码结构。
+
+- 🚀 **新 API 提案**：引入`useContextSelector`钩子，允许选择 Context 的特定部分，避免不必要的组件更新。
+- ⚡ **性能优化**：通过惰性 Context 传播机制，确保只有所选部分变化时才触发更新，提升应用性能。
+- 🔄 **替代方案**：可能取代未发布的`observedBits`优化机制，提供更一致的开发体验。
+- 🧩 **兼容性与简化**：解决外部状态库与并发 React 的兼容问题，减少用户代码复杂性和体积。
+- 💡 **动态选择支持**：支持基于 props 的动态选择器，但需依赖 Context 传播的惰性执行以确保安全。
+- 🌐 **社区反馈**：讨论了类似 API（如`slice`方法）和替代方案（如`useIsolation`），但作者认为`useContextSelector`更直接有效。
+- 🤖 **编译器辅助**：React 编译器通过记忆化减少子组件渲染，但`useContextSelector`能在源头避免组件执行，提供更根本的优化。
+- 📦 **数据模型建议**：建议避免单一大型状态块，使用规范化存储和选择器以实现更高效的更新管理。
+
+### [Node.js](https://nodejs.org/en/blog/release/v22.18.0)
+
+Node.js v22.18.0 LTS 版本发布，主要特性包括默认启用 TypeScript 类型剥离功能，并带来多项模块、文件系统、权限管理等核心功能更新。
+
+- 🚀 默认启用实验性 TypeScript 类型剥离功能，无需配置可直接运行.ts 文件
+- ⚠️ 类型剥离功能仍存在语法限制，可通过--no-experimental-strip-types 禁用
+- 🔧 新增 import.meta.main 支持，改进 ES 模块功能
+- 📁 文件系统优化：增强 fs-events 异步迭代器处理能力，改进目录操作
+- 🔐 权限管理增强：支持 addon 权限检查，完善 spawn 操作的权限标志传播
+- 💾 SQLite 扩展：新增 readBigInts 连接选项支持
+- 🌐 URL 模块新增 fileURLToPathBuffer API
+- 👀 监视模式：新增--watch-kill-signal 终止信号配置选项
+- 🧵 Worker 线程支持异步销毁接口
+- 📦 依赖项更新：npm 升级至 10.9.3，SQLite 升级至 3.50.2
+
+### [ESLint v9.34.0 新特性：多线程代码检查 - ESLint - 可插拔 JavaScript 代码检查工具](https://eslint.org/blog/2025/08/multithread-linting/)
+
+ESLint v9.34.0 正式推出多线程检查功能，通过利用多核 CPU 并行处理文件，显著提升大型项目的代码检查速度。
+
+- 🚀 支持多线程检查，可同时处理多个文件，大幅减少大型项目的检查时间
+- ⚙️ 提供三种并发模式：数字指定线程数、自动模式（auto）以及关闭多线程（off）
+- 📊 测试显示性能提升显著，早期测试者报告速度提升最高达 3.01 倍
+- 🔧 自动模式根据 CPU 核心数和文件数量智能选择线程数，默认为 CPU 核心数的一半
+- ⚠️ 需要注意选项的可克隆性限制，非可克隆值（如函数）会导致错误
+- 📦 引入选项模块（Options Modules）解决克隆限制问题，支持通过模块导入配置
+- 🖥️ 同时支持 CLI 和 Node.js API 使用多线程功能
+- 💡 建议通过基准测试选择最佳线程数，并结合缓存功能进一步提升性能
+- 🌐 在 CI 和容器环境中可能需要重新测试以确认性能提升效果
 
 ## AI
 
+### [bytebot](https://github.com/bytebot-ai/bytebot)
+
+Bytebot 是一款桌面级 AI 代理，它拥有一个完整的虚拟桌面环境，使其能够像人类一样操作计算机，执行跨应用程序的复杂多步骤任务。
+
+- 🖥️ **独立的虚拟桌面**：Bytebot 运行在完整的 Ubuntu Linux 桌面环境中，可自主使用任何应用程序（浏览器、邮件客户端、Office、IDE 等）。
+- 🤖 **自然语言任务**：用户只需用自然语言描述任务（如“下载所有供应商发票并整理”），它便能理解并自动执行。
+- 🔐 **完整的自动化能力**：支持安装密码管理器处理身份验证（包括 2FA），能下载、读取和处理文件（如 PDF、电子表格），并完成跨程序的多步骤工作流。
+- ⚡ **快速部署**：支持通过 Railway 一键部署或使用 Docker Compose 在本地快速搭建，只需提供 AI 供应商（如 Anthropic、OpenAI）的 API 密钥即可运行。
+- 🛠️ **程序化控制**：提供 REST API，允许通过代码创建任务或直接控制桌面（如截图、模拟鼠标点击）。
+- 🔒 **自托管与数据隐私**：所有任务均在用户自己的基础设施上运行，保障数据隐私和安全，并可灵活定制桌面环境。
+- 🌐 **多 AI 提供商支持**：通过 LiteLLM 集成支持 Azure OpenAI、AWS Bedrock、Ollama 本地模型等 100 多个 AI 提供商。
+- 🚀 **企业级应用**：适用于自动化业务流程（如发票处理、数据同步）、研发测试、研究与分析等多种场景。
+
 ## 其他
 
+
+有一本畅销书曾经提出"兴奋效应"（hormesis）这个概念。它指的是少量的压力或不适感，会让我们变得更强大。
+
+练习举重，肌肉可以增长。
+接种疫苗，免疫力可以增加。
+承担失败的风险，信心会增长。
+通过解决难题，创造力得以扩展。
+这种"兴奋效应"也适用于大脑，经常思考困难的问题，让思想经受考验，你才能学会思考。
+
+但是，现在有了 AI，很多人就把问题交给 AI 去思考，让自己的大脑歇着。我担心，久而久之，我们会一步步丧失思考能力，直至变成生物傀儡。
+
+最近有一项研究，科学家让参与者完全依靠 AI 来写论文，结果 83％的人在写完后不久，无法引用自己论文中的任何内容。即使稍后让这些人重新独立写作论文，他们也会表现出大脑神经活动减少和无法完全投入思考，总是习惯性寻求 AI 的帮助。
+
+研究人员创造出了"认知债务"这个词来描述这种现象：AI 确实带来了便利，但代价是牺牲我们的思考能力。
+
+机器借给你脑力，你需要付出利息----你自身的思维能力。
+
+我的建议是，明智地使用 AI，不要让它帮你解数学方程式，而要让它查看你的答案，来解释你可能错在哪里。你的原则是坚持独立思考，在这个基础上再加入 AI。
+
+思考可能会让你觉得很累、不舒服，但它是你大脑的训练场，不适感让你的思考变得更强大。
