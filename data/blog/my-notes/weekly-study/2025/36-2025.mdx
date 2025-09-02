@@ -12,6 +12,21 @@ summary: ''
 
 ## 技术
 
+### [大规模自托管 Next.js 完整指南](https://dlhck.com/thoughts/the-complete-guide-to-self-hosting-nextjs-at-scale)
+
+本文全面介绍了大规模自托管 Next.js 的生产环境部署挑战与解决方案，重点针对多副本水平扩展场景下的核心问题。
+
+- 🐳 必须改造官方 Dockerfile：添加健康检查实现零停机部署，避免重启循环和僵尸容器
+- 🌐 反向代理需禁用响应缓冲：配置 X-Accel-Buffering:no 确保 React Suspense 和流式响应正常工作
+- 🧠 分布式缓存必须使用 Redis：替代本地文件缓存，解决多副本数据不一致问题
+- 🖼️ 图像优化需外部处理：采用 ImageKit 或自托管 IPX 服务，避免重复处理造成的资源浪费
+- 📦 CDN 必须遵循 Cache-Control：根据动态路由、认证状态等头部正确缓存内容
+- 🔑 服务器动作需固定加密密钥：设置 NEXT_SERVER_ACTIONS_ENCRYPTION_KEY 避免部署版本不一致错误
+- ⚠️ 注意 monorepo 陷阱：缓存处理器文件重复会导致连接失败，需使用绝对路径和 webpack 插件
+- 📊 性能优化关键：监控 Redis 内存使用，控制缓存条目大小（建议 < 1MB），预处理数据再缓存
+- 🔒 安全注意事项：服务器动作应视为公开 API 端点，必须实施身份验证和授权检查
+- ✅ 生产清单：包含负载测试、副本健康监控、缓存命中率告警和回滚策略验证
+
 ## 工具
 
 ### [fastmcp](https://github.com/punkpeye/fastmcp)
