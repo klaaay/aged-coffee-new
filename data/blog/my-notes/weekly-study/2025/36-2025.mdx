@@ -12,6 +12,72 @@ summary: ''
 
 ## 技术
 
+### [使用 Vite 构建 SSR：自定义 getStaticProps 替代方案](https://www.patron.com/blog/post/vite-ssr-getstaticprops-replacement/)
+
+本文详细介绍了如何从 Next.js 迁移到自定义 Vite SSR 设置，重点替换了 `getStaticProps` 和 `getServerSideProps` 功能。通过构建 Express 服务器、Vite 集成、自定义数据加载函数以及利用 React 18 流式渲染，实现了一个高性能、灵活且可控的服务器端渲染方案。
+
+- 🚀 **迁移挑战与动机**  
+  主要挑战是替换 Next.js 的 `getStaticProps` 和 `getServerSideProps`，但自定义 Vite SSR 提供了完全控制、更优性能、架构灵活性和 React 18 流式支持。
+
+- 🏗️ **系统架构组成**  
+  系统包含四个核心部分：Express 服务器、服务器入口点（entry-server.tsx）、客户端入口点（entry-client.tsx）以及自定义数据加载函数 `loadDataForUrl`。
+
+- ⚙️ **Express 服务器设置**  
+  服务器根据环境（开发或生产）差异化处理请求，开发时使用 Vite 开发服务器，生产时服务预构建的静态资源。
+
+- 🔄 **Vite 开发服务器集成**  
+  开发模式下利用 Vite 中间件实现热模块替换，生产模式下使用压缩和静态文件服务来优化性能。
+
+- 📦 **自定义数据加载函数**  
+  `loadDataForUrl` 函数根据 URL 模式从数据库、内部 API 或请求中获取数据，完全替代了 Next.js 的数据获取方法。
+
+- 🌊 **流式 SSR 渲染管道**  
+  流程包括：加载数据、将数据安全序列化到 HTML 中，以及使用 React 18 的 `renderToPipeableStream` 进行流式渲染以优化性能。
+
+- ⚛️ **React 服务端与客户端入口**  
+  服务器入口使用 `renderToPipeableStream` 渲染应用，客户端入口使用 `hydrateRoot` 进行水解，并均接收初始数据。
+
+- 📝 **在应用中使用服务器数据**  
+  React 应用通过 `initialData` 属性接收服务器加载的数据，可用于直接渲染或管理客户端状态。
+
+- 📁 **Vite 配置与构建脚本**  
+  需要配置 Vite 以支持 React 和 SSR，并设置构建脚本分别构建客户端和服务端包。
+
+- 🧩 **高级模式与错误处理**  
+  支持基于路由的正则匹配加载数据，并在客户端实现错误边界与加载状态，以提升用户体验。
+
+- 🚄 **性能优化策略**  
+  可通过缓存策略（如为数据设置短期缓存）和 React 18 流式 SSR（提升 TTFB 和渐进加载）来优化性能。
+
+- 🐳 **部署与环境变量**  
+  需要正确配置环境变量（如 API URL、数据库连接和缓存开关），并提供 Dockerfile 示例以便于部署。
+
+- 📊 **与 Next.js 的对比**  
+  自定义方案在开发速度、构建速度和灵活性上更优，但复杂度稍高，Next.js 则拥有更庞大的生态系统。
+
+- ✅ **方案优势与总结**  
+  该方案提供了优异的性能、完整的控制权和良好的开发体验，适用于从简单博客到复杂应用的各种场景，并已在 Patron 中实践验证。
+
+### [每位开发者都应尝试的顶级 Chrome API](https://anchorbrowser.io/blog/top-chrome-apis-every-developer-should-try)
+
+Chrome API 为开发者提供了强大的浏览器扩展开发能力，通过核心接口实现高效、跨设备且安全的用户体验增强。
+
+- 🚀 Chrome API 是构建浏览器扩展的核心，支持创建功能丰富的应用级工具
+- ⚡ 提升开发效率，减少重复代码，内置标签管理、存储和通知等功能
+- 🔄 chrome.storage.sync 实现跨设备数据同步，提升用户体验连续性
+- 🔒 内置权限和沙箱机制，保障扩展安全性
+- 🌐 API 设计兼容多浏览器（Firefox/Edge/Safari），便于技能迁移
+- 📑 chrome.tabs 支持程序化标签管理，可实现会话保存和恢复功能
+- 💾 chrome.storage 提供数据持久化存储，支持本地和同步存储模式
+- 🛠️ chrome.scripting 允许安全注入脚本修改页面内容
+- ⏰ chrome.alarms 提供可靠的任务调度，替代传统定时器
+- 🖱️ chrome.contextMenus 可扩展右键菜单，添加上下文功能选项
+- 🔔 chrome.notifications 实现非侵入式用户通知
+- 🔗 chrome.runtime 管理扩展组件间通信和生命周期事件
+- 🛡️ chrome.declarativeNetRequest 提供隐私安全的网络请求控制
+- 📌 chrome.sidePanel 创建侧边栏界面，增强浏览体验
+- 📚 chrome.bookmarks 支持书签的全面管理操作
+
 ### [大规模自托管 Next.js 完整指南](https://dlhck.com/thoughts/the-complete-guide-to-self-hosting-nextjs-at-scale)
 
 本文全面介绍了大规模自托管 Next.js 的生产环境部署挑战与解决方案，重点针对多副本水平扩展场景下的核心问题。
@@ -27,7 +93,32 @@ summary: ''
 - 🔒 安全注意事项：服务器动作应视为公开 API 端点，必须实施身份验证和授权检查
 - ✅ 生产清单：包含负载测试、副本健康监控、缓存命中率告警和回滚策略验证
 
+### [Next.js 令人抓狂 - Dominik 的博客](https://blog.meca.sh/3lxoty3shjc2z?auth_completed=true)
+
+作者分享在 Next.js 中配置生产环境日志的挫败经历，指出框架设计缺陷导致开发效率低下，并对比 SvelteKit 提出批评。
+
+- 😠 作者因 Next.js 的日志配置问题感到愤怒，决定撰写博客宣泄情绪
+- 🐛 Next.js 默认只在开发环境启用日志，生产环境需自行配置且过程复杂
+- 🤦 中间件功能设计存在严重缺陷：仅支持 4 个参数传递且无法链式调用
+- 🔄 尝试使用 AsyncLocalStorage 实现请求追踪时遭遇运行时兼容性问题
+- 📝 最终被迫通过请求头传递 requestId 的迂回方案实现基础日志功能
+- 🚫 自定义服务器方案同样失效，AsyncLocalStorage 在页面组件中无法获取
+- ⚖️ 对比 SvelteKit 的 locals 设计，批评 Next.js 缺乏合理的上下文传递机制
+- 🐢 指责 Next.js 团队对 GitHub issues 响应迟缓，大量问题多年未解决
+- 💔 总结表示不再愿意使用 Next.js，认为其存在大量边界案例和设计缺陷
+
 ## 工具
+
+### [mediabunny](https://github.com/Vanilagy/mediabunny)
+
+Mediabunny 是一个纯 JavaScript/TypeScript 编写的高性能媒体工具库，专为浏览器和 Node.js 环境设计，提供媒体文件的读取、写入、转换及编解码等一站式解决方案，具有零依赖、高性能和高度可摇树优化等特点。
+
+- 📦 **核心功能**：支持读取和写入 MP4、WebM、MP3 等多种媒体格式，内置 25+ 音视频编解码器，并支持基于 WebCodecs 的硬件加速。
+- ⚡ **高性能与精确性**：提供微秒级精度的读写操作，支持内存高效的流式 I/O 处理大文件。
+- 🌐 **跨平台运行**：可在现代浏览器和 Node.js 环境中使用，完全基于 TypeScript 实现，无任何外部依赖。
+- 🧩 **高度模块化**：极度可摇树优化，最小压缩后仅 5kB，确保用户只引入所需功能。
+- 🔄 **媒体转换与处理**：提供转码、转封装、裁剪、旋转、重采样等丰富的媒体处理 API。
+- 📖 **完善的文档与示例**：提供详细的使用文档、代码示例和开发指南，支持快速上手和深度定制。
 
 ### [fastmcp](https://github.com/punkpeye/fastmcp)
 
@@ -46,9 +137,53 @@ FastMCP 是一个基于 TypeScript 的框架，用于构建支持客户端会话
 
 ## 更新
 
+### [重混新构想：V3 版将弃用 React，转向 Preact 分支 - InfoQ](https://www.infoq.com/news/2025/08/remix-run-v3-drops-react/)
+
+Remix 团队宣布正在开发 v3 版本，将放弃 React 转而采用 Preact 分支，以掌握全栈控制权并减少关键依赖。新版本遵循四大原则：模型优先开发、优先使用 Web API、运行时优于构建步骤、避免依赖。开发者社区反应两极，部分人赞赏其革新精神，部分人质疑模型优先原则受 Shopify 影响。预览版尚未发布，进展将在 Remix Jam 会议公布。
+
+- 🚀 Remix v3 将用 Preact 分支替代 React，实现全栈自主控制
+- 🧩 新版本四大原则：模型优先/Web API 优先/轻构建/去依赖化
+- 🌐 开发者评价分化：有人赞赏革新勇气，有人质疑 AI 优先策略
+- 🏢 Shopify 收购背景引发对"模型优先"原则的猜测
+
 ## 设计
 
 ## AI
+
+### [cc-switch](https://github.com/farion1231/cc-switch)
+
+CC Switch 是一个用于管理和切换 Claude Code 与 Codex 不同供应商配置的开源桌面应用程序，采用 Tauri 2.0 框架开发，具有轻量快速、界面美观的特点。
+
+- 🚀 **技术架构迁移** - 从 Electron 完全迁移到 Tauri 2.0，应用体积减少 85%，启动速度提升 10 倍
+- 🔄 **双平台支持** - 同时支持 Claude Code 和 Codex 的供应商切换与配置管理
+- 🎯 **一键切换** - 提供预设供应商配置（Qwen coder、kimi k2、智谱 GLM 等），只需填写 API Key 即可快速配置
+- 📁 **本地存储** - 所有配置信息存储在本地 `~/.cc-switch/config.json`，确保数据隐私安全
+- 🖥️ **跨平台兼容** - 支持 Windows、macOS 和 Linux 主流操作系统
+- ⚙️ **开发友好** - 基于 React 18 + TypeScript + Rust 技术栈，提供完整的开发环境和构建脚本
+
+### [serena](https://github.com/oraios/serena)
+
+Serena 是一个强大的、免费开源的编码智能体工具包，它能将大型语言模型（LLM）转变为一个功能齐全、可直接在代码库上工作的智能体。它通过提供类似 IDE 的语义化代码检索和编辑工具，极大地提升了 LLM 在处理代码时的效率和精准度。
+
+- 🚀 **核心能力**：可将任何 LLM 转变为功能齐全的编码智能体，直接操作你的代码库。
+- 🛠️ **独特优势**：不绑定特定 LLM、框架或界面，使用方式高度灵活；提供类似 IDE 的语义级代码检索和编辑工具。
+- 💰 **免费开源**：完全免费，旨在免费增强现有 LLM 的编码能力。
+- 🔍 **工作原理**：基于语言服务器协议（LSP），提供符号级别的精准代码查找（如 `find_symbol`）和编辑（如 `insert_after_symbol`）能力，避免低效的全文件读取和字符串替换。
+- 🤖 **集成方式**：可通过模型上下文协议（MCP）与多种客户端集成，包括 Claude Code、Claude Desktop、终端客户端（如 Cursor、VSCode）以及本地 GUI（如 OpenWebUI）。
+- 🌐 **语言支持**：支持众多编程语言（如 Python, JavaScript, Go, Rust, Java 等），并可轻松扩展支持更多语言。
+- 📊 **实际效果**：用户反馈其能显著提升智能体在复杂代码库中的工作效率，堪称“游戏规则改变者”。
+- ⚙️ **高度可定制**：可通过上下文（Contexts）和模式（Modes）调整行为，并支持自定义工具和配置。
+- ⚠️ **注意事项**：在处理极小型项目或从零开始时优势不明显；建议在项目结构清晰、有良好测试覆盖率的代码库中使用以获得最佳效果。
+
+### [Awesome-Nano-Banana-images](https://github.com/PicoTrex/Awesome-Nano-Banana-images)
+
+这是一个收集和展示 Google 图像生成模型 Nano-Banana 在各种任务场景下应用案例的 GitHub 项目仓库。它包含了大量由社区用户分享的、结合了具体提示词和输入输出示例的创意用法。
+
+- 🍌 **项目介绍**: 一个名为 "Awesome-Nano-Banana-images" 的 GitHub 代码库，专门收集和展示 Google Nano-Banana 模型的惊艳图像生成与编辑案例。
+- ⭐ **项目热度**: 该项目获得了较高的社区关注度，拥有 1.8k stars 和 190 forks，显示出其受欢迎程度。
+- 📚 **内容来源**: 案例主要来源于 Twitter/X、小红书等社交媒体平台，由社区用户创作和分享。
+- 🖼️ **案例丰富**: 提供了多达 47 个详细的使用示例，涵盖了从角色设计、照片修复、风格转换、到信息图生成等极其广泛的应用场景。
+- 🛠️ **实用指南**: 每个例子都包含了所需的输入类型（如上传图片）、具体的提示词（Prompt）以及生成的输出效果，具有很高的参考和学习价值。
 
 ### [claude-code-memory-bank](https://github.com/hudrazine/claude-code-memory-bank)
 
@@ -62,3 +197,17 @@ Claude Code Memory Bank 是一个专为 Claude Code 设计的结构化记忆管�
 - 🌐 **开源与可扩展**：基于 Unlicense 许可开放使用，支持社区贡献和改进，可自定义命令与工作流。
 
 ## 其他
+
+一项美国研究发现，AI 对于非名校的毕业生就业冲击最大，对哈佛、MIT 之类的名校毕业生的就业没有什么冲击。
+
+AI 加剧了普通学校的贬值。
+
+-- 《AI 对就业市场的冲击》
+
+---
+
+SEO（搜索引擎优化）的游戏早就结束了。
+
+大​部​分​人还​在​拼​命​追求 Google 排名，但​用户其实已经离开了 Google。现在只有 27% 的搜索发生在那里，剩下 73% 都发生​在 TikTok、Amazon、Reddit、YouTube、甚​至 ChatGPT。
+
+-- Neil Patel，美国畅销书作者
