@@ -78,6 +78,19 @@ Chrome API 为开发者提供了强大的浏览器扩展开发能力，通过核
 - 📌 chrome.sidePanel 创建侧边栏界面，增强浏览体验
 - 📚 chrome.bookmarks 支持书签的全面管理操作
 
+### [用 JavaScript Beacon 说再见 | Hemath 的博客](https://hemath.dev/blog/say-bye-with-javascript-beacon/)
+
+本文介绍了在用户离开网页时向服务器发送数据的可靠方法，重点推荐使用 JavaScript 的 Beacon API 替代传统的 XMLHTTPRequest 方案。
+
+- 🚫 传统 XMLHTTPRequest 在 beforeunload 事件中发送请求不可靠，可能被浏览器取消
+- ⚡ 浏览器为避免用户体验延迟，不会等待 JavaScript 完全执行
+- 📨 Beacon API 采用 fire-and-forget 机制，请求发送后立即结束执行
+- 🎯 使用方法简单：navigator.sendBeacon(url, data)
+- 📏 限制：仅支持 POST 请求且数据量较小
+- 💡 适用场景：页面关闭时的数据分析、自动登出等
+- 🔄 也可用于常规数据同步，如实时保存用户输入
+- 📊 特别适合不需要等待响应的场景（如数据分析）
+
 ### [大规模自托管 Next.js 完整指南](https://dlhck.com/thoughts/the-complete-guide-to-self-hosting-nextjs-at-scale)
 
 本文全面介绍了大规模自托管 Next.js 的生产环境部署挑战与解决方案，重点针对多副本水平扩展场景下的核心问题。
@@ -119,6 +132,27 @@ Mediabunny 是一个纯 JavaScript/TypeScript 编写的高性能媒体工具库�
 - 🧩 **高度模块化**：极度可摇树优化，最小压缩后仅 5kB，确保用户只引入所需功能。
 - 🔄 **媒体转换与处理**：提供转码、转封装、裁剪、旋转、重采样等丰富的媒体处理 API。
 - 📖 **完善的文档与示例**：提供详细的使用文档、代码示例和开发指南，支持快速上手和深度定制。
+
+### [CR-Mentor](https://github.com/Gijela/CR-Mentor)
+
+CR-Mentor 是一个基于 AI 和知识库的智能代码审查与开发者成长平台，旨在将代码审查转化为团队知识积累和个人提升的宝贵机会。
+
+- 🧠 深度代码理解：集成 Deepwiki 技术，可自动追踪和分析代码变更相关的所有文件，实现全局视角的代码分析
+- 📊 开发者画像：通过分析 GitHub 用户全部提交历史，自动生成包含技术优势、常见问题与成长曲线的个人能力画像
+- 💾 知识库管理：提供 MCP 知识管理能力，支持一键保存审查中的亮点与最佳实践，形成可检索复用的团队知识资产
+- ⚙️ 自定义规则：支持上传团队专属代码标准和文档，智能代理能自动识别潜在风险并提供专业建议
+- 🚀 快速开始：项目采用多模块架构（前端、智能代理、Koa 后端），支持通过 pnpm 快速部署和体验
+
+### [nstr](https://github.com/shuding/nstr)
+
+该文章介绍了一个名为 nstr 的 JavaScript 库，它能自动检测并修复浮点数运算中出现的精度问题，从而避免在用户界面中显示不美观的小数点后多余的数字。
+
+- 🧠 **智能精度检测**：自动识别并清理浮点数运算产生的精度误差（如 `0.1 + 0.2` 输出 `"0.3"`），同时保留用户有意输入的高精度数字。
+- 🎯 **解决实际问题**：有效解决了 UI 开发中的常见痛点，例如 CSS 变换属性中的坐标值和价格显示中出现的长小数。
+- 🛠️ **优于传统方案**：不同于 `toFixed()` 或 `toPrecision()` 需要预设精度，nstr 能自动为每个数字选择最佳精度。
+- 📦 **易于安装使用**：通过 npm、pnpm 或 yarn 即可安装，使用简单，只需用 `nstr()` 函数包装任何数字即可。
+- ⚙️ **可定制选项**：提供 `threshold`（检测敏感度）和 `maxDecimals`（最大保留小数位数）等高级选项以满足不同需求。
+- 🔍 **工作原理**：通过将数字转换为固定小数位字符串，检测连续的 0 或 9 模式，并进行智能截断或舍入来清理结果。
 
 ### [fastmcp](https://github.com/punkpeye/fastmcp)
 
@@ -184,6 +218,36 @@ Serena 是一个强大的、免费开源的编码智能体工具包，它能将�
 - 📚 **内容来源**: 案例主要来源于 Twitter/X、小红书等社交媒体平台，由社区用户创作和分享。
 - 🖼️ **案例丰富**: 提供了多达 47 个详细的使用示例，涵盖了从角色设计、照片修复、风格转换、到信息图生成等极其广泛的应用场景。
 - 🛠️ **实用指南**: 每个例子都包含了所需的输入类型（如上传图片）、具体的提示词（Prompt）以及生成的输出效果，具有很高的参考和学习价值。
+
+### [llms-txt-hub](https://github.com/thedaviddias/llms-txt-hub)
+
+llms.txt 是一个用于标准化 LLM 工具和服务如何与项目文档及代码库交互的规范文件。该仓库作为中心枢纽，汇集了各类项目和平台对 llms.txt 的实现和资源。
+
+- 🤖 **指导 AI 模型**：引导 AI 模型如何解释和使用项目文档。
+- 📚 **标准化访问**：为 LLM 驱动的工具提供标准化的文档访问方式。
+- 🔍 **提高准确性**：提升 AI 关于项目响应的准确性。
+- 🛠 **增强体验**：通过 AI 工具改善开发者体验。
+- 🔒 **设定边界**：为 AI 与内容的交互设定明确的界限。
+
+### [iphone-mcp](https://github.com/Lakr233/iphone-mcp)
+
+该文本介绍了一个基于 Model Context Protocol (MCP) 的服务端项目，用于通过 Appium 自动化控制 iPhone，支持应用操作、UI 交互和截图等功能。
+
+- 📱 **项目简介**: 一个用于 iPhone 自动化的 MCP 服务器，通过 Appium 实现应用控制、UI 交互和可流式传输的 HTTP 截图。
+- 📋 **主要功能**: 获取设备信息、列出已安装应用、捕获屏幕截图、列出 UI 元素、执行触摸操作、通过 Bundle ID 启动或切换应用，并提供优化的 XML 输出以减少 token 使用。
+- ⚙️ **安装要求**: 需要 Python 3.8+、Node.js 和 npm、iPhone UDID、Xcode，并需安装 Appium 及配置 WebDriver Agent。
+- 🚀 **使用方法**: 运行 `start.sh` 启动服务，默认通过 `http://127.0.0.1:8765/mcp` 访问，提供多种工具如获取设备信息、截图、点击、滑动、文本输入和应用启动等。
+- 🔧 **配置方式**: 通过修改 `start.sh` 中的环境变量进行配置，包括设备 UDID（必需）、Appium 及服务器的主机、端口、路径和日志级别等。
+
+### [ruler](https://github.com/intellectronica/ruler)
+
+Ruler 是一个用于集中管理 AI 编码助手指令的工具，它通过一个统一的 `.ruler/` 目录来存储所有规则，并自动分发到不同 AI 代理的配置文件中，解决了多工具配置不一致和维护复杂的问题。
+
+- 🎯 **核心功能**：集中管理规则、嵌套规则加载、自动分发配置、MCP 服务器传播和 `.gitignore` 自动化。
+- 📁 **目录结构**：使用 `.ruler/` 目录存放规则文件（如 `AGENTS.md`）和配置文件（`ruler.toml`），支持嵌套结构以适应复杂项目。
+- ⚙️ **配置管理**：通过 `ruler.toml` 配置默认代理、MCP 服务器和代理特定设置，支持全局和本地配置。
+- 🔄 **命令使用**：`ruler init` 初始化项目，`ruler apply` 应用规则，`ruler revert` 撤销更改，支持多种选项和详细输出。
+- 🌐 **支持的代理**：包括 GitHub Copilot、Claude、Cursor、Aider 等众多 AI 编码工具，每个代理有对应的配置文件和 MCP 设置。
 
 ### [claude-code-memory-bank](https://github.com/hudrazine/claude-code-memory-bank)
 
