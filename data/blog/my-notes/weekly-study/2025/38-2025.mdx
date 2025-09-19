@@ -1,0 +1,265 @@
+---
+title: 2025-第三十八周
+date: '2025-09-15'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [使用 HTTP OPTIONS 方法发现功能特性](https://evertpot.com/discovering-features-with-http-options/)
+
+本文介绍了 HTTP OPTIONS 方法在 API 功能发现中的用途和相关标准响应头，包括其基本用法、扩展头字段以及实际应用示例。
+
+- 🔍 OPTIONS 方法用于客户端被动发现 API 端点支持的 HTTP 方法，通过`Allow`头返回可用方法列表（如 GET、PUT、POST 等）。
+- 🛡️ `Allow`头可结合权限控制，例如仅对具有写权限的用户返回 DELETE 和 PUT 方法。
+- 📦 响应头`Accept`和`Accept-Encoding`可分别声明端点支持的 MIME 类型（如 JSON、HTML）和压缩算法（如 gzip、brotli）。
+- 🔄 专用头字段`Accept-Patch`、`Accept-Post`和`Accept-Query`明确指定 PATCH/POST/QUERY 请求支持的 Content-Type 格式。
+- 📚 可通过`Link`头关联机器可读的文档（如 OpenAPI 定义）和人类可读的说明文档，增强可发现性。
+- 🌐 WebDAV 等协议扩展使用 OPTIONS 进行特性发现（如返回`DAV`头声明支持的扩展功能）。
+- ⚠️ 星号请求（`OPTIONS *`）可探测服务器全局支持的功能，但部分客户端不支持此语法。
+- ❗ PUT 请求没有专用 Accept 头，而 DELETE 请求无需 body 故仅通过`Allow`头声明可用性。
+
+
+### [Tailwind 是 CSS-in-JS 的另一种形式……](https://nmn.sh/blog/2025-09-14-tailwind-is-css-in-js)
+
+本文探讨了 CSS-in-JS 的定义争议，指出术语混淆导致 Tailwind 和 StyleX 等工具被错误归类，并强调现代工具已转向构建时生成静态 CSS 文件的趋势。
+
+- 🎯 CSS-in-JS 术语存在定义模糊问题，早期指运行时注入 CSS 的库（如 Styled Components），现在涵盖构建时生成 CSS 的工具
+- ⚙️ 按工作原理划分：Tailwind/StyleX/Linaria 均属构建时生成静态 CSS，不属于传统 CSS-in-JS
+- 📝 按语法形态划分：三者都允许在 JS 文件中编写样式，Tailwind 通过特殊 className 语法也可视为 CSS-in-JS
+- ⚠️ Tailwind 作为 CSS-in-JS 语法存在局限：复杂动画/定位等场景仍需原生 CSS 文件
+- 🚀 行业趋势已转向构建时生成 CSS 方案，运行时注入 CSS 的方案因性能问题逐渐被淘汰
+- 💡 开发者无需因 CSS-in-JS 的负面评价回避 Tailwind 或 Linaria，它们与传统运行时方案有本质区别
+
+### [关于 corner-shape，我们究竟能做些什么？](https://css-tricks.com/what-can-we-actually-do-with-corner-shape/)
+
+本文回顾了 CSS 中圆角设计的历史演变，并重点介绍了新属性`corner-shape`的多种创意应用，该属性目前仅 Chrome 139+ 支持。
+
+- 🎨 **圆角设计演进**：早期实现圆角需复杂技巧，`border-radius`的出现曾引发热潮，如今设计趋势已转向直角和方圆混合形状
+- 🔧 **新属性支持**：`corner-shape`需与`border-radius`配合使用，目前仅 Chrome 139+ 支持，提供多种角部形状选择
+- ✂️ **斜角效果**：使用`corner-shape: bevel`可轻松创建流行的斜切角效果，适合 brutalist 和 cyberpunk 美学风格
+- 📐 **轴心控制**：通过分别设置水平和垂直轴半径值（如`border-bottom-right-radius: 100% 50px`）可创建倾斜截面效果
+- 🏷️ **标签设计**：组合使用`corner-shape: round bevel bevel round`和复杂`border-radius`值可创建精确的促销标签形状
+- 🧭 **箭头导航**：利用负边距和 z-index 控制，配合 bevel 效果可实现连贯的箭头式面包屑导航
+- 💬 **工具提示**：结合 popover 和 anchor 定位，使用`corner-shape: scoop`可创建独特的气泡提示框
+- 🖍️ **高亮效果**：通过`corner-shape: squircle bevel`和随机半径值可实现手写风格的高亮效果
+- 📱 **应用图标**：单独使用`squircle`可创建类似 iOS 的圆润应用图标风格
+- ✂️ **背景裁剪**：使用`corner-shape: notch`配合特定轴值可实现背景内容的精确裁剪
+
+
+### [子网格：随心所欲对齐元素](https://webkit.org/blog/17339/subgrid-how-to-line-up-elements-to-your-hearts-content/)
+
+Subgrid 是 CSS Grid 的扩展功能，允许嵌套网格继承父网格的行列结构以实现精确对齐布局，适用于多列内容统一排版。
+
+- 🎯 子网格（Subgrid）可解决多列内容高度不一致导致的对齐问题，通过继承父网格的行列定义实现跨列对齐
+- 🛠️ 使用方法：先在父网格中定义行/列（如 grid-template-rows），再在子元素中设置 grid-template-rows: subgrid 和 grid-row: span N
+- 🌐 浏览器支持：主流浏览器均已支持，可安全使用
+- 💡 适用场景：价格表、产品列表等需要多列内容严格对齐的复杂布局
+
+### [使用 CSS 锚点定位实现跟随主导模式](https://una.im/follow-the-anchor/)
+
+本文介绍了使用 CSS 锚点定位实现“跟随领导者”效果的技巧，通过动态更新锚点名称和过渡动画，创建元素间的视觉联动效果。
+
+- 🎯 利用 CSS 锚点定位 API 实现动态元素跟随效果，适用于悬停、焦点等交互场景
+- 🧭 核心机制：设置跟随元素的 position-anchor 属性和可能锚点的 anchor-name 属性
+- 🌀 通过 transition 实现平滑的位置过渡动画，增强视觉效果
+- 🎮 展示三种实际应用：基础悬停演示、操作栏交互和轮播滚动标记器
+- ⚡ 结合 JavaScript 处理状态管理，CSS 负责样式呈现的混合开发模式
+- 🌐 该技术属于 Interop 2025 标准，目前已在 Chromium 中实现，Webkit 即将支持
+- 💡 作者推荐使用伪元素技巧避免元素间间隙，并建议调整动画速率创造协调效果
+
+## 工具
+
+### [harlan-zw/mdream：☁️ 将任意网站转换为纯净 Markdown 与 LLMs 文本文件。提升网站 AI 可发现性，或为当前项目生成 LLM 上下文数据。](https://github.com/harlan-zw/mdream)
+
+mdream 是一个开源工具，专注于将 HTML 转换为优化的 Markdown 格式，特别针对 LLM（大语言模型）和 AI 可发现性设计，提供多种集成方式和插件系统。
+
+- 🚀 核心功能：将 HTML 高效转换为 Markdown，减少约 50% 的 token 使用，支持流式处理
+- 🌐 多平台支持：提供 CLI、Docker、GitHub Actions、Vite 和 Nuxt 等多种集成方式
+- 🕷️ 网站爬取：可爬取整个网站生成 llms.txt 和 Markdown 文件，支持排除特定路径和限制爬取范围
+- 🔌 插件系统：支持自定义插件，包括内容过滤、元数据提取、Tailwind 转换等功能
+- 📦 模块化设计：包含多个独立包（mdream、@mdream/crawl、@mdream/vite 等），满足不同使用场景
+- ⚡ 高性能：处理 1.4MB HTML 仅需约 50ms，压缩后仅 5kB，无依赖核心
+- 📄 输出优化：生成 GitHub 风格的 Markdown，支持 frontmatter、嵌套和 HTML 标记
+- 🤖 AI 友好：专门为 LLM 优化，提升网站的 AI 可发现性和上下文生成能力
+
+### [jsonschema2md](https://github.com/adobe/jsonschema2md)
+
+该仓库为 Adobe 维护的 `jsonschema2md` 工具项目，用于将复杂的 JSON Schema 文件转换为易于阅读的 Markdown 格式文档。
+
+- 📄 **项目概述**: 一个开源工具，旨在帮助开发者将 JSON Schema 文件生成清晰的 Markdown 文档，便于在 GitHub 或静态站点生成器上使用。
+- ⭐ **项目热度**: 获得 683 个星标，拥有 42 个关注者和 151 个复刻，表明项目具有较高的关注度和社区活跃性。
+- 🛠️ **核心功能**: 支持从指定目录读取 Schema 文件并输出文档，提供国际化（如英语、德语）、自定义属性显示、示例格式切换（JSON/YAML）等高级功能。
+- 📦 **安装与使用**: 可通过 npm 全局安装，并提供了详细的命令行参数说明，例如指定输入输出目录、文件扩展名、语言等。
+- 🔧 **集成与 API**: 支持通过 npm scripts 集成到项目构建流程中，并提供了 Node.js API 以供编程方式调用。
+- 🧪 **质量保障**: 项目包含完整的测试套件、代码覆盖率要求（100%）、代码风格检查（eslint）和持续集成（GitHub Actions）。
+
+### [trash](https://github.com/sindresorhus/trash)
+
+跨平台将文件和文件夹移至回收站/废纸篓的功能，与永久删除相比更安全且可恢复。
+
+- 🖥️ 支持在 macOS (10.12+)、Linux 和 Windows (8+) 系统上运行
+- ⚠️ Linux 实现目前维护不佳并寻求帮助，否则未来可能移除支持
+- ♻️ 区别于 fs.unlink 等永久删除操作，本模块采用更安全的可逆删除方式
+- 📦 通过 `npm install trash` 安装并提供 Promise API
+- 🌐 支持路径和 glob 模式输入，可配置通配符选项
+- ⚙️ 底层分别使用 macos-trash (macOS)、XDG 规范 (Linux) 和 recycle-bin (Windows)
+- 🔧 提供独立的 trash-cli 全局命令行工具
+- ⚠️ Windows 服务账户使用时文件会移至系统账户回收站，普通用户不可见
+- 🔗 配套提供 empty-trash 清空废纸篓和 del 永久删除模块
+
+
+### [logtape](https://github.com/dahlia/logtape)
+
+LogTape 是一个专为 JavaScript 和 TypeScript 设计的零依赖、跨平台日志库，适用于库和应用开发，支持结构化日志记录和层级分类管理。
+
+- 📦 零依赖设计，无需担心依赖冲突问题
+- 📚 同时支持库和应用开发场景
+- 🌐 跨运行时支持（Deno、Node.js、Bun、边缘函数和浏览器）
+- 🏗️ 结构化日志记录，支持模板字面量
+- 📊 层级分类系统，可精细控制日志级别
+- 🔒 内置数据脱敏功能，保护敏感信息
+- 🔌 简单易用的接收器（sink）扩展机制
+- 📦 通过 JSR 和 npm 分发，支持多种包管理器
+- 🛠️ 提供丰富的扩展包（Pino/winston 适配器、CloudWatch、Sentry 等集成）
+
+### [crawl4ai](https://github.com/unclecode/crawl4ai)
+
+Crawl4AI 是一个开源、专为 LLM 优化的网络爬虫与内容抓取工具，能够将网页内容转换为结构化的 Markdown 格式，适用于 RAG、智能体和数据管道等场景，拥有活跃的开发者社区和丰富的功能集。
+
+- 🚀 核心功能包括 Markdown 生成、结构化数据提取、浏览器集成和智能爬取策略
+- 🔧 支持多种安装方式：pip 直接安装、Docker 部署及 CLI 命令行操作
+- 💡 最新版本 v0.7.4 带来革命性 LLM 表格提取、智能分块和并发性能优化
+
+## 更新
+
+### [Expo SDK 54](https://expo.dev/changelog/sdk-54)
+
+Expo SDK 54 正式发布，包含 React Native 0.81，带来 iOS 预编译框架、Android 全面屏支持、Expo 更新功能增强、包管理器优化等多项改进，同时标志着旧架构支持的终结。
+
+- 🚀 iOS 预编译 React Native XCFrameworks，大幅减少构建时间
+- 🍎 支持 iOS 26 Liquid Glass 图标和应用内玻璃视觉效果
+- 🤖 Android 16 目标版本，强制启用全面屏且无法禁用
+- 🔄 Expo Updates 支持运行时覆盖请求头与下载进度追踪
+- 📦 包管理器与自动链接优化，提升 monorepo 和依赖处理可靠性
+- ⚠️ SDK 54 是最后一个支持旧架构的版本，SDK 55 将仅支持新架构
+- 🛠️ 开发工具增强，包括 Expo CLI 默认启用导入堆栈跟踪和 React Compiler
+- 📱 Expo Router v6 支持链接预览、原生标签页和实验性中间件
+- 🗑️ 多项弃用和移除，包括 `expo-av` 将在 SDK 55 中移除
+- ⚡ 其他亮点包括 `expo-file-system` 新 API 稳定、`expo-sqlite` 支持 `localStorage` API 等
+
+### [Node.js 中 QUIC 协议现状 - Pavel Romanov 著 - Node Vibe](https://nodevibe.substack.com/p/state-of-quic-in-nodejs)
+
+Node.js 的 QUIC 实现历经六年延迟，主要因 OpenSSL 长期拒绝提供完整 QUIC 支持。随着 OpenSSL 3.5 发布关键 API，Node.js 25 计划于 2025 年 10 月首次集成 QUIC 协议。
+
+- 🚧 QUIC 是基于 UDP 的传输层协议，旨在通过单次往返握手替代 TCP+TLS，提升连接效率
+- ⚡ 协议特点包括 0-RTT 连接恢复和直接处理加密传输，但某些场景性能可能比 HTTP/2 低 45%
+- 🔐 核心障碍是 OpenSSL 此前拒绝提供 QUIC 必需的 TLS 1.3 底层 API（密钥直取/记录层绕过）
+- 📅 2018 年启动需求讨论，2019 年 James Snell 开始开发，但因依赖问题 2021 年 PR 被关闭
+- 🛠️ 社区曾转向 OpenSSL 分支 quictls，最终 OpenSSL 3.5（2025 年 4 月）提供了关键支持
+- 🎯 Node.js 25 计划 2025 年 10 月正式发布 QUIC 实现，比原计划延迟 4-5 年
+
+### [Node.js 手册，2025 年版](https://flaviocopes.com/the-nodejs-handbook-2025-edition/)
+
+
+《Node.js 手册》2025 版是一本面向初学者的全面指南，专注于 Node.js v22 LTS 的核心概念与实践应用，包含基础到进阶内容，强调原理理解与实战代码示例。
+
+- 📘 手册最初发布于 2018 年，下载量数万次，曾作为 Node.js 官方文档基础
+- 🎯 2025 版彻底重写，精简复杂内容，专注初学者友好性与实践性
+- 📚 覆盖 40+ 主题：现代 JavaScript、内置 API、性能优化、安全实践及真实案例
+- 🔧 详解核心模块（fs/path/os/http）、事件系统、流操作和加密功能
+- ⚙️ 包含开发工具配置、环境变量管理、错误处理和测试方案
+- 🌐 提供 HTTP 服务器搭建、网络编程及多线程（Worker Threads）等进阶内容
+- 📥 可通过 https://flaviocopes.com/access/ 免费下载完整版
+
+### [pnpm 10.16](https://pnpm.io/blog/releases/10.16)
+
+pnpm 10.16 版本引入了新的安全设置和高级依赖搜索功能，同时修复了多个已知问题。
+
+- 🛡️ 新增 minimumReleaseAge 设置，可延迟安装新发布的依赖包以降低安全风险
+- 📋 支持通过 minimumReleaseAgeExclude 排除特定依赖包的延迟安装限制
+- 🔍 新增 finder 函数功能，允许根据依赖包属性（如 peerDependencies）进行高级搜索
+- 🖨️ finder 函数支持返回附加信息（如许可证）并在输出中显示
+- ⚠️ 修复了 Node.js 24 下的弃用警告提示问题
+- 🚫 现在要求 nodeVersion 必须设置为精确的 semver 版本
+- 📦 改进了 pnpm publish 对.tar.gz 文件的支持
+- ⌨️ 修复了 Ctrl-C 取消进程时 pnpm run 的退出码问题
+
+## 设计
+
+### [你不需要动画](https://emilkowal.ski/ui/you-dont-need-animations)
+
+动画在界面设计中应谨慎使用，需有明确目的并考虑使用频率和速度，以提升用户体验而非造成干扰。
+
+- 🎯 动画需有明确目的：如解释功能（Linear 产品智能演示）、增强交互反馈（按钮缩放）或创造空间一致性（Sonner 提示框）
+- ⚡ 高频操作应避免动画：如 Raycast 每日使用数百次，无动画反而更高效
+- ⌨️ 键盘触发的操作绝不应添加动画：会延迟响应并破坏操作连贯性
+- 🐇 动画速度必须极快：UI 动画建议低于 300 毫秒，提升感知性能（如快速旋转的加载图标）
+- 🎭 营销类动画可适当延长：但需确保用户不会频繁接触（如反馈组件的变形动画）
+- ⚖️ 最终准则是构建优秀界面：有时最佳动画就是无动画，一切以用户日常使用体验为核心
+
+## AI
+
+### [mem-agent-mcp](https://github.com/firstbatchxyz/mem-agent-mcp)
+
+这是一个用于 mem-agent 模型的 MCP 服务器，可连接至 Claude Desktop 或 LM Studio 等应用，用于与类似 Obsidian 的记忆系统进行交互。
+
+- 🚀 **支持平台**：macOS（Metal 后端）和 Linux（带 GPU，vLLM 后端）
+- ⚙️ **运行指令**：包含检查安装、安装 LM Studio、设置存储目录、运行代理及生成 MCP 配置文件等步骤
+- 🔌 **应用配置**：支持 Claude Desktop 和 LM Studio，需复制配置文件并重启应用
+- 📁 **记忆结构**：要求特定的目录和文件结构（`user.md` 和 `entities/` 目录），使用严格的链接格式
+- 🛡️ **过滤功能**：模型支持通过标签内的过滤器对检索信息进行过滤或模糊处理
+- 🔗 **记忆连接器**：支持多种数据源导入，包括 ChatGPT、Notion、Nuclino、GitHub 和 Google Docs
+- 🧙 **交互向导**：推荐使用交互式记忆向导，可引导完成连接器选择、认证设置、源配置等步骤
+- 🧪 **测试记忆**：导入后可通过启动代理并提问来测试记忆系统是否正常工作
+- 🏗️ **系统架构**：基于 Dria 的记忆代理、Obsidian 风格的结构和 FastMCP 框架集成
+- 🤖 **ChatGPT 集成**：可通过 MCP 兼容的 HTTP 服务器和 ngrok 暴露，在 ChatGPT 中配置使用
+
+### [genkit](https://github.com/firebase/genkit)
+
+Genkit 是由 Google Firebase 团队开发并用于生产环境的开源框架，用于构建全栈 AI 应用。它提供多语言 SDK，并支持集成众多主流 AI 模型，旨在简化 AI 开发流程。
+
+- 🚀 **生产就绪**：JavaScript/TypeScript 和 Go 版本的 SDK 已具备生产就绪的完整功能支持，Python 版本目前处于 Alpha 早期开发阶段。
+- 🔌 **统一接口**：提供统一的 API，可轻松集成 Google、OpenAI、Anthropic、Ollama 等数百家供应商的 AI 模型。
+- ⚡ **快速开发**：通过简化的 API 支持多模态内容、结构化输出、工具调用和智能体工作流，只需几行代码即可快速构建聊天机器人、自动化系统和推荐系统。
+- 📱 **全平台集成**：可无缝与 Next.js、React、Angular、iOS、Android 等前端和移动框架集成，并提供专用的客户端 SDK。
+- 🌐 **跨语言支持**：支持使用 JavaScript/TypeScript、Go 和 Python 进行开发，并在所有支持的语言中保持一致的 API 和功能。
+- ☁️ **灵活部署**：可将 AI 逻辑部署到任何支持所选编程语言的环境中，包括 Cloud Functions for Firebase、Google Cloud Run 或第三方平台。
+- 🔧 **开发工具**：提供本地 CLI 和开发者 UI，用于快速测试提示、调试执行跟踪、比较不同模型的输出，并通过即时可视化反馈进行迭代。
+- 📊 **生产监控**：内置生产监控仪表板，可跟踪模型性能、请求量、延迟和错误率，确保 AI 功能满足质量和性能目标。
+- 🛠️ **核心功能**：支持文本和图像生成、类型安全的结构化数据生成、工具调用、提示模板、持久化聊天界面、AI 工作流和 AI 驱动的数据检索（RAG）。
+
+
+### [mcp-gateway](https://github.com/docker/mcp-gateway)
+
+Docker MCP 插件和网关为开发者提供了一个在 Docker 环境中配置、运行和管理 MCP 服务器的统一工具集，旨在简化集成流程并增强安全性。
+
+- 🐳 **容器化运行**：MCP 服务器在隔离的 Docker 容器中运行，确保安全性和环境一致性。
+- 🔧 **集中管理**：通过统一的 Docker MCP Gateway 接口，为各种 AI 客户端（如 VS Code、Claude）提供一致的 MCP 服务访问。
+- 🔐 **安全管理**：利用 Docker Desktop 的密钥管理功能安全处理 API 密钥和凭证，避免使用环境变量。
+- 🌐 **OAuth 集成**：内置 OAuth 流程，简化需要身份验证的服务连接。
+- 📋 **服务目录**：可管理多个 MCP 服务目录，支持服务器的动态发现、启用、禁用和配置。
+- 📊 **监控与追踪**：提供内置的日志记录和调用追踪功能，便于监控和调试。
+- ⚙️ **灵活部署**：该 CLI 插件既可集成在 Docker Desktop 中使用，也可独立运行，支持多种传输模式（stdio, streaming）。
+
+## 其他
+
+有了 AI，代码不再珍贵。
+
+-- 鲍里斯·切尔尼（Boris Cherny），Claude Code 产品负责人
+
+---
+
+许多人，尤其是新工程师，错误地认为使用复杂的工具和语言会做出更强大、更具创新性的产品。
+
+事实恰恰相反。最有效的组件是简单、可预测、枯燥无趣的成熟技术。它们为我们提供了进一步开发复杂项目所需的基础。
+
+你不是要建造一座有趣的桥梁，你要建造的是人们以后要充满信心走在上面的坚固桥梁。
+
+-- 《选择无聊和灵活的技术》
