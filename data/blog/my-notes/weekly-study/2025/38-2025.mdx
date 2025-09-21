@@ -25,7 +25,6 @@ summary: ''
 - ⚠️ 星号请求（`OPTIONS *`）可探测服务器全局支持的功能，但部分客户端不支持此语法。
 - ❗ PUT 请求没有专用 Accept 头，而 DELETE 请求无需 body 故仅通过`Allow`头声明可用性。
 
-
 ### [Tailwind 是 CSS-in-JS 的另一种形式……](https://nmn.sh/blog/2025-09-14-tailwind-is-css-in-js)
 
 本文探讨了 CSS-in-JS 的定义争议，指出术语混淆导致 Tailwind 和 StyleX 等工具被错误归类，并强调现代工具已转向构建时生成静态 CSS 文件的趋势。
@@ -52,7 +51,6 @@ summary: ''
 - 📱 **应用图标**：单独使用`squircle`可创建类似 iOS 的圆润应用图标风格
 - ✂️ **背景裁剪**：使用`corner-shape: notch`配合特定轴值可实现背景内容的精确裁剪
 
-
 ### [子网格：随心所欲对齐元素](https://webkit.org/blog/17339/subgrid-how-to-line-up-elements-to-your-hearts-content/)
 
 Subgrid 是 CSS Grid 的扩展功能，允许嵌套网格继承父网格的行列结构以实现精确对齐布局，适用于多列内容统一排版。
@@ -75,6 +73,20 @@ Subgrid 是 CSS Grid 的扩展功能，允许嵌套网格继承父网格的行�
 - 💡 作者推荐使用伪元素技巧避免元素间间隙，并建议调整动画速率创造协调效果
 
 ## 工具
+
+### [wait-on](https://github.com/jeffbski/wait-on)
+
+wait-on 是一个跨平台的命令行工具和 Node.js API，用于等待文件、端口、套接字和 HTTP(S) 资源变为可用（或通过反向模式变为不可用）。它功能强大，支持多种资源类型和丰富的配置选项，常用于在继续执行下一个命令前确保所需依赖已就绪。
+
+- 🚀 **功能与用途**: 等待文件、端口、套接字、HTTP/HTTPS 资源变为可用（或不可用），以便在后续命令执行前确保依赖就绪。
+- 🌐 **跨平台支持**: 可在所有 Node.js 运行的环境（如 Linux、Unix、macOS、Windows）上使用。
+- ⏳ **智能等待**: 对于文件，会等待其停止增长（构建完成）后才触发可用；支持设置稳定性检查时间窗口。
+- 🔍 **HTTP(S) 检查**: 通过发送 HEAD 或 GET 请求（支持重定向）并检查 2XX 状态码来判断资源是否可用。
+- 🔄 **反向模式**: 使用 `-r` 或 `--reverse` 选项可等待资源变为不可用，适用于等待服务关闭。
+- 📦 **安装方式**: 可通过 npm 进行本地（`npm install wait-on`）或全局（`npm install -g wait-on`）安装。
+- 💻 **使用方式**: 支持命令行使用（如 `wait-on file1 && NEXT_CMD`）和 Node.js 编程 API（提供回调、Promise 和 async/await 支持）。
+- ⚙️ **丰富配置**: 提供大量选项，如延迟检查、轮询间隔、超时时间、并发控制、HTTP 代理、认证头等。
+- 🎯 **设计目标**: 旨在提供一个简单、便携的工具，用于等待资源稳定可用，从而简化工作流程。
 
 ### [harlan-zw/mdream：☁️ 将任意网站转换为纯净 Markdown 与 LLMs 文本文件。提升网站 AI 可发现性，或为当前项目生成 LLM 上下文数据。](https://github.com/harlan-zw/mdream)
 
@@ -113,7 +125,6 @@ mdream 是一个开源工具，专注于将 HTML 转换为优化的 Markdown 格
 - 🔧 提供独立的 trash-cli 全局命令行工具
 - ⚠️ Windows 服务账户使用时文件会移至系统账户回收站，普通用户不可见
 - 🔗 配套提供 empty-trash 清空废纸篓和 del 永久删除模块
-
 
 ### [logtape](https://github.com/dahlia/logtape)
 
@@ -167,7 +178,6 @@ Node.js 的 QUIC 实现历经六年延迟，主要因 OpenSSL 长期拒绝提供
 
 ### [Node.js 手册，2025 年版](https://flaviocopes.com/the-nodejs-handbook-2025-edition/)
 
-
 《Node.js 手册》2025 版是一本面向初学者的全面指南，专注于 Node.js v22 LTS 的核心概念与实践应用，包含基础到进阶内容，强调原理理解与实战代码示例。
 
 - 📘 手册最初发布于 2018 年，下载量数万次，曾作为 Node.js 官方文档基础
@@ -206,6 +216,17 @@ pnpm 10.16 版本引入了新的安全设置和高级依赖搜索功能，同时
 
 ## AI
 
+### [ai-sdk-tools](https://github.com/midday-ai/ai-sdk-tools)
+
+一个基于 Vercel AI SDK 构建的扩展工具集，提供状态管理、调试工具和结构化数据流功能，旨在帮助开发者构建生产级 AI 应用程序。
+
+- 🗂️ **核心功能**：提供三个核心工具包——状态管理（@ai-sdk-tools/store）、开发调试工具（@ai-sdk-tools/devtools）和结构化数据流（@ai-sdk-tools/artifacts）
+- 🚀 **应用场景**：支持构建超越简单聊天界面的高级 AI 应用，如仪表板、分析报告和交互式文档
+- 💡 **技术特性**：通过结构化数据流实现实时更新和类型安全，支持 React 组件直接消费流式数据
+- 📊 **项目状态**：开源项目获得 594 星标和 40 个分支，主要使用 TypeScript 开发，采用 MIT 许可证
+- 🌐 **生态支持**：提供详细文档和演示网站（ai-sdk-tools.dev），支持生产环境和预览部署
+- 🔧 **开发体验**：包含开发调试工具，类似 react-query-devtools，可直接集成到代码库中
+
 ### [mem-agent-mcp](https://github.com/firstbatchxyz/mem-agent-mcp)
 
 这是一个用于 mem-agent 模型的 MCP 服务器，可连接至 Claude Desktop 或 LM Studio 等应用，用于与类似 Obsidian 的记忆系统进行交互。
@@ -234,7 +255,6 @@ Genkit 是由 Google Firebase 团队开发并用于生产环境的开源框架�
 - 🔧 **开发工具**：提供本地 CLI 和开发者 UI，用于快速测试提示、调试执行跟踪、比较不同模型的输出，并通过即时可视化反馈进行迭代。
 - 📊 **生产监控**：内置生产监控仪表板，可跟踪模型性能、请求量、延迟和错误率，确保 AI 功能满足质量和性能目标。
 - 🛠️ **核心功能**：支持文本和图像生成、类型安全的结构化数据生成、工具调用、提示模板、持久化聊天界面、AI 工作流和 AI 驱动的数据检索（RAG）。
-
 
 ### [mcp-gateway](https://github.com/docker/mcp-gateway)
 
