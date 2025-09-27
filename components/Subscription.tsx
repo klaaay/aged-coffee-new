@@ -27,6 +27,27 @@ export const Subscription = () => {
   const [subscriptions, setSubscriptions] = useState<SubscriptionItem[]>(
     [
       {
+        name: 'Figma Full Seat',
+        yearly: toFixed2Number(16 * 12 * DOLLAR2RMB),
+        expiry: '2026-9-27',
+        type: '效率',
+        extra: '',
+      },
+      {
+        name: 'ChatGPT Pro',
+        yearly: toFixed2Number(20 * 12 * DOLLAR2RMB),
+        expiry: '2026-10-3',
+        type: '效率',
+        extra: '',
+      },
+      {
+        name: '薄荷记账',
+        yearly: 25.6,
+        expiry: '2030-09-10',
+        type: '效率',
+        extra: '',
+      },
+      {
         name: 'LobeChat 自助',
         yearly: 428.73,
         expiry: '2026-02-17',
@@ -50,7 +71,7 @@ export const Subscription = () => {
       {
         name: '夸克网盘 VIP',
         yearly: 198,
-        expiry: '2025-7-21',
+        expiry: '2026-8-14',
         type: '效率',
         extra: '',
       },
