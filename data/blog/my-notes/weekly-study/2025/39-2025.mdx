@@ -12,7 +12,83 @@ summary: ''
 
 ## 技术
 
+### [弃用 `middleware` 并推荐使用 `proxy` by devjiwonchoi · Pull Request #84119 · vercel/next.js · GitHub](https://github.com/vercel/next.js/pull/84119)
+
+Next.js 团队计划弃用 middleware 并推荐使用 proxy 作为替代方案，旨在提供更清晰的 API 和更好的用户体验。
+
+- 🔄 建议用户避免依赖 Middleware，除非没有其他选择，目标是提供更符合人体工程学的 API
+- 🏷️ 将文件约定从 "middleware" 更名为 "proxy"，以明确方向并避免与 Express.js 中间件混淆
+- 📝 proxy.js 应作为 middleware.js 的替代品，只需将导出函数从 `middleware` 改为 `proxy`
+- 🔧 提供了代码修改工具 (#84127) 来帮助迁移
+- ⚠️ 该更改已通过测试，但会带来一些构建大小和缓存大小的增加
+- 📊 性能测试显示此次更改不会对性能产生负面影响
+
+### [并行与递归路由渲染](https://twofoldframework.com/blog/parallel-and-recursive-route-rendering-with-rsc)
+
+RSC 路由通过并行服务器渲染和递归客户端组装来避免数据获取的瀑布效应，提升嵌套组件的渲染性能。
+
+- 🚀 RSC 路由采用并行渲染模式，使嵌套组件的数据请求同时进行而非顺序等待
+- 🌊 传统嵌套组件会导致"瀑布效应"，子组件需等待父组件完成渲染才能开始数据获取
+- 🔄 利用`renderToReadableStream`将组件树转为并行渲染的数组结构，配合占位符组件保持层级关系
+- 🧩 客户端通过递归组件`StackReader`逐层解析服务端序列化的组件栈，重建嵌套结构
+- ⚡ 该模式将串行渲染优化为并行执行，使三层级组件的加载时间从 3 秒缩短至 1 秒
+- 🔧 并行递归渲染作为路由层实现细节，对开发者透明且支持未来优化迭代
+
+### [你可能在寻找 useSyncExternalStore | Swizec Teller](https://swizec.com/blog/you-may-be-looking-for-a-useSyncExternalStore/)
+
+本文介绍了 React 中常见的使用 useEffect 进行状态订阅的模式及其在服务端渲染时可能导致的问题，并推荐使用 useSyncExternalStore 作为优化方案。
+
+- ⚠️ 常见模式：useEffect+useState 组合用于订阅事件源（如浏览器 API），但会导致组件多次渲染
+- 🌐 服务端渲染问题：hydration 过程中会出现默认值闪烁，需要 2 次以上渲染才能稳定
+- 🚀 解决方案：使用 useSyncExternalStore 替代，可显式定义订阅函数和服务端默认值
+- 📝 实现示例：通过 subscribe 函数管理事件监听，第二个参数获取当前值，第三个参数设置服务端默认值
+- ⚡ 优化效果：减少页面闪烁，提升渲染性能，特别适合 ResizeObserver 等场景
+
+### [JavaScript 2025 现状](https://survey.devographics.com/en-US/survey/state-of-js/2025?source=frontendfocus)
+
+JavaScript 生态系统已从快速迭代进入稳定期，前端框架创新放缓，竞争焦点转向元框架和构建工具领域
+
+- 🏗️ 前端框架创新明显放缓，已有 9 年历史的 Svelte 被视为"老牌"框架
+- ⚔️ 竞争重点转向元框架层面，Astro 正挑战 Next.js 的领先地位
+- ⚡ 构建工具领域 Vite 有望取代 webpack 成为新标准
+- 🦀 Rust 生态可能孕育下一代颠覆性工具
+- 📊 2025 年 State of JavaScript 调查将于 10 月 1 日至 11 月 1 日进行
+- ⏱️ 调查耗时约 15-20 分钟，面向所有 JavaScript/TypeScript 使用者
+- 🌍 调查支持多语言翻译，由全球志愿者共同完成
+- 📈 调查目标为追踪技术趋势，帮助开发者和浏览器厂商决策
+
 ## 工具
+
+### [NickvanDyke/eslint-plugin-react-you-might-not-need-an-effect：捕获不必要的React useEffect 钩子，使代码更简洁、更快速、更安全。](https://github.com/NickvanDyke/eslint-plugin-react-you-might-not-need-an-effect)
+
+这是一个用于检测 React 项目中不必要 useEffect 钩子的 ESLint 插件，旨在帮助开发者编写更简洁、高效和安全的代码。
+
+- 🚀 **插件功能** - 捕获不必要的 React useEffect 钩子，使代码更易维护、运行更快且减少错误
+- 📦 **安装方式** - 支持 npm 和 yarn 两种包管理器安装
+- ⚙️ **配置方法** - 提供传统配置和扁平配置两种 ESLint 配置方案
+- 🔧 **规则体系** - 包含 11 条具体规则，涵盖派生状态管理、状态更新链、事件处理等常见误用场景
+- 📚 **学习资源** - 提供 React 官方文档链接，帮助深入理解 useEffect 的正确使用方式
+- 🌟 **项目状态** - 获得 854 个 star 和 11 个 fork，采用 MIT 开源协议
+- 💡 **适用人群** - 特别推荐 React 新手学习，有经验的开发者也能从中受益
+
+### [icomp](https://github.com/zur4ik/icomp)
+
+`icomp` 是一个开发工具，可将 SVG 文件转换为 React 函数式图标组件，并提供 CLI 和 UI 两种使用模式。
+
+- ✨ **功能特性**：支持将 SVG 转换为 React 组件、自动生成索引文件、CLI 监听模式、UI 拖拽管理、从 Figma 直接粘贴图标、支持搜索等。
+- 📦 **安装方式**：可通过 `npm install -g icomp` 全局安装，或使用 `npx` 直接运行，也可作为项目开发依赖安装。
+- ⚙️ **CLI 使用**：通过 `icomp generate` 命令生成组件，可指定输入/输出路径，并支持 `--watch` 模式监听文件变化。
+- 🖥️ **UI 模式**：通过 `icomp ui` 启动图形界面，支持拖拽上传、粘贴 SVG 代码或 Figma 图标，并可自定义端口号。
+- 📝 **实用技巧**：在 UI 中可直接重命名、生成或删除图标，索引文件会自动更新，操作简单直观。
+
+### [abinthomasonline/repo2txt：基于网页的工具，可将GitHub仓库内容转换为单一格式化文本文件](https://github.com/abinthomasonline/repo2txt)
+
+这是一个将 GitHub 仓库内容转换为格式化文本文件的网页工具，支持本地目录操作，专为大型语言模型输入设计
+
+- 🌐 基于浏览器的在线工具，无需服务器处理，保障数据隐私安全
+- 📁 支持 GitHub 仓库和本地目录两种输入源
+- 🔧 可展示仓库结构、选择包含文件、按扩展名过滤文件
+- 📄 生成格式化文本文件，支持复制到剪贴板和下载功能
 
 ### [chartdb](https://github.com/chartdb/chartdb)
 
@@ -26,9 +102,142 @@ ChartDB 是一款基于网页的开源数据库图表编辑器，无需安装和
 
 ## 更新
 
+### [Node.js v24.9.0](https://nodejs.org/en/blog/release/v24.9.0)
+
+Node.js v24.9.0（Current 版本）于 2025 年 9 月 25 日发布，主要包含 HTTP 升级控制、SQLite 功能增强、Worker 堆分析 API 等新特性，同时进行了多项性能优化和错误修复。
+
+- 🚀 HTTP 模块新增 shouldUpgradeCallback，允许服务器控制 HTTP 升级流程
+- 🗃️ SQLite 模块优化 ERM 支持并导出 Session 类，新增标记模板功能
+- 📊 Worker 线程新增堆性能分析 API，便于内存监控
+- 🔧 加密模块改进异步函数实现，提升 Promise 处理效率
+- 🌐 网络模块优化 IPv6 代理支持和 HTTP 令牌验证性能
+- 📚 文档更新包括安全升级策略和 V8 快速 API 指南
+- 🛠️ 核心代码重构涉及字符串处理、缓存优化和内存管理改进
+- 🔍 调试功能增强包括 Source Map 支持和断言错误溯源
+- 📦 依赖项更新至 OpenSSL 3.5.3 和 Undici 7.16.0
+- ⚡ 性能优化涵盖 zlib 压缩、VM 模块和 REPL 大文本处理
+
+### [苹果拥有私有 CSS 属性，可为网页内容添加液态玻璃效果](https://alastair.is/apple-has-a-private-css-property-to-add-liquid-glass-effects-to-web-content/)
+
+苹果在 WebKit 中开发了一个私有 CSS 属性，允许在 Web 内容中实现类似 iOS 系统的液态玻璃视觉效果，但目前仅限于内部使用，无法在公开的网页或通过 App Store 审核的应用中部署。
+
+- 🔍 作者通过监测 WebKit 代码库发现苹果新增了私有 CSS 属性`-apple-visual-effect`，支持系统级模糊和玻璃材质效果
+- 🚫 该功能无法在 Safari 浏览器中直接使用，且需要启用 WKWebView 的私有设置`useSystemAppearance`才会生效
+- ⚠️ 若开发者强行启用该私有属性，应用将无法通过 App Store 审核流程
+- 💡 通过`@supports`条件 CSS 可优雅实现兼容方案：支持时采用玻璃效果，否则回退到半透明背景
+- 🧠 作者提出"假发理论"：优秀的 WebView 集成往往难以被用户察觉，暗示苹果可能已在某些系统组件中秘密使用此技术
+- 🔮 该发现揭示了原生与 Web 技术融合的新方向，虽当前受限但具有未来生态整合的指示意义
+
+### [发布 @tanstack/react-db@0.1.21 · TanStack/db ](https://github.com/TanStack/db/releases/tag/%40tanstack%2Freact-db%400.1.21)
+
+TanStack React DB 库发布 0.1.21 版本，主要增强了 useLiveQuery 钩子的条件查询功能
+
+- 🔄 useLiveQuery 回调现支持返回 undefined/null 临时禁用查询
+- ⚙️ 新增直接返回预创建 Collection 实例的功能
+- 🎛️ 支持返回 LiveQueryCollectionConfig 对象进行高级配置
+- 💡 禁用状态下返回明确空闲状态（isIdle: true）
+- 📚 提供条件查询/预建集合/高级配置三种使用示例
+- 🔗 同步更新依赖项 @tanstack/db 至 0.3.2 版本
+
+### [React Router 中间件 | Remix](https://remix.run/blog/middleware)
+
+React Router 7.9.0 版本中，期待已久的中间件功能通过 future.v8_middleware 标志正式稳定发布。该功能解决了嵌套路由中数据加载的并行执行限制，允许在加载器之前和之后顺序执行逻辑，支持父子路由间数据共享和短路重定向，并引入了新的上下文 API 以改善类型安全。
+
+- 🚀 React Router 7.9.0 稳定版引入中间件功能，通过 future.v8_middleware 标志启用
+- 🔄 中间件解决了嵌套路由中加载器并行执行的问题，支持顺序逻辑和短路操作
+- 📚 灵感来自 Remix v1/v2模式，解决了父子加载器数据无法共享和重定向无效的痛点
+- 🛠️ 早期尝试因架构限制（如多 HTTP 请求）未能实现性能优化，后通过 Single Fetch 功能重构
+- 🔧 新 API 基于 dataStrategy 和类型安全上下文，支持中间件在 SSR 和 SPA 中的灵活应用
+- 💡 示例展示中间件如何实现用户数据共享和认证重定向，提升代码简洁性和性能
+- 📖 详细文档和社区资源（如 remix-utils）可供参考，鼓励开发者探索新模式
+
+### [Wasm 3.0 完成 - WebAssembly](https://webassembly.org/news/2025-09-17-wasm-3.0/)
+
+WebAssembly 3.0 标准正式发布，引入 64 位地址空间、多内存、垃圾回收、异常处理等重大特性，显著提升对高级语言的支持能力。
+
+- 🌐 64 位地址空间支持，内存寻址从 4GB 扩展至 16EB（网页环境限制为 16GB）
+- 🧠 单模块支持多内存声明，实现静态链接与安全数据隔离
+- 🗑️ 新增底层垃圾回收机制，支持结构体/数组类型的内存自动管理
+- 🔗 类型化引用系统支持精确堆值描述，实现安全间接函数调用
+- 🔄 通用尾调用优化，避免栈空间累积
+- 🚨 原生异常处理机制，支持标签化异常捕获
+- ⚡ 宽松向量指令集，允许硬件相关优化以提升性能
+- ⚖️ 确定性执行模式，确保浮点运算和向量指令结果可重现
+- 📝 文本格式支持自定义注解语法
+- 📜 JavaScript API 新增字符串内置函数支持
+- 🌍 已获主流浏览器支持，独立引擎适配进行中
+
 ## 设计
 
+### [Web 界面指南](https://vercel.com/design/guidelines)
+
+本文档是一份持续更新的网页界面设计指南，涵盖交互、动画、布局、内容、表单、性能、设计等核心原则，旨在创建高可用性、可访问性且性能优异的用户界面。
+
+- ⌨️ 交互设计需确保全键盘操作、焦点管理明确，移动端点击目标不小于 44px
+- 🎯 输入框在移动端字体不小于 16px，禁止禁用浏览器缩放和粘贴功能
+- ⏳ 加载状态需设置最短显示时间，URL 应持久化状态以支持页面刷新和分享
+- 🚨 危险操作需二次确认，工具提示应设置延迟，滚动位置需保持持久化
+- 🎞️ 动画应优先使用 CSS，支持运动偏好设置，避免使用 transition: all
+- 📐 布局采用视觉对齐原则，适配各种屏幕尺寸，避免多余滚动条
+- 📝 内容需提供多状态设计，使用印刷级引号，图标需配备文字标签
+- 📋 表单应支持回车提交，标签需关联控件，错误信息需邻近字段显示
+- ⚡ 性能优化需虚拟化长列表，预加载关键资源，将耗时任务移至 Web Worker
+- 🎨 设计规范要求使用分层阴影，确保色彩对比度，设置主题色匹配浏览器
+- ✍️ 文案使用主动语态和标题式大写，错误信息应提供明确解决方案
+- 🤖 提供 AGENTS.md 文件供 AI 代理集成，推荐审计所有生成界面
+
 ## AI
+
+### [zilliztech/claude-context: 面向 Claude 代码的代码搜索 MCP。将整个代码库作为任何编程智能体的上下文环境。](https://github.com/zilliztech/claude-context)
+
+Claude Context 是一个基于模型上下文协议（MCP）的语义代码搜索工具，可将整个代码库作为 AI 编程助手的上下文，通过向量数据库实现高效的代码检索和成本控制。
+
+- 🧠 **智能语义搜索**：通过混合搜索技术（BM25+ 向量检索）实现自然语言查询代码功能
+- 💰 **成本优化设计**：仅加载相关代码到上下文，避免全量代码传输的高昂成本
+- 🚀 **多平台支持**：兼容 Claude Code、VS Code、Cursor 等主流编程工具和 IDE
+- ⚡ **增量索引机制**：基于 Merkle 树实现高效的文件变更重新索引
+- 🌳 **AST 智能分块**：使用抽象语法树分析代码结构进行智能分块处理
+- 🗄️ **可扩展架构**：支持 OpenAI、VoyageAI 等多种嵌入模型和 Milvus 向量数据库
+- 📦 **多种使用方式**：提供 MCP 服务器、VS Code 扩展和核心包三种集成方案
+- 🔧 **开发友好**：支持 TypeScript、Python 等十多种编程语言，MIT 开源协议
+
+### [引言 - 代理客户端协议](https://agentclientprotocol.com/overview/introduction)
+
+Agent Client Protocol（ACP）是一个标准化代码编辑器与 AI 编程助手之间通信的协议，旨在解决不同编辑器与 AI 助手之间集成兼容性问题。
+
+- 🤝 标准化 AI 助手与编辑器通信，类似语言服务器协议 (LSP) 的作用
+- 🔌 解决编辑器与 AI 助手紧耦合导致的集成开销和兼容性限制问题
+- 💻 采用 JSON-RPC over stdio 通信方式，代理作为编辑器子进程运行
+- 📝 默认使用 Markdown 格式传输用户可读文本，支持富文本展示
+- 🚀 目前仍在开发中，但已具备构建有趣用户体验的完整度
+- 🔄 重用 MCP 的 JSON 表示方法，同时包含专用于代码编辑的差异化类型
+
+### [面向 AI 代理的 Chrome DevTools (MCP)  |  博客  |  Chrome 开发者专栏](https://developer.chrome.com/blog/chrome-devtools-mcp)
+
+Chrome DevTools 推出基于模型上下文协议（MCP）的服务器公开预览版，使 AI 编程助手能够直接连接浏览器进行实时调试和性能分析，提升代码生成的准确性。
+
+- 🚀 通过 MCP 协议让 AI 助手直接操控 Chrome DevTools 进行网页调试
+- 🔍 支持实时验证代码修改效果和诊断网络/控制台错误
+- 👤 可模拟用户行为测试表单提交等交互流程
+- 🎨 实时检查 DOM/CSS 布局问题并提供修复建议
+- ⚡ 自动化性能追踪与 LCP 等核心指标分析
+- ⚙️ 通过 npm 快速安装配置，支持现有 AI 编程工具集成
+- 🌱 目前为预览版，邀请开发者反馈以完善功能
+
+### [探索 Chrome 全新 AI 功能：浏览器背后的奥秘](https://blog.google/products/chrome/new-ai-features-for-chrome/)
+
+Chrome 迎来史上最大规模升级，通过集成谷歌 AI 技术提升浏览体验，涵盖智能助手、跨标签操作、安全防护等十大新功能。
+
+- 🤖 Gemini 助手内嵌 Chrome，可解释复杂内容并支持多标签页协同工作
+- ⚡ 即将推出代理浏览功能，可自动处理预约理发等重复性任务
+- 🔍 地址栏集成 AI 搜索模式，支持复杂问题提问和智能应答
+- 🛡️ 利用 Gemini Nano 增强安全浏览，扩展技术支持和虚假赠品诈骗检测
+- 📱 深度整合谷歌应用，无需切换标签即可操作日历、地图等服务
+- 📚 智能回忆历史浏览页面，通过自然语言快速定位过往内容
+- 💬 基于当前页面内容提供上下文问题建议和 AI 概述
+- 🔔 智能拦截垃圾通知，日均减少 30 亿条安卓端骚扰提醒
+- 🚫 AI 学习用户偏好，智能管理网站摄像头/定位权限请求
+- 🔐 一键更换泄露密码功能，支持 Coursera 等主流网站快捷更新
 
 ### [neovate-code](https://github.com/neovateai/neovate-code)
 
@@ -39,3 +248,21 @@ Neovate 是一个旨在提升开发工作流程的编程助手，可用于生成
 - 🤖 使用 `/model` 命令选择模型后，即可在命令行中描述需求（如“为用户认证函数添加错误处理”或“优化数据库查询”），助手会生成修改建议供审核批准。
 
 ## 其他
+
+AI 编程只能解决 70% 的问题
+
+根据我的观察，公司里面的高级程序员和低级程序员，使用 AI 的方式是不一样的。
+
+高级程序员并不完全信任 AI 的输出，只是用 AI 加速项目。他们一般会审查和重构 AI 生成的代码，对于 AI 的架构决策也是抱着怀疑的态度。
+
+初级程序员更倾向于跳过审查和重构，全盘接受 AI 的输出，从而导致"纸牌屋式"的代码：看起来能发挥作用，一旦投入使用就会崩溃。
+
+我不知道，AI 未来会不会替代程序员，但是现阶段，AI 编程还不能解决 100% 的软件问题，但已经可以解决 70% 的问题。这相当于，AI 可以减轻高级程序员 70% 的工作量。
+
+剩下的 30%，依然需要依靠程序员的经验和专业知识，而初级程序员恰恰缺少的是这 30%。
+
+所以，听起来可能违反直觉：AI 对高级程序员比对初级程序员帮助更大，更容易产生工作成果。
+
+现阶段的 AI，更像团队中的一个非常有干劲的初级程序员，可以快速编写代码，但需要不断的监督和纠正。你知道的越多，你就越能指导它。
+
+所以，AI 的正确用法是，高级程序员用它来加速他们已经知道如何做的事情，初级程序员用它来学习该做什么。
