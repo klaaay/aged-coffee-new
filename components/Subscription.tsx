@@ -27,6 +27,13 @@ export const Subscription = () => {
   const [subscriptions, setSubscriptions] = useState<SubscriptionItem[]>(
     [
       {
+        name: '夸克扫描王',
+        yearly: 88,
+        expiry: '2026-11-28',
+        type: '效率',
+        extra: '',
+      },
+      {
         name: 'Figma Full Seat',
         yearly: toFixed2Number(16 * 12 * DOLLAR2RMB),
         expiry: '2026-9-27',
