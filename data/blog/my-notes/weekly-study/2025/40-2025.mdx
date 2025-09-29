@@ -12,6 +12,31 @@ summary: ''
 
 ## 技术
 
+### [如何利用 React Router 内置数据去重功能 by sergiodxa](https://sergiodxa.com/tutorials/leverage-react-router-s-built-in-data-deduplication)
+
+React Router 7.0.0 内置了智能数据去重机制，当使用 Promise.all 等组合多个数据请求时，框架会自动检测共享数据并通过引用传输而非重复传输值，从而优化网络性能。
+
+- 🚀 自动去重：React Router 在组合 Promise 时自动识别重复数据，使用引用代替实际值传输
+- 🔗 引用机制：通过指针标识数据关系，如 P6/P8 指向独立数据，P10 通过 [[14,13]] 引用已传输数据
+- ⚡ 流式传输：数据分块发送，每个 Promise 解析后立即传输对应数据片段
+- 🎯 智能关联：框架理解数据依赖关系，组合 Promise 仅传输引用而非重复数据
+- 📦 复杂结构优化：对包含多个属性的对象同样有效，显著减少带宽占用
+- 💡 无感优化：开发者使用标准 Promise 语法即可自动获得去重收益
+- 🛒 实际价值：在电商等复杂场景中避免用户信息、商品数据等重复传输
+- 🎪 渐进加载：配合 Suspense 和 Await 实现细粒度加载状态管理
+
+### [2025 年 React 状态管理：你真正需要掌握的核心要点](https://www.developerway.com/posts/react-state-management-2025)
+
+本文探讨了 2025 年 React 状态管理的实际需求，指出大多数情况下并不需要专门的状态管理库，并针对不同状态类型推荐了相应的解决方案。
+
+- 🎯 状态管理决策应基于具体需求，没有"最佳"通用方案
+- 🌐 远程状态推荐使用 TanStack Query 或 SWR 库处理数据获取和缓存
+- 🔗 URL 状态可通过 nuqs 库实现与本地状态的高效同步
+- 🏠 本地状态直接使用 React 内置的 useState 或 useReducer 即可
+- 🔄 共享状态可先用 Context 解决，复杂场景再考虑状态管理库
+- ⚡ Zustand 因简单易用且符合 React 理念成为作者首选共享状态方案
+- 📊 通过分类处理不同状态类型，可消除约 90% 的状态管理问题
+
 ## 工具
 
 ## 更新
