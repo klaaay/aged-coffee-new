@@ -1,0 +1,67 @@
+---
+title: 2025-第四十一周
+date: '2025-10-08'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [快速了解 useEffectEvent | Nico 的博客](https://www.nico.fyi/blog/quick-look-use-effect-event)
+
+React 19.2 版本引入了 useEffectEvent 钩子，用于从 Effect 中提取非响应式逻辑，创建能始终访问最新状态但不会触发 Effect 重新运行的函数。
+
+- 🔄 useEffectEvent 能创建始终读取最新状态值的"不稳定"函数
+- ⚡ 使用该钩子的函数不会导致包含它的 Effect 因依赖变化而重新执行
+- 🚫 通过 ESLint 规则自动排除依赖项，无需手动声明函数依赖
+- 🐛 解决了传统方法中函数闭包捕获旧状态值的问题
+- 💡 适用于需要在 Effect 中访问最新状态但不希望触发重运行的场景
+- 📝 通过包装函数创建 Effect Event，确保始终使用最新值
+
+## 工具
+
+### [window-post-message-proxy](https://github.com/microsoft/window-post-message-proxy)
+
+这是一个用于替代原生 `window.postMessage` 的库，通过在发送和接收窗口两端同时使用，可实现基于 Promise 的异步消息通信。它通过消息 ID 追踪和延迟对象管理，简化了跨窗口通信的流程，并支持自定义消息处理、错误检测和日志记录等功能。
+
+- 🚀 **异步消息通信**：通过唯一 ID 和延迟对象管理，实现基于 Promise 的跨窗口消息传递。
+- 🔧 **基础用法**：初始化代理后，使用 `postMessage` 发送消息并异步处理响应。
+- 🛠️ **自定义消息追踪**：支持通过配置函数修改消息中追踪属性的存储方式（如添加到 `headers` 字段）。
+- ⚠️ **错误检测定制**：可自定义判断响应消息是否为错误的逻辑（默认检查 `error` 属性）。
+- 📝 **日志记录功能**：启用后可打印所有收发消息的 JSON 内容，便于调试。
+- 🏷️ **实例命名支持**：可为代理实例设置自定义名称，方便在日志中区分不同窗口。
+- 🔕 **警告抑制**：支持关闭未处理消息的警告提示，适应多消息处理器的场景。
+- 🌐 **官方支持**：提供文档、问题反馈和社区论坛等资源，协助开发者使用。
+
+## 更新
+
+### [15 个替代热门 npm 包的最新 Node.js 功能](https://nodesource.com/blog/nodejs-features-replacing-npm-packages)
+
+Node.js 持续将常用功能集成到运行时核心中，取代了多个流行的 npm 包，从而减少依赖、提升安全性和维护性。
+
+- 🌐 **全局 fetch()** - Node.js 18+ 内置 fetch API，替代 node-fetch
+- 🔌 **全局 WebSocket 客户端** - Node.js 21+ 提供 WebSocket 类，替代 ws 包客户端功能
+- 🧪 **内置测试运行器** - node:test 模块提供基础测试功能，替代 mocha/jest
+- 💾 **实验性 SQLite 支持** - node:sqlite 模块正在开发中，未来可能替代 sqlite3 包
+- 🎨 **控制台样式** - util.styleText() 提供文本颜色样式，替代 chalk/kleur
+- 🧹 **ANSI 代码清理** - util.stripVTControlCharacters() 清除控制字符，替代 strip-ansi
+- 📁 **文件模式匹配** - fs.glob() 支持通配符文件搜索，替代 glob 包
+- 🗑️ **递归删除** - fs.rm() 支持 recursive 选项，替代 rimraf
+- 📂 **递归创建目录** - fs.mkdir() 支持 recursive 选项，替代 mkdirp
+- 🔐 **UUID 生成** - crypto.randomUUID() 生成 UUID，替代 uuid 包
+- 🔄 **Base64 编码** - 内置 atob/btoa 全局函数，替代 base64-js 包
+- 🛣️ **URL 模式匹配** - 实验性 URLPattern API，替代 url-pattern
+- ⚙️ **环境文件加载** - --env-file 标志支持加载 .env 文件，替代 dotenv
+- 🎯 **事件目标** - 全局 EventTarget 类，替代 event-target-shim
+- 🔧 **TypeScript 支持** - 实验性类型剥离功能，简化 TypeScript 运行
+
+## 设计
+
+## AI
+
+## 其他
