@@ -12,6 +12,30 @@ summary: ''
 
 ## 技术
 
+### [并发水合与 useSyncExternalStore | Jacob 'Kurt' Groß](https://kurtextrem.de/posts/react-uses-hydration)
+
+本文探讨了在 React 服务端渲染中使用 Suspense 时如何通过改进 useSyncExternalStore 实现并发水合，避免水合不匹配问题并提升用户体验。
+
+- 🚧 传统 useSyncExternalStore 会导致同步阻塞渲染，引发 Suspense 回退内容闪烁、水合错误和 INP 指标下降等问题
+- ⚡ 通过结合 useDeferredValue 创建并发版本 useSyncExternalStore，在保持水合一致性的同时实现非阻塞渲染
+- 🔧 关键技术方案：在初始水合阶段返回服务端值，随后通过延迟值触发并发渲染更新客户端内容
+- 📝 需要配合 useMemo 正确缓存组件，避免在同步渲染过程中产生不必要的子组件更新
+- ✅ 该模式已获 React 团队认可，能有效解决水合期间的上下文更新问题和 Suspense 边界闪烁
+- 🎯 相比 useEffect 方案，能更精准控制服务端/客户端渲染逻辑，避免重复渲染和不良用户体验
+
+### [我对 React 的所有不满，实则皆是对 JavaScript 的怨怼](https://chadnauseam.com/coding/pltd/react-is-good-javascript-is-the-problem)
+
+本文认为，人们对 React 的许多不满实际上源于 JavaScript 的设计缺陷，特别是其引用相等性比较机制，这导致了不必要的重新渲染和复杂的性能优化工作。
+
+- 🐛 **匿名函数导致重渲染**：在 React 中，向子组件传递匿名函数（如`() => checkout(cart)`）会在每次渲染时创建新函数，即使子组件被记忆化，也会触发重新渲染。
+- 🎭 **useCallback 的局限**：使用`useCallback`来记忆函数，但其依赖数组中的对象（如数组）若在每次渲染时重新创建（例如通过`.map`），会使得`useCallback`失效，再次导致重渲染。
+- 🧩 **记忆化瀑布**：为了解决上述问题，需要引入`useMemo`来记忆衍生数据（如`normalizedItems`），导致代码中记忆化逻辑远多于业务逻辑，形成“记忆化瀑布”。
+- 🔍 **JavaScript 的引用相等性问题**：JavaScript 默认使用引用相等性（`[1,2,3] !== [1,2,3]`），这几乎从未是开发者实际需要的比较方式，迫使开发者使用`JSON.stringify`等低效方法进行深层比较。
+- ⚠️ **正确性问题**：在`useEffect`的依赖数组中放入一个每次渲染都会重新创建的对象，会导致`useEffect`在每次渲染时都运行，可能引发严重的逻辑错误和性能问题（如 API 被意外重复调用）。
+- ⚙️ **React 编译器的局限**：React 编译器旨在自动插入记忆化逻辑，但它并非优化所有组件，有时甚至会与手动添加的`useMemo`冲突，导致开发者仍需手动处理记忆化，未能从根本上解决问题。
+- 🦀 **Rust 作为解决方案的探索**：作者尝试将 React 仅用作 UI 层，而将核心业务逻辑用 Rust 编写（编译为 WebAssembly）。这种方式避免了 JavaScript 的诸多问题，作者感觉在 Rust 中的开发效率远高于 JavaScript。
+- 🚧 **现状与展望**：目前完全用 Rust 开发网站的方案尚不成熟，但作者相信未来会出现更符合人体工学的 Rust Web 开发方案，并期待彻底告别 JavaScript。
+
 ### [快速了解 useEffectEvent | Nico 的博客](https://www.nico.fyi/blog/quick-look-use-effect-event)
 
 React 19.2 版本引入了 useEffectEvent 钩子，用于从 Effect 中提取非响应式逻辑，创建能始终访问最新状态但不会触发 Effect 重新运行的函数。
@@ -24,6 +48,17 @@ React 19.2 版本引入了 useEffectEvent 钩子，用于从 Effect 中提取非
 - 📝 通过包装函数创建 Effect Event，确保始终使用最新值
 
 ## 工具
+
+### [GitHub - blazejkustra/react-compiler-marker: 在 VSCode/Cursor 中高亮显示经 React 编译器优化的组件 ✨](https://github.com/blazejkustra/react-compiler-marker)
+
+这是一个用于 VSCode/Cursor 编辑器的 React Compiler 标记扩展，可在代码编辑器中直观显示被 React Compiler 优化的 React 组件
+
+- ✨ 在编辑器中标记被 React Compiler 优化的组件（✨表示优化成功，🚫表示优化失败）
+- 🎯 提供悬停提示功能，显示组件优化状态的详细信息
+- 🛠️ 支持多种命令操作：激活/停用标记、单文件检查、预览编译输出
+- 📁 兼容 JavaScript、TypeScript 及 JSX/TSX 文件格式
+- ⚡ 无需额外依赖配置，开箱即用
+- 🐛 已知问题：匿名函数可能无法正确显示提示，大量组件时性能可能略有下降
 
 ### [window-post-message-proxy](https://github.com/microsoft/window-post-message-proxy)
 
@@ -39,6 +74,45 @@ React 19.2 版本引入了 useEffectEvent 钩子，用于从 Effect 中提取非
 - 🌐 **官方支持**：提供文档、问题反馈和社区论坛等资源，协助开发者使用。
 
 ## 更新
+
+### [视图过渡新动态（2025 年更新） | 博客 | Chrome 开发者](https://developer.chrome.com/blog/view-transitions-in-2025)
+
+2025 年视图过渡 API 迎来多项重要更新，包括浏览器支持扩展、新功能发布和开发者工具增强。
+
+- 🌐 **浏览器支持扩展** - Firefox 144 将于 10 月 14 日支持同文档视图过渡功能，React 核心已集成视图过渡支持
+- 🤖 **自动命名优化** - 新增`view-transition-name: match-element`功能，自动为元素生成视图过渡名称
+- 🔧 **开发者工具升级** - Chrome 139 起 DevTools 可显示针对`view-transition-class`的样式规则
+- 🎯 **嵌套视图组** - Chrome 140 支持嵌套`::view-transition-group`，保留 DOM 层级效果
+- ⚡ **动画属性继承** - 伪元素现在继承更多动画属性，保持过渡效果同步
+- 🕒 **执行时机优化** - `finished`承诺回调不再等待帧渲染，避免动画结束时的闪烁问题
+- 🧪 **作用域过渡测试** - Chrome 140 支持元素级`element.startViewTransition()`，允许多个过渡同时运行
+- 📍 **定位方式变更** - Chrome 142 将`::view-transition`从`fixed`改为`absolute`定位
+- 📊 **活动过渡访问** - Chrome 142 新增`document.activeViewTransition`属性，方便访问当前过渡实例
+- ⏳ **过渡控制增强** - 即将推出`ViewTransition.waitUntil`方法，可延迟过渡完成直到指定承诺解决
+
+### [What's coming in ESLint v10.0.0](https://eslint.org/blog/2025/10/whats-coming-in-eslint-10.0.0/)
+
+ESLint v10.0.0 的开发计划已确定，将分阶段发布以确保稳定性并收集社区反馈。该版本包含多项重大变更，如停止对旧版 Node.js 的支持、完全移除 eslintrc 配置系统、更新规则配置和 AST 处理逻辑等，旨在提升工具性能和现代化支持。
+
+- 🚀 **分阶段发布计划**：依次发布 Alpha（含重大破坏性变更）、Beta（剩余功能和小幅变更）及候选版本，最终于 2026 年 1 月正式发布。
+- ⚠️ **停止支持旧 Node.js 版本**：仅支持 Node.js v20.19.0+、v22.13.0+ 及 v24+，以利用新特性（如原生 ESM 支持）。
+- 🗑️ **彻底移除 eslintrc 配置系统**：不再兼容 `.eslintrc.*` 文件及相关 CLI 参数，全面转向扁平化配置。
+- 📋 **更新推荐配置**：`eslint:recommended` 将新增规则以提升代码质量。
+- 🔧 **修正 AST 节点范围**：Program 节点的范围将覆盖整个文件内容（含注释与空格）。
+- 🧹 **清理废弃 API**：移除规则上下文和 SourceCode 中的过时方法（如 `getSourceCode()`、`getTokenOrCommentBefore()`）。
+- 🧩 **启用 JSX 引用追踪**：改进对 JSX 元素的作用域分析，提升 JSX 项目检测准确性。
+- ⏳ **调整配置查找逻辑**：默认从被检测文件目录向上查找配置，优化 monorepo 支持。
+- 📅 **发布时间表**：Alpha 版于 2025 年 11 月发布，最终版计划 2026 年 1 月发布。
+
+### [渐进式采用——React](https://react.dev/learn/react-compiler/incremental-adoption)
+
+React Compiler 支持渐进式采用策略，允许开发者在现有项目中分阶段启用编译器功能，通过目录级配置、组件级注解和运行时特性开关三种方式实现可控迁移。
+
+- 🗂️ **目录级启用**：通过 Babel 的 overrides 配置，可针对特定目录（如`./src/modern/`）启用编译器，支持分批次扩展覆盖范围
+- 🎯 **组件级控制**：使用`"use memo"`指令精准标记需编译的组件/钩子，搭配`compilationMode: 'annotation'`实现细粒度控制
+- 🚦 **运行时开关**：通过 gating 配置结合特性标志（如`isCompilerEnabled()`），支持 A/B 测试和按用户分群逐步发布
+- ⚠️ **问题排查**：可用`"use no memo"`临时排除问题组件，配合 ESLint 插件修复 React 规则违规
+- 📊 **渐进优势**：降低全量迁移风险，便于验证优化效果、系统性修复问题，特别适合对稳定性要求高的生产环境
 
 ### [15 个替代热门 npm 包的最新 Node.js 功能](https://nodesource.com/blog/nodejs-features-replacing-npm-packages)
 
@@ -62,6 +136,47 @@ Node.js 持续将常用功能集成到运行时核心中，取代了多个流行
 
 ## 设计
 
+### [审核您的设计系统以提升无障碍访问性](https://uxdesign.cc/auditing-your-design-system-for-accessibility-49784d15ae56)
+
+设计系统是产品可访问性的基础，若其存在缺陷，所有基于它构建的产品都会受到影响。通过在系统层面解决可访问性问题，可以一次性修复所有下游产品的问题，从而节省成本、加速开发并促进包容性设计。
+
+- 🎯 **设定审计范围**：从设计令牌（如颜色、间距）和核心组件（如按钮、输入框）开始审计，并确保文档中包含可访问性指南。
+- 🛠️ **选择审计工具**：使用 Figma 插件（如 Stark）检查设计，使用 Storybook 插件和浏览器扩展（如 axe）测试代码组件，并辅以辅助技术（如屏幕阅读器）进行手动测试。
+- 📏 **确定可访问性标准**：根据产品用户所在地（如欧盟需遵循 EAA）选择标准，通常以 WCAG 2.2 AA 级为基准。
+- 📋 **系统盘点**：列出所有设计令牌、UI 组件和模式，记录使用频率并链接到其设计或代码源文件。
+- 🎨 **审计设计令牌**：检查颜色对比度、文本可读性、目标尺寸和动画设置，确保符合 WCAG 要求。
+- ⚙️ **审计 UI 组件**：使用测试清单验证键盘操作、焦点管理、语义、状态反馈、屏幕阅读器支持、缩放适应性和指针独立性。
+- 🔄 **验证 UI 模式**：确保导航框架、表单、空状态等系统级模式默认具备可访问性。
+- 📝 **记录审计结果**：为每个问题记录标题、证据、影响用户群、严重性、修复工作量和建议解决方案。
+- 🚦 **问题优先级排序**：根据严重性（关键、主要、次要）和修复工作量，使用 2x2 矩阵确定修复顺序，优先处理高严重性低工作量的问题。
+
 ## AI
+
+### [chatkit-js](https://github.com/openai/chatkit-js)
+
+ChatKit 是一个功能全面的框架，用于快速构建高质量、AI 驱动的聊天体验，它提供开箱即用的生产级聊天界面，支持深度 UI 定制和丰富的交互功能。
+
+- 🚀 **快速集成**：只需添加 ChatKit 组件并配置少量选项，即可快速为应用添加高级对话智能功能。
+- 🎨 **深度定制**：支持深度 UI 自定义，使聊天界面完美融入您的应用设计。
+- 🌊 **流式响应**：内置响应流式传输，实现交互式自然对话体验。
+- 🛠️ **工具集成**：支持工具和工作流集成，可可视化智能体操作和思维链推理。
+- 📦 **丰富组件**：直接在聊天中渲染丰富的交互式小组件。
+- 📎 **附件处理**：支持文件和图片上传的附件处理功能。
+- 💬 **会话管理**：提供线程和消息管理，用于组织复杂对话。
+- 🔍 **透明参考**：支持来源标注和实体标记，提高透明度和参考性。
+- 🌐 **框架无关**：作为框架无关的即插即用解决方案，无需构建自定义 UI 或管理底层聊天状态。
+- ⚡ **快速开始**：通过服务器生成客户端令牌，安装 React 绑定，添加 JS 脚本即可快速启动。
+
+### [OpenAI 应用 SDK：在 ChatGPT 内构建原生应用 - 首字节机构](https://www.premieroctet.com/blog/en/openai-apps-sdk-build-native-apps-inside-chatgpt)
+
+OpenAI Apps SDK 将 ChatGPT 从对话助手转变为应用平台，开发者可构建原生应用直接集成到 ChatGPT 中，利用其庞大的用户基础。该 SDK 基于开放的 Model Context Protocol (MCP) 标准，支持 TypeScript 和 Python 开发，提供安全的 OAuth 2.1 认证和沙盒化组件运行环境，强调用户体验、安全性和可发现性。
+
+- 🚀 **平台转型**：ChatGPT 成为应用分发渠道，支持原生应用集成
+- 🔧 **技术架构**：基于 MCP 开放标准，实现跨客户端兼容
+- ⚙️ **开发选择**：推荐 TypeScript，支持代码复用和类型安全
+- 🛡️ **安全隐私**：强制 OAuth 2.1 认证，遵循最小权限原则
+- 🎨 **用户体验**：支持三种显示模式，遵循五大设计原则
+- 🔍 **测试调试**：提供 MCP Inspector 工具和自动化测试支持
+- 💡 **应用场景**：涵盖内容展示、交互地图、视频播放等多样化用例
 
 ## 其他
