@@ -75,6 +75,36 @@ React 19.2 版本引入了 useEffectEvent 钩子，用于从 Effect 中提取非
 
 ## 更新
 
+### [发布 v1.56.0 · microsoft/playwright · GitHub](https://github.com/microsoft/playwright/releases/tag/v1.56.0)
+
+Playwright v1.56.0 版本发布，引入 AI 智能代理系统并新增多项 API 功能
+
+- 🎭 新增 Playwright Agents 三大智能代理：planner 生成测试计划、generator 创建测试文件、healer 自动修复失败测试
+- 🛠️ 新增页面控制台消息 (page.consoleMessages) 和网络请求 (page.requests) 检索 API
+- 📋 新增--test-list 参数支持手动指定测试用例
+- 🎨 UI 模式和 HTML 报告器新增合并文件、禁用复制按钮等功能选项
+- ⚠️ 弃用 browserContext.on('backgroundpage') 事件
+- 🔧 新增 ARIA 快照对比输入框占位符功能
+- 🌐 浏览器版本更新：Chromium 141.0、Firefox 142.0、WebKit 26.0
+- 📦 提供 npx playwright init-agents 命令生成最新代理定义文件
+
+### [Next.js 16（测试版）| Next.js](https://nextjs.org/blog/next-16-beta)
+
+**原文标题**: [Next.js 16 (beta) | Next.js](https://nextjs.org/blog/next-16-beta)
+
+Next.js 16（测试版）现已发布，带来多项性能优化和新功能，包括 Turbopack 稳定版、React 编译器支持、增强的路由和缓存 API 等，同时包含一些破坏性变更和弃用功能。
+
+- 🚀 **Turbopack 稳定版**：作为默认打包工具，开发刷新速度提升 5-10 倍，构建速度提升 2-5 倍
+- 💾 **文件系统缓存（测试版）**：通过磁盘缓存大幅提升大型项目的启动和编译速度
+- ⚙️ **React 编译器支持**：内置自动记忆化功能，无需手动代码调整即可减少不必要的重新渲染
+- 🔌 **构建适配器 API（Alpha 版）**：允许创建自定义适配器来修改构建过程
+- 🛣️ **增强路由导航**：布局去重和增量预取优化页面过渡，显著降低网络传输大小
+- 🔄 **改进缓存 API**：新增`updateTag()`和优化`revalidateTag()`，提供更精确的缓存控制
+- ⚛️ **React 19.2 支持**：包含视图过渡、`useEffectEvent`和`<Activity/>`等新功能
+- ⚠️ **破坏性变更**：Node.js 20.9+ 最低要求、移除 AMP 支持、异步参数访问等
+- 📦 **默认行为调整**：图像缓存 TTL 默认改为 4 小时，预取缓存行为完全重写
+- 🗑️ **功能弃用**：`middleware.ts`更名为`proxy.ts`，弃用`next/legacy/image`等旧功能
+
 ### [视图过渡新动态（2025 年更新） | 博客 | Chrome 开发者](https://developer.chrome.com/blog/view-transitions-in-2025)
 
 2025 年视图过渡 API 迎来多项重要更新，包括浏览器支持扩展、新功能发布和开发者工具增强。
