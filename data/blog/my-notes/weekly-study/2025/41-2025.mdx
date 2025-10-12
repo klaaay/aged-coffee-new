@@ -182,6 +182,29 @@ Node.js 持续将常用功能集成到运行时核心中，取代了多个流行
 
 ## AI
 
+### [claude-skills](https://github.com/simonw/claude-skills)
+
+`claude-skills` 是一个通过提示 Claude.ai 创建的仓库，其内容来源于 Claude 代码解释器环境中的 `/mnt/skills` 文件夹。该项目旨在分享和记录这些技能文件。
+
+- 💡 **项目起源**: 项目是通过在 Claude.ai 上执行特定提示词创建的，目的是获取其技能文件夹的全部内容。
+- 📂 **内容来源**: 仓库文件克隆自 Claude 代码解释器环境中的 `/mnt/skills` 目录。
+- 🔗 **背景信息**: 项目创建者在其博客文章中详细说明了该项目的背景和动机。
+- ⭐ **社区关注**: 项目获得了较高的社区关注度，拥有 561 个星标和 76 个复刻。
+- 👥 **贡献者**: 目前有两位贡献者，包括项目创建者 Simon Willison 和 Claude 本身。
+
+### [superpowers](https://github.com/obra/superpowers)
+
+这是一个名为"Superpowers"的 Claude 代码插件项目，它为 Claude Code 提供了一个全面的技能库，包含测试、调试、协作和元技能等核心功能。项目采用 MIT 许可证，包含搜索工具、斜杠命令和个人技能管理等功能。
+
+- 🚀 **项目信息** - GitHub 仓库 obra/superpowers，113 星标，3 个分支，41 次提交，主要包含 TypeScript 和 Shell 代码
+- 📚 **技能库组成** - 提供测试技能 (TDD、异步测试)、调试技能 (系统调试、根本原因追踪)、协作技能 (头脑风暴、代码审查) 和元技能 (创建、测试技能)
+- ⚡ **核心功能** - 支持/brainstorm、/write-plan、/execute-plan 等斜杠命令，提供技能搜索和运行工具
+- 🏠 **个人技能管理** - 自动创建~/.config/superpowers/个人技能仓库，支持 git 版本控制和个人技能覆盖核心技能
+- 🔧 **安装方式** - 通过插件市场安装，首次会话自动设置个人技能仓库并初始化 git
+- 📖 **使用流程** - 先通过 find-skills 搜索相关技能，然后使用斜杠命令进行头脑风暴、制定计划和执行计划
+- 🤝 **贡献机制** - 支持用户创建个人技能并贡献回核心库，遵循测试驱动的文档开发流程
+- 🎯 **设计理念** - 强调测试驱动开发、系统性方法优先于临时方案、复杂性减少和基于证据的验证
+
 ### [译：Superpowers：我在 2025.10 如何使用 Code Agent](https://sorrycc.com/superpowers-how-im-using-coding-agents-in-october-2025)
 
 本文介绍了作者 Jesse Vincent 开发的 Superpowers 系统，这是一个为 Claude Code 设计的插件工具集，旨在通过“技能”机制来系统化 AI 代理的工作流程，提升其执行任务的可靠性和效率。系统强制 AI 在特定任务中使用预设技能，并引入了压力测试来验证技能的有效性。文章还探讨了说服心理学原则在 AI 交互中的应用，并展望了未来的技能分享和记忆功能。
