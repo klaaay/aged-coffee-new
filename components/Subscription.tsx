@@ -124,7 +124,13 @@ export const Subscription = () => {
         type: '娱乐',
         extra: '续订 12/4 Apple 付款',
       },
-      { name: 'Apple Music', yearly: 110, expiry: '2025-01-03', type: '娱乐', extra: '' },
+      {
+        name: 'Apple Music',
+        yearly: 17 * 12,
+        expiry: '2030-01-01',
+        type: '娱乐',
+        extra: '家庭',
+      },
       {
         name: '阿里云盘',
         yearly: 168,
