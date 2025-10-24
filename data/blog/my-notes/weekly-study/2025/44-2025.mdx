@@ -1,0 +1,123 @@
+---
+title: 2025-第四十四周
+date: '2025-10-25'
+tags: ['WEEKLY-2025']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [面向 React 开发者的 AI 原生 shadcn 组件库](https://www.shadcn.io/)
+
+shadcn.io 是一个面向 React 开发者的 AI 原生组件库资源平台，提供丰富的 UI 组件、动画效果和自定义 Hooks，支持 TypeScript 和 Tailwind CSS，帮助开发者快速构建现代应用程序。
+
+- 🧩 提供可组合的 React UI 组件，支持完全自定义和 TypeScript
+- 🤖 包含 AI 集成组件和聊天界面等现代应用元素
+- 📊 内置基于 Recharts 的图表组件，支持交互式数据可视化
+- ✨ 提供丰富的动画效果组件，如磁性悬停、液体按钮等
+- ⚓ 提供实用的 React Hooks，包含状态管理和性能优化功能
+- 🛠️ 支持通过 CLI 工具快速安装组件
+- 🌐 社区驱动的资源库，非官方 shadcn/ui 关联项目
+- 🎨 基于 Tailwind CSS 和 Radix UI 构建，包含主题生成器等工具
+
+### [Vercel 出品 Next.js —— React 框架](https://nextjs.org/evals)
+
+本文档展示了多种 AI 模型在 Next.js 代码生成与迁移任务中的性能评估结果，涵盖成功率、执行时间及资源消耗等关键指标。
+
+- 🏆 **GPT-5-Codex 模型表现最佳** - 成功率最高达 42%，但执行时间较长（42.8 秒）
+- ⚡ **Kimi-K2-0905 速度最快** - 仅需 1.82 秒完成处理，成功率 36%
+- 📊 **成功率分布集中** - 多数模型成功率落在 30%-40% 区间
+- 🔋 **资源消耗差异显著** - Gemini-2.5-Pro 消耗最多令牌（322,147），Qwen3-Max 最节省（87,364）
+- 🤖 **智能代理表现突出** - Claude 代理以 42% 成功率领先其他代理
+- ⏱️ **效率平衡典范** - Grok-4-Fast-Reasoning 在速度（6.02 秒）与成功率（38%）间取得良好平衡
+- 📈 **版本迭代进步** - Claude 系列从 Haiku 到 Opus 版本呈现性能提升趋势
+- 🎯 **专业模型优势** - 代码专用模型（如 Qwen3-Coder）在响应速度方面表现亮眼
+
+### [入门指南：缓存组件 | Next.js](https://nextjs.org/docs/app/getting-started/cache-components)
+
+Next.js Cache Components 是一种新的渲染和缓存方法，通过细粒度控制缓存内容与时机，结合部分预渲染（PPR）实现快速初始加载与动态内容流式传输的平衡。
+
+- 🚀 **动态默认**：所有路由默认动态渲染，确保数据实时性
+- 🎯 **缓存控制**：使用 `use cache` 指令标记可缓存组件和数据
+- ⏳ **流式渲染**：通过 Suspense 边界管理动态内容，静态外壳立即显示
+- 🔄 **缓存更新**：支持 `cacheTag` 标签化和 `updateTag`/`revalidateTag` 重新验证
+- ⚙️ **配置启用**：在 next.config.js 中设置 `cacheComponents: true` 开启功能
+- 📊 **数据分类**：运行时数据（cookies/headers）和动态数据（fetch/数据库查询）需包裹在 Suspense 中
+- 🚫 **限制说明**：缓存函数参数需可序列化，不支持 Edge Runtime
+- 🔄 **迁移指南**：替代原有的 dynamic、revalidate、fetchCache 等路由配置选项
+
+## 工具
+
+### [MCPJam/inspector：可视化检查MCP服务器](https://github.com/MCPJam/inspector)
+
+MCPJam Inspector 是一个用于可视化测试 MCP 服务器的本地开发平台，支持多种传输协议和 LLM 模型测试。
+
+- 🔧 支持协议握手测试，可测试工具、资源、提示词和 OAuth 2.0 功能
+- 🌐 兼容所有传输方式，包括 STDIO、SSE 和 Streamable HTTP
+- 🤖 集成 LLM 游乐场，支持 OpenAI、Claude、Gemini 和 Ollama 等模型
+- 🔐 提供 OAuth 测试和动态客户端注册功能
+- 📊 可查看所有 JSON-RPC 消息，便于调试和观察
+- 🎯 新增 OpenAI Apps SDK 支持，可在测试环境中预览应用界面
+- 🐳 支持通过 npx、Docker 或桌面应用快速启动
+- 💻 提供完整的开发环境设置指南和构建说明
+
+## 更新
+
+### [Next.js 16 | Next.js](https://nextjs.org/blog/next-16)
+
+Next.js 16 正式发布，带来缓存组件、Turbopack 稳定版、路由优化及多项架构改进，提升开发体验与应用性能。
+
+- 🚀 **Turbopack 稳定版**：默认打包工具，生产构建提速 2-5 倍，热更新快达 10 倍
+- 💾 **缓存组件**：通过`use cache`指令实现显式缓存，完善部分预渲染 (PPR) 能力
+- 🔧 **开发工具增强**：集成 MCP 协议提供 AI 辅助调试，改进构建日志显示
+- 🔄 **路由优化**：布局去重与增量预加载减少网络传输，导航更流畅
+- 🛠️ **代理中间件**：`middleware.ts`更名为`proxy.ts`，明确网络边界
+- ⚡ **React 19.2 支持**：包含视图过渡、useEffectEvent 等新特性
+- 📦 **构建适配器**：Alpha 版支持自定义构建流程适配
+- 🗑️ **破坏性变更**：移除 AMP 支持，要求 Node.js 20.9+，异步 API 调用成为必须
+- 🔄 **缓存 API 更新**：新增`updateTag()`和`refresh()`，改进`revalidateTag()`语义
+- 📊 **开发者体验**：简化项目创建流程，增强 TypeScript 和 ESLint 配置
+
+## 设计
+
+## AI
+
+### [doganarif/fastapi-ai-sdk：用于Vercel AI SDK 后端实现的 FastAPI 辅助库 - 通过完全类型安全与 SSE 支持，将 AI 响应从 FastAPI 流式传输至 Next.js](https://github.com/doganarif/fastapi-ai-sdk)
+
+这是一个用于在 FastAPI 后端集成 Vercel AI SDK 的 Python 辅助库，支持从 FastAPI 向 Next.js 前端流式传输 AI 响应，具备完整类型安全和 SSE 支持。
+
+- 🚀 **完全兼容 Vercel AI SDK** - 实现完整的 AI SDK 协议规范
+- 🛡️ **Pydantic 类型安全** - 所有事件具有完整类型提示和验证
+- 🌊 **流式传输支持** - 内置服务器发送事件（SSE）流式传输
+- 🔧 **简单集成** - 提供 FastAPI 的简单装饰器和工具
+- 🏗️ **灵活构建器模式** - 直观的 API 用于构建 AI 流
+- ✅ **全面测试** - 具有完整的测试覆盖率
+- 📚 **完整文档** - 包含示例的完整文档
+- 📦 **MIT 许可证** - 开源项目，可自由使用
+- 👥 **社区贡献** - 欢迎提交 Pull Request 进行功能改进
+
+### [React 定义了 Web，AI SDK 将定义 AI | egghead.io](https://egghead.io/react-defined-the-web-the-ai-sdk-will-define-ai~ugbyu)
+
+AI SDK 正在引领从命令式编程到声明式编程的思维模式转变，就像 React 当年重新定义前端开发范式一样。它通过统一的流式处理和工具调用抽象层，让开发者专注于智能功能本身而非底层集成细节。
+
+- 🧠 **思维模式革新** - 从手动处理 API 响应转向声明式的流式交互和智能界面构建
+- ⚡ **声明式抽象** - 提供`useChat`和`streamText`等原语，自动处理连接、状态管理和重新渲染
+- 🔄 **统一接口** - 作为 AI 领域的"虚拟 DOM"，提供模型无关的 API，支持快速切换 LLM 提供商
+- 🌐 **全栈覆盖** - 相同 API 可在浏览器、Node.js 和 CLI 中无缝使用，支持从个人工具到企业级多智能体编排
+- 🎯 **生成式 UI** - 超越文本流式传输，让 AI 能够动态决定渲染哪个交互组件
+- 📈 **生态主导** - 每周超 360 万次下载，获得 Cloudflare、Anthropic、OpenAI 等主流厂商官方支持
+- 🚀 **快速开发** - 20 行代码构建 CLI 工具，80 行代码实现多智能体编排系统
+- 🔧 **工具调用** - 统一的工具调用接口，任何模型都能自动使用定义的工具
+
+## 其他
+
+工程师不仅需要具备技术技能，还要具备软技能，也就是人际交往的技能。
+
+如果你不理解人类社会的复杂性，就无法理解公司或团队的工作方式，最终影响到自己的产出和扩大影响力。
+
+-- 《被低估的软技能》
