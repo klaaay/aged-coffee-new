@@ -12,6 +12,45 @@ summary: ''
 
 ## 技术
 
+### [面向 React 开发者的 AI 原生 shadcn 组件库](https://www.shadcn.io/)
+
+shadcn.io 是一个面向 React 开发者的 AI 原生组件库资源平台，提供丰富的 UI 组件、动画效果和自定义 Hooks，支持 TypeScript 和 Tailwind CSS，帮助开发者快速构建现代应用程序。
+
+- 🧩 提供可组合的 React UI 组件，支持完全自定义和 TypeScript
+- 🤖 包含 AI 集成组件和聊天界面等现代应用元素
+- 📊 内置基于 Recharts 的图表组件，支持交互式数据可视化
+- ✨ 提供丰富的动画效果组件，如磁性悬停、液体按钮等
+- ⚓ 提供实用的 React Hooks，包含状态管理和性能优化功能
+- 🛠️ 支持通过 CLI 工具快速安装组件
+- 🌐 社区驱动的资源库，非官方 shadcn/ui 关联项目
+- 🎨 基于 Tailwind CSS 和 Radix UI 构建，包含主题生成器等工具
+
+### [Vercel 出品 Next.js —— React 框架](https://nextjs.org/evals)
+
+本文档展示了多种 AI 模型在 Next.js 代码生成与迁移任务中的性能评估结果，涵盖成功率、执行时间及资源消耗等关键指标。
+
+- 🏆 **GPT-5-Codex 模型表现最佳** - 成功率最高达 42%，但执行时间较长（42.8 秒）
+- ⚡ **Kimi-K2-0905 速度最快** - 仅需 1.82 秒完成处理，成功率 36%
+- 📊 **成功率分布集中** - 多数模型成功率落在 30%-40% 区间
+- 🔋 **资源消耗差异显著** - Gemini-2.5-Pro 消耗最多令牌（322,147），Qwen3-Max 最节省（87,364）
+- 🤖 **智能代理表现突出** - Claude 代理以 42% 成功率领先其他代理
+- ⏱️ **效率平衡典范** - Grok-4-Fast-Reasoning 在速度（6.02 秒）与成功率（38%）间取得良好平衡
+- 📈 **版本迭代进步** - Claude 系列从 Haiku 到 Opus 版本呈现性能提升趋势
+- 🎯 **专业模型优势** - 代码专用模型（如 Qwen3-Coder）在响应速度方面表现亮眼
+
+### [入门指南：缓存组件 | Next.js](https://nextjs.org/docs/app/getting-started/cache-components)
+
+Next.js Cache Components 是一种新的渲染和缓存方法，通过细粒度控制缓存内容与时机，结合部分预渲染（PPR）实现快速初始加载与动态内容流式传输的平衡。
+
+- 🚀 **动态默认**：所有路由默认动态渲染，确保数据实时性
+- 🎯 **缓存控制**：使用 `use cache` 指令标记可缓存组件和数据
+- ⏳ **流式渲染**：通过 Suspense 边界管理动态内容，静态外壳立即显示
+- 🔄 **缓存更新**：支持 `cacheTag` 标签化和 `updateTag`/`revalidateTag` 重新验证
+- ⚙️ **配置启用**：在 next.config.js 中设置 `cacheComponents: true` 开启功能
+- 📊 **数据分类**：运行时数据（cookies/headers）和动态数据（fetch/数据库查询）需包裹在 Suspense 中
+- 🚫 **限制说明**：缓存函数参数需可序列化，不支持 Edge Runtime
+- 🔄 **迁移指南**：替代原有的 dynamic、revalidate、fetchCache 等路由配置选项
+
 ### [在 ChatGPT 中运行 Next.js：深入探讨原生应用集成 - Vercel](https://vercel.com/blog/running-next-js-inside-chatgpt-a-deep-dive-into-native-app-integration)
 
 本文介绍了如何将完整的 Next.js 应用嵌入到 ChatGPT 中运行，通过解决三层 iframe 架构带来的技术挑战，实现了原生导航和现代框架功能的完整支持。
@@ -84,6 +123,19 @@ URLPattern API 现已成为基准功能，提供标准化的 URL 模式匹配方
 - ⚡ 实现关注点分离：actions/loaders 作为 HTTP 与业务逻辑间的转换器，提升代码可复用性
 
 ## 工具
+
+### [MCPJam/inspector：可视化检查MCP服务器](https://github.com/MCPJam/inspector)
+
+MCPJam Inspector 是一个用于可视化测试 MCP 服务器的本地开发平台，支持多种传输协议和 LLM 模型测试。
+
+- 🔧 支持协议握手测试，可测试工具、资源、提示词和 OAuth 2.0 功能
+- 🌐 兼容所有传输方式，包括 STDIO、SSE 和 Streamable HTTP
+- 🤖 集成 LLM 游乐场，支持 OpenAI、Claude、Gemini 和 Ollama 等模型
+- 🔐 提供 OAuth 测试和动态客户端注册功能
+- 📊 可查看所有 JSON-RPC 消息，便于调试和观察
+- 🎯 新增 OpenAI Apps SDK 支持，可在测试环境中预览应用界面
+- 🐳 支持通过 npx、Docker 或桌面应用快速启动
+- 💻 提供完整的开发环境设置指南和构建说明
 
 ### [web-codegen-scorer：Web 代码生成评分器，一款用于评估 LLM 生成的 Web 代码质量的工具。](https://github.com/angular/web-codegen-scorer)
 
@@ -176,6 +228,47 @@ SuperDesign 是一款开源的 AI 设计助手，可直接集成在 IDE 中使�
 
 ## AI
 
+### [我是如何编程的？（2025 年 10 月版）](https://xuanwo.io/2025/07-how-i-coding-oct-2025-edition/)
+
+本文作者在 Claude Sonnet 4.5 发布后，结合自身编程实践更新了对 AI 工具的思考。核心观点是：**注意力是最宝贵的资源**，模型速度并非关键，高质量输出才能减少注意力消耗。作者强调应优先选择高质量模型（如 Claude Opus），并聚焦技术本质，避免过度追逐 AI 新闻。工具方面，Codex 的云端、Slack 和 GitHub 集成体验仍有局限，但代码审查功能表现突出。最后，作者建议开发者关注主流 SOTA 模型，定期评估工具选择，并将精力集中在核心开发任务上。
+
+- 🧠 **注意力是核心资源**：模型速度提升未必增加效率，高质量输出更能节省注意力，避免因修正错误而消耗精力。
+- 🐢 **慢即是快**：选择响应慢但结果准确的模型，长期反而更高效，因为能腾出时间专注思考正确路径。
+- ⚖️ **质量优于成本**：模型更新带来的改进边际递减，应更看重输出质量而非价格或速度，避免陷入低效循环。
+- ☁️ **云端 Codex 体验有限**：环境配置复杂、资源受限，仅适合非实时任务（如代码库咨询），实际开发中实用性低。
+- 💬 **Slack 集成功能简陋**：仅支持任务触发与通知，无法直接提交 PR 或对话，体验未达预期。
+- ✅ **GitHub 代码审查亮眼**：能发现关键错误，避免无意义纠错，减轻维护者负担，已是显著进步。
+- 📅 **订阅制成为趋势**：主流模型转向订阅模式，推动服务商优化成本与质量，市场竞争防止质量下降。
+- 🎯 **专注 SOTA 模型**：只需关注顶尖模型（如 OpenAI、Anthropic、Google），避免陷入模型对比争议，定期评估选择。
+- ⏳ **合理分配注意力**：AI 新闻仅占信息输入的 10%，重心应放在语言、工具与行业趋势上，保持开发效率。
+
+### [doganarif/fastapi-ai-sdk：用于Vercel AI SDK 后端实现的 FastAPI 辅助库 - 通过完全类型安全与 SSE 支持，将 AI 响应从 FastAPI 流式传输至 Next.js](https://github.com/doganarif/fastapi-ai-sdk)
+
+这是一个用于在 FastAPI 后端集成 Vercel AI SDK 的 Python 辅助库，支持从 FastAPI 向 Next.js 前端流式传输 AI 响应，具备完整类型安全和 SSE 支持。
+
+- 🚀 **完全兼容 Vercel AI SDK** - 实现完整的 AI SDK 协议规范
+- 🛡️ **Pydantic 类型安全** - 所有事件具有完整类型提示和验证
+- 🌊 **流式传输支持** - 内置服务器发送事件（SSE）流式传输
+- 🔧 **简单集成** - 提供 FastAPI 的简单装饰器和工具
+- 🏗️ **灵活构建器模式** - 直观的 API 用于构建 AI 流
+- ✅ **全面测试** - 具有完整的测试覆盖率
+- 📚 **完整文档** - 包含示例的完整文档
+- 📦 **MIT 许可证** - 开源项目，可自由使用
+- 👥 **社区贡献** - 欢迎提交 Pull Request 进行功能改进
+
+### [React 定义了 Web，AI SDK 将定义 AI | egghead.io](https://egghead.io/react-defined-the-web-the-ai-sdk-will-define-ai~ugbyu)
+
+AI SDK 正在引领从命令式编程到声明式编程的思维模式转变，就像 React 当年重新定义前端开发范式一样。它通过统一的流式处理和工具调用抽象层，让开发者专注于智能功能本身而非底层集成细节。
+
+- 🧠 **思维模式革新** - 从手动处理 API 响应转向声明式的流式交互和智能界面构建
+- ⚡ **声明式抽象** - 提供`useChat`和`streamText`等原语，自动处理连接、状态管理和重新渲染
+- 🔄 **统一接口** - 作为 AI 领域的"虚拟 DOM"，提供模型无关的 API，支持快速切换 LLM 提供商
+- 🌐 **全栈覆盖** - 相同 API 可在浏览器、Node.js 和 CLI 中无缝使用，支持从个人工具到企业级多智能体编排
+- 🎯 **生成式 UI** - 超越文本流式传输，让 AI 能够动态决定渲染哪个交互组件
+- 📈 **生态主导** - 每周超 360 万次下载，获得 Cloudflare、Anthropic、OpenAI 等主流厂商官方支持
+- 🚀 **快速开发** - 20 行代码构建 CLI 工具，80 行代码实现多智能体编排系统
+- 🔧 **工具调用** - 统一的工具调用接口，任何模型都能自动使用定义的工具
+
 ### [避免这些 AI 编程错误](https://newsletter.posthog.com/p/avoid-these-ai-coding-mistakes?r=5t1b8o)
 
 使用 AI 编程工具需要掌握特定技能，通过实践和总结常见错误可提升效率。本文基于 PostHog 团队经验，总结六大关键注意事项。
@@ -259,3 +352,22 @@ Claude Code 引入了基于沙盒的新功能，旨在提升开发安全性与�
 
 - 🗺️ **分阶段实施扩展**  
   前 3 个月夯实基础，4-6 个月优化流程，7-12 个月聚焦文化创新，逐步构建可持续的团队体系。
+
+---
+
+工程师不仅需要具备技术技能，还要具备软技能，也就是人际交往的技能。
+
+如果你不理解人类社会的复杂性，就无法理解公司或团队的工作方式，最终影响到自己的产出和扩大影响力。
+
+-- 《被低估的软技能》
+
+---
+
+MCP 也不会过时，MCP 是偏工具，Skill 是偏技能，互为补充，举个例子，Chrome Dev Tool，它是一个工具，适合发布为 MCP，既可以控制版本，又可以适用于所有不同的支持 MCP 的场景（比如 Copilot、Claude Code、Codex、你自己的应用。
+
+作为 Chrome 官方不适合发布它为 Skill，因为：
+
+1. Skill 版本不那么好控制，需要配合 Git，但使用方和发布方的 Git 源是不一样的
+2. Skill 的发布和使用也不那么方便，目前支持 Skill 的并不多，而且是以目录形式存在，分发、安装、版本控制都要稍微麻烦一些
+
+但它和 Skill 又可以配合使用，比如我可以有一个 Debug 的 Skill，它用到了 Chrome Dev Tool MCP；还可以有一个前端性能优化的 Skill，也可以用到 Chrome Dev Tool MCP。
