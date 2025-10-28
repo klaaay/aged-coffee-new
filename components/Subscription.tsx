@@ -188,7 +188,6 @@ export const Subscription = () => {
 
   return (
     <div>
-      <input type="file" accept="video/*" />
       <table>
         <thead>
           <tr>
