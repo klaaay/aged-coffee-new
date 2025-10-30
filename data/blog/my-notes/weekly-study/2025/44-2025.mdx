@@ -12,6 +12,18 @@ summary: ''
 
 ## 技术
 
+### [元素：setHTML() 方法 - Web API 接口 | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Element/setHTML)
+
+Element 接口的 setHTML() 方法提供了一种 XSS 安全的方式，用于解析和清理 HTML 字符串并将其作为元素的子树插入 DOM 中。
+
+- 🛡️ 该方法会移除所有 XSS 不安全元素和属性，即使这些元素被传入的清理器允许也会被移除
+- ⚠️ 始终会被移除的元素包括：`<script>`、`<frame>`、`<iframe>`、`<object>`、`<use>`、事件处理属性和数据属性
+- 🔧 支持可选参数 options，可传入 Sanitizer 对象或 SanitizerConfig 配置对象
+- 📝 建议作为 Element.innerHTML 的安全替代方案，特别是在处理用户提供的 HTML 时
+- 🧪 目前属于实验性技术，浏览器兼容性有限，生产环境使用前需仔细检查兼容性表
+- 🚫 即使清理器配置允许不安全选项，该方法仍会移除 XSS 不安全实体
+- 💡 提供了默认清理器和自定义清理器的使用示例，展示不同配置下的清理效果
+
 ## 工具
 
 ### [XCodeReviewer](https://github.com/lintsinghua/XCodeReviewer)
