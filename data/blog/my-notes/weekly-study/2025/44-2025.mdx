@@ -63,6 +63,66 @@ Element 接口的 setHTML() 方法提供了一种 XSS 安全的方式，用于�
 
 ## 工具
 
+### [githubhunt](https://github.com/xgzlucario/githubhunt)
+
+GitHubHunt 是一个利用 AI Agent 进行自然语言搜索的 GitHub 仓库发现工具，通过智能解析用户需求并优化搜索，实现精准匹配。项目依赖 MeiliSearch、Python 3.13 和 DeepSeek API，支持仓库拉取、视觉分析和本地索引构建。
+
+- 🚀 通过自然语言描述需求，AI Agent 自动优化搜索，精准查找 GitHub 仓库
+- 👁️ 集成视觉理解模型，可分析仓库流程图或解释功能
+- ⭐ 支持从用户关注列表中搜索特定类型项目
+- 🛠️ 依赖 MeiliSearch 进行数据索引，提升搜索性能和召回率
+- 📁 包含仓库拉取、Agent 搜索、浏览器截图和数据库操作等核心模块
+- ⚙️ 需配置 GitHub Token 和 DeepSeek API 密钥，视觉分析需额外 QWEN API
+- 🐳 使用 Docker 启动 MeiliSearch，通过 uv 工具管理依赖和运行脚本
+
+### [react-grab](https://github.com/aidenybai/react-grab)
+
+React Grab 是一个开发工具，允许开发者通过简单的点击操作，将应用中的任何元素直接提供给 Cursor、Claude Code 等 AI 编程助手作为上下文，从而辅助代码修改。
+
+- 🖱️ **操作简便**：按住 ⌘C 并点击页面上的任意元素即可抓取
+- 🤖 **多平台兼容**：支持 Cursor、Claude Code、OpenCode 等主流 AI 编程工具
+- ⚡ **快速集成**：仅需添加一个 script 标签即可使用
+- 🛠️ **框架适配**：提供 Next.js（App router 和 Pages router）和 Vite 的详细安装指南
+- 🎯 **开发环境**：建议仅在开发环境（NODE_ENV === 'development'）下启用
+
+### [gethooky](https://github.com/ezpieco/gethooky)
+
+GetHooky 是一个简单、跨平台的 Git 钩子管理器，适用于任何技术栈，旨在通过自动化命令执行来防止将未测试或未整理的代码推送到生产环境。
+
+- 🛠️ **跨平台兼容** - 支持所有操作系统，并适用于任何编程语言项目
+- 👶 **简单易用** - 设计直观，即使新手也能轻松上手
+- 📁 **集中化管理** - 将钩子存储在 `.hooky` 目录中，便于版本控制
+- 🧠 **智能管控** - 仅管理包含 `# hooky ya rookie` 标识的钩子文件
+- 🚀 **便捷安装** - 支持 curl、wget 和 scoop 多种安装方式
+- 🔧 **快速上手** - 通过 `hooky init` 初始化，`hooky add` 添加钩子，`hooky install` 安装钩子
+- ⚠️ **安全机制** - 钩子执行失败时会阻止操作并显示绕过提示
+
+### [react-horizontal-heatmap](https://github.com/sakthilkv/react-horizontal-heatmap)
+
+这是一个用于渲染水平热力图的轻量级 React 组件，适用于时间线、活动图表或状态指示器，支持自定义颜色、方块尺寸和间距。
+
+- 🚀 **安装**：可通过 npm、yarn 或 pnpm 安装此组件。
+- 📦 **使用**：导入组件并传入数据数组即可生成水平热力图，数据可包含值、时间及附加项。
+- ⚙️ **配置**：支持自定义最大值、颜色梯度、方块尺寸和间距等属性。
+- 🎨 **定制**：允许使用自定义颜色数组来设置热力图的颜色渐变。
+- 📊 **应用场景**：适用于服务器健康时间线、活动追踪器、类 GitHub 贡献图等可视化需求。
+- 🛠 **开发**：提供克隆仓库、安装依赖和构建项目的开发指南。
+
+### [charlieclark/thiings-grid：一款高性能的React无限滚动网格组件，提供流畅的触摸/鼠标交互和基于动量的滚动体验。](https://github.com/charlieclark/thiings-grid)
+
+这是一个高性能的 React 无限滚动网格组件，支持流畅的触摸/鼠标交互和基于动量的滚动，适用于展示大型数据集。
+
+- 🚀 高性能渲染：仅渲染可见单元格，优化视口计算
+- 📱 多设备支持：提供桌面端和移动端的平滑交互体验
+- 🎯 动量滚动：基于物理原理的自然惯性滚动效果
+- ♾️ 无限网格：支持无限网格尺寸的高效渲染
+- 🎨 自定义渲染：支持使用自定义组件灵活渲染单元格
+- 🔧 TypeScript 支持：提供完整的类型安全定义
+- 🎮 实时演示：提供可交互的在线演示和示例代码
+- 📚 详细文档：包含 API 参考、最佳实践和多种使用示例
+- 🔍 开发友好：支持响应式网格尺寸和程序化访问网格位置
+- 🤝 开源贡献：采用 MIT 许可证，欢迎社区贡献
+
 ### [打字 SVG](https://typingsvg.vercel.app/)
 
 这是一个用于生成动态打字效果 SVG 动画的在线工具，用户可自定义文本内容和样式参数。
@@ -116,7 +176,73 @@ Workflow Development Kit (WDK) 是一个开源的 TypeScript 框架，通过将�
 
 ## 设计
 
+### [grab/cursor-talk-to-figma-mcp：TalkToFigma：实现Cursor与Figma间MCP集成的工具，使Cursor代理AI能够与Figma通信，以编程方式读取和修改设计。](https://github.com/grab/cursor-talk-to-figma-mcp)
+
+这是一个连接 Cursor AI 与 Figma 的 MCP 集成项目，使 AI 能够读取和编程修改 Figma 设计文件
+
+- 🎯 项目实现了 Cursor AI 与 Figma 之间的双向通信，支持设计读取和程序化修改
+- 🔧 包含 MCP 服务器、Figma 插件和 WebSocket 服务器三个核心组件
+- 📝 提供丰富的设计操作工具：文档信息获取、选择管理、注释创建、原型连接、元素创建等
+- 🎨 支持自动布局设置、样式修改、组件管理和文本内容批量替换
+- 🚀 具备批量操作功能：多节点删除、多注释设置、多文本内容更新
+- 💡 包含多个预设策略提示，指导完成复杂设计任务
+- 🔄 支持组件实例覆盖传播，大幅减少重复设计工作
+- 📚 提供完整的开发设置指南，支持 Windows + WSL 环境
+- 📊 项目采用 MIT 许可证，拥有 5.6k 星标和 581 个分支
+
 ## AI
+
+### [agents](https://github.com/inkeep/agents)
+
+Inkeep Agents 是一个开源框架，用于通过可视化构建器或 TypeScript SDK 构建 AI 智能体，支持双向同步，便于技术与非技术团队协作。
+
+- 🛠️ **构建方式**：提供无代码可视化构建器和 TypeScript SDK 两种方式，支持双向同步和团队协作。
+- 🤖 **核心功能**：支持创建实时 AI 聊天助手（如客服、内部助手）和 AI 工作流自动化（如更新知识库、处理工单）。
+- 🏗️ **平台组成**：包含管理 API/UI、运行时 API、SDK、CLI 和 UI 组件库，支持多智能体架构和 MCP 工具。
+- 🌐 **部署与扩展**：支持通过 Vercel 或 Docker 轻松部署，可自托管，并使用 OpenTelemetry 实现可观测性。
+
+### [ZMCPTools](https://github.com/ZachHandley/ZMCPTools)
+
+ZMCPTools 是一个基于 TypeScript 的 MCP 工具集，为 Claude Code 提供专业的多智能体编排平台，包含 61 个增强工具，具备文档智能和高级自动化能力。
+
+- 🚀 **TypeScript 优先架构** - 采用严格的 TypeScript 和 Zod 模式构建，确保类型安全和可靠性
+- 🤖 **多智能体编排** - AI 架构师自动生成并协调专业智能体团队，实现智能依赖管理和实时通信
+- 💰 **成本优化** - 通过基础会话缓存实现 85-90% 的成本降低，自动管理共享上下文
+- 🌐 **高级浏览器自动化** - 集成 Playwright，提供 AI 驱动的 DOM 分析和智能会话管理
+- 📚 **文档智能与向量搜索** - 内置 LanceDB 向量数据库，支持本地高性能语义搜索和多页面文档收集
+- 🧠 **知识图谱与记忆系统** - 基于图的知识存储，支持实体关系建模和跨智能体学习
+- ⚡ **快速安装** - 支持全局安装和开发环境设置，自动配置 MCP 服务器和项目权限
+- 🛠️ **开发友好** - 提供热重载开发环境、完整的测试套件和 TypeScript 类型检查
+- 📊 **专业任务管理** - 创建、分配、跟踪和监控复杂的开发工作流程
+- 🔄 **现代化 CLI** - 基于 Commander.js 的命令行界面，提供结构化的命令层次和状态报告
+
+### [claude-task-master](https://github.com/eyaltoledano/claude-task-master)
+
+Taskmaster 是一个专为 AI 驱动开发设计的任务管理系统，能够无缝集成多种 AI 聊天工具和代码编辑器，通过 MCP 协议提供智能任务管理、项目规划和代码生成功能。
+
+- 🚀 **快速安装**：支持一键安装到 Cursor、Windsurf、VS Code 等编辑器，提供 MCP 配置模板
+- 🔑 **多模型支持**：兼容 Anthropic、OpenAI、Google、Perplexity 等多种 AI 提供商，需要相应 API 密钥
+- 📋 **智能任务管理**：能够解析 PRD 文档生成任务清单，支持任务依赖关系和状态跟踪
+- 🔧 **工具加载优化**：支持按需加载工具（all/standard/core 模式），减少上下文窗口占用
+- 💻 **多种使用方式**：支持 MCP 集成和命令行两种使用模式，满足不同开发场景
+- 📚 **完善文档**：提供详细的使用指南、教程和 API 参考文档
+- 🆓 **开源许可**：采用 MIT 许可证加 Commons Clause，允许商业使用但禁止直接销售软件本身
+- 🔄 **持续更新**：项目活跃，版本迭代快速，支持最新的 AI 模型和开发工具
+
+### [Anthropics/Claude代码行动](https://github.com/anthropics/claude-code-action)
+
+这是一个由 Anthropic 开发的 GitHub Action 工具，能够通过 Claude AI 模型自动处理代码审查、问题回答和代码实现等任务。
+
+- 🤖 智能模式检测：根据工作流上下文自动选择执行模式，无需额外配置
+- 💬 代码交互助手：能够回答代码相关问题并提供编程建议
+- 🔍 自动代码审查：分析 PR 变更并提出改进建议
+- ✨ 代码实现功能：可执行简单修复、重构甚至新功能开发
+- 🔧 灵活工具访问：支持 GitHub API 和文件操作，可配置额外工具
+- 📊 进度跟踪：提供可视化进度指示器，动态更新任务完成状态
+- 🏃 本地化运行：在用户自己的 GitHub 运行器上执行，支持多种云服务提供商
+- 📦 简化配置：统一的 prompt 和 claude_args 输入，与 Claude Code SDK 对齐
+- 📚 丰富用例：提供代码审查、安全分析、文档同步等多种解决方案
+- ⚖️ 开源许可：采用 MIT 许可证，拥有 3.8k 星标和 1.2k 分支的高人气项目
 
 ### [CCPlugins](https://github.com/brennercruvinel/CCPlugins)
 
