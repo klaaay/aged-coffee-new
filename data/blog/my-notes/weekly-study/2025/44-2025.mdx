@@ -12,6 +12,18 @@ summary: ''
 
 ## 技术
 
+### [指令与平台边界 | TanStack 博客](https://tanstack.com/blog/directives-and-the-platform-boundary)
+
+本文讨论了 JavaScript 生态中框架自定义指令（如"use client"、"use server"）的兴起趋势，分析了其与标准化语言特性的区别，并指出这种模式可能导致开发混淆、工具链负担和可移植性问题。作者建议通过显式 API 替代指令来明确框架行为边界。
+
+- 🎯 框架自定义指令（如 use client）表面类似语言特性，但缺乏标准规范，易造成开发者混淆
+- ⚠️ 指令会模糊平台与框架的边界，导致调试困难且工具链需特殊处理
+- 🔧 具有配置需求的功能更适合用显式 API 实现（如 cache() 函数），可携带版本控制和类型支持
+- 🌐 共享语法缺乏统一规范会导致框架间语义分歧，降低代码可移植性
+- 🔗 命名空间（如"use next.js cache"）无法解决指令在来源追溯和工具链适配的根本问题
+- 💡 建议通过跨框架协作制定标准 API，而非依赖类语法形式的指令
+- 🛡️ 指令虽能提升开发体验，但可能造成厂商锁定，增加迁移成本
+
 ### [React 与 Remix 选择不同未来路径](https://laconicwit.com/react-and-remix-choose-different-futures/)
 
 React 与 Remix 因价值观差异走向技术路线分叉，React 选择通过复杂技术栈提升用户体验，而 Remix 将简洁性与 Web 平台标准作为核心追求。
@@ -152,6 +164,46 @@ XCodeReviewer 是一个由大型语言模型（LLM）驱动的智能代码审计
 
 ## 更新
 
+### [Rspack 1.6 版本发布 - Rspack](https://rspack.rs/blog/announcing-1-6)
+
+Rspack 1.6 版本发布，带来多项新功能和性能优化，包括增强的 Tree Shaking、支持 import defer 语法、改进的 ESM 输出、默认启用的 Barrel 优化、稳定的 Layer 功能、保留 JSX 语法、提取 Source Map 以及性能提升。同时，Rstack 生态工具链（如 Rsbuild、Rspress、Rslib、Rstest、Rsdoctor）也同步更新，并优化了 next-rspack 集成性能。
+
+- 🌳 增强 Tree Shaking：全面支持动态导入的静态分析，可识别更多使用模式并消除未使用导出
+- ⏳ 支持 import defer：通过 experiments.deferImport 启用，延迟模块执行以控制代码副作用
+- 📦 改进 ESM 输出：引入 EsmLibraryPlugin 实验插件，生成更清晰高效的 ESM 库并支持代码分割
+- 🛢️ 默认优化 Barrel：lazyBarrel 功能结束实验状态，默认启用以提升构建性能
+- 🍰 稳定 Layer 功能：移除 experiments.layers 实验标志，支持模块分层编译管理
+- 🔧 保留 JSX 语法：新增配置选项，可在输出中保留原始 JSX 语法供后续处理
+- 🗺️ 提取 Source Map：通过 Rule.extractSourceMap 保留第三方库的源映射信息
+- 🚀 性能提升：CLI 启动加快 50ms，万级 React 组件构建提速 11%，组件库构建快 31%
+- 🔄 Rstack 生态更新：Rsbuild 支持浏览器日志转发和 ESM 应用构建，Rspress v2 主题预览上线，Rslib 类型生成提速 300%，Rstest 新增 VS Code 插件和覆盖率支持，Rsdoctor 提供 GitHub Actions 检测
+- ⚡ next-rspack 性能优化：集成自定义 Rust 绑定方案，构建性能提升 24%，开发性能提升 10%
+
+### [Electron 39.0.0 版本发布 | Electron](https://www.electronjs.org/blog/electron-39-0)
+
+Electron 39.0.0 已发布，包含 Chromium、V8 和 Node.js 的版本升级，新增多项功能改进并修复了部分问题，同时宣布对 36.x.y 版本停止支持。
+
+- 🚀 升级 Chromium 至 142.0.7444.52、V8 至 14.2、Node.js 至 22.20.0
+- ✅ ASAR 完整性功能结束实验阶段，现已稳定可用
+- 🛠️ 新增硬件加速检测、HDR 色彩支持、Linux 系统强调色获取等功能
+- ⚠️ 弃用 --host-rules 命令行参数，需改用 --host-resolver-rules
+- 🔄 window.open 弹窗默认调整为可调整大小
+- 🖥️ 共享纹理离屏渲染的 paint 事件数据结构优化
+- 📅 Electron 36.x.y 版本已停止支持，建议升级至新版
+
+### [Express.js 6 及更高版本：现代化最受欢迎的 Node.js 框架](https://nodesource.com/blog/express-6-modernizig-nodejs-frameworks)
+
+Express.js 框架正在进行重大现代化改造，通过新的治理模式、性能优化和社区协作，旨在提升其安全性和效率，同时保持向后兼容性。
+
+- 🚀 Express.js 从单一维护者项目转变为社区驱动的技术委员会治理模式，确保项目可持续发展
+- 🐒 框架存在大量遗留的"猴子补丁"问题，这些对 Node.js 核心模块的修改导致安全风险和性能问题
+- 🔄 Express 5 是近十年来首次重大更新，支持异步/等待中间件，移除了废弃 API 并改进了路由匹配
+- 📊 NodeSource 团队通过 N|Solid 工具帮助分析性能特征，建立性能验证管道和自动化基准测试
+- 🤝 与 NodeSource 合作建立了性能工作组，开发多运行器环境和性能测试工作流程
+- 🌟 Express 6 将专注于性能优化和现代化，减少对 Node.js 传统 HTTP 内部的依赖
+- 📺 未来将通过 YouTube 公开会议记录，提高项目透明度和社区参与度
+- 💪 现代化改造旨在让 Express 运行更高效、寿命更长，继续服务全球数百万开发者
+
 ### [介绍 Hono CLI - 和田优介](https://blog.yusu.ke/hono-cli/)
 
 Hono CLI 是一款专为人类和 AI 设计的创新命令行工具，提供五个核心子命令来优化开发流程。
@@ -258,6 +310,21 @@ CCPlugins 是一个为 Claude Code CLI 设计的专业命令集，通过自动�
 - 🌐 **兼容性**：框架无关，支持所有编程语言和跨平台操作。
 
 ## 其他
+
+### [Octoverse：AI 引领 TypeScript 登顶，每秒新增一位开发者加入 GitHub - GitHub 官方博客](https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/)
+
+GitHub 在 2025 年迎来爆发式增长，开发者数量突破 1.8 亿，AI 技术推动 TypeScript 成为平台最常用编程语言，全球开发版图呈现多元化发展态势。
+
+- 👥 开发者生态高速扩张：平均每秒新增 1 位开发者，全年增长超 3600 万，印度以 520 万新增开发者成为最大贡献源
+- 🤖 AI 工具深度集成：80% 新用户首周使用 Copilot，110 万公开仓库接入 LLM SDK，AI 相关仓库数量两年内翻倍
+- 🦾 TypeScript 登顶语言榜：首次超越 Python 和 JavaScript，类型系统更适配 AI 辅助编程，年增长 66% 达 260 万贡献者
+- 🌍 全球格局重构：印度成为开源贡献第一大国，巴西、印尼等新兴市场增速超 400%，预测 2030 年印度将占全球新开发者三分之一
+- 🚀 开发效率显著提升：全年合并 4.32 亿 PR（+23%），推送近 10 亿次提交，Dockerfile 使用量暴增 120%
+- 🛡️ 安全自动化进阶：关键漏洞修复时间缩短 30%，Dependabot 配置仓库增长 137%，AI 自动修复覆盖 6000+ 仓库
+- 📦 开源项目 AI 化：前 10 大热门项目中 6 个为 AI 基础设施，vLLM、Ollama 等新兴项目贡献者增速达中位数 3 倍
+- 🔄 工作流范式变革：智能代理参与生成百万级 PR，代码审查 AI 采纳率 72.6%，"氛围编程"降低开发门槛
+
+---
 
 要真正理解一个概念，你必须在某种程度上自己"发明"这个概念。理解并非源于被动的内容消费，而是源于一个主动的、自我导向的创建和调试过程。
 
