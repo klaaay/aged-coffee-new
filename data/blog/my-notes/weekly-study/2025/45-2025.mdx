@@ -318,6 +318,26 @@ Figma 官方宣布收购 AI 设计工具 Weavy，将更名为 Figma Weave。此�
 
 ## AI
 
+### [claude-writers-aid-mcp](https://github.com/xiaolai/claude-writers-aid-mcp)
+
+Claude Writer's Aid MCP 是一款专为使用 Markdown 文稿的作家和作者设计的工具，通过 Model Context Protocol (MCP) 服务器提供智能分析、质量检查和写作辅助功能，并与 Claude Code 集成。它支持文稿索引、语义搜索、质量分析、链接管理、进度跟踪等功能，但仅适用于 Claude Code CLI，不兼容其他 Claude 平台。
+
+- 📚 **文稿索引**：自动索引和跟踪写作项目中的所有 Markdown 文件。
+- 🔍 **语义搜索**：通过自然语言查询在文稿中查找内容。
+- ✅ **质量分析**：检查术语一致性、可读性、重复内容和结构问题。
+- 🔗 **链接管理**：验证内部链接，查找损坏引用并建议交叉引用。
+- 📈 **进度跟踪**：监控字数、跟踪更改并生成进度报告。
+- 🎨 **主题提取**：发现并分析内容中的重复主题。
+- 📝 **TODO 管理**：提取并跟踪所有 TODO、FIXME 和 DRAFT 标记。
+- 📊 **写作统计**：为写作项目提供全面的指标和分析。
+- ⚠️ **兼容性限制**：仅适用于 Claude Code CLI，不兼容 Claude Desktop、Claude Web 或其他集成。
+- 💾 **数据存储**：将文稿数据存储在项目文件夹的 `.writers-aid/manuscript.db` 中。
+- 🛠️ **安装要求**：需要 Claude Code CLI 和 Node.js 18 或更高版本。
+- 🔄 **重启提示**：升级后必须重启 Claude Code CLI 以加载新版本。
+- 🖥️ **独立 CLI 模式**：提供交互式 REPL、单命令和 MCP 服务器三种操作模式。
+- 🔧 **高级功能**：支持 Git 集成、对话历史迁移和项目合并。
+- ❓ **故障排除**：提供常见问题（如“未找到对话”或“嵌入失败”）的解决方案。
+
 ### [代理专用 Postgres](https://www.tigerdata.com/blog/postgres-for-agents)
 
 Tiger Data 公司发布专为 AI 智能体设计的 Agentic Postgres 数据库，通过创新存储架构和工具集帮助开发者更高效地构建 AI 应用。
