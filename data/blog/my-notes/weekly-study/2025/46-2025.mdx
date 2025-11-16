@@ -12,6 +12,21 @@ summary: ''
 
 ## 技术
 
+### [JavaScript 中的错误链：使用 Error.cause 实现更清晰的调试](https://allthingssmitty.com/2025/11/10/error-chaining-in-javascript-cleaner-debugging-with-error-cause/)
+
+本文介绍了 JavaScript 中 `Error.cause` 属性的用途和优势，它解决了传统错误处理中原始错误信息丢失的问题，并提供了标准化的错误链管理方法。
+
+- 🎯 **传统错误处理的问题**：通过字符串拼接包装错误会导致原始堆栈跟踪和错误类型丢失，使得追踪根因困难。
+- 🆕 **Error.cause 的引入**：ES2022 新增的 `cause` 参数允许在抛出新错误时保留原始错误，便于访问完整的错误链。
+- ⚙️ **实际应用示例**：演示了如何在函数中捕获解析错误，并使用 `cause` 属性包装和传递原始错误，保持错误类型和堆栈信息。
+- 🔧 **自定义错误类支持**：可以在自定义错误类（如 `DatabaseError`）中通过构造函数传递 `cause`，确保错误链的完整性。
+- 🧪 **测试断言改进**：错误链使得测试更加清晰和健壮，可以直接断言深层原因错误（如 `ValidationError`）。
+- ⚠️ **注意事项与最佳实践**：默认日志不会自动显示 `cause` 链，需手动记录；避免过度链式包装，以免增加调试复杂度。
+- 🔄 **递归记录错误链**：提供了辅助函数来安全地遍历和记录完整的错误链，包括堆栈跟踪，适用于多层系统调试。
+- 🌐 **跨层错误链示例**：展示了从数据库连接超时到服务不可用的多层错误包装，输出结构化的错误链信息。
+- ✅ **环境支持**：所有现代浏览器（Chrome 93+、Firefox 91+ 等）和 Node.js 16.9+ 均支持 `cause` 属性。
+- 💡 **TypeScript 配置**：使用 ES2022 作为编译目标（`"target": "es2022"`）以启用 `cause` 属性的类型支持。
+
 ### [自学前端开发者的编程原则](https://piccalil.li/blog/programming-principles-for-self-taught-front-end-developers/)
 
 作者作为非科班出身的前端开发者，分享 20 年经验中真正实用的编程原则，强调在编写代码时直接可操作的准则而非抽象理论。
@@ -53,6 +68,36 @@ summary: ''
 - 🏅 **开源安全实践**：采用 OpenSSF 评分卡和最佳实践徽章提升项目安全等级
 
 ## 工具
+
+### [Yuxi-Know](https://github.com/xerrors/Yuxi-Know)
+
+语析（Yuxi-Know）是一个基于大模型的知识库与知识图谱智能体开发平台，集成了 RAG 技术、知识图谱和工具调用能力。项目采用 LangGraph v1 + Vue.js + FastAPI + LightRAG 架构，提供全套智能体开发套件，并支持 Docker 部署与多模型扩展。
+
+- 🚀 **核心功能**：融合 RAG 知识库与知识图谱技术，支持智能体开发、工具调用及联网检索。
+- 🛠️ **技术栈**：基于 LangChain/LangGraph v1、Vue、FastAPI、Neo4j 等主流框架与工具。
+- 📦 **开源协议**：采用 MIT 许可证，允许自由使用与二次开发。
+- 🔄 **最新动态**：v0.3 版本适配 LangGraph v1 特性，升级文档解析并优化智能体开发流程。
+- 🌟 **项目热度**：GitHub 获 2.4k 星标、302 分叉，活跃社区持续贡献。
+- 📚 **生态支持**：提供详细文档、视频演示及 Docker 部署指南，覆盖从开发到部署的全流程。
+
+### [mcporter](https://github.com/steipete/mcporter)
+
+MCPorter 是一个用于 Model Context Protocol (MCP) 的 TypeScript 运行时、CLI 和代码生成工具包。它能够自动发现系统中已配置的 MCP 服务器，直接调用它们，在 TypeScript 中组合更丰富的自动化流程，并在需要共享工具时生成单一用途的 CLI。
+
+- 🚀 **零配置发现**: 自动加载配置并合并来自 Cursor、Claude 等编辑器的 MCP 服务器导入。
+- 🛠️ **一键 CLI 生成**: 将任何 MCP 服务器定义转换为可直接运行的命令行工具。
+- 📝 **类型化工具客户端**: 生成强类型的 TypeScript 接口或客户端包装器。
+- 🔗 **友好可组合 API**: 提供符合人体工程学的代理方法和结果处理助手。
+- 🔐 **OAuth 和 stdio 优化**: 内置 OAuth 缓存、日志跟踪和 stdio 包装器。
+- 🌐 **临时连接**: 无需修改配置即可直接指向任何 MCP 端点进行调用。
+
+- 📋 **列出 MCP 服务器**: 使用 `npx mcporter list` 查看已配置的服务器及其工具。
+- 📞 **调用 MCP 工具**: 支持多种调用语法，如 `npx mcporter call linear.create_comment issueId:ENG-123 body:'Looks good!'`。
+- 🔑 **OAuth 认证**: 对受保护的服务器运行 `npx mcporter auth <server>` 完成登录。
+- 🖥️ **守护进程管理**: 使用 `mcporter daemon` 子命令管理状态化 stdio 服务器的生命周期。
+- ⚙️ **配置管理**: 通过 `mcporter config` 命令交互式地管理项目 MCP 配置。
+- 📦 **生成独立 CLI**: 使用 `npx mcporter generate-cli` 将服务器定义打包为可分享的 CLI 工具。
+- 📄 **生成类型化客户端**: 使用 `npx mcporter emit-ts` 生成 `.d.ts` 接口或客户端包装器代码。
 
 ### [Hashbrown：面向生成式 UI 的 TypeScript 框架](https://hashbrown.dev/)
 
@@ -108,6 +153,22 @@ Ebook-MCP 是一个基于模型上下文协议（MCP）的强大电子书处理�
 
 ## 更新
 
+### [Bun v1.3.2 | Bun 博客](https://bun.com/blog/bun-v1.3.2)
+
+Bun 1.3.2 版本修复了 287 个问题，主要更新包括恢复提升安装为默认方式、引入配置版本锁定机制、新增 CPU 性能分析功能、优化依赖安装速度，并改进了 WebSocket、测试框架和 Docker 支持。
+
+- 🚀 安装方式：支持 curl/npm/powershell/scoop/brew/docker 多种安装命令
+- 🔄 默认安装调整：现有项目恢复使用提升安装，新项目仍默认隔离安装
+- 📌 配置版本锁定：通过 configVersion 字段避免未来版本升级时的破坏性变更
+- ⚡ 性能提升：热门库安装速度优化，Next.js+Vite 项目安装提速 6 倍
+- 📊 CPU 性能分析：新增--cpu-prof 标志生成 Chrome DevTools 兼容的性能分析文件
+- 🧪 测试增强：bun:test 新增 onTestFinished 钩子，支持串行测试中的异步清理
+- 🔌 WebSocket 改进：ServerWebSocket 新增 subscriptions 获取器便于主题管理
+- 🐳 Docker 更新：官方镜像升级至 Alpine 3.22，提升安全性和兼容性
+- 🔗 Git 依赖解析：改进 GitHub 简写和协议前缀的依赖解析逻辑
+- 📋 依赖查看：新增 bun list 命令作为 bun pm ls 的快捷别名
+- 🐛 问题修复：涵盖 Node.js 兼容性、N-API、HTTP/HTTPS、bun test、bun build 等多个领域
+
 ### [React Email 5.0 · 重发版](https://resend.com/blog/react-email-5)
 
 React Email 5.0 正式发布，新增深色模式切换器、Tailwind 4 支持、Resend 集成及 8 个新组件，同时公布显著增长数据与升级指南。
@@ -134,9 +195,32 @@ TanStack DB 0.5 版本引入了查询驱动同步功能，通过组件查询自�
 - 🎪 实时协作支持：与 Electric 等同步引擎结合实现实时数据流
 - 🧩 声明式编程：采用 React 式纯函数查询，组件声明数据需求框架处理实现
 
-## 设计
-
 ## AI
+
+### [CodeMachine-CLI](https://github.com/moazbuilds/CodeMachine-CLI)
+
+CodeMachine CLI 是一个本地运行的自主多智能体平台，能够将规范文件转化为生产就绪的代码。它通过协调多个 AI 智能体，支持大规模并行执行和长期工作流，显著提升开发效率。最新版本 v0.5.0 集成了 OpenCode CLI 引擎，并增强了类型安全性。
+
+- 🚀 **自主代码生成**：CodeMachine 通过多智能体协作，将规范自动转换为完整代码库，其自身 90% 的代码由该工具生成。
+- ⚙️ **多引擎支持**：兼容多种 AI 引擎（如 Codex CLI、Claude Code、OpenCode CLI 等），支持跨平台运行。
+- 🔄 **并行工作流**：支持智能体分层与并行执行，可动态调整任务流程，实现高效协作。
+- 📦 **快速入门**：通过 npm 全局安装后，只需添加规范文件并运行命令即可启动自动化开发流程。
+- 🛠️ **生产验证**：已在 Sustaina Platform 项目中成功生成 7 个微服务、500+ 文件及 6 万行代码，验证其生产环境适用性。
+- ⚡ **高效对比**：相比传统人工协调 AI 工具，CodeMachine 将开发时间从 200-300 小时缩短至 8 小时，效率提升 25-37 倍。
+- 📚 **文档齐全**：提供详细的使用指南、核心概念说明及自定义工作流配置方法，方便开发者深入使用。
+
+### [Memori](https://github.com/GibsonAI/Memori)
+
+Memori 是一个开源的 SQL 原生内存引擎，旨在为任何 LLM 提供持久化、可查询的记忆功能。它通过简单的代码集成，支持多种 SQL 数据库和 LLM 框架，显著降低成本并避免供应商锁定。
+
+- 🧠 **一键集成记忆功能**：仅需一行代码 `memori.enable()` 即可为 LLM 添加持久化记忆，支持 OpenAI、Anthropic 等主流框架。
+- 🗃️ **SQL 原生存储**：记忆数据存储在标准 SQL 数据库（如 SQLite、PostgreSQL）中，用户完全掌控且可移植。
+- 💰 **成本节约显著**：无需昂贵的向量数据库，可节省 80-90% 的成本。
+- 🔍 **智能记忆管理**：支持自动实体提取、关系映射和上下文优先级排序，提升 LLM 的交互质量。
+- ⚙️ **灵活配置模式**：提供 Conscious（短期工作记忆）、Auto（动态搜索）及 Combined 模式，适应不同应用场景。
+- 🌐 **多框架支持**：兼容 LiteLLM、LangChain 等 100 多种模型，并通过拦截调用实现无缝集成。
+- 🚀 **开源与社区驱动**：采用 Apache 2.0 许可证，鼓励社区贡献，提供详细文档和示例。
+- 📈 **应用场景广泛**：适用于个人助手、多用户系统、研究助手等，支持实时交互和模式分析。
 
 ## 其他
 
