@@ -64,7 +64,7 @@ export const Subscription = () => {
       {
         name: 'Cursor Pro',
         yearly: toFixed2Number(192 * DOLLAR2RMB),
-        expiry: '2025-11-14',
+        expiry: '2026-11-18',
         type: '效率',
         extra: '',
       },
