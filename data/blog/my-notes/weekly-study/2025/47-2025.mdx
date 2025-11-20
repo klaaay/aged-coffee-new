@@ -12,12 +12,103 @@ summary: ''
 
 ## 技术
 
+### [Visual Types 摘要](https://types.kitlangton.com/)
+
+- 🏷️ 类型是运行时值集合的标签，包括布尔值、字面量类型和联合类型等。
+- 📊 子类型关系使用 `extends` 表示，若类型 A 是 B 的子集，则 `A extends B` 成立。
+- 🧩 元组类型是固定长度且各位置类型确定的数组，对象类型则通过属性定义集合。
+- 🔀 联合类型使用 `|` 组合多个类型，交集类型使用 `&` 取共同部分，无交集时为 `never`。
+- 📝 类型别名允许为类型命名，泛型类型别名则像类型级函数，接受类型参数并返回新类型。
+- 🔧 `typeof` 操作符在编译时提取值的类型，`as const` 将对象属性设为只读字面量类型。
+- 🔑 `keyof` 提取对象所有键的联合类型，索引访问类型通过键查找属性类型。
+- 🗺️ 映射类型通过迭代键来创建新对象类型，条件类型则根据条件判断选择不同类型。
+- 🔄 条件类型在处理联合类型时会进行分布式计算，可用元组包装来禁用此行为。
+- 🛠️ 实用工具类型如 `Pick`、`ReturnType` 和 `Parameters` 等，提供了常见的类型操作功能。
+
+### [React 中的计时器同步机制](https://www.dzialowski.eu/synchronizing-timers-react/)
+
+当应用中多个组件需要以相同间隔执行操作但计时器不同步时，可以使用自定义钩子实现定时器同步。
+
+- 🎯 问题场景：闪烁按钮组件与进度条组件使用独立计时器，导致动画效果不同步
+- ⚙️ 初始方案：使用 useInterval 钩子独立管理间隔，但组件间状态相互隔离
+- 🪣 核心思路：创建按延迟时间分组的“桶”机制，同间隔的回调函数归入同一桶
+- 🛠️ 技术实现：通过 setupBucket 函数管理间隔实例，add/remove 函数控制回调队列
+- 📦 钩子设计：useSynchronizedInterval 接收函数与延迟参数，自动加入对应桶
+- 🎉 使用效果：替换 useInterval 后，多个组件可实现毫秒级精确同步
+- 🔧 扩展能力：支持通过 id 参数为相同延迟创建独立桶，满足复杂场景需求
+
+### [DNS 解析累加效应 | 亚历克斯·麦克阿瑟](https://macarthur.me/posts/dns/)
+
+本文探讨了 DNS 预解析（dns-prefetch）资源提示对前端性能的优化作用，通过提前解析第三方域名来减少延迟，并对比了 preconnect 和 preload 等资源提示的使用场景与效果。
+
+- 🌐 DNS 解析虽快但非零成本，多域名访问时延迟会累积
+- ⚡ DNS 预解析可提前获取 IP 地址，优化不确定的第三方资源请求
+- 📊 实测显示常见网站 DNS 解析耗时可达 100-300 毫秒
+- 🔄 对比三种资源提示：dns-prefetch 仅解析 DNS、preconnect 建立完整连接、preload 直接预加载资源
+- 🎯 使用建议：不确定资源用 dns-prefetch，确定连接用 preconnect，关键资源用 preload
+- 💡 资源提示属于精细化优化工具，需结合具体场景使用
+- 📈 正确使用可提升页面加载性能，但需注意 preload 的 URL 精确匹配要求
+
+### [React 19.2：React 进入其巅峰时代 - DEV 社区](https://dev.to/sagi0312/react-192-react-in-its-sigma-era-op7)
+
+React 19.2 版本以幽默风格介绍了其新特性和改进，强调框架在性能优化和开发者体验上的提升，包括自动编译优化、组件状态保持、副作用管理、性能调试工具等，标志着 React 进入更成熟高效的"sigma 时代"。
+
+- 🚀 **React Compiler 自动优化** - 通过 Babel 插件实现自动记忆化，减少手动优化时间，尽管可能略微增加构建时间
+- 🎭 **Activity 组件** - 允许组件在隐藏时保持状态和 DOM，避免重复挂载卸载，提升用户体验
+- 🧘‍♀️ **useEventEffect Hook** - 减少不必要的重渲染，更稳定地处理事件回调，避免依赖项频繁更新
+- 🫠 **cacheSignal API** - 为服务器组件缓存提供中止信号，适用于高流量应用的边缘场景
+- 📊 **性能追踪工具** - 在 Chrome DevTools 中显示调度器和组件渲染时间，帮助调试性能问题
+- 🍱 **部分预渲染 (PPR)** - 支持静态外壳和动态内容流式传输，需配合框架如 Next.js 使用
+- 🤝 **Suspense 边界批处理** - SSR 期间同步加载多个异步组件，避免内容逐个闪现
+- 🔧 **工具更新** - eslint-plugin-react-hooks v6 支持 useEffectEvent 和扁平配置，useId 前缀更新为兼容 View Transitions API
+
 ## 工具
 
+### [css-extras](https://github.com/sindresorhus/css-extras)
+
+`css-extras` 是一个利用原生 CSS `@function` 规则的实用自定义函数集合，无需构建步骤，可直接复制使用。它提供了数学运算、颜色处理、版式控制、布局、间距、动画等多种功能，但目前仅支持 Chrome 141+ 浏览器。
+
+- 📦 无需构建步骤，可直接复制使用
+- ⚠️ 目前仅支持 Chrome 141+ 浏览器
+- 🔧 包含约 43 个 CSS 自定义函数
+- 📐 涵盖数学计算、颜色处理、版式控制等类别
+- 🎨 支持主题感知组件和响应式设计
+- 💡 提供完整的函数参考和实际使用示例
+- 📄 采用 MIT 或 CC0-1.0 开源协议
+
 ## 更新
+
+### [ESLint v10.0.0-alpha.0 发布 - ESLint - 可插拔 JavaScript 代码检查工具](https://eslint.org/blog/2025/11/eslint-v10.0.0-alpha.0-released/)
+
+ESLint v10.0.0-alpha.0 作为主要版本发布，包含新功能、错误修复和多项重大变更，目前为预发布版本仅供测试反馈。
+
+- 🚨 此为预发布版本，不建议用于生产环境，需通过指定标签安装
+- 🔄 不再支持 Node.js v20.19.0 以下版本及 v21/v23，仅支持 v20.19.0+、v22.13.0+ 和 v24+
+- 📁 配置文件查找逻辑更新，改为从被检测文件目录开始查找 eslint.config.\*
+- 🗑️ 完全移除 eslintrc 配置系统及相关环境变量、CLI 参数和文件支持
+- ⚠️ 停止支持 jiti < v2.2.0 版本
+- 📋 更新 eslint:recommended 配置，纳入新的重要规则
+- 🔧 移除多个已弃用的 rule context 成员，需使用替代属性
+- 🧪 删除 LintMessage#nodeType 和 TestCaseError#type 属性
+- 🌐 Program AST 节点范围调整为覆盖整个源代码文本
+- 🔭 要求自定义 ScopeManager 实现自动解析全局变量引用
+- 📚 提供详细迁移指南协助升级适配
 
 ## 设计
 
 ## AI
+
+### [双子座 3](https://blog.google/products/gemini/gemini-3-collection/)
+
+Gemini 3 作为谷歌最智能的 AI 模型正式发布，整合了多模态理解、长上下文处理、思维推理与原生工具使用等能力，旨在帮助用户实现各类创意构想。该模型已全面应用于 Gemini 应用、谷歌搜索、企业服务及开发者平台。
+
+- 🚀 Gemini 3 成为谷歌最智能的集成化 AI 模型，融合多模态与推理能力
+- 📱 Gemini 应用迎来重大升级，搭载 Gemini 3 增强智能功能
+- 🔍 谷歌搜索集成 Gemini 3，提供更智能的搜索与 AI 模式
+- 💻 开发者可通过 Gemini 3 体验智能编码与 Antigravity 开发平台
+- 🏢 企业用户可通过 Gemini Enterprise 和 Vertex AI 使用 Gemini 3
+- 🎨 生成式 UI 技术在 Gemini 应用中实现可视化交互体验
+- ⚙️ Gemini CLI 与 Android Studio 集成 Gemini 3 Pro 助力开发效率
+- 🔥 Flutter 平台推出 GenUI SDK，支持生成式界面开发
 
 ## 其他
