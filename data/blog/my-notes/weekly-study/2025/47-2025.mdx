@@ -12,6 +12,18 @@ summary: ''
 
 ## 技术
 
+### [实验：使 TypeScript 默认不可变](https://evanhahn.com/typescript-immutability-experiment/)
+
+作者尝试在 TypeScript 中实现默认不可变变量，通过禁用内置库并自定义类型定义，成功使数组和 Record 类型默认不可变，但未能实现普通对象的默认不可变性。
+
+- 🚫 禁用 TypeScript 内置库，通过设置 noLib 标志移除默认可变类型定义
+- 🧩 创建基础类型定义文件 lib.d.ts，包含空接口作为类型占位符
+- 🔒 通过 readonly 修饰符成功实现数组的默认不可变性，禁止直接赋值和 push 等操作
+- 🔄 定义 MutableArray 接口实现可控的可变数组，需显式声明
+- 📝 扩展方案到 Record 类型，分别定义不可变 Record 和可变 MutableRecord
+- ❌ 普通对象`{foo:"bar"}`的默认不可变性实现失败，无法通过修改 Object 接口达成
+- 💡 建议未来可通过 lint 规则强制实现完全不可变，或等待语言原生支持
+
 ### [Visual Types 摘要](https://types.kitlangton.com/)
 
 - 🏷️ 类型是运行时值集合的标签，包括布尔值、字面量类型和联合类型等。
@@ -64,6 +76,61 @@ React 19.2 版本以幽默风格介绍了其新特性和改进，强调框架在
 
 ## 工具
 
+### [git-worktree-runner](https://github.com/coderabbitai/git-worktree-runner)
+
+gtr (Git Worktree Runner) 是一个用于简化 Git worktree 管理的跨平台命令行工具，它通过提供直观的命令、编辑器集成、AI 工具支持和自动化配置，极大地提升了并行开发工作流的效率。
+
+- 🚀 **简化命令** - 使用 `git gtr new <branch>` 等直观命令创建和管理 worktree，告别冗长的原生 Git worktree 命令。
+- 📁 **仓库作用域** - 每个 Git 仓库都拥有自己独立且互不干扰的 worktree 集合。
+- 🔧 **配置优于标志** - 通过 `git gtr config` 一次性设置默认编辑器、AI 工具、文件复制规则等，后续使用简单命令即可。
+- 🎨 **编辑器集成** - 支持一键在 Cursor、VS Code、Zed 等编辑器中打开指定 worktree。
+- 🤖 **AI 工具支持** - 集成 Aider、Claude Code、OpenCode 等主流 AI 编程工具，可在特定 worktree 中启动。
+- 📋 **智能文件复制** - 通过配置模式，自动将如 `.env.example`、`CLAUDE.md` 等配置文件复制到新 worktree，并可排除敏感文件。
+- 📁 **目录复制加速** - 支持复制 `node_modules`、`.venv` 等依赖目录，避免重复安装，大幅缩短 worktree 创建时间。
+- 🪝 **钩子系统** - 支持在 worktree 创建或删除后自动运行自定义命令（如 `npm install`、`cargo build`）。
+- 🌍 **跨平台支持** - 兼容 macOS、Linux 和 Windows (通过 Git Bash 或 WSL)。
+- ⚡ **并行开发** - 核心价值在于允许同时在不同 worktree 中处理多个分支（如功能开发、Bug 修复、PR 审查），而无需切换或储藏更改。
+- 🛠️ **高级用法** - 支持通过 `--force` 和 `--name` 在同一分支上创建多个 worktree，便于多 AI 代理并行处理同一特性的不同部分。
+
+### [Ademking/use-nemo：自定义React指令集](https://github.com/Ademking/use-nemo)
+
+这是一个名为 use-nemo 的 Vite 插件库，允许开发者在 React 项目中创建自定义指令，实现代码转换和功能注入。
+
+- 🐟 支持创建任意自定义指令（如 "use nemo"、"use cat" 等）
+- ⚡ 基于 Vite 构建工具，通过插件机制实现代码转换
+- 🔧 提供完整的 API 接口和辅助函数（injectCode、injectComment、injectImport）
+- 📁 采用模块化设计，通过指令注册表管理自定义指令
+- 🐱 内置 useMeow 示例指令，展示基本使用方法
+- 📚 支持 TypeScript 类型定义，确保开发体验
+- 🔄 指令处理流程包括发现、解析、转换和清理四个阶段
+
+### [Acetyld/expo-foreground-actions：在用户切换应用后的宽限期内持续运行操作的启动功能](https://github.com/Acetyld/expo-foreground-actions)
+
+该库允许应用在用户切换到其他应用后的宽限期内继续执行前台任务，适用于发送消息、创建任务或同步数据等场景。
+
+- 📱 支持 iOS 和 Android 平台，模拟系统原生后台任务执行机制
+- ⏱️ iOS 任务可运行约 30 秒，Android 前台服务运行时间更长但建议控制在 30 秒内
+- 🚫 不适用于后台位置追踪，推荐使用 WorkManager 等替代方案
+- 🔔 Android 支持自定义通知标题、描述和进度条，兼容 Android 34+ 后台策略
+- ⚠️ iOS 支持后台执行时间即将到期时的通知提醒
+- 🌐 提供有限的 Web 支持，建议使用 runInJS 方法
+- 🔧 提供多种控制方法：启动/停止前台任务、强制终止所有任务、更新任务设置等
+- 📊 可获取任务标识符、已运行任务计数和剩余后台执行时间
+- 🛠️ 需要 Expo v49+ 环境，支持 Bare/Manage 工作流但不兼容 Expo Go
+
+### [WookieFPV/expo-build-disk-cache：Expo CLI 应用构建缓存（使用磁盘）](https://github.com/WookieFPV/expo-build-disk-cache)
+
+这是一个用于 Expo CLI 的本地磁盘构建缓存工具，通过缓存构建结果大幅提升 Android 和 iOS 应用的构建速度。
+
+- ⚡ 显著加速 Expo 应用的 Android 和 iOS 构建过程
+- 💾 利用本地磁盘缓存技术，跳过重复编译步骤
+- 🚀 当缓存可用时，构建几乎可以立即启动
+- 📋 要求 Expo SDK 53 及以上版本
+- 🔧 支持自定义缓存目录和自动清理功能
+- 🌐 可集成远程缓存提供商如 EAS
+- 📄 采用 MIT 开源许可证
+- ⭐ 获得 102 个星标，显示社区高度关注
+
 ### [css-extras](https://github.com/sindresorhus/css-extras)
 
 `css-extras` 是一个利用原生 CSS `@function` 规则的实用自定义函数集合，无需构建步骤，可直接复制使用。它提供了数学运算、颜色处理、版式控制、布局、间距、动画等多种功能，但目前仅支持 Chrome 141+ 浏览器。
@@ -77,6 +144,33 @@ React 19.2 版本以幽默风格介绍了其新特性和改进，强调框架在
 - 📄 采用 MIT 或 CC0-1.0 开源协议
 
 ## 更新
+
+### [工具集 | Node.js v25.2.1 文档](https://nodejs.org/docs/latest/api/util.html#utildeprecatefn-msg-code-options)
+
+Node.js v25.2.1 实用工具模块文档，提供用于调试和内部 API 支持的多种功能方法。
+
+- 🔄 **util.callbackify()** - 将异步函数转换为回调风格函数
+- 🐛 **util.debuglog()** - 创建条件性调试日志函数
+- ⚠️ **util.deprecate()** - 标记函数为已弃用并发出警告
+- 🔍 **util.inspect()** - 返回对象的字符串表示，用于调试
+- 📊 **util.format()** - 使用格式说明符返回格式化字符串
+- 🧩 **util.types** - 提供各种内置对象的类型检查
+- 🔄 **util.promisify()** - 将回调风格函数转换为 Promise 版本
+- 📝 **util.parseArgs()** - 高级命令行参数解析 API
+- 🔤 **util.TextDecoder/TextEncoder** - WHATWG 编码标准实现
+- 🎨 **util.styleText()** - 终端文本格式化功能
+- 🛑 **util.aborted()** - 监听中止信号并返回 Promise
+- 📧 **util.MIMEType/MIMEParams** - MIME 类型解析和操作类
+
+### [Promise 子类的新`use()`文档 · reactwg/async-react · 讨论 #3 · GitHub](https://github.com/reactwg/async-react/discussions/3)
+
+React 工作组发布了关于 Promise 子类的新文档，主要说明在数据获取层中如何正确创建用于 use() 的 Promise 对象。
+
+- 📚 新增 Promise 子类的 use() 文档，说明创建悬停 Promise 的细节
+- ⚠️ 不建议条件性调用 use()，可能导致数据错乱和优化失效
+- 🔄 用户代码中的条件性 use() 调用仍被允许
+- 📝 推荐通过子类化 Promise 或设置状态字段来同步获取已解析数据
+- 🛠️ 文档由多位贡献者共同完善，欢迎反馈和提问
 
 ### [ESLint v10.0.0-alpha.0 发布 - ESLint - 可插拔 JavaScript 代码检查工具](https://eslint.org/blog/2025/11/eslint-v10.0.0-alpha.0-released/)
 
@@ -97,6 +191,24 @@ ESLint v10.0.0-alpha.0 作为主要版本发布，包含新功能、错误修复
 ## 设计
 
 ## AI
+
+### [VSCODE 2025 年 10 月（版本 1.106）](https://code.visualstudio.com/updates/v1_106)
+
+VS Code 2025 年 10 月版本 (1.106) 带来三大核心更新：集中管理 AI 代理会话的 Agent HQ、增强安全控制机制，以及优化日常编码体验的编辑器改进。
+
+- 🎯 **Agent HQ 统一视图** - 新增代理会话中心，支持本地与云端 AI 代理的集中监控和管理
+- 🛡️ **安全与信任增强** - 引入工具后审批机制，支持按来源批量信任 MCP 服务器
+- ✨ **编辑器体验优化** - 差异编辑器支持删除文本选择，Go to Line 命令新增字符定位功能
+- 🤖 **计划代理功能** - 新增分步任务规划代理，支持自定义规划流程
+- 🌐 **云端代理集成** - Copilot 编码代理集成至 Chat 扩展，提供更原生体验
+- 🔄 **自定义代理升级** - 聊天模式重命名为自定义代理，支持跨环境运行配置
+- 📝 **代码编辑改进** - 内联建议开源合并，支持通过装订区图标暂停建议
+- 🎨 **界面视觉刷新** - 更新 codicon 图标集，采用更现代的曲线设计
+- ⚙️ **高级设置支持** - 新增高级设置分类，专为需要精细控制的用户设计
+- 💬 **聊天功能增强** - 改进工具选择算法，支持保存对话为可重用提示
+- 🔧 **终端智能感知** - 终端 IntelliSense 结束预览阶段，正式向所有用户推出
+- 📊 **测试覆盖导航** - 新增未覆盖代码行导航命令，便于快速定位测试缺口
+- 🔐 **认证管理优化** - 扩展账户偏好设置更易发现，微软认证淘汰经典模式
 
 ### [双子座 3](https://blog.google/products/gemini/gemini-3-collection/)
 
