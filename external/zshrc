@@ -179,6 +179,10 @@ alias uno="eevee ai uno"
 
 # -------------------------------- #
 
+# npm install --global trash-cli
+alias rm="trash"
+
+# -------------------------------- #
 
 # where proxy
 proxy () {
