@@ -181,6 +181,8 @@ alias uno="eevee ai uno"
 
 # npm install --global trash-cli
 alias rm="trash"
+alias claude-yolo="claude --dangerously-skip-permissions"
+alias codex-yolo="codex --dangerously-bypass-approvals-and-sandbox"
 
 # -------------------------------- #
 
