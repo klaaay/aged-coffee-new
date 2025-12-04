@@ -12,6 +12,16 @@ summary: ''
 
 ## 技术
 
+### [锚点定位与内嵌修改的包含块（IMCB）](https://www.bram.us/2025/12/02/anchor-positioning-and-the-inset-modified-containing-block-imcb/)
+
+本文解释了 CSS 锚点定位中“插入修改包含块”（IMCB）的概念及其作用，通过可视化工具演示了如何通过调整`inset`、`align-self`和`justify-self`属性来控制锚定元素的位置。
+
+- 🧩 IMCB（插入修改包含块）是理解 CSS 锚点定位的关键概念，它通过`inset`属性调整包含块的大小和位置。
+- 🔀 使用`position-area`选择“位置区域网格”中的一个区域作为锚定元素的包含块，再通过`inset`调整形成 IMCB。
+- 🛠️ 通过`align-self`和`justify-self`属性可以在 IMCB 内微调锚定元素的位置，例如实现右上角定位。
+- 🎥 作者创建了交互式演示工具，可视化 IMCB 和包含块，并允许动态调整`inset`、`align-self`和`justify-self`属性。
+- 💡 默认情况下`inset`值为 0，因此包含块与 IMCB 通常相同，但调整`inset`可改变锚定元素的定位区域。
+
 ## 工具
 
 ## 更新
