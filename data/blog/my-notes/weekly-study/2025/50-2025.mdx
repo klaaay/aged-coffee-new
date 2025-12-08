@@ -12,14 +12,14 @@ summary: ''
 
 ## 技术
 
-### [使用 React `<Activity />` 组件预加载视频 | Kent C. Dodds 的 Epic React 系列](https://www.epicreact.dev/use-react-activity-to-preload-a-video-y2lmw)
+### [使用 React `Activity` 组件预加载视频 | Kent C. Dodds 的 Epic React 系列](https://www.epicreact.dev/use-react-activity-to-preload-a-video-y2lmw)
 
-**原文标题**: [Use React `<Activity />` to preload a video | Epic React by Kent C. Dodds](https://www.epicreact.dev/use-react-activity-to-preload-a-video-y2lmw)
+**原文标题**: [Use React `Activity` to preload a video | Epic React by Kent C. Dodds](https://www.epicreact.dev/use-react-activity-to-preload-a-video-y2lmw)
 
-使用 React 的 `<Activity />` 组件可以预加载视频，解决条件渲染时视频无法预加载的问题，提升用户体验。
+使用 React 的 `Activity` 组件可以预加载视频，解决条件渲染时视频无法预加载的问题，提升用户体验。
 
 - 🎬 **条件渲染导致预加载失效**：当视频元素通过条件渲染（如三元表达式）控制显示时，`preload="auto"` 无法生效，因为视频不在 DOM 中，浏览器无法预加载。
-- 🛠️ **Activity 组件解决方案**：React 19 的 `<Activity>` 组件允许视频始终存在于 DOM 中，通过 `mode` 属性控制显示（`'visible'`）或隐藏（`'hidden'`），从而启用预加载功能。
+- 🛠️ **Activity 组件解决方案**：React 19 的 `Activity` 组件允许视频始终存在于 DOM 中，通过 `mode` 属性控制显示（`'visible'`）或隐藏（`'hidden'`），从而启用预加载功能。
 - ⚡ **提升加载性能**：用户点击播放时，视频可立即显示，无需等待加载，尤其有利于慢速网络连接下的体验。
 - 🔄 **状态与效果管理**：Activity 在隐藏时会清理副作用（如暂停订阅）、保留组件状态，并在再次显示时恢复，适用于标签页、模态框等交互场景。
 - ⏸️ **自动播放控制**：结合自定义 Hook（如 `useAutoplay`）可管理视频的播放与暂停，确保隐藏时暂停、显示时播放，兼顾预加载与播放控制。
