@@ -24,7 +24,34 @@ summary: ''
 
 ## 工具
 
+### [GitHub - shivantra/react-web-camera: React Web Camera — 一个 React 组件，用于直接从浏览器捕获多张照片。适用于网页、响应式应用和 PWA。解决了`<input type="file" capture>`一次只能拍摄一张照片的限制。](https://github.com/shivantra/react-web-camera)
+
+React Web Camera 是一个轻量灵活的 React 组件，用于从用户摄像头（前置或后置）捕获图像，支持 jpeg、png 和 webp 格式。它解决了移动端 `<input type="file" capture>` 只能拍摄单张照片的限制，适用于网页、响应式应用和 PWA，提供多图拍摄、摄像头切换和完全可定制的 UI。
+
+- 📷 **支持前后摄像头** – 轻松切换前后摄像头进行拍摄。
+- 🖼️ **多图像格式** – 可导出为 jpeg、png 或 webp 格式。
+- ⚡ **可调拍摄质量** – 通过 0.1 至 1.0 的范围控制图像质量。
+- 🔄 **摄像头切换功能** – 无缝在前置（用户）和后置（环境）摄像头间切换。
+- 📸 **多图拍摄** – 在单次会话中拍摄并管理多张照片，适用于网页和移动端。
+- 🎯 **即时摄像头就绪** – 组件加载后立即访问摄像头。
+- 🛠️ **完全程序控制** – 可使用 capture()、switch() 和 getMode() 等 ref 方法。
+- 🎨 **自定义样式** – 可自定义容器和视频元素的样式以匹配设计系统。
+- 📦 **易于安装** – 支持 npm、yarn 和 pnpm 安装。
+- 🌐 **多框架示例** – 提供 Vite.js、Next.js 和 PWA 的集成示例。
+
 ## 更新
+
+### [Vite 8 Beta：基于 Rolldown 驱动的 Vite | Vite](https://vite.dev/blog/announcing-vite8-beta)
+
+Vite 8 Beta 现已发布，它采用 Rolldown 作为新的打包工具，取代了原有的 esbuild 和 Rollup 组合，带来了显著的构建性能提升和更一致的行为。此次更新统一了底层工具链，为未来的功能改进奠定了基础。
+
+- 🚀 **性能大幅提升**：Rolldown 基于 Rust 开发，构建速度比 Rollup 快 10–30 倍，实际案例显示生产构建时间从 46 秒缩短至 6 秒。
+- 🔧 **兼容性与统一工具链**：Rolldown 支持 Rollup 和 Vite 的插件 API，大多数插件可直接使用；并与 Oxc 编译器整合，形成由同一团队维护的端到端工具链。
+- 📦 **新功能解锁**：包括完整打包模式、更灵活的代码分割控制、模块级持久缓存和模块联邦等高级功能。
+- 🛠️ **平滑迁移路径**：提供直接升级或通过 `rolldown-vite` 包逐步迁移的选项，并附有详细的迁移指南以处理配置调整。
+- ⚙️ **内置功能增强**：新增对 `tsconfig paths` 和 TypeScript `emitDecoratorMetadata` 的原生支持，进一步提升开发体验。
+- 🔮 **未来展望**：即将推出的完整打包模式预计大幅提升开发服务器速度，同时团队正优化 JavaScript 插件在 Rust 系统中的使用效率。
+- 📢 **反馈渠道开放**：鼓励用户通过 Discord、GitHub 讨论和问题仓库分享体验与性能提升案例，共同完善稳定版本。
 
 ## 设计
 
@@ -59,3 +86,16 @@ Anthropic 公司于 2025 年 8 月对内部 132 名工程师和研究员进行�
 - 🏁 **创业的黄金时代**：技术超级周期为初创公司创造了极佳机会。即使在有巨头（如 GitHub Copilot）的领域，初创公司（如 Cursor）也能凭借创新有效竞争。现在是投身 AI 软件开发领域创业的最佳时机之一。
 
 ## 其他
+
+### [Bun 加入 Anthropic | Bun 博客](https://bun.com/blog/bun-joins-anthropic)
+
+Bun 已被 Anthropic 收购，将作为 Claude Code 等 AI 编程工具的基础设施，同时保持开源、公开开发及原有团队不变，以加速 JavaScript 工具生态发展。
+
+- 🚀 **Bun 被 Anthropic 收购**：将作为 Claude Code、Claude Agent SDK 等 AI 编程产品的核心基础设施
+- 🔓 **开源承诺不变**：保持 MIT 开源协议，代码持续公开在 GitHub 维护
+- 👥 **团队与开发模式延续**：原团队全职投入，维持高频更新与社区互动
+- 🎯 **技术路线持续聚焦**：继续优化高性能 JavaScript 工具链、Node.js 兼容性与替代方案
+- 🤖 **深度集成 AI 生态**：通过单文件可执行特性，已支撑 Claude Code、FactoryAI 等多款 AI 编程工具
+- ⚡ **获得长期发展动力**：依托 Anthropic 资源，跳过商业化探索阶段，专注工具链优化
+- 📈 **历史演进回顾**：从个人项目到月下载量超 720 万的开源运行时，历时 5 年迭代至 v1.3 版本
+- 🔮 **未来定位**：成为 AI 驱动软件开发的首选运行时，同时服务通用 JavaScript 生态
