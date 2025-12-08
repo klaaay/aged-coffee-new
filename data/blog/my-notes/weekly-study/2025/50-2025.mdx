@@ -16,7 +16,7 @@ summary: ''
 
 **原文标题**: [Use React `<Activity />` to preload a video | Epic React by Kent C. Dodds](https://www.epicreact.dev/use-react-activity-to-preload-a-video-y2lmw)
 
-使用 React 的 ``<Activity />` 组件可以预加载视频，解决条件渲染时视频无法预加载的问题，提升用户体验。
+使用 React 的 `<Activity />` 组件可以预加载视频，解决条件渲染时视频无法预加载的问题，提升用户体验。
 
 - 🎬 **条件渲染导致预加载失效**：当视频元素通过条件渲染（如三元表达式）控制显示时，`preload="auto"` 无法生效，因为视频不在 DOM 中，浏览器无法预加载。
 - 🛠️ **Activity 组件解决方案**：React 19 的 `<Activity>` 组件允许视频始终存在于 DOM 中，通过 `mode` 属性控制显示（`'visible'`）或隐藏（`'hidden'`），从而启用预加载功能。
