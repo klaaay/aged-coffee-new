@@ -12,6 +12,16 @@ summary: ''
 
 ## 技术
 
+### [宣布适用于 VS Code 的 JavaScript/TypeScript 现代化工具 - Microsoft 开发者平台](https://developer.microsoft.com/blog/jsts-modernizer-preview)
+
+微软宣布推出适用于 VS Code 的 JavaScript/TypeScript 现代化工具，这是一款 AI 辅助工具，旨在帮助开发者自动化升级 npm 包和更新代码，以简化项目现代化过程。
+
+- 🚀 **工具发布**：推出 VS Code 扩展“JavaScript/TypeScript Modernizer”，利用 GitHub Copilot 自动化升级 JS/TS 项目依赖和代码。
+- 🤖 **AI 驱动**：通过 Copilot Chat 交互式指导，自动分析项目、升级 npm 包至最新版本，并适配代码变更。
+- ⚙️ **使用条件**：需预先安装 Node.js/npm、启用 GitHub Copilot，并安装预览版扩展后手动开启实验性设置。
+- 📦 **操作流程**：在 VS Code 中打开项目，通过扩展面板启动升级，跟随 Copilot 提示完成包更新和代码调整。
+- ⚠️ **预览限制**：目前仅支持单项目升级，且为预览功能，可能遇到复杂场景兼容性问题。
+
 ### [TypeScript 类型作为一种编程语言](https://marmelab.com/blog/2025/12/04/typescript-type-as-a-programming-language.html)
 
 本文探讨了将 TypeScript 类型系统视为一门编程语言，通过类比编程概念（如函数、条件、变量和循环）来构建高级泛型类型，以提升代码的通用性和类型安全性。
@@ -119,6 +129,22 @@ Sonda 是一款通用的 JavaScript 和 CSS 可视化分析工具，兼容主流
 - 📄 **丰富文档**：包含详细的 API 参考和示例代码。
 
 ## 更新
+
+### [Python-Node：现已支持流式传输与 WebSocket](https://blog.platformatic.dev/streaming-and-websocket-support-now-available-in-platformaticpython-node)
+
+@platformatic/python-node v2.0.0 版本现已发布，引入了对 HTTP 响应流式传输和双向 WebSocket 通信的完整支持。该版本使全栈团队能够通过桥接 Python 的异步生态系统与 Node.js，构建实时、高性能的应用程序。
+
+- 🚀 **支持 HTTP 响应流式传输**：新的 `handleStream()` 方法允许以增量方式处理响应块，减少大响应的内存占用，并可在正文完成前立即访问响应头。
+- 📤 **支持 HTTP 请求流式传输**：现在可以将请求正文流式传输到 Python，这对于处理大文件上传、渐进式数据处理或实现自定义流式协议至关重要。
+- 🔄 **支持双向 WebSocket 通信**：Python ASGI 应用程序现在可以处理持久、双向的连接，适用于构建聊天应用、实时仪表板或多人游戏等场景。
+- 🏗️ **实现 ASGI 3.0 协议**：底层实现了 ASGI 3.0 协议规范，确保与整个 Python 异步生态系统的兼容性，包括 FastAPI 的 `StreamingResponse` 和 Starlette 的 WebSocket 端点。
+- 💾 **降低内存占用**：流式传输大响应而无需将所有内容缓冲在内存中。
+- ⚡ **更快的首字节时间**：在正文开始写入之前即可立即访问响应头。
+- 🔧 **更好的资源利用率**：响应块到达时即进行处理，无需等待完成。
+- ⏪ **向后兼容**：现有使用 `handleRequest()` 的代码几乎完全无需更改即可继续工作。
+- 📊 **实际应用示例**：包括使用 FastAPI 构建服务器发送事件（SSE）的实时监控仪表板，以及构建具有双向通信的对话式 AI 助手。
+- 🛠️ **集成场景**：支持多种集成模式，如在 Python 中运行机器学习模型进行实时推理、渐进式数据处理、混合 API 网关以及为现有 Python 工具添加 WebSocket 接口。
+- 📦 **入门与迁移**：提供了安装指南，并解释了何时使用 `handleRequest()` 与 `handleStream()`，以及迁移现有应用程序的检查清单。
 
 ### [发布 6.1.0 版本 · ant-design/ant-design · GitHub](https://github.com/ant-design/ant-design/releases/tag/6.1.0)
 
