@@ -12,6 +12,19 @@ summary: ''
 
 ## 技术
 
+### [Worktrunk 完全指南：让 Git Worktree 和 Claude Code 和平共处](https://blog.cosine.ren/post/git-worktrunk-guide#%E7%94%A8%E6%88%B7%E7%BA%A7-hooks)
+
+本文介绍了 Worktrunk，一个专为并行开发（尤其是同时运行多个 AI Agent）场景优化的 Git Worktree 命令行管理工具。它通过简化原生 Git Worktree 繁琐的命令，实现了用分支名快速创建、切换和清理独立工作目录，显著提升了开发效率。
+
+- 🛠️ **简化操作**：Worktrunk 将复杂的原生 Git Worktree 命令简化为直观的指令（如`wt switch`创建/切换），无需手动管理路径和分支。
+- 🤖 **AI 场景优化**：专为并行运行多个 AI Agent（如 Claude Code）设计，可一键为每个任务创建独立工作树并自动启动 Agent。
+- 📁 **自动目录管理**：自动在主仓库同级生成格式化的独立工作目录（如`repo.branch`），避免代码互相干扰。
+- 📊 **增强状态视图**：`wt list`提供比原生命令更丰富的状态概览，包括 Git 变更、CI 状态等，便于管理多个并行任务。
+- 🔗 **Hook 系统**：支持在 Worktree 生命周期各阶段（如创建后、合并前）自动执行命令（如安装依赖、运行测试），并可复用主仓库缓存。
+- ✍️ **智能提交**：集成 LLM（如 Claude）自动生成有意义的提交信息，支持在合并、提交等场景中使用。
+- 🔐 **安全与配置**：支持项目级与用户级 Hook 配置，项目 Hook 需经批准，保障安全性；提供快捷方式（如`^`代表主分支）和交互式选择器。
+- 🧩 **生态集成**：支持 GitHub Actions CI 状态显示、Claude Code 插件，并可手动为工作树设置状态标记。
+
 ### [Node.js 中的 require(esm)：实现者的故事](https://joyeecheung.github.io/blog/2025/12/30/require-esm-in-node-js-implementers-tales/)
 
 本文回顾了在 Node.js 中实现 `require(esm)` 功能时所遇到的关键挑战与解决方案，重点讨论了与现有生态系统的互操作性、性能权衡及规范兼容性等问题。
@@ -69,6 +82,19 @@ summary: ''
 - 🤖 开发过程：工具本身完全使用 Claude Code 构建，依赖 Click、Jinja2、httpx 等库，并采用快照测试确保稳定性。
 - 🔍 逆向工程：通过 OpenAI Codex CLI 逆向分析了 Claude Code 的 JavaScript，提取了包括从 macOS 钥匙串获取 OAuth 令牌的关键 API 调用方法。
 
+### [译：仅使用 TypeScript 中的 bash 和文件系统构建 AI 代理](https://sorrycc.com/building-ai-agent-with-bash-and-filesystem-in-typescript)
+
+本文介绍了将 just-bash 与 AgentFS 结合使用，为 AI 代理提供安全、轻量且透明的 Bash 环境的方法，从而无需依赖真实 Shell 或容器即可执行文件操作和文本处理。
+
+- 🛠️ **Bash 是 AI 代理的高效工具**：基础模型熟悉 Shell 命令，赋予其 Bash 访问权限可使代理直接处理数据、文本和文件，无需为每个任务定制工具。
+- 🚫 **真实 Bash 的环境限制与风险**：运行真实 Bash 需要真实 Shell 和文件系统，涉及服务器隔离、容器或安全风险，不适用于 Cloudflare Workers 等轻量环境或希望避免复杂性的场景。
+- 🔄 **just-bash 的 TypeScript 创新解决方案**：Malte Ubl 发布的 just-bash 用 TypeScript 重新实现了 Bash 及其常用命令，使代理能在 JavaScript 进程中安全执行命令，无法访问宿主文件系统。
+- 🤝 **与 AgentFS 的无缝集成**：just-bash 提供可插拔的文件系统接口，可集成 AgentFS，后者使用 Turso 从 SQLite 数据库读写文件，代理操作被完全捕获且隔离。
+- 📦 **简便的 AI SDK 集成示例**：通过 `agentfs-sdk/just-bash` 和 `just-bash/ai` 包，可快速创建 Bash 工具并接入 AI SDK，使代理能透明地使用 Shell 命令。
+- ☁️ **跨平台部署灵活性**：除基于 Turso 的集成外，AgentFS 通过 `agentfs-sdk/cloudflare` 支持 Cloudflare Workers，使用托管 SQLite，保持相同的使用方式。
+- ⚖️ **三种集成模式的适用场景**：直接 SDK 调用适合自定义工具；`agentfs run/mount` 提供无限制的宿主系统能力；just-bash 是折衷方案，透明、轻量、可移植，但限于已实现的命令。
+- 🚀 **开始使用与可用性**：just-bash 和 Cloudflare Worker 集成已在 AgentFS 0.4.1 中提供，GitHub 仓库提供完整示例，便于快速上手。
+
 ## 工具
 
 ### [likec4](https://github.com/likec4/likec4)
@@ -109,6 +135,21 @@ LikeC4 是一个基于代码的软件架构建模语言与工具，能够根据�
 - 🛠️ **工具增强测试**：为智能体提供如 Puppeteer MCP 服务器等测试工具，显著提升了其识别和修复仅通过代码审查难以发现的问题的能力。
 - 🧭 **会话启动流程**：每个新会话都遵循标准化的“确定方向”步骤，包括检查工作目录、阅读进度与 Git 历史、选择待办功能等，以提高效率。
 - ❓ **待解问题与未来方向**：文章指出，目前尚不清楚单一通用智能体与多智能体架构孰优孰劣，且当前方案主要针对全栈 Web 开发，其经验能否推广至科研、金融等其他长周期任务领域仍有待探索。
+
+### [Boris（Claude Code 的创建者）分享了他个人使用 Claude Code 的工作流设置与高效技巧](https://threadreaderapp.com/thread/2007179832300581177.html)
+
+本文作者 Boris（Claude Code 的创建者）分享了他个人使用 Claude Code 的工作流设置与高效技巧。
+
+- 🖥️ **并行运行多个实例**：在终端并行运行 5 个 Claude，并在网页端（claude.ai/code）同时运行 5-10 个，通过编号标签和系统通知管理，并可在本地、网页甚至手机端（iOS 应用）之间切换会话。
+- 🧠 **首选 Opus 4.5 模型**：尽管更大更慢，但其卓越的编码能力和工具使用效果，减少了人工干预，整体效率反而更高。
+- 📝 **团队共享 CLAUDE.md**：团队将项目规范文件 CLAUDE.md 纳入 git 管理，持续更新以纠正 Claude 的错误，并在代码审查中使用 GitHub Action 自动补充文档。
+- 📋 **重视计划模式**：多数会话始于计划模式（shift+tab 两次），通过反复讨论完善计划后，再切换到自动接受编辑模式，常能一次性完成代码。
+- ⚡ **自定义快捷命令**：为高频工作流创建并托管在.claude/commands/下的斜杠命令（如/commit-push-pr），大幅提升效率，Claude 也可调用。
+- 🤖 **善用子代理**：使用 code-simplifier、verify-app 等子代理自动化常见任务，如代码简化和端到端测试。
+- 🔧 **代码格式化与权限管理**：通过 PostToolUse 钩子自动格式化代码；使用/permissions 预授权安全命令，而非跳过权限检查。
+- 🔌 **集成多种工具**：配置 Claude 使用 MCP 服务器操作 Slack、通过 CLI 运行 BigQuery 查询、查看 Sentry 错误日志等，团队共享配置。
+- ⏳ **处理长时任务**：通过提示验证、代理停止钩子或 ralph-wiggum 插件确保质量；在沙盒中使用特定权限模式避免中断。
+- ✅ **建立验证反馈环**：强调为 Claude 提供验证工作的方式（如运行测试、浏览器测试）能大幅提升最终成果质量，作者本人会要求 Claude 通过 Chrome 扩展测试每个更改。
 
 ## 其他
 
