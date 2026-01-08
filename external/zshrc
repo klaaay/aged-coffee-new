@@ -129,6 +129,8 @@ alias yalca="yalc add"
 
 alias gca="git commit --amend"
 
+alias gw="git worktree"
+
 alias ga="git add"
 alias gA="git add -A"
 
