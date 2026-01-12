@@ -12,6 +12,40 @@ summary: ''
 
 ## 技术
 
+### [构建类型安全的复合组件 | TkDodo 的博客](https://tkdodo.eu/blog/building-type-safe-compound-components)
+
+本文探讨了在构建组件库时使用复合组件模式的优势与局限，并提出了通过组件工厂模式实现类型安全的方法。复合组件适合需要灵活布局和静态内容的场景，但在固定布局或动态内容时可能不是最佳选择。
+
+- 🧩 复合组件模式在组件库设计中提供了灵活性，允许用户自由组合子组件，避免了单一、臃肿的 API。
+- 🚫 复合组件并非万能，例如在固定布局（如 Select 组件）或动态内容（如选项来自 API）的场景下，使用 props 可能更合适。
+- 🔧 通过组件工厂模式（如 createRadioGroup）可以实现类型安全的复合组件，确保父组件与子组件之间的类型一致性。
+- 📦 对于需要严格顺序和一致性的组件（如 ModalDialog），使用插槽（slots）比复合组件更合适。
+- 💡 复合组件的最佳用例包括 ButtonGroup、TabBar 和 RadioGroup 等需要灵活布局且内容相对静态的组件。
+
+### [30 年的`<br>`标签](https://www.artmann.co/articles/30-years-of-br-tags)
+
+本文回顾了作者从 1990 年代至今 30 年的网页开发历程，展现了技术从静态网页到 AI 辅助开发的演变，强调工具不断降低创作门槛，使网络成为人人可构建与分享的平台。
+
+- 🌐 **静态网页时代**：通过 HTML 和 FTP 手动创建网站，依赖“查看源代码”学习，布局使用表格和空格 GIF，动态功能需 CGI 脚本，浏览器兼容性差，但网络平等开放。
+- 🛠️ **LAMP 栈与 Web 2.0**：PHP 和 MySQL 降低动态网站门槛，WordPress 普及内容管理，Gmail 和 Google Maps 引领 AJAX 和 Web 2.0 革命，jQuery 简化 JavaScript，但存在安全与部署问题。
+- ⚔️ **框架战争**：Ruby on Rails 引入 MVC 和约定优于配置，Heroku 简化部署，Git 和 GitHub 变革代码协作，响应式设计和 Bootstrap 应对移动端，Node.js 和 NoSQL 兴起。
+- 🔄 **JavaScript 复兴**：React 引领 SPA 和组件化开发，ES6 和 Babel 使现代 JavaScript 可用，Webpack 和 npm 生态繁荣但复杂，Docker 容器化，微服务和 Scrum 普及。
+- 📐 **TypeScript 时代**：TypeScript 提供类型安全，VS Code 优化开发体验，Next.js 等元框架整合工具，Vercel 和 Netlify 简化部署，Tailwind CSS 和 GraphQL 流行，Kubernetes 成为标准。
+- 🤖 **AI 时刻**：ChatGPT 和 GitHub Copilot 等 AI 工具提升开发效率，改变开发者角色至“指导编码”，降低学习与构建门槛，推动独立开发者和远程协作发展。
+
+### [AI 在编写 React 代码方面究竟有多出色？——Addy Osmani 著](https://addyo.substack.com/p/how-good-is-ai-at-coding-react-really)
+
+AI 在 React 编码方面表现参差不齐，擅长独立组件和明确需求实现，但在多步骤集成和设计审美上存在明显短板。其实际效果高度依赖上下文工程和约束条件，开发者需通过明确指令和结构化流程来引导 AI，而非盲目接受输出。
+
+- 🧠 **AI 在 React 编码中表现不均衡**：基准测试显示，AI 在独立任务（如组件搭建）上成功率约 40%，但在多步骤集成上降至 25%，存在“复杂性悬崖”。
+- 🎨 **逻辑强于审美**：AI 能处理数据流和明确需求，但在设计品味、层次感和用户体验判断上较弱，需人工主导设计意图。
+- 🛠️ **上下文工程是关键**：AI 输出质量取决于上下文管理，通过精准提示、工具链（如 MCP）和结构化约束可显著提升效果。
+- 📉 **警惕“氛围编码”陷阱**：区分“AI 辅助工程”与“AI 辅助氛围编码”，前者强调人工审查和控制，避免产出难以维护的代码。
+- 🌐 **主流技术栈优势明显**：AI 对 React、TypeScript、Tailwind 等主流生态支持更好，偏离主流栈需额外补偿上下文和约束。
+- 🔄 **分步迭代优于单次生成**：复杂任务应拆解为小步骤，要求 AI 先提供计划再逐步实施，避免一次性生成不可靠代码。
+- 📚 **工具层比基础模型更重要**：通过文档检索、状态管理和浏览器自动化等工具（如 Context7、Next.js DevTools MCP）可弥补模型局限。
+- 🧪 **测试与验证不可或缺**：生成代码需经过类型检查、性能测试、可访问性验证，并融入现有设计系统和代码规范。
+
 ## 工具
 
 ## 更新
