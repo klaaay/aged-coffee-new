@@ -63,6 +63,10 @@ export const dietAndExerciseData: TableData = {
     '学日语',
     '学乐理',
     '不吃宵夜',
+    '不吃辣',
+    '冥想',
+    '吃补充剂',
+    '外语 Youtube 学习',
   ],
   months: [
     {
@@ -89,6 +93,14 @@ export const dietAndExerciseData: TableData = {
         // 学乐理
         '-',
         // 不吃宵夜
+        '-',
+        // 不吃辣
+        '-',
+        // 冥想
+        '-',
+        // 吃补充剂
+        '-',
+        // 外语 Youtube 学习
         '-',
       ],
     },
