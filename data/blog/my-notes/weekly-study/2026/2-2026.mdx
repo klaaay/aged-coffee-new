@@ -12,6 +12,16 @@ summary: ''
 
 ## 技术
 
+### [与客户端组件共享数据](https://next-16-recipes.vercel.app/sharing-data-with-client-components)
+
+在 Next.js 应用中，通过将 Server Components 获取的数据以 Promise 形式传递给 Client Components，并结合 React 的 Context 和`use` API，可以避免“属性钻取”问题，同时不阻塞页面的初始渲染。这种方法允许在服务器端集中获取数据（如当前用户信息），并在客户端树中高效共享，提升渲染性能。
+
+- 🚀 **使用 Promise 传递数据**：Server Components 将数据获取的 Promise（而非已解析的数据）传递给 Client Components，避免阻塞整个应用的初始渲染。
+- 🔄 **结合 Context 共享数据**：Client Components 通过 Context 接收 Promise，并使用 React 的`use` API 解析数据，实现跨组件的数据访问。
+- ⚡ **利用`cache`优化服务器端**：在 Server Components 中使用 React 的`cache`函数，确保每个请求周期内数据获取函数仅执行一次，提高效率。
+- 🛠️ **处理组件挂起状态**：当 Client Components 依赖的数据未就绪时，使用`Suspense`组件提供回退 UI，保持用户体验流畅。
+- 🌐 **适用于通用数据场景**：此模式特别适合共享当前用户、功能标志或依赖请求参数（如动态路由或搜索参数）的动态数据。
+
 ### [构建类型安全的复合组件 | TkDodo 的博客](https://tkdodo.eu/blog/building-type-safe-compound-components)
 
 本文探讨了在构建组件库时使用复合组件模式的优势与局限，并提出了通过组件工厂模式实现类型安全的方法。复合组件适合需要灵活布局和静态内容的场景，但在固定布局或动态内容时可能不是最佳选择。
@@ -47,6 +57,16 @@ AI 在 React 编码方面表现参差不齐，擅长独立组件和明确需求�
 - 🧪 **测试与验证不可或缺**：生成代码需经过类型检查、性能测试、可访问性验证，并融入现有设计系统和代码规范。
 
 ## 工具
+
+### [GitHub - k1LoW/git-wt: 简化 `git worktree` 的 Git 子命令](https://github.com/k1LoW/git-wt)
+
+git-wt 是一个简化 `git worktree` 操作的 Git 子命令，提供便捷的工作树管理功能，支持多种配置选项和 Shell 集成。
+
+- 🛠️ **简化工作树管理**：通过 `git wt` 命令轻松列出、切换、创建或删除 Git 工作树，提升多分支开发效率。
+- ⚙️ **灵活的配置选项**：支持基于目录模板、文件复制规则（如忽略文件、未跟踪文件）以及工作树创建后的钩子命令，可通过 Git 配置或命令行参数自定义。
+- 🔗 **Shell 集成与自动补全**：提供 Zsh、Bash、Fish 和 PowerShell 的集成脚本，支持命令自动补全和自动切换目录功能，也可通过 `--nocd` 选项禁用目录切换。
+- 🧩 **扩展功能与配方**：支持与外部工具（如 `peco` 进行交互式选择）和终端环境（如 `tmux` 自动开新窗口）集成，适应多样化工作流。
+- 📦 **多种安装方式**：可通过 Go 安装、Homebrew 或手动下载二进制文件安装，支持 MIT 开源协议。
 
 ### [GitHub - styled-components/xstyled：一个为React构建的实用优先CSS-in-JS框架。💅👩‍🎤⚡️](https://github.com/styled-components/xstyled)
 
@@ -90,6 +110,18 @@ Jint 是一个用于 .NET 平台的 JavaScript 解释器，支持在安全的沙
 - 🔄 **开发状态**：主分支为 main，通过 MyGet 持续集成，并定期发布至 NuGet。
 
 ## 更新
+
+### [React Native 在 2026 年：趋势与我们的预测](https://blog.swmansion.com/react-native-in-2026-trends-our-predictions-463a837420c7)
+
+本文展望了 React Native 在 2026 年的发展趋势，指出其正通过新架构、多线程、性能优化和工具完善走向成熟与稳定，致力于实现高性能、统一开发体验和跨平台愿景。
+
+- 🏗️ **新架构成为核心**：React Native 新架构（TurboModules、Fabric）已不再是可选项，旧架构正被逐步弃用。迁移至新架构将成为获取最新性能与功能的必要条件。
+- 🧵 **多线程开发更简单**：React Native Worklets 让多线程处理变得简单，允许在独立运行时中执行重型任务，避免阻塞 UI，从而提升复杂应用的性能。
+- ⚡ **性能显著提升**：Hermes V1 引擎的懒加载、RAM 包等优化，结合新架构与多线程，将使应用启动更快、运行更流畅，成为高性能 React Native 应用的基准。
+- 🐛 **调试工具更智能**：React Native DevTools 正成为标准调试方案，新的性能面板等工具将帮助开发者更高效地定位性能瓶颈和问题。
+- 🎨 **GPU 与着色器方案普及**：随着 React Native Skia 等库的发展，GPU 渲染和着色器技术将在更多消费级和企业应用中被采用，以实现复杂的视觉效果和流畅界面。
+- 🌐 **跨平台梦想接近现实**：React Strict DOM（RSD）正取代 React Native for Web，通过贴近 Web API 的标准，推动真正“一次编写，处处运行”的统一代码库开发。
+- 🚀 **进入稳定与成熟期**：随着新架构的巩固和 API 的标准化，React Native 正变得更加稳定和可预测，旨在减少破坏性变更，让开发者能更专注于功能构建。
 
 ### [ESLint v10.0.0-rc.0 发布 - ESLint - 可插拔的 JavaScript 代码检查工具](https://eslint.org/blog/2026/01/eslint-v10.0.0-rc.0-released/)
 
