@@ -48,7 +48,60 @@ AI 在 React 编码方面表现参差不齐，擅长独立组件和明确需求�
 
 ## 工具
 
+### [GitHub - styled-components/xstyled：一个为React构建的实用优先CSS-in-JS框架。💅👩‍🎤⚡️](https://github.com/styled-components/xstyled)
+
+xstyled 是一个基于 React 构建的实用优先的 CSS-in-JS 框架，它扩展了 styled-components，提供了一套类似 Tailwind CSS 的实用类系统，用于快速构建样式化的 React 组件。
+
+- 🎨 **实用优先的 CSS-in-JS 框架** – 结合了 styled-components 的灵活性和实用类的高效性。
+- ⚛️ **专为 React 设计** – 深度集成 React，提供声明式的样式编写方式。
+- 📚 **文档齐全** – 提供详细文档和快速入门指南，包含代码示例。
+- 📦 **安装简便** – 通过 npm 安装 `@xstyled/styled-components` 和 `styled-components` 即可使用。
+- 🌐 **活跃社区** – 项目在 GitHub 上获得 2.3k 星标、106 个分支，被 1.2k 多个项目使用。
+- 📄 **MIT 许可证** – 开源且允许自由使用和修改。
+- 🔄 **持续维护** – 拥有活跃的贡献者团队，定期发布更新版本。
+
+### [superdiff](https://github.com/DoneDeal0/superdiff)
+
+Superdiff 是一个高性能的 JavaScript 差异比较库，专为对象和数组设计，提供丰富可读的差异输出。它支持处理大型数据集的流和文件输入，经过实战测试，无第三方依赖，且在性能基准测试中领先于同类库。
+
+- 📊 **功能全面**：提供对象差异比较、数组差异比较、流式处理大型列表、相等性判断和类型检查五大核心功能。
+- ⚡ **性能卓越**：在对象和数组的差异比较基准测试中，速度均显著快于 `deep-diff` 和 `deep-object-diff` 等流行库。
+- 🌊 **支持流处理**：独有的 `streamListDiff` 函数可流式处理超大型数据集，有效控制内存使用。
+- 🔍 **检测移动操作**：在数组比较中能够识别元素的位置移动，而许多竞品库不具备此功能。
+- 📦 **零依赖**：库本身不依赖任何第三方包，保持轻量和稳定。
+- 🛠️ **高度可配置**：提供多种选项，如忽略数组顺序、按状态过滤结果、设置参考属性等，以满足不同场景需求。
+- 🖥️ **多环境支持**：流式差异比较函数为服务器端（Node.js）和浏览器环境提供了不同的导入路径和 API 适配。
+
+### [GitHub - sebastienros/jint: .NET 的 JavaScript 解释器](https://github.com/sebastienros/jint)
+
+Jint 是一个用于 .NET 平台的 JavaScript 解释器，支持在安全的沙箱环境中运行 JavaScript 代码，并允许与 .NET 对象进行互操作。
+
+- 🚀 **项目简介**：Jint 是一个 .NET 的 JavaScript 解释器，支持 .NET Standard 2.0 及更高版本，可在现代 .NET 平台上运行。
+- 🛡️ **主要用途**：在 .NET 应用中安全执行 JavaScript、暴露 .NET 对象给 JavaScript 调用，以及支持应用脚本化定制。
+- 📜 **许可证**：采用 BSD-2-Clause 开源许可证。
+- 🌐 **用户案例**：被 RavenDB、EventStore、OrchardCore 等多个知名项目使用。
+- ✅ **功能支持**：全面支持 ECMAScript 2015 至 2025 的大多数特性，包括模块、Promise、类、异步迭代等。
+- ⚡ **性能特点**：不生成 .NET 字节码，小脚本执行速度快；建议缓存脚本实例并启用严格模式以提升性能。
+- 🔧 **互操作性**：可直接在 JavaScript 中操作 .NET 对象、调用方法，并支持泛型类型和自定义程序集加载。
+- 🌍 **国际化**：可配置时区和区域文化，以控制日期、数字的本地化格式。
+- ⏳ **执行约束**：支持设置内存、执行时间、语句数等限制，并可自定义约束条件（如 CPU 使用率）。
+- 📦 **模块系统**：支持 ES 模块，可从文件或代码字符串定义模块，并导出 .NET 类型和值。
+- 🔒 **安全性**：提供沙箱环境，可通过内存限制、禁用 BCL、超时设置等方式确保安全执行。
+- 🔄 **开发状态**：主分支为 main，通过 MyGet 持续集成，并定期发布至 NuGet。
+
 ## 更新
+
+### [ESLint v10.0.0-rc.0 发布 - ESLint - 可插拔的 JavaScript 代码检查工具](https://eslint.org/blog/2026/01/eslint-v10.0.0-rc.0-released/)
+
+ESLint v10.0.0-rc.0 已发布，这是一个包含新功能、错误修复和重大变更的主要版本预发布，旨在收集社区反馈，暂不建议用于生产环境。
+
+- 🚀 **预发布版本**：ESLint v10.0.0-rc.0 是主要版本升级，提供新功能和错误修复，但包含重大变更，需谨慎评估。
+- 🧪 **RuleTester 增强**：新增 `requireData` 断言选项，要求测试用例在消息包含占位符时提供 `data` 对象，确保测试一致性。
+- 🔍 **测试调试改进**：`RuleTester` 现在在失败测试的堆栈跟踪中提供更精确的位置信息，便于快速定位问题代码行。
+- ⚙️ **规则选项更新**：`max-params` 规则新增 `countThis` 选项，取代已弃用的 `countVoidThis`，用于忽略 TypeScript 函数中 `this` 注解的参数计数。
+- 📦 **安装方式**：需通过 `npm i eslint@next --save-dev` 或指定版本 `eslint@10.0.0-rc.0` 安装此预发布版本。
+- 📚 **迁移指南**：官方提供了详细的迁移指南，帮助用户处理重大变更，大多数用户可无构建更改升级，但建议参考指南以应对问题。
+- 🐛 **错误修复与优化**：包括更新依赖、修复 `RuleTester` 错误位置报告、调整类型定义等多项修复和文档更新。
 
 ### [2025 year in review](https://astro.build/blog/year-in-review-2025/)
 
