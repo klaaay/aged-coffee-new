@@ -12,6 +12,16 @@ summary: ''
 
 ## 技术
 
+### [620 - “Agent Browser”](https://sorrycc.com/agent-browser)
+
+本文介绍了 Agent Browser 这一由 Vercel Labs 开发的 AI 浏览器自动化工具。它通过生成页面的可访问性树并为元素提供唯一引用，使 AI 能够精准控制浏览器操作。文章详细说明了其安装、基本工作流、如何连接本地 Chrome 以利用登录状态、内置 Skills 功能以及如何结合 undetected_chromedriver 绕过网站自动化检测，适用于多种网页自动化场景。
+
+- 🚀 **工具介绍**：Agent Browser 是 Vercel Labs 开发的 Rust 构建的 CLI 工具，专为 AI Agent 设计，通过输出页面的可访问性树和元素唯一引用，让 AI 能准确控制浏览器交互。
+- ⚙️ **快速上手**：安装后可通过 `open` 命令打开网页并生成快照，使用 `click` 或 `fill` 等指令与页面元素交互，每个元素都有类似 `@e2` 的唯一标识。
+- 🔗 **连接本地 Chrome**：支持通过 Chrome DevTools Protocol 连接已运行的浏览器实例，利用现有登录状态（如 Cookie、账号信息），实现更实用的自动化操作（如发推、管理 GitHub）。
+- 🛠️ **Skills 功能**：提供预置 Skills，可与 AI 结合自动执行复杂任务，例如获取并总结 Hacker News 上 AI 相关的内容，或操作 Gmail 发送邮件。
+- 🕵️ **绕过检测**：可接入 undetected_chromedriver 启动带调试端口的 Chrome，避免被网站识别为自动化工具，适用于反爬虫、自动注册等灰色地带场景。
+
 ### [Browser Extension Dev - 03. 注入 UI](https://blog.rxliuli.com/p/5cb6d59a968a449b9fa2c003b9f4c48a/)
 
 本文详细介绍了如何使用 WXT 框架、React、Tailwind CSS 和 shadcn 组件库，在 YouTube 页面中注入一个复杂的 UI 扩展，以实现视频截图功能。文章通过一个具体的“YouTube 视频截图扩展”示例，逐步讲解了如何解决样式冲突、框架注入、图标嵌入、视频帧捕获、图片复制到剪贴板以及自动下载等关键问题。
