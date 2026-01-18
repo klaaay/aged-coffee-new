@@ -1,0 +1,48 @@
+---
+title: 2026-第三周
+date: '2026-01-18'
+tags: ['WEEKLY-2026']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+### [Browser Extension Dev - 03. 注入 UI](https://blog.rxliuli.com/p/5cb6d59a968a449b9fa2c003b9f4c48a/)
+
+本文详细介绍了如何使用 WXT 框架、React、Tailwind CSS 和 shadcn 组件库，在 YouTube 页面中注入一个复杂的 UI 扩展，以实现视频截图功能。文章通过一个具体的“YouTube 视频截图扩展”示例，逐步讲解了如何解决样式冲突、框架注入、图标嵌入、视频帧捕获、图片复制到剪贴板以及自动下载等关键问题。
+
+- 🎯 **项目目标**：创建一个 YouTube 视频截图扩展，将图标注入视频播放器工具栏，点击后可截取当前视频帧、复制到剪贴板并自动下载。
+- 🛠️ **技术栈与初始化**：使用 WXT 初始化 React 模板项目，并配置 Tailwind CSS 和 shadcn 组件库，手动完成相关依赖安装和配置。
+- 🎨 **样式隔离方案**：通过 Shadow DOM 模式注入 UI，有效隔离扩展样式与网页样式，避免了 Tailwind CSS 可能引发的样式冲突。
+- ⚛️ **框架注入原理**：React 等现代前端框架在构建时会被打包到 Content Script 中，随脚本一同注入页面，因此可以在扩展中使用任意 JavaScript 框架。
+- 🔧 **图标注入与资源访问**：通过定位 YouTube 播放器工具栏的特定容器元素，将自定义按钮注入其中，并需在 manifest 中配置 `web_accessible_resources` 以允许网页访问扩展图标资源。
+- 📸 **截图功能实现**：利用 Canvas API 的 `drawImage` 方法捕获视频当前帧，生成图片 Blob。
+- 📋 **复制与下载功能**：使用 Clipboard API 将图片 Blob 复制到剪贴板，并借助 `file-saver` 和 `dayjs` 库实现带时间戳的文件自动下载。
+- ⚠️ **注意事项与局限**：文中提及了未处理的边缘情况，如视频未播放、广告处理、异常捕获等，但核心流程已完整实现。
+
+## 工具
+
+### [ai-elements](https://github.com/vercel/ai-elements)
+
+AI Elements 是一个基于 shadcn/ui 构建的组件库，旨在帮助开发者快速构建 AI 原生应用。它提供了一系列专为 AI 应用设计的可定制 React 组件，并支持通过 CLI 工具轻松集成到 Next.js 项目中。
+
+- 🧩 **组件库定位**：基于 shadcn/ui 的 AI 原生应用组件库，提供对话、消息、代码块、推理展示等预制组件。
+- ⚙️ **安装方式**：可通过 `npx ai-elements@latest` 直接安装，或使用 shadcn CLI 添加特定组件。
+- 📋 **前提条件**：需要 Node.js 18+、已安装 AI SDK 的 Next.js 项目、已初始化的 shadcn/ui 以及配置为 CSS 变量模式的 Tailwind CSS。
+- 🧠 **组件功能**：包含聊天机器人、代码块、推理展示、工作流可视化等 20 多个组件，覆盖 AI 应用常见交互场景。
+- 🚀 **快速使用**：安装后可直接在 React 应用中调用组件，并支持与 AI SDK 的 `useChat` 等钩子集成。
+- 🔧 **定制化支持**：组件将安装到本地代码库中，允许开发者完全自定义样式和逻辑。
+- 🌐 **推荐配置**：建议搭配 Vercel AI Gateway 和 CSS 变量模式使用，以获得最佳体验。
+
+## 更新
+
+## 设计
+
+## AI
+
+## 其他
