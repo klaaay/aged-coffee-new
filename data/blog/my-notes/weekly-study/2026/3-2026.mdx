@@ -12,6 +12,19 @@ summary: ''
 
 ## 技术
 
+### [构建 docfind：利用 Rust 与 WebAssembly 实现快速客户端搜索](https://code.visualstudio.com/blogs/2026/01/15/docfind)
+
+本文讲述了 VS Code 团队开发的一款名为 docfind 的浏览器内搜索引擎的诞生故事。它利用 WebAssembly、有限状态转换器（FST）和压缩技术，为静态网站提供快速、紧凑、无需服务器的客户端搜索体验。
+
+- 🚀 **目标与挑战**：作者希望为 VS Code 官网打造一个类似其编辑器内“快速打开”功能的即时搜索体验，但现有方案（如 Algolia、Lunr.js）在客户端性能、索引大小或维护性上均不理想。
+- 💡 **技术灵感**：项目灵感来源于一篇关于使用有限状态转换器（FST）高效索引海量字符串的博客，并融合了 RAKE 关键词提取算法和 FSST 字符串压缩技术。
+- 🔧 **解决方案：docfind**：开发了一个 Rust 编写的 CLI 工具，它能在网站构建时，将文档转换为一个集成了索引数据的单一 WebAssembly 模块，供浏览器直接使用。
+- 🧩 **核心技术实现**：索引结构结合了 FST（用于快速关键词查找）、压缩存储的文档字符串以及关键词到文档的映射。搜索时支持前缀匹配和 Levenshtein 自动机（容错匹配）。
+- ⚙️ **关键难题**：最大的挑战是如何将动态生成的索引数据“嵌入”到预编译的 WebAssembly 模板中，这涉及对 WASM 二进制格式的解析、内存段修补和全局变量替换。
+- 🤖 **AI 助力开发**：作者强调，在时间有限且不精通 Rust 和 WASM 底层细节的情况下，GitHub Copilot 在技术研究、代码编写（特别是绕过借用检查器）、项目脚手架和攻克 WASM 修补难题上起到了关键作用，是项目得以完成的重要因素。
+- 📊 **成果展示**：docfind 已成功应用于 VS Code 官网，处理约 3700 份文档，索引压缩后仅约 2.7MB，每次查询耗时约 0.4 毫秒，实现了无需服务器、无持续成本的快速搜索。
+- 📦 **开源与使用**：项目已开源，用户可通过简单命令安装，并为自己的静态网站生成搜索模块，只需自行实现前端结果展示界面即可。
+
 ### [译：我的 AGENTS.md 文件](https://sorrycc.com/my-agents-md-file)
 
 本文介绍了“规划循环”这一关键方法，它能将 AI 从一个不可靠的代码生成器转变为高效的编程伙伴。该方法通过一个结构化的四步流程（规划、执行、测试、迭代），强制要求开发者在编码前与 AI 明确方案，从而显著提升 AI 生成代码的质量和可靠性。
@@ -85,6 +98,33 @@ summary: ''
 
 ## 工具
 
+### [localspace](https://github.com/unadlib/localspace)
+
+localspace 是一个现代化的存储工具包，它在保持与 localForage API 完全兼容的同时，采用了 async/await、TypeScript 等现代技术，并消除了遗留包袱。它旨在为现代应用提供强类型、更好的异步编程体验、多平台可靠性以及一系列新功能，而无需重写现有代码。
+
+- 🎯 **核心目标**：提供与 localForage 完全兼容的 API，同时内部使用现代 TypeScript 和原生 Promise 重构，以解决社区长期存在的痛点。
+- 🛠️ **现代特性**：提供一流的 TypeScript 类型支持、原生 async/await、可靠的 IndexedDB 清理、跨平台一致性、批量操作、TTL（生存时间）和加密等。
+- 🔄 **无缝迁移**：允许团队在不更改应用代码的情况下从 localForage 迁移，然后解锁更好的开发者体验和未来可扩展性。
+- 🚀 **性能优化**：提供可选的“合并写入”功能，可将高频写入操作批量处理，使 IndexedDB 写入性能提升 3-10 倍。
+- 📦 **批量操作**：支持 `setItems()`、`getItems()`、`removeItems()` 等批量 API，通过单次事务处理提高吞吐量。
+- 🔌 **插件系统**：提供模块化的插件架构，支持 TTL、加密、压缩、多标签页同步和配额管理等高级功能。
+- 🌐 **多平台支持**：支持浏览器、Node.js、React Native 和 Electron 等多种环境，并计划集成更多驱动（如 OPFS、SQLite）。
+- ⚙️ **灵活配置**：允许创建独立的存储实例、自定义驱动顺序、配置写入一致性模式和使用存储桶进行数据隔离。
+- 🛡️ **错误处理**：提供结构化的错误类型和详细的上下文信息，便于调试和问题排查。
+- 📈 **开发路线图**：核心兼容性已完成，未来将重点开发插件系统、新驱动集成（如 OPFS、Node.js 适配器）和社区优先的功能。
+
+### [resolvers](https://github.com/react-hook-form/resolvers)
+
+`@hookform/resolvers` 是一个为 React Hook Form 提供验证解析器的官方库，它允许开发者无缝集成各种外部验证库（如 Yup、Zod、Joi 等）或自定义验证逻辑，以实现高性能、灵活且可扩展的表单验证。
+
+- 📦 **核心功能**：作为 React Hook Form 的官方桥梁，支持集成超过 15 种主流验证库，包括 Yup、Zod、Joi、Vest、Ajv、TypeBox 等。
+- 🛠️ **安装简单**：通过 npm、yarn、pnpm 或 bun 安装 `@hookform/resolvers` 及所需的验证库即可快速开始。
+- 🧩 **TypeScript 友好**：大多数解析器能自动从验证模式（schema）推断类型，提供完整的类型安全支持。
+- ⚙️ **统一 API**：所有解析器遵循一致的 `resolver(schema, schemaOptions?, resolverOptions?)` 调用方式，支持同步或异步验证模式。
+- 📚 **详尽示例**：为每种支持的验证库提供了完整的代码示例，展示如何与 React Hook Form 的 `useForm` 结合使用。
+- 🔗 **官方文档**：提供了与 React Hook Form 验证解析器相关的详细文档链接，方便深入查阅。
+- 🌍 **社区支持**：项目拥有活跃的社区贡献者、赞助者，并采用 MIT 开源协议，鼓励参与和协作。
+
 ### [ai-elements](https://github.com/vercel/ai-elements)
 
 AI Elements 是一个基于 shadcn/ui 构建的组件库，旨在帮助开发者快速构建 AI 原生应用。它提供了一系列专为 AI 应用设计的可定制 React 组件，并支持通过 CLI 工具轻松集成到 Next.js 项目中。
@@ -98,6 +138,30 @@ AI Elements 是一个基于 shadcn/ui 构建的组件库，旨在帮助开发者
 - 🌐 **推荐配置**：建议搭配 Vercel AI Gateway 和 CSS 变量模式使用，以获得最佳体验。
 
 ## 更新
+
+### [Electron 40.0.0 | Electron](https://www.electronjs.org/blog/electron-40-0)
+
+Electron 40.0.0 已发布，包含 Chromium、V8 和 Node.js 的版本升级，引入了多项新功能与改进，同时包含一些破坏性变更。
+
+- 🚀 升级核心组件：Chromium 至 144.0.7559.60，Node.js 至 v24.11.1，V8 至 14.4
+- ✨ 新增功能：包括内存回收原因标识、HDR 色彩空间支持、硬件加速检测、自定义协议处理选项等
+- 🔧 改进特性：增强无障碍支持管理、外部共享纹理导入、系统强调色获取、文件系统 API 状态持久化等
+- ⚠️ 破坏性变更：渲染进程中剪贴板 API 已弃用，macOS dSYM 文件改用 tar.xz 压缩，Electron 37.x.y 停止支持
+- 📅 后续计划：团队将继续跟进 Chromium、Node 和 V8 的主要组件开发，维护项目时间线
+
+### [jQuery 4.0.0 | 官方 jQuery 博客](https://blog.jquery.com/2026/01/17/jquery-4-0-0/)
+
+jQuery 团队在 2026 年 1 月 17 日发布了 jQuery 4.0.0 正式版，这是近 10 年来的首个主要版本更新。该版本包含多项现代化改进和破坏性变更，建议升级前详细阅读升级指南。大多数用户只需少量代码调整即可完成升级。
+
+- 🎉 **发布里程碑**：jQuery 4.0.0 是 20 周年纪念版，距离上一个主要版本发布已近 10 年。
+- 🗑️ **移除旧版支持**：放弃对 IE 10 及更旧版本、Edge Legacy、旧版 iOS/Android/Firefox 等浏览器的支持。
+- 🔒 **安全增强**：新增对 Trusted Types 的支持，优化 AJAX 请求以避免 CSP 错误。
+- 📦 **源码现代化**：源码从 AMD 迁移至 ES 模块，兼容现代构建工具和浏览器原生模块。
+- 🧹 **清理废弃 API**：移除多个已废弃的辅助函数（如 `jQuery.isArray`、`jQuery.trim`），推荐使用原生等效方法。
+- 🧩 **精简内部方法**：从 jQuery 原型中移除仅供内部使用的数组方法（`push`、`sort`、`splice`）。
+- 👁️ **事件顺序标准化**：焦点事件顺序现在遵循 W3C 规范，不再覆盖浏览器原生行为。
+- 🏗️ **更小的 Slim 构建**：移除了 Deferreds 和 Callbacks 模块，体积进一步缩小（gzip 后约 19.5KB）。
+- 📥 **获取方式**：可通过 jQuery CDN、npm（`npm install jquery@4.0.0`）获取，同时提供标准版和 Slim 版。
 
 ## 设计
 
