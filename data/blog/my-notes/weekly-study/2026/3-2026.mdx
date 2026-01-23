@@ -98,6 +98,18 @@ summary: ''
 
 ## 工具
 
+### [composify](https://github.com/composify-js/composify)
+
+Composify 是一个开源 React 库，为您的应用添加可视化编辑器。它允许非开发人员使用您现有的生产组件构建页面，从而让工程师能专注于实际功能开发。它在僵化的通用页面构建器和复杂的无头 CMS 之间提供了折中方案，是一个直接操作您真实组件代码的可视化界面。
+
+- 🎯 **定位清晰** - Composify 是一个开源 React 库，旨在为现有 React 组件添加可视化编辑能力，让非开发者也能构建页面。
+- ⚖️ **折中方案** - 它介于僵化的通用页面构建器（如 Wix）和需要适配代码的复杂无头 CMS（如 Builder.io）之间，直接使用您自己的组件。
+- 🚀 **快速开始** - 通过 npm 等工具安装，注册组件到目录后，即可使用 `Renderer` 渲染或 `Editor` 进行可视化编辑。
+- 🔧 **工程师友好** - 工程师只需一次性注册组件，定义其可配置属性，团队其他成员即可在编辑器中拖放使用，设计系统得以保持。
+- 🌐 **环境兼容** - 作为一个 React 库，可与 Next.js、Remix 等任何 React 环境配合使用，且您完全拥有自己的数据。
+- ⚡ **核心优势** - 支持无需重新部署即可更新 UI、让非开发者团队自主进行页面组合与调整，并便于进行 A/B 测试和快速原型开发。
+- ☁️ **云服务选项** - 除了开源库，还提供 Composify Cloud，包含托管、实时协作和版本历史等托管后端功能。
+
 ### [localspace](https://github.com/unadlib/localspace)
 
 localspace 是一个现代化的存储工具包，它在保持与 localForage API 完全兼容的同时，采用了 async/await、TypeScript 等现代技术，并消除了遗留包袱。它旨在为现代应用提供强类型、更好的异步编程体验、多平台可靠性以及一系列新功能，而无需重写现有代码。
@@ -138,6 +150,24 @@ AI Elements 是一个基于 shadcn/ui 构建的组件库，旨在帮助开发者
 - 🌐 **推荐配置**：建议搭配 Vercel AI Gateway 和 CSS 变量模式使用，以获得最佳体验。
 
 ## 更新
+
+### [模块：node:module API | Node.js v25.4.0 文档](https://nodejs.org/api/module.html#module-compile-cache)
+
+Node.js v25.4.0 文档中关于 `node:module` API 的详细说明，提供了模块系统的高级定制和实用功能。
+
+- 📦 **模块对象**：提供与 `Module` 实例交互的通用工具方法，可通过 `import 'node:module'` 或 `require('node:module')` 访问。
+- 📜 **内置模块列表**：`module.builtinModules` 返回 Node.js 提供的所有模块名称列表，用于区分核心模块与第三方模块。
+- 🔗 **创建 require 函数**：`module.createRequire(filename)` 根据指定文件路径构造一个 `require` 函数，支持文件 URL 或绝对路径。
+- 📁 **查找 package.json**：`module.findPackageJSON(specifier[, base])` 根据模块说明符查找最近的 `package.json` 文件路径。
+- ✅ **检查内置模块**：`module.isBuiltin(moduleName)` 判断给定模块名是否为 Node.js 内置模块。
+- ⚙️ **注册异步钩子**：`module.register(specifier[, parentURL][, options])` 注册导出异步钩子的模块，用于定制模块解析和加载行为（需注意线程间通信开销）。
+- 🔧 **注册同步钩子**：`module.registerHooks(options)` 直接注册同步钩子函数，在加载模块的同一线程中运行，推荐使用以简化操作。
+- 🧹 **剥离 TypeScript 类型**：`module.stripTypeScriptTypes(code[, options])` 移除 TypeScript 代码中的类型注解，并可选择转换为 JavaScript。
+- 🔄 **同步内置 ESM 导出**：`module.syncBuiltinESMExports()` 更新所有内置 ES 模块的实时绑定，以匹配 CommonJS 导出的属性。
+- 💾 **模块编译缓存**：通过 `module.enableCompileCache([options])` 或环境变量启用磁盘缓存，加速后续模块加载，支持便携模式。
+- 🪝 **定制钩子**：支持同步和异步钩子，用于自定义模块解析（`resolve`）和加载（`load`）逻辑，链式调用遵循 LIFO 顺序。
+- 🗺️ **源映射支持**：提供 `module.SourceMap` 类及相关方法（如 `findSourceMap`、`setSourceMapsSupport`），用于处理 Source Map 以增强调试体验。
+- 📚 **示例应用**：文档包含从 HTTPS 导入、代码转译（如 CoffeeScript）、导入映射等实际用例，展示钩子的强大灵活性。
 
 ### [[RFC] 由 captbaritone 提出的 useStore/createStore API · Pull Request #35449 · facebook/react · GitHub](https://github.com/facebook/react/pull/35449)
 
@@ -205,6 +235,28 @@ jQuery 团队在 2026 年 1 月 17 日发布了 jQuery 4.0.0 正式版，这是�
 - 🚀 作者呼吁设计师提供规则而非固定尺寸，开发者则聚焦实现设计逻辑，共同拥抱网页的流动本质，以意图驱动构建面向未来的界面。
 
 ## AI
+
+### [Tab, Tab, Dead](https://ampcode.com/news/tab-tab-dead)
+
+本文宣布 Amp Tab 将被逐步淘汰，原因是 AI 代码生成已从辅助工具转变为开发主体。公司指出，当前 90% 的代码由 Amp 自动生成，开发瓶颈已从“编写速度”转向“产出效率”，标志着“后智能体时代”的到来。未来将聚焦于新一代技术探索，并推荐了替代工具。
+
+- 🚀 **AI 主导编码**：Amp 现已自动生成 90% 的交付代码，人类手动编写比例大幅下降。
+- 🌅 **时代转变**：开发瓶颈从“代码编写速度”转为“代码产出速度”，部分用户无需打开编辑器即可交付代码。
+- 🔚 **标签补时终结**：基于人类为主、AI 为辅的补全引擎（如 Amp Tab）已不适应新时代，将被淘汰。
+- 🎯 **聚焦未来**：团队将资源转向“后智能体时代”的技术探索，而非维护旧工具。
+- ⏳ **过渡安排**：Amp Tab 将持续支持至 2026 年 1 月底，后续推荐使用 Cursor、Copilot 或 Zed 等工具。
+- 😌 **团队感言**：联合创始人 Quinn 对此表示怀念，但认同变革必要性。
+
+### [social-media-agent](https://github.com/langchain-ai/social-media-agent)
+
+这是一个名为“社交媒体代理”的开源项目，它能够根据提供的 URL 内容自动生成 Twitter 和 LinkedIn 帖子。项目采用人机协同（HITL）流程处理社交媒体平台的身份验证，并允许用户修改、接受或拒绝生成的帖子。支持快速启动和高级配置两种模式，可集成多种外部服务（如 Arcade、Supabase、Slack 等），并提供了自定义提示词和帖子风格的灵活选项。
+
+- 🚀 **快速启动模式**：通过基础配置快速运行代理，但缺少部分高级功能（如 GitHub/Twitter/YouTube 内容解析、Slack 集成和图片上传）。
+- 🔑 **环境变量配置**：需设置 Anthropic API、LangSmith、FireCrawl 和 Arcade 等服务的密钥，以支持 LLM 生成、网络爬取和社交平台认证。
+- 🔐 **身份验证方式**：支持使用 Arcade（快速设置）或自建 Twitter/LinkedIn 开发者账户进行授权，后者需配置 OAuth 回调和服务端。
+- 🗃️ **数据存储与集成**：高级模式需配置 Supabase 存储图片、Slack 接收消息、GitHub API 读取仓库内容，以实现完整功能。
+- 🤖 **代理运行与监控**：通过 LangGraph CLI 启动本地服务器，使用内置脚本生成帖子，并可通过 Agent Inbox 界面管理中断事件和帖子审批。
+- ⚙️ **自定义与扩展**：允许修改提示词（如业务背景、帖子结构、示例推文）和内容规则，以适配不同行业或内容风格的需求。
 
 ## 其他
 
