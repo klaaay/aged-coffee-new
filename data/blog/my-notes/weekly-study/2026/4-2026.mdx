@@ -12,7 +12,51 @@ summary: ''
 
 ## 技术
 
+### [什么是 HTTP 头部？](https://httpcolon.dev/)
+
+本文概述了 HTTP 响应头中`Cache-Control`指令的各类用途与含义，用于控制缓存行为以平衡性能、新鲜度和隐私。
+
+- 🕐 **max-age=N**：表示响应自服务器生成起保持新鲜的时间为 N 秒，缓存时间需减去响应在途中已消耗的时间（通过`Age`头判断）。
+- 🌐 **public**：允许任何缓存（包括共享代理缓存）存储该响应，可提高缓存命中率但可能涉及隐私风险。
+- 🔒 **private**：响应仅允许存储在非共享缓存（如浏览器缓存）中，适用于包含敏感个人信息的数据。
+- 🔄 **no-cache**：在使用缓存响应前必须向源服务器重新验证其新鲜度，会忽略`max-age`等设置。
+- 🚫 **no-store**：禁止任何缓存存储响应内容，适用于高度敏感信息（如金融数据）。
+- ⚙️ **s-maxage=N**：仅作用于共享缓存（如代理），可覆盖`max-age`，对私有缓存无效。
+- ✋ **no-transform**：禁止中间缓存（如代理）修改响应内容，保护数据的完整性与安全性。
+- ⚠️ **must-revalidate**：缓存必须在使用前重新验证过期响应，禁止直接提供过期内容。
+- 🔁 **proxy-revalidate**：类似`must-revalidate`，但仅作用于共享缓存，对私有缓存无效。
+- 📚 **must-understand**：非标准指令，表示缓存仅在其理解基于状态码的缓存要求时才应存储响应。
+- 🧱 **immutable**：表示响应内容不可变，缓存期间禁止任何修改，适合长期不变的静态资源。
+- ⏳ **stale-while-revalidate**：允许在后台重新验证时继续提供过期响应，以提升用户体验与性能。
+- 🆘 **stale-if-error**：当无法连接源服务器时，允许在指定时间内提供过期响应作为容错机制。
+
+### [我的 2026 年 React 生态系统栈 | Felipe Gustavo 的博客](https://www.felgus.dev/blog/react-stack-2026)
+
+2026 年 React 生态圈趋于稳定，核心工具变化不大，但路由和框架选择出现新动向，同时 React Server Components 面临采用挑战。
+
+- 🧠 **状态管理**：Zustand 已成为默认选择，使用广泛且稳定。
+- 🔄 **服务器状态**：Tanstack Query（原 React Query）仍是处理服务器状态的首选，体验流畅。
+- 🎨 **样式方案**：Tailwind CSS 主导前端领域，与 LLM 配合良好，Shadcn/ui 作为易定制的 UI 库成为行业标准。
+- ⚡ **测试与构建**：Vitest 在新项目中取代 Jest，性能优异；Vite 继续主导打包工具市场；React Testing Library 保持组件测试最佳工具地位。
+- 📝 **表单处理**：React-hook-form 结合 Zod 等验证工具，仍是表单状态管理最优解。
+- 🌐 **React Server Components**：采用进展缓慢，沟通偏差和安全漏洞（已快速修复）影响声誉，本质是替代 REST API 而非 SSR。
+- 🏗️ **框架演变**：Next.js 仍是主流，但 Vercel 争议和 RSC 策略引发不满；Tanstack Start 凭借良好口碑可能崛起。
+- 🧭 **路由革新**：Tanstack Router 整合缓存概念，提供更优 SPA 体验，逐渐替代混乱的 React Router。
+- 🚀 **未来趋势**：Base UI、HeroUI 等组件库和 React Bits 动画库兴起；React v19 的 View Transition 等新特性将推动动画和并发功能发展。
+
 ## 工具
+
+### [pdf2video](https://github.com/DangJin/pdf2video)
+
+pdf2video 是一个基于 Remotion 框架的工具，可将 PDF 文档转换为具有平滑动画效果的动态视频演示。
+
+- 🎬 **核心功能**：将 PDF 文档转换为带有多种动画场景（如堆叠、聚焦、切换、扇形展开）的演示视频。
+- 🛠️ **智能特性**：包含智能动画（如呼吸、反弹效果）、标题系统、底部信息栏、自动时长计算及背景音乐。
+- 🚀 **快速上手**：通过 npm 安装，将 PDF 和背景音乐放入 `public/` 文件夹，即可进行开发预览和视频渲染。
+- ⚙️ **灵活配置**：支持基础配置（如高亮页面、自定义标题）和自定义脚本，以完全控制演示流程。
+- 🤖 **Claude 集成**：内置 Claude Code 技能，可自动分析 PDF 内容并生成视频配置。
+- 📁 **项目结构清晰**：包含配置、资源、输出和源代码目录，便于定制和扩展。
+- 🧰 **技术栈**：基于 Remotion、react-pdf、pdfjs-dist 和 Zod 构建，输出 1080p 30fps 视频。
 
 ### [agentation](https://github.com/benjitaylor/agentation)
 
