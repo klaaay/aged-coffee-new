@@ -57,10 +57,27 @@ Midscene.js 是一个基于视觉模型驱动的跨平台 UI 自动化框架，�
 [confirmo](https://confirmo.love/)  
 本文介绍了名为“CONFIRMO”的 AI 编程助手，该工具设计为桌面端应用程序，支持多平台使用，包括 macOS（Apple Silicon 和 Intel 芯片）、Windows 以及 Linux 系统（提供 AppImage 和.deb 格式）。
 
-## CodeAgent 增强
+## CodeAgent 编排并行
+
+[gastown](https://github.com/steveyegge/gastown)  
+Gas Town 是一个多智能体编排系统，专为 Claude Code 设计，通过 Git 支持的钩子实现持久化工作跟踪。它允许用户协调多个智能体处理不同任务，解决智能体重启后上下文丢失、手动协调困难以及工作状态易失等问题，支持扩展到 20-30 个智能体协同工作。
 
 [CodexMonitor](https://github.com/Dimillian/CodexMonitor)  
 CodexMonitor 是一款基于 Tauri 框架的 macOS 应用程序，用于在本地工作区中编排和管理多个 Codex 智能体。它通过侧边栏管理项目，提供主屏幕快速操作，并支持基于 Codex app-server 协议的对话视图。
+
+[worktrunk](https://github.com/max-sixty/worktrunk)  
+Worktrunk 是一款专为并行 AI 代理工作流设计的 Git 工作树管理命令行工具。
+
+## CodeAgent 增强
+
+[skills-npm](https://github.com/antfu/skills-npm)  
+skills-npm 是一个命令行工具，用于发现 npm 包中内置的智能体技能，并通过创建符号链接供编程智能体使用。该项目旨在解决现有技能分发方式中的摩擦，如仅支持 Git 源、版本不匹配和手动管理问题，提出将技能直接打包在 npm 包中的新约定。
+
+[skillman](https://github.com/pi0/skillman)  
+本文介绍了 skillman 工具，它是一个用于管理项目 Agent 技能的命令行工具，通过读取和操作 skills.json 文件来安装、添加来自不同来源的技能。
+
+[claude-mem](https://github.com/thedotmack/claude-mem)  
+Claude-Mem 是一款为 Claude Code 设计的持久化记忆压缩系统，能够自动捕获工具使用记录、生成语义摘要，并在不同会话间保持上下文连续性，从而让 Claude 在项目开发中具备跨会话的记忆能力。
 
 [cc-mirror](https://github.com/numman-ali/cc-mirror)  
 CC-MIRROR 是一个用于创建和管理独立 Claude Code 实例的工具，支持多种模型提供商，提供预设配置、主题和技能包，并包含旧版团队协作功能（仅限 1.6.3 版本）。用户可通过命令行快速创建隔离的 Claude Code 变体，每个变体拥有独立的配置和会话。
@@ -68,36 +85,25 @@ CC-MIRROR 是一个用于创建和管理独立 Claude Code 实例的工具，支
 [rulesync](https://github.com/dyoshikawa/rulesync)  
 Rulesync 是一个 Node.js 命令行工具，旨在通过统一的 AI 规则文件，自动为多种主流 AI 开发工具生成配置文件。它支持选择性生成、全面的导入/导出功能，并能管理规则、命令、MCP 配置、忽略文件、子代理和技能，从而实现跨工具开发规则的一致性
 
-[worktrunk](https://github.com/max-sixty/worktrunk)
-
-Worktrunk 是一款专为并行 AI 代理工作流设计的 Git 工作树管理命令行工具。
-
-[dotagents](https://github.com/iannuttall/dotagents)
-
+[dotagents](https://github.com/iannuttall/dotagents)  
 这里可以集中管理您的所有钩子函数、命令行工具、智能技能以及 AGENT/CLAUDE.md 配置文件。
 
-[osaurus](https://github.com/dinoki-ai/osaurus)
-
+[osaurus](https://github.com/dinoki-ai/osaurus)  
 Osaurus 是一款专为 macOS（Apple Silicon）设计的 AI 边缘运行时，集本地与云端模型于一体。它通过 MCP 协议暴露共享工具，为 AI 应用和工作流提供了一个原生、常驻的基础平台。核心功能包括运行本地模型、连接多种远程 API、支持 MCP 服务器与客户端、可扩展的插件系统、自定义 AI 助手（Personas）、任务自动化调度、多窗口聊天、开发者工具以及强大的本地语音输入与转录功能。
 
-[happy](https://github.com/slopus/happy)
-
+[happy](https://github.com/slopus/happy)  
 Happy Coder，这是一个为 Claude Code 和 Codex AI 编程工具提供的移动端与网页客户端，支持端到端加密和跨设备即时切换。
 
-[hapi](https://github.com/tiann/hapi)
-
+[hapi](https://github.com/tiann/hapi)  
 本文介绍了 HAPI（哈皮）项目，这是一个本地优先的 AI 编程辅助工具，支持在本地运行 Claude Code、Codex 和 Gemini 等 AI 会话，并可通过 Web、PWA 或 Telegram Mini App 进行远程控制。项目强调无缝切换、远程审批、实时进度跟踪和多模型支持等特性，同时提供了从安装到使用的详细指南。
 
-[ccmate](https://randynamic.org/ccmate)
-
+[ccmate](https://randynamic.org/ccmate)  
 CC Mate 是一款为 Claude Code 设计的图形化配置与管理工具，提供直观的界面来轻松设置、切换配置、监控使用情况并管理 MCP 服务器。
 
-[cc-cli](https://github.com/cjh-store/cc-cli)
-
+[cc-cli](https://github.com/cjh-store/cc-cli)  
 CC CLI 是一个用于管理 Claude Code 和 Codex 配置的命令行工具，支持一键切换 API 站点与 Token、智能合并配置、WebDAV 云端备份等功能，简化配置流程。
 
-[CodeBar-用量统计](https://github.com/steipete/CodexBar)
-
+[CodeBar-用量统计](https://github.com/steipete/CodexBar)  
 CodexBar 是一款专为 macOS 14+ 设计的轻量级菜单栏应用，可实时监控并显示多种 AI 服务（如 Codex、Claude、Gemini 等）的用量限额和重置时间。它支持多服务切换、隐私优先设计，并提供 CLI 工具和桌面小组件，方便用户管理使用情况。
 
 ## CodeAgent 代码编辑器
