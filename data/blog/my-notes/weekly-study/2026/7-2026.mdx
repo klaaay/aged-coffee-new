@@ -1,0 +1,34 @@
+---
+title: 2026-第七周
+date: '2026-02-16'
+tags: ['WEEKLY-2026']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+## 工具
+
+### [prek](https://github.com/j178/prek)
+
+prek 是一个用 Rust 重写的 pre-commit 替代工具，旨在提供更快的速度、零依赖的单二进制体验，并完全兼容原有的 pre-commit 配置。它通过并行化处理、共享工具链和集成 uv 等优化，显著提升了钩子运行效率，并支持单仓库多项目配置。目前已被 CPython、Apache Airflow 等知名项目采用。
+
+- 🚀 **性能优化** – 比 pre-commit 更快，占用磁盘空间更少，支持并行克隆仓库和运行钩子。
+- 📦 **零依赖便携** – 仅需单个二进制文件，无需安装 Python 或其他运行时环境。
+- 🔧 **完全兼容** – 支持原有 pre-commit 的配置文件与钩子，可无缝迁移。
+- 🏗️ **内置增强功能** – 支持单仓库多项目工作区、自动管理 Python 版本与虚拟环境，并提供 Rust 原生内置钩子。
+- ⚙️ **智能工具链** – 使用 uv 管理 Python 依赖，共享 Node.js、Go 等语言工具链，减少重复安装。
+- 🌍 **广泛采用** – 已被 FastAPI、Ruff、Home Assistant 等众多开源项目使用或推荐。
+
+## 更新
+
+## 设计
+
+## AI
+
+## 其他
