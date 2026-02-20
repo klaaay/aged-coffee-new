@@ -48,6 +48,14 @@ export const Subscription = () => {
         extra: '',
       },
       {
+        name: 'DeepSeek API',
+        monthly: 10,
+        yearly: toFixed2Number(10 * 12),
+        expiry: '2030-01-01',
+        type: '效率',
+        extra: '',
+      },
+      {
         name: '薄荷记账',
         yearly: 25.6,
         expiry: '2030-09-10',
