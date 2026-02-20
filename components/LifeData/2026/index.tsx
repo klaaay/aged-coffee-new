@@ -5,7 +5,6 @@ import {
   calculateAverage,
   dietAndExerciseData,
   MonthData,
-  sleepData,
   sleepDataApp,
 } from './helper'
 
@@ -98,10 +97,6 @@ const Table: React.FC<TableProps> = ({ headers, months, type }) => {
       </tbody>
     </table>
   )
-}
-
-export const SleepTable2026: React.FC = () => {
-  return <Table headers={sleepData.headers} months={sleepData.months} type="sleep" />
 }
 
 export const SleepTableApp2026: React.FC = () => {

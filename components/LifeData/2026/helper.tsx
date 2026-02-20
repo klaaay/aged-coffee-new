@@ -8,27 +8,6 @@ export interface TableData {
   months: MonthData[]
 }
 
-export const sleepData: TableData = {
-  headers: ['睡眠时间', '优质睡眠', '入睡时间', '心率', '深度睡眠'],
-  months: [
-    {
-      month: '1 月',
-      data: [
-        // 睡眠时间
-        '-',
-        // 优质睡眠
-        '-',
-        // 入睡时间
-        '-',
-        // 心率
-        '-',
-        // 深度睡眠
-        '-',
-      ],
-    },
-  ],
-}
-
 export const sleepDataApp: TableData = {
   headers: ['平均睡眠时间', '清醒时间', '快速眼动睡眠', '核心睡眠', '深度睡眠'],
   months: [
