@@ -1,4 +1,8 @@
+'use client'
+
 import React from 'react'
+import { Table as AntdTable } from 'antd'
+import type { ColumnsType } from 'antd/es/table'
 import {
   booksAndMediaData,
   calculateChanges,
@@ -49,53 +53,92 @@ const getCellBackgroundColor = (change: string, type: TableType): string => {
   return 'transparent'
 }
 
+interface TableRow {
+  key: string
+  month: string
+  isAverage?: boolean
+  [key: string]: string | boolean | undefined
+}
+
 const Table: React.FC<TableProps> = ({ headers, months, type }) => {
   const changes = calculateChanges(months)
   const averageData = calculateAverage(months)
+
+  const columns: ColumnsType<TableRow> = [
+    {
+      title: '月份',
+      dataIndex: 'month',
+      key: 'month',
+      align: 'left',
+      width: 80,
+      fixed: 'left',
+      render: (text: string, record) => (record.isAverage ? <strong>{text}</strong> : text),
+    },
+    ...headers.map((header, index) => ({
+      title: header,
+      dataIndex: `col_${index}`,
+      key: `col_${index}`,
+      align: 'left' as const,
+      width: 100,
+      onCell: (record: TableRow) => {
+        if (record.isAverage) return {}
+        const monthIndex = parseInt(record.key, 10)
+        const change = monthIndex > 0 ? changes[monthIndex - 1]?.[index] : null
+        const backgroundColor = change ? getCellBackgroundColor(change, type) : undefined
+        return backgroundColor ? { style: { backgroundColor } } : {}
+      },
+      render: (value: string, record: TableRow) => {
+        const isAvgRow = record.isAverage
+        if (isAvgRow) {
+          return <strong>{value}</strong>
+        }
+        const monthIndex = parseInt(record.key, 10)
+        const change =
+          monthIndex > 0 && changes[monthIndex - 1]?.[index] ? changes[monthIndex - 1][index] : null
+        const changeColor = change ? getChangeColor(change, type) : 'black'
+        return (
+          <>
+            {value}
+            {change && <sup style={{ color: changeColor, marginLeft: 2 }}>{change}</sup>}
+          </>
+        )
+      },
+    })),
+  ]
+
+  const dataSource: TableRow[] = months.map((month, monthIndex) => {
+    const row: TableRow = {
+      key: String(monthIndex),
+      month: month.month,
+      isAverage: false,
+    }
+    month.data.forEach((cell, cellIndex) => {
+      row[`col_${cellIndex}`] = cell
+    })
+    return row
+  })
+
+  if (averageData) {
+    const avgRow: TableRow = {
+      key: 'average',
+      month: '平均',
+      isAverage: true,
+    }
+    averageData.forEach((avg, index) => {
+      avgRow[`col_${index}`] = avg
+    })
+    dataSource.push(avgRow)
+  }
+
   return (
-    <table style={{ textAlign: 'left' }}>
-      <thead>
-        <tr>
-          <th>月份</th>
-          {headers.map((header, index) => (
-            <th key={index}>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {months.map((month, monthIndex) => (
-          <tr key={monthIndex}>
-            <td>{month.month}</td>
-            {month.data.map((cell, cellIndex) => (
-              <td
-                key={cellIndex}
-                style={{
-                  backgroundColor:
-                    monthIndex > 0 && changes[monthIndex - 1][cellIndex]
-                      ? getCellBackgroundColor(changes[monthIndex - 1][cellIndex], type)
-                      : 'transparent',
-                }}
-              >
-                {cell}
-                {monthIndex > 0 && changes[monthIndex - 1][cellIndex] && (
-                  <sup style={{ color: getChangeColor(changes[monthIndex - 1][cellIndex], type) }}>
-                    {changes[monthIndex - 1][cellIndex]}
-                  </sup>
-                )}
-              </td>
-            ))}
-          </tr>
-        ))}
-        {averageData && (
-          <tr style={{ fontWeight: 'bold' }}>
-            <td>平均</td>
-            {averageData.map((average, index) => (
-              <td key={index}>{average}</td>
-            ))}
-          </tr>
-        )}
-      </tbody>
-    </table>
+    <AntdTable
+      columns={columns}
+      dataSource={dataSource}
+      pagination={false}
+      showHeader
+      size="small"
+      scroll={{ x: 'max-content' }}
+    />
   )
 }
 
