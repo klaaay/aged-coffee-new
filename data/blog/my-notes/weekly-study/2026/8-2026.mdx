@@ -12,9 +12,44 @@ summary: ''
 
 ## 技术
 
+### [AGENTS.md 在我们的代理评估中表现优于技能 - Vercel](https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals)
+
+我们原本期望通过技能（skills）来教授 AI 编程助手框架知识，但测试发现，将压缩的文档索引直接嵌入 AGENTS.md 文件实现了 100% 的通过率，而技能方法即使在明确指令下最高也只有 79%。被动上下文之所以优于按需检索，主要因为消除了代理的决策点、确保信息始终可用，并避免了顺序问题。
+
+- 🧠 **技能未被可靠触发**：在 56% 的测试案例中，代理从未调用技能，导致表现与无文档时相同。
+- 📝 **明确指令提升有限**：添加使用技能的指令后，通过率提升至 79%，但效果受措辞影响大，显得脆弱。
+- 🏆 **AGENTS.md 表现卓越**：嵌入压缩文档索引的方法在测试中达到 100% 通过率，全面优于技能方法。
+- 🔍 **消除决策点优势**：被动上下文让代理无需决定是否查阅文档，信息始终可用，避免了检索顺序问题。
+- 📦 **高效压缩处理**：文档索引被压缩 80% 至 8KB，通过管道分隔结构指向外部文件，既节省上下文又保持效果。
+- 🛠️ **实际应用简便**：通过`npx @next/codemod@canary agents-md`命令可自动为 Next.js 项目设置 AGENTS.md。
+- ⚖️ **技能仍有特定价值**：技能适用于垂直的、用户明确触发的操作，如版本升级或迁移任务。
+- 🧪 **测试与设计建议**：应针对训练数据中未包含的 API 构建评估，并设计便于代理检索的文档结构。
+
 ## 工具
 
+### [GitHub - Blazity/next-migration-skills](https://github.com/Blazity/next-migration-skills)
+
+这是一个用于将 Next.js 项目从 Pages Router 迁移到 App Router 的代理导向工具包，包含多个技能模块，旨在通过 AST 分析和转换工具自动化迁移过程。
+
+- 🛠️ **核心工具包**：提供 AST 分析和转换工具（ts-morph），是所有其他技能的基础依赖
+- 📊 **迁移评估**：分析代码库复杂性和迁移准备情况
+- 📋 **迁移规划**：创建分阶段迁移计划
+- 🔗 **依赖映射**：将旧依赖映射到 App Router 等效项
+- 🛣️ **路由转换**：将 pages/路由转换为 app/路由结构
+- ⚛️ **组件迁移**：迁移组件以实现 RSC 兼容性
+- 📡 **数据层迁移**：迁移数据获取和 API 路由
+- ✅ **验证测试**：在每个阶段后验证正确性
+
 ## 更新
+
+### [发布 styled-components@6.3.0 · styled-components/styled-components · GitHub](https://github.com/styled-components/styled-components/releases/tag/styled-components%406.3.0)
+
+styled-components 6.3.0 版本发布，主要增加了对 React Server Components (RSC) 的原生支持，无需额外配置即可在 RSC 环境中自动处理 CSS 注入。同时扩展了内置 HTML 和 SVG 元素别名，并修复了 TypeScript 中对 CSS 自定义属性的类型支持。
+
+- 🚀 新增 React Server Components (RSC) 支持：自动检测 RSC 环境，无需 `'use client'` 指令，CSS 以内联样式标签注入并由 React 19 自动优化。
+- 🧩 扩展元素别名：新增对现代 HTML（如 `search`、`slot`）和 SVG 元素（如 `feBlend`、`linearGradient`）的样式支持。
+- 🔧 修复 TypeScript 类型：现在完全支持在 `style` 属性和 `.attrs` 中使用 CSS 自定义属性（CSS 变量）。
+- ⚙️ 更新构建工具：共享 CSS 属性处理工具已更新至最新版本。
 
 ## 设计
 

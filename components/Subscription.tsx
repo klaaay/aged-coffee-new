@@ -126,8 +126,8 @@ export const Subscription = () => {
         extra: '退订',
       },
       {
-        name: '多邻国',
-        yearly: 588,
+        name: '多邻国 MAX',
+        yearly: 798,
         expiry: '2026-12-04',
         type: '娱乐',
         extra: '续订 12/4 Apple 付款',
