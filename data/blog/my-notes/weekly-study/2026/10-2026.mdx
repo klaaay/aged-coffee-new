@@ -14,6 +14,18 @@ summary: ''
 
 ## 工具
 
+### [just-bash](https://github.com/vercel-labs/just-bash)
+
+just-bash 是一个用 TypeScript 编写的模拟 Bash 环境，提供基于内存的虚拟文件系统。它专为需要安全沙盒环境的 AI 代理设计，支持可选的网络访问和自定义命令，并具备执行保护机制，可用于开发、测试或 AI 工具集成。
+
+- 🛡️ **安全沙盒环境**：提供隔离的 Bash 执行环境，默认无网络访问，可通过配置允许列表启用受控网络请求。
+- 📁 **灵活文件系统**：支持多种文件系统（内存、覆盖、读写、可挂载），可懒加载文件内容，方便集成真实目录或虚拟数据。
+- 🔧 **自定义命令扩展**：允许通过 TypeScript 自定义命令，增强环境功能，支持管道、重定向等 Shell 特性。
+- 🤖 **AI 代理优化**：提供与 AI SDK 集成的专用工具（bash-tool），兼容 Vercel Sandbox API，便于在 AI 工作流中安全执行脚本。
+- ⚙️ **执行保护与限制**：可配置递归深度、循环次数等执行限制，防止无限循环或资源耗尽，提升稳定性。
+- 🌐 **网络与语言支持**：可选启用 Python（Pyodide）、SQLite（WASM）和 curl 网络访问，支持 JSON、CSV 等数据处理工具。
+- 🖥️ **多使用方式**：提供 CLI 命令行工具、交互式 Shell 和编程 API，适用于脚本测试、开发调试和代理任务执行。
+
 ### [figma-console-mcp](https://github.com/southleft/figma-console-mcp)
 
 Figma Console MCP Server 是一个连接 AI 助手（如 Claude）与 Figma 的 Model Context Protocol 服务器，为 AI 提供了对 Figma 的完整访问能力，支持设计数据提取、UI 创建和插件调试等功能。它提供三种安装方式，功能覆盖范围各不相同。
