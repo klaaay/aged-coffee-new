@@ -12,6 +12,16 @@ summary: ''
 
 ## 技术
 
+### [看完就懂 useLayoutEffect](https://ssshooter.com/react-uselayouteffect/)
+
+本文对比了 React 中的 `useLayoutEffect` 与 `useEffect` 钩子，重点阐述了两者的调用时机差异、适用场景以及使用建议。核心区别在于 `useLayoutEffect` 在浏览器绘制前同步执行，适用于避免 DOM 操作引起的视觉闪烁；而 `useEffect` 在绘制后异步执行，是大多数副作用场景的首选，以避免阻塞渲染。
+
+- 🕐 **调用时机差异**：`useLayoutEffect` 在浏览器绘制（paint）前同步执行，`useEffect` 则在绘制后异步执行。执行顺序为：`useLayoutEffect` → 画面绘制 → `useEffect`。
+- 🎨 **使用场景**：当 DOM 操作会引起回流（reflow）或重绘（repaint）并可能导致视觉闪烁时（如测量元素位置并立即更新），应使用 `useLayoutEffect` 以避免用户看到中间状态。
+- ⚠️ **性能注意**：由于 `useLayoutEffect` 会阻塞浏览器绘制，可能影响性能，因此不应滥用。在绝大多数情况下，应优先使用 `useEffect`。
+- 🔧 **实践建议**：作为专业开发者，应默认使用 `useEffect`，仅在确实观察到因回流/重绘导致的闪烁问题时，才考虑替换为 `useLayoutEffect`。
+- 📚 **补充说明**：即使在某些场景下使用 `useEffect` 作为反模式，用户也可能无法察觉明显闪烁，因为两次渲染间隔极短。但遵循最佳实践有助于保持代码质量和性能。
+
 ### [移除 Next.js 让我明白为何框架对 AI 依然至关重要](https://zenn.dev/smartvain/articles/coding-agent-kills-framework-nextjs-reverse-truth?locale=en)
 
 本文作者通过移除 Next.js 框架并尝试用纯 HTML/JS 开发，得出了与“AI 时代不再需要框架”相反的结论：框架在 AI 时代反而更加重要，因为它为人类与 AI 提供了协作的共同语言和明确规则。
