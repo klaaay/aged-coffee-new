@@ -41,6 +41,13 @@ export const Subscription = () => {
         extra: '',
       },
       {
+        name: 'Google AI Pro',
+        yearly: toFixed2Number(126.76 * 12),
+        expiry: '2026-10-3',
+        type: '效率',
+        extra: '2900JPY/Month',
+      },
+      {
         name: 'ChatGPT Pro',
         yearly: toFixed2Number(20 * 12 * DOLLAR2RMB),
         expiry: '2026-10-3',
