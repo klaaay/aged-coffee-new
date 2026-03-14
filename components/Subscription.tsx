@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
+import { Table } from 'antd'
+import type { ColumnsType } from 'antd/es/table'
 
 type SubscriptionItem = {
   name: string
@@ -201,34 +203,33 @@ export const Subscription = () => {
 
   const totals = calculateTotal()
 
+  const columns: ColumnsType<SubscriptionItem> = [
+    { title: '名称', dataIndex: 'name', key: 'name', fixed: 'left', width: 160 },
+    {
+      title: '套餐',
+      key: 'plan',
+      render: (_, record) => `￥${record.yearly} / 年 (￥${record.monthly} / 月)`,
+    },
+    { title: '到期时间', dataIndex: 'expiry', key: 'expiry' },
+    {
+      title: '剩余天数',
+      key: 'daysLeft',
+      render: (_, record) => daysUntilExpiry(record.expiry),
+    },
+    { title: '类型', dataIndex: 'type', key: 'type' },
+    { title: '备注', dataIndex: 'extra', key: 'extra' },
+  ]
+
   return (
     <div>
-      <table>
-        <thead>
-          <tr>
-            <th>名称</th>
-            <th>套餐</th>
-            <th>到期时间</th>
-            <th>剩余天数</th>
-            <th>类型</th>
-            <th>备注</th>
-          </tr>
-        </thead>
-        <tbody>
-          {subscriptions.map((sub, index) => (
-            <tr className={daysUntilExpiry(sub.expiry) > 0 ? `` : `line-through`} key={index}>
-              <td>{sub.name}</td>
-              <td>
-                ￥{sub.yearly} / 年 (￥{sub.monthly} / 月)
-              </td>
-              <td>{sub.expiry}</td>
-              <td>{daysUntilExpiry(sub.expiry)}</td>
-              <td>{sub.type}</td>
-              <td>{sub.extra}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table<SubscriptionItem>
+        columns={columns}
+        dataSource={subscriptions}
+        rowKey={(record) => `${record.name}-${record.expiry}`}
+        pagination={false}
+        scroll={{ x: 'max-content' }}
+        rowClassName={(record) => (daysUntilExpiry(record.expiry) > 0 ? '' : 'line-through')}
+      />
       <div>
         <p>效率总计：¥{totals.efficiencyTotal.toFixed(2)}/月</p>
         <p>娱乐总计：¥{totals.entertainmentTotal.toFixed(2)}/月</p>
