@@ -70,6 +70,30 @@ cc-connect 是一个将本地运行的 AI 智能体（Agent）连接到常用即
 
 ## 更新
 
+### [Electron 41.0 | Electron](https://www.electronjs.org/blog/electron-41-0)
+
+Electron 41.0 版本发布，包含 Chromium、V8 和 Node.js 的升级，引入了多项安全增强、功能改进和平台支持优化。
+
+- 🔒 **ASAR 完整性摘要**：macOS 应用可嵌入 ASAR 完整性摘要，增强应用防篡改检测能力。
+- 🖥️ **Wayland 支持改进**：Linux 平台下无边框窗口现支持阴影和扩展调整边界，提升视觉体验。
+- 🔄 **MSIX 自动更新支持**：新增 MSIX 格式自动更新功能，与 Squirrel.Mac 更新服务器兼容。
+- 📦 **底层堆栈升级**：Chromium 升级至 146.0.7680.65，Node.js 升级至 v24.14.0，V8 升级至 14.6。
+- 🛠️ **新功能与优化**：包括禁用地理位置服务、NV12 纹理支持、通知关闭原因追踪等多项 API 增强。
+- ⚠️ **行为变更与弃用**：PDF 渲染改为同进程处理，Cookie 变更事件原因细化，Electron 38.x.y 停止支持。
+- 🚀 **后续计划**：团队将持续跟进 Chromium、Node 和 V8 的更新，维护版本兼容性与功能演进。
+
+### [GitHub - tc39/proposal-import-text: TC39 关于导入文本的提案 · GitHub](https://github.com/tc39/proposal-import-text)
+
+该提案旨在为 JavaScript 引入导入文本文件的功能，通过新增`type: "text"`导入属性，使开发者能够像导入 JSON 模块一样直接导入文本文件为字符串，从而简化常见操作并提升性能。
+
+- 📄 提案目标：为 JavaScript 添加导入文本文件的功能，使其像导入 JSON 一样简便
+- 🔧 解决方案：新增`type: "text"`导入属性，允许将文本文件作为字符串导入
+- 🚀 当前进展：提案已进入 Stage 3，由 Eemeli Aro 主导，得到 Jordan Harband 和 Nicolò Ribaudo 的评审
+- 📈 现有方案对比：相比 Fetch API，该提案支持同步导入、基于模块路径解析，且加载时机更早
+- 🌍 生态支持：Deno 和 Bun 等运行时已实现类似功能，HTML、Fetch 和 CSP 标准也在同步更新
+- ⚠️ 已知限制：不支持指定编码，需通过`type: "bytes"`导入后手动解码处理
+- 📚 相关资源：包含规范文档、测试用例及演示材料，代码托管于 GitHub
+
 ## 设计
 
 ## AI
