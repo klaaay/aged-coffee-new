@@ -112,6 +112,7 @@ summary: ''
 
 - [ni](https://github.com/antfu/ni)  
 - [git-open](https://github.com/paulirish/git-open)
+- [awesome-cli-apps - 精选命令行应用列表](https://github.com/agarrharr/awesome-cli-apps)
 
 ### 常见替代
 
