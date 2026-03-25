@@ -35,6 +35,23 @@ Ant Design 官方的命令行工具。
 
 ## 更新
 
+### [TypeScript 6.0 发布公告 - TypeScript](https://devblogs.microsoft.com/typescript/announcing-typescript-6-0/)
+
+TypeScript 6.0 正式发布，这是一个重要的过渡版本，旨在为基于 Go 重写的原生编译器 TypeScript 7.0 铺平道路。此版本包含多项新特性、改进以及为迎接 7.0 而做的对齐调整，同时也引入了一些重大的默认值变更和弃用项。
+
+- 🚀 **发布与定位**：TypeScript 6.0 现已可用，它是基于当前代码库的最后一个主要版本，充当 5.9 和未来的原生版本 7.0 之间的桥梁。
+- 🧠 **类型推断优化**：对于未使用 `this` 的函数，减少了其上下文敏感性，从而在方法语法等场景中改善了泛型参数的类型推断。
+- 📁 **子路径导入支持**：现在支持 Node.js 中以前导 `#/` 开头的子路径导入（如 `#/*`），需在 `--moduleResolution` 设为 `nodenext` 或 `bundler` 时使用。
+- ⚙️ **模块解析组合**：现在允许将 `--moduleResolution bundler` 与 `--module commonjs` 组合使用，为许多项目提供了合适的升级路径。
+- 🔢 **稳定的类型排序**：新增 `--stableTypeOrdering` 标志，使 6.0 的类型排序行为与 7.0 保持一致，有助于减少版本间差异的噪音，但可能会带来性能开销。
+- 🎯 **新的编译目标**：增加了 `es2025` 作为 `target` 和 `lib` 的选项，包含了新的内置 API 类型（如 `RegExp.escape`）并将一些声明从 `esnext` 移入。
+- ⏳ **Temporal API 类型**：为已达到 Stage 4 的 Temporal API 提供了内置类型支持，可通过 `--target esnext` 或 `"lib": ["esnext"]` 使用。
+- 🗺️ **新增 Map 方法类型**：为 `Map` 和 `WeakMap` 新增了 `getOrInsert` 和 `getOrInsertComputed` 方法的类型定义，它们源自已进入 Stage 4 的提案。
+- 🛡️ **RegExp.escape**：增加了 `RegExp.escape` 函数的类型，用于转义正则表达式中的特殊字符。
+- 🌐 **DOM 库更新**：`dom` 库现在默认包含了 `dom.iterable` 和 `dom.asynciterable` 的内容，简化了配置。
+- ⚠️ **重大变更与弃用**：此版本包含多项旨在反映现代 JS 生态的默认值变更和弃用，例如 `strict` 默认为 `true`、`module` 默认为 `esnext`、`target` 默认为 `es2025`，并弃用了 `target: es5`、`--moduleResolution node`、`--baseUrl`、`--outFile` 等。建议使用 `"ignoreDeprecations": "6.0"` 暂时忽略警告，但这些选项将在 7.0 中彻底移除。
+- 📝 **为 7.0 做准备**：团队鼓励开发者在升级到 6.0 后，着手解决所有弃用警告，并尝试 TypeScript 7.0 的原生预览版，以便顺利过渡。
+
 ## 设计
 
 ## AI
