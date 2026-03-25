@@ -20,6 +20,7 @@ summary: ''
 [构筑大语言模型应用应用开发与架构设计](https://aigc.phodal.com/prelude.html)  
 [Prompt Engineering Guide](https://www.promptingguide.ai/)  
 [AiMonneyHunter](https://github.com/bleedline/aimoneyhunter)  
+[claude-code-harness](https://github.com/Chachamaru127/claude-code-harness)  
 
 ## [Prompts](/blog/resources-save/prompts)
 
