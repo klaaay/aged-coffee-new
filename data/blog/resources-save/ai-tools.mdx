@@ -33,6 +33,14 @@ summary: ''
 - 支持外部 CLI 工作者：可在 tmux 中拉起 Codex、Gemini、Claude CLI 做并行审查、UI 设计和实现任务。
 - 面向真实开发流程：内置 setup、doctor、更新、深度访谈等命令，覆盖从需求澄清到执行验证的整套工作流。
 
+[codex-plugin-cc - 在 Claude Code 内调用 Codex](https://github.com/openai/codex-plugin-cc)<br />
+OpenAI 官方的 Claude Code 插件，让你直接在 Claude Code 工作流里调用 Codex 做代码审查或委托任务。安装后可通过 `/codex:review`、`/codex:adversarial-review`、`/codex:rescue`、`/codex:status`、`/codex:result` 等命令，在当前仓库里发起只读审查、挑战式审查和后台救火任务。
+
+- 官方插件接入：通过 `/plugin marketplace add openai/codex-plugin-cc` 和 `/plugin install codex@openai-codex` 安装，适合已经把 Claude Code 当主工作台的用户。
+- 审查与委托一体：既能做普通 review，也能把排查问题、尝试修复、续跑上一次任务交给 Codex。
+- 复用本机 Codex 环境：依赖本地 `codex` CLI、登录态和 `.codex/config.toml` 配置，不额外引入一套独立运行时。
+- 使用门槛明确：需要本机已安装 Codex、Node.js 18.18+，并用 ChatGPT 账号或 OpenAI API key 完成 Codex 登录。
+
 ### Claude Code 工具链
 
 [claude-code-marketplace](https://github.com/ananddtyagi/claude-code-marketplace)<br />
