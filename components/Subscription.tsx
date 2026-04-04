@@ -197,7 +197,7 @@ export const Subscription = () => {
           yearly: item.yearly ? item.yearly : item.monthly! * 12,
         }
       })
-      .sort((a, b) => daysUntilExpiry(b.expiry) - daysUntilExpiry(a.expiry))
+      .sort((a, b) => daysUntilExpiry(a.expiry) - daysUntilExpiry(b.expiry))
   )
 
   const calculateTotal = () => {
