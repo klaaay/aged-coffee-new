@@ -107,6 +107,20 @@ export const Subscription = () => {
         extra: '',
       },
       {
+        name: '100 云服务器 55R 型号租用一年',
+        yearly: 89,
+        expiry: '2026-06-12',
+        type: '效率',
+        extra: '',
+      },
+      {
+        name: '100 云服务器 V2R 型号租用一年',
+        yearly: 165,
+        expiry: '2026-09-30',
+        type: '效率',
+        extra: '',
+      },
+      {
         name: 'Raycast Pro',
         yearly: toFixed2Number(192 * DOLLAR2RMB),
         expiry: '2026-05-19',
