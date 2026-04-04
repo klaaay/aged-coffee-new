@@ -50,11 +50,11 @@ export const Subscription = () => {
         extra: '2900JPY/Month',
       },
       {
-        name: 'ChatGPT Pro',
-        yearly: toFixed2Number(20 * 12 * DOLLAR2RMB),
+        name: 'ChatGPT Plus',
+        yearly: toFixed2Number(20 * 12 * DOLLAR2RMB * 2),
         expiry: '2026-10-3',
         type: '效率',
-        extra: '',
+        extra: '两个账号',
       },
       {
         name: 'DeepSeek API',
