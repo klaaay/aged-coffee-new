@@ -36,7 +36,7 @@ flowchart TD
 
 ### 章节总结
 
-这一章先把比较对象纠偏了：不是比较两个“会写代码的助手”谁更顺手，而是比较它们如何处理“模型不可靠”这件事。作者认为，真正有价值的地方在于，Claude Code 和 Codex 都没有把模型直接当执行体，而是各自发展出一套驯化不确定性的 harness。
+这一章先把比较对象纠偏了：不是比较两个“会写代码的助手”谁更顺手，而是比较它们如何处理“模型不可靠”这件事。作者认为，真正有价值的地方在于，Claude Code 和 Codex 都没有把模型直接当作执行主体，而是各自发展出一套驯化不确定性的 harness。
 
 Claude Code 更像一条运行时优先的路线，重点放在 query loop、工具编排、compact 与恢复这种“系统如何继续活着”的问题上; Codex 则更像显式控制面优先的路线，把 instructions、skills、sandboxing、exec policy、thread state 等边界拆成明确模块。两者都在回答同一个问题，只是起笔位置不同。
 
@@ -56,9 +56,9 @@ Claude Code 更像一条运行时优先的路线，重点放在 query loop、工
 
 ### 章节总结
 
-作者指出，控制面首先不是文风问题。Claude Code 和 Codex 都把面向模型的指令当成行为控制的一部分，但实现方式不同。Claude Code 更像动态装配线：默认 prompt、memory、本地规则、输出风格会在运行时拼装成同一控制面。Codex 则更像结构化片段系统：instruction fragment 有明确来源、边界和类型，用户指令也被序列化进可区分的上下文单元里。
+作者指出，控制面首先不是文风问题。Claude Code 和 Codex 都把面向模型的指令当成行为控制的一部分，但实现方式不同。Claude Code 更像动态装配线：默认 prompt、memory、本地规则、输出风格会在运行时拼装成同一控制面。Codex 则更像结构化片段系统：instruction fragment 有明确来源、边界和类型，用户指令也被有序地装入可区分的上下文单元中。
 
-两者差异不只是实现趣味，而是系统气质差异。前者偏向按场景实时组装控制面，后者偏向先把制度层显式化、编号化，再让运行时在其上执行。
+两者差异不只是实现趣味，而是系统气质差异。前者偏向按场景实时组装控制面，后者偏向先把制度层显式化、结构化，再让运行时在其上执行。
 
 ### 内在联系
 
@@ -158,7 +158,7 @@ Claude Code 更像一条运行时优先的路线，重点放在 query loop、工
 
 作者在这一章先说“同归”: Claude Code 和 Codex 都已经越过“模型更强就能自动解决系统问题”的幼稚阶段。它们都承认 prompt 不足以控制全部、工具必须受约束、长会话需要状态治理、本地规则必须进入系统、多代理必须有验证。
 
-但作者也强调“各表一枝”。Claude Code 的主轴是从 query loop 出发，用运行时调度、compact、中断与恢复维持秩序; Codex 的主轴则更像先把 instructions、tool schema、approval policy、thread state、hook event 和 skills 这些制度层显式化，再让运行时按制度执行。共同目的相同，重心不同。
+但作者也强调“各表一枝”。Claude Code 的主轴是从 query loop 出发，用运行时调度、compact、中断与恢复维持秩序; Codex 的主轴则更像先把 instructions、tool schema、approval policy、thread state、hook event 和 skills 这些制度层显式化，再让运行时按制度执行。目标相同，重心不同。
 
 ### 内在联系
 
