@@ -45,7 +45,7 @@ export const Subscription = () => {
       {
         name: 'Google AI Pro',
         yearly: toFixed2Number(126.76 * 12),
-        expiry: '2026-10-3',
+        expiry: '2026-4-8',
         type: '效率',
         extra: '2900JPY/Month',
       },
