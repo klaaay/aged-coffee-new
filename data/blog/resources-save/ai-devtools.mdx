@@ -116,6 +116,14 @@ EnsoAI 是一款面向开发者的 AI 智能工作空间管理工具，通过集
 
 ## 运行时与服务
 
+[OpenHarness - Open Agent Harness](https://github.com/HKUDS/OpenHarness)
+OpenHarness 是一个开源 Agent Harness，核心覆盖 tool-use、skills、memory、权限治理和多 Agent 协作。它更适合放在 `AI DevTools`，因为它提供的是一整套 agent 基础设施，而不是某个单点应用或单一 CLI 包装。
+
+- 基础骨架比较完整：仓库把工具调用循环、上下文压缩、持久记忆、权限模式、Hook 和子代理协作放进同一套实现里，适合拿来理解 agent runtime 怎么搭。
+- 兼顾研究和落地：主实现基于 Python，同时带 React 终端界面，内置文件、Shell、搜索、Web、MCP 等工具能力，适合作为二次开发底座。
+- 适合接现有工作流：支持按需加载 `.md` skills，也强调插件生态和多代理协作，对已经在研究 Claude Code、Codex 一类 harness 的人比较有参考价值。
+- 上手门槛不高：项目提供 `oh` 入口和安装脚本，可以直接跑 Demo，也可以从源码安装后继续改造成自己的 harness。
+
 [agent-infra/sandbox - AI Agent 一体化沙箱](https://github.com/agent-infra/sandbox)
 AIO Sandbox 是一个把浏览器、Shell、共享文件系统、MCP、VS Code Server 甚至 Jupyter 放进同一个 Docker 容器的 agent 运行时，适合需要“能看网页、能跑命令、能处理文件、还能调试”的一体化执行环境。
 
