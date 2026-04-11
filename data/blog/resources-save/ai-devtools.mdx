@@ -83,6 +83,15 @@ Expect 是一个让 AI agent 在真实浏览器里测试代码改动的工具。
 - 兼容 Claude 和 Codex：可以把 Claude Code 或 Codex CLI 作为生成测试计划的 agent。
 - 适合本地与 CI：本地可用交互式 TUI 审核计划，CI 中可用 `-y` 跳过审核直接无头执行。
 
+[ralph - 基于 PRD 的自循环开发工作流](https://github.com/snarktank/ralph)
+Ralph 是一个围绕 Geoffrey Huntley `Ralph pattern` 落地的自动化开发循环，用 Bash 脚本反复拉起新的 AI coding tool 实例，直到 `prd.json` 里的需求项全部完成。它支持 Amp 和 Claude Code，核心不是“长会话坚持到底”，而是“每轮都用干净上下文重新开始”，再通过 git 历史、`progress.txt` 和 `prd.json` 保持跨轮次记忆。
+
+- 核心执行模型很清晰：每次迭代只做一个足够小的 story，跑实现、质量检查、提交、更新状态，然后再开一个全新 agent 继续下一轮。
+- 适合长任务拆分：它强调 PRD item 必须小到能在单个上下文窗口内完成，否则会因为上下文耗尽导致质量下降。
+- 记忆设计偏工程化：不依赖单个会话上下文续命，而是把长期记忆沉淀到 commit、`progress.txt`、`prd.json` 和 `AGENTS.md` 更新里。
+- 带配套技能：仓库同时提供 `/prd` 和 `/ralph` 两个 skill，用来先生成需求文档，再转成适合自动执行的 `prd.json`。
+- 更像“本地自治循环器”而不是通用平台：它没有做成完整工作台，而是把自主开发流程压缩成一套可直接拷进项目的脚本和 prompt 模板，适合研究 agent 如何通过小步快跑和反馈回路稳定推进任务。
+
 ## 记忆与状态
 
 [claude-mem](https://github.com/thedotmack/claude-mem)

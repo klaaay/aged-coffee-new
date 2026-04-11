@@ -14,6 +14,16 @@ summary: ''
 
 这是一个基于 AI 技术的智能电子书解析工具，支持将 EPUB 和 PDF 格式的电子书转换为结构化的思维导图和文字总结。工具采用 BYOK 模式保障隐私，提供多种处理模式，并具备缓存管理、现代化界面等特性。
 
+[llm_wiki - 可自我构建的个人知识库](https://github.com/nashsu/llm_wiki/blob/main/README_CN.md)
+
+LLM Wiki 是一个跨平台桌面应用，目标不是做一次性的 RAG 问答，而是让 LLM 持续把你的文档整理成结构化、可交叉引用、可长期维护的个人 Wiki。它基于 Karpathy 的 `llm-wiki` 方法论，但做成了完整产品，适合把 PDF、Markdown、Office 文档、网页剪藏等资料沉淀成长期知识库。
+
+- 核心思路是“持久化 Wiki”而不是“每次重查一遍”：原始资料只需被摄入和结构化一次，后续持续增量更新，而不是每次查询都从头检索和拼接答案。
+- 有比较完整的知识组织层：保留 `index.md`、`log.md`、`[[wikilink]]`、YAML frontmatter、Obsidian 兼容等设计，同时新增 `purpose.md` 来约束 Wiki 的目标和研究方向。
+- 不只是聊天问答：内置两步摄入、知识图谱、Louvain 社区发现、图谱洞察、异步审核、Deep Research、网页剪藏和多对话持久化，已经接近“个人研究工作台”。
+- 检索链路比较值得参考：它把分词搜索、图谱扩展、预算控制和带引用的上下文组装拆成四阶段，而不是只做一个简单的向量检索外壳。
+- 产品形态明确：Tauri + React + TypeScript 的桌面端，支持多 LLM 提供商，也能和本地文件系统、浏览器扩展、Obsidian 工作流打通。
+
 [由 AI 生成的书籍深度总结](https://bookds.com/)
 
 BookDS · Book Deep Summary 是一个利用先进 AI Agent 对书籍进行深度总结的服务，旨在帮助用户快速掌握书籍核心内容。它强调 AI 总结的辅助性质，并倡导用户支持正版书籍。
