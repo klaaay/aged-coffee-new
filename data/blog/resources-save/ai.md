@@ -22,6 +22,10 @@ summary: ''
 [AiMonneyHunter](https://github.com/bleedline/aimoneyhunter)  
 [claude-code-harness](https://github.com/Chachamaru127/claude-code-harness)  
 
+## AI Agent / Prompt 工程
+
+- [caveman：通过约束 LLM 表达方式来压缩 token 的 agent 技能与上下文压缩工具](/blog/resources-save/caveman)
+
 ## [Prompts](/blog/resources-save/prompts)
 
 ## [PopAi](/blog/resources-save/PopAi)

@@ -128,6 +128,15 @@ OpenASE 是一个把同步交互式 AI 和异步 ticket agent 串起来的开发
 - 更像 AI 开发控制台：它的核心价值是统一工作台与执行编排，不是单独的 Agent 框架或纯 CLI，所以放在 `AI DevTools` 比放到 `AI Agents` 更准确。
 - 收录来源：[GitHubDaily #787](https://github.com/GitHubDaily/GitHubDaily/issues/787)
 
+[Multica - 托管式 AI Agent 开发平台](https://github.com/multica-ai/multica)
+Multica 是一个把 coding agent 变成“团队成员”的开源托管平台。它不只是起一个 agent 跑任务，而是把 issue 分配、状态流转、实时进度、运行时调度和技能沉淀都放进同一套工作台里，适合把 Claude Code、Codex、OpenClaw、OpenCode 这类 agent 真正纳入研发协作流程。
+
+- 任务分配方式接近人类协作：你可以像给同事派单一样把 issue 指给 agent，agent 会领取任务、执行、汇报阻塞并更新状态，而不是每次都手动复制 prompt。
+- 工作台与运行时分离：Web 端负责看板、Agent、Workspace 和状态可视化；本机 daemon 负责发现本地 CLI、执行任务并把运行状态回传到平台。
+- 支持多运行时和多工作区：同一个平台可以接本地 runtime 或云端 runtime，并按 workspace 做隔离，适合团队化管理。
+- 强调能力复用：项目把 skills 视为可沉淀的团队资产，不只是这次任务用完即弃的 prompt。
+- 技术栈清晰：前端是 Next.js，后端是 Go + WebSocket，数据库是 PostgreSQL + pgvector，整体更像“agent 协作基础设施”而不是单个桌面客户端。
+
 [EnsoAI](https://github.com/J3n5en/EnsoAI)
 EnsoAI 是一款面向开发者的 AI 智能工作空间管理工具，通过集成 Git Worktree 与多 AI 代理，支持在同一个项目中并行处理多个分支任务。
 
