@@ -83,6 +83,14 @@ Expect 是一个让 AI agent 在真实浏览器里测试代码改动的工具。
 - 兼容 Claude 和 Codex：可以把 Claude Code 或 Codex CLI 作为生成测试计划的 agent。
 - 适合本地与 CI：本地可用交互式 TUI 审核计划，CI 中可用 `-y` 跳过审核直接无头执行。
 
+[aimock](https://github.com/CopilotKit/aimock)
+aimock 是一套面向 AI 应用测试的统一 Mock 基础设施。它不是只模拟单个 LLM 接口，而是把 AI 应用真正会依赖的一整层外部能力一起替身掉，包括 LLM API、MCP、A2A、AG-UI、向量库、搜索、rerank、moderation，以及图片、语音、视频等多媒体接口。
+
+- 更适合集成测试和 CI：既可以程序化嵌进测试，也可以用单独端口跑成统一 mock 服务，把 OpenAI、Claude、Gemini 一类入口一起切到本地。
+- 覆盖 agent 真实依赖：除了模型接口，还支持 MCP tools、A2A agent、AG-UI 事件流和向量数据库，适合测试多协议、多服务的 agent 应用。
+- 支持录制回放和漂移检测：可以代理真实 API 录成 fixtures，再稳定回放；也能在 CI 里做 drift detection，持续检查 mock 与真实供应商行为是否偏离。
+- 对异常场景友好：支持 500、坏 JSON、流中断这类 chaos testing，适合补齐“平时最难稳定复现”的 AI 失败路径。
+
 [ralph - 基于 PRD 的自循环开发工作流](https://github.com/snarktank/ralph)
 Ralph 是一个围绕 Geoffrey Huntley `Ralph pattern` 落地的自动化开发循环，用 Bash 脚本反复拉起新的 AI coding tool 实例，直到 `prd.json` 里的需求项全部完成。它支持 Amp 和 Claude Code，核心不是“长会话坚持到底”，而是“每轮都用干净上下文重新开始”，再通过 git 历史、`progress.txt` 和 `prd.json` 保持跨轮次记忆。
 
