@@ -83,6 +83,23 @@ Expect 是一个让 AI agent 在真实浏览器里测试代码改动的工具。
 - 兼容 Claude 和 Codex：可以把 Claude Code 或 Codex CLI 作为生成测试计划的 agent。
 - 适合本地与 CI：本地可用交互式 TUI 审核计划，CI 中可用 `-y` 跳过审核直接无头执行。
 
+[aimock](https://github.com/CopilotKit/aimock)
+aimock 是一套面向 AI 应用测试的统一 Mock 基础设施。它不是只模拟单个 LLM 接口，而是把 AI 应用真正会依赖的一整层外部能力一起替身掉，包括 LLM API、MCP、A2A、AG-UI、向量库、搜索、rerank、moderation，以及图片、语音、视频等多媒体接口。
+
+- 更适合集成测试和 CI：既可以程序化嵌进测试，也可以用单独端口跑成统一 mock 服务，把 OpenAI、Claude、Gemini 一类入口一起切到本地。
+- 覆盖 agent 真实依赖：除了模型接口，还支持 MCP tools、A2A agent、AG-UI 事件流和向量数据库，适合测试多协议、多服务的 agent 应用。
+- 支持录制回放和漂移检测：可以代理真实 API 录成 fixtures，再稳定回放；也能在 CI 里做 drift detection，持续检查 mock 与真实供应商行为是否偏离。
+- 对异常场景友好：支持 500、坏 JSON、流中断这类 chaos testing，适合补齐“平时最难稳定复现”的 AI 失败路径。
+
+[ralph - 基于 PRD 的自循环开发工作流](https://github.com/snarktank/ralph)
+Ralph 是一个围绕 Geoffrey Huntley `Ralph pattern` 落地的自动化开发循环，用 Bash 脚本反复拉起新的 AI coding tool 实例，直到 `prd.json` 里的需求项全部完成。它支持 Amp 和 Claude Code，核心不是“长会话坚持到底”，而是“每轮都用干净上下文重新开始”，再通过 git 历史、`progress.txt` 和 `prd.json` 保持跨轮次记忆。
+
+- 核心执行模型很清晰：每次迭代只做一个足够小的 story，跑实现、质量检查、提交、更新状态，然后再开一个全新 agent 继续下一轮。
+- 适合长任务拆分：它强调 PRD item 必须小到能在单个上下文窗口内完成，否则会因为上下文耗尽导致质量下降。
+- 记忆设计偏工程化：不依赖单个会话上下文续命，而是把长期记忆沉淀到 commit、`progress.txt`、`prd.json` 和 `AGENTS.md` 更新里。
+- 带配套技能：仓库同时提供 `/prd` 和 `/ralph` 两个 skill，用来先生成需求文档，再转成适合自动执行的 `prd.json`。
+- 更像“本地自治循环器”而不是通用平台：它没有做成完整工作台，而是把自主开发流程压缩成一套可直接拷进项目的脚本和 prompt 模板，适合研究 agent 如何通过小步快跑和反馈回路稳定推进任务。
+
 ## 记忆与状态
 
 [claude-mem](https://github.com/thedotmack/claude-mem)
@@ -127,6 +144,15 @@ OpenASE 是一个把同步交互式 AI 和异步 ticket agent 串起来的开发
 - 面向本机执行：agent 会在你的机器上跑工作流，同时保留 ticket、执行状态和结果的可追踪性。
 - 更像 AI 开发控制台：它的核心价值是统一工作台与执行编排，不是单独的 Agent 框架或纯 CLI，所以放在 `AI DevTools` 比放到 `AI Agents` 更准确。
 - 收录来源：[GitHubDaily #787](https://github.com/GitHubDaily/GitHubDaily/issues/787)
+
+[Multica - 托管式 AI Agent 开发平台](https://github.com/multica-ai/multica)
+Multica 是一个把 coding agent 变成“团队成员”的开源托管平台。它不只是起一个 agent 跑任务，而是把 issue 分配、状态流转、实时进度、运行时调度和技能沉淀都放进同一套工作台里，适合把 Claude Code、Codex、OpenClaw、OpenCode 这类 agent 真正纳入研发协作流程。
+
+- 任务分配方式接近人类协作：你可以像给同事派单一样把 issue 指给 agent，agent 会领取任务、执行、汇报阻塞并更新状态，而不是每次都手动复制 prompt。
+- 工作台与运行时分离：Web 端负责看板、Agent、Workspace 和状态可视化；本机 daemon 负责发现本地 CLI、执行任务并把运行状态回传到平台。
+- 支持多运行时和多工作区：同一个平台可以接本地 runtime 或云端 runtime，并按 workspace 做隔离，适合团队化管理。
+- 强调能力复用：项目把 skills 视为可沉淀的团队资产，不只是这次任务用完即弃的 prompt。
+- 技术栈清晰：前端是 Next.js，后端是 Go + WebSocket，数据库是 PostgreSQL + pgvector，整体更像“agent 协作基础设施”而不是单个桌面客户端。
 
 [EnsoAI](https://github.com/J3n5en/EnsoAI)
 EnsoAI 是一款面向开发者的 AI 智能工作空间管理工具，通过集成 Git Worktree 与多 AI 代理，支持在同一个项目中并行处理多个分支任务。
