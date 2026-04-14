@@ -97,6 +97,7 @@ summary: ''
 - ⭐[Apifox](https://apifox.com/)
 - ⭐[Coteditor](https://coteditor.com/)
 - ⭐[Applite - homebrew UI 管理](https://github.com/milanvarady/Applite)
+- [Switzy - Git 身份切换与 SSH Key 管理](https://github.com/yefga/Switzy)
 - [Fig 自动补全](https://fig.io/)
 - [virtualbox](https://www.virtualbox.org/)
 - Docker
