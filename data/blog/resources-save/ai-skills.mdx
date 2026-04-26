@@ -43,6 +43,9 @@ summary: ''
 [skills-npm](https://github.com/antfu/skills-npm)
 skills-npm 是一个命令行工具，用于发现 npm 包中内置的智能体技能，并通过创建符号链接供编程智能体使用。该项目旨在解决现有技能分发方式中的摩擦，如仅支持 Git 源、版本不匹配和手动管理问题，提出将技能直接打包在 npm 包中的新约定。
 
+[autoskills](https://github.com/midudev/autoskills)
+autoskills 是一个自动安装 AI agent skills 的 CLI。它会扫描项目里的 `package.json`、Gradle 和配置文件，识别技术栈，再从维护者审核过的 registry 中选择匹配 skills，校验 hash 后写入本地，适合给项目快速补齐前端、后端、移动端、云基础设施和测试相关技能。
+
 [skillman](https://github.com/pi0/skillman)
 本文介绍了 skillman 工具，它是一个用于管理项目 Agent 技能的命令行工具，通过读取和操作 skills.json 文件来安装、添加来自不同来源的技能。
 
@@ -173,6 +176,10 @@ Claude AI 实用技能和指令集锦
 - 自带配图提示：会输出封面图和正文配图的 AI 生图 prompt，方便直接进入排版和配图流程。
 - 更像内容生产工作流：从需求确认、11 维度构思，到正文、标题、配图一起输出为结构化 Markdown。
 
+[Kami](https://github.com/tw93/kami)
+
+Kami 是一个面向 AI 时代的文档设计系统 Skill，主打“好内容应该落在好纸上”。它用一套约束语言覆盖一页纸、长文档、信件、作品集、简历和幻灯片 6 种格式，支持中英文一等公民体验，并提供日文 best-effort 路径。适合让 Agent 输出可直接交付的研究报告、简历、演示文稿和品牌资料页。
+
 ## 通用技能 Skill
 
 [Humanizer-zh: AI 写作去痕工具（中文版）](https://github.com/op7418/Humanizer-zh)
@@ -182,6 +189,12 @@ Claude AI 实用技能和指令集锦
 [huaxia-wisdom - 华夏智囊 / 老祖宗智慧全家桶 Skill](https://github.com/liangjfblue/huaxia-wisdom)
 
 一个把华夏传统思想包装成 AI Skill 的项目，主打“少一点正确废话，多一点带判断的建议”。它把决策、效率、成长、关系、搞钱、生活等场景拆成 24 个智慧框架，适合在纠结决策、任务拆解、说服沟通和自我校准时，切换不同的分析视角与表达口吻。
+
+## 命理 / 占星 Skills
+
+[Yuan - 原：东方占星与命理 Agent Skill](https://github.com/LZRight123/yuan)
+
+Yuan 是一个面向 Codex、Claude Code 和 Agent Skills 运行时的东方命理综合 Skill。它把八字、紫微斗数、纳音五行、十二宫法和现代占星整合成统一分析流程，并强调结构化输入、可审计推导和 Markdown / HTML / PDF 输出，适合研究传统知识如何被封装成可复用 Agent Skill。
 
 ## 个人 skill 收集
 
