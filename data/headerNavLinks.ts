@@ -1,6 +1,7 @@
 const headerNavLinks = [
   { href: '/blog', title: '记录' },
   { href: '/tags', title: '分类' },
+  { href: '/life', title: '生活' },
   // { href: '/projects', title: 'Projects' },
   { href: '/blog/resources-save/tech-manual', title: '手册' },
   // { href: '/blog/resources-save/tech-note', title: '笔记' },

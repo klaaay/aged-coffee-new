@@ -1,7 +1,7 @@
 ---
 title: 走走停停 - 观感
 date: '2024-06-10'
-tags: ['life',"movie"]
+tags: ['movie']
 draft: false
 summary: ''
 ---
