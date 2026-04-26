@@ -194,7 +194,7 @@ export const Subscription = () => {
         type: '娱乐',
         extra: '续订 3/6 Apple 付款',
       },
-      { name: '网易云音乐', yearly: 158, expiry: '2026-04-18', type: '娱乐' },
+      { name: '网易云音乐', yearly: 158, expiry: '2027-05-29', type: '娱乐' },
       {
         name: '哔哩哔哩超级大会员',
         yearly: 178,
