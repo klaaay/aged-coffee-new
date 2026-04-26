@@ -25,6 +25,19 @@ const daysUntilExpiry = (expiryDate: string) => {
   return days > 0 ? days : 0
 }
 
+const isSubscriptionActive = (expiryDate: string) => daysUntilExpiry(expiryDate) > 0
+
+const compareSubscriptions = (a: SubscriptionItem, b: SubscriptionItem) => {
+  const isAActive = isSubscriptionActive(a.expiry)
+  const isBActive = isSubscriptionActive(b.expiry)
+
+  if (isAActive !== isBActive) {
+    return isAActive ? -1 : 1
+  }
+
+  return daysUntilExpiry(a.expiry) - daysUntilExpiry(b.expiry)
+}
+
 export const Subscription = () => {
   const [subscriptions, setSubscriptions] = useState<SubscriptionItem[]>(
     [
@@ -197,7 +210,7 @@ export const Subscription = () => {
           yearly: item.yearly ? item.yearly : item.monthly! * 12,
         }
       })
-      .sort((a, b) => daysUntilExpiry(a.expiry) - daysUntilExpiry(b.expiry))
+      .sort(compareSubscriptions)
   )
 
   const calculateTotal = () => {
