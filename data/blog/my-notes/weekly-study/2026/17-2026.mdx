@@ -12,9 +12,203 @@ summary: ''
 
 ## 技术
 
+### [构建 2026 年的 Python 库](https://stephenlf.dev/blog/python-library-in-2026/)
+
+本文概述了 2026 年构建现代 Python 库的最佳实践，重点介绍了使用 uv 工具链进行项目初始化、代码质量维护、测试和发布的全流程。
+
+- 📦 **项目初始化**：使用`uv init --lib`创建库，遵循标准化包命名，并利用`pyproject.toml`管理元数据和 SemVer 版本号。
+- 🧹 **代码规范**：采用`ruff`进行 linting 和格式化，通过`uv add --dev ruff`添加依赖，并用 Makefile 等工具记录常用命令。
+- 🔍 **类型检查**：强制使用类型注解，推荐`mypy`、`ty`或`pyrefly`，通过`uv run`轻松切换测试不同工具。
+- 🧪 **测试与覆盖**：使用`pytest`和`pytest-cov`进行单元/集成测试，并支持多 Python 版本测试（利用`uv python`）。
+- 🔒 **质量维护**：通过 CI/CD（如 GitHub Actions）强制执行代码检查，结合`pre-commit`钩子提升开发体验。
+- 🚀 **发布与部署**：利用`uv build`和`uv publish`发布到 PyPI，小型团队也可直接通过`uv add /path/to/my-package`从源码安装。
+- 📚 **学习案例**：参考 OpenAI Python SDK（使用 ruff、black、mypy 等）和 Polars（使用 ruff、setuptools、pytest）等知名项目的工具栈。
+
+### [异步承诺及其实现](https://causality.blog/essays/what-async-promised/)
+
+本文分析了从操作系统线程到回调、Promise、async/await 的并发处理演进历程，指出每次解决方案虽然解决了前一阶段的问题，但都引入了新的结构性成本——最终形成了函数颜色化、生态系统碎片化、顺序陷阱等累积性代价。
+
+- 🧵 操作系统线程：每个线程占用 1MB 栈空间和约 1 毫秒创建时间，大量线程导致资源竞争和 CPU 浪费，这是 C10K 问题的根源
+- 🔗 回调：通过事件循环解决线程资源问题，但导致控制流反转、错误处理分散、形成“回调地狱”，且缺乏取消机制
+- 📦 Promise：提供可组合的异步结果对象，改善错误处理（.catch() 统一捕获），但存在一次性限制、静默吞没错误、函数返回类型分裂
+- ⚡ Async/Await：让异步代码看起来像同步顺序执行，大幅提升本地编写体验，但引入了函数颜色问题——async函数会“感染”整个调用链
+- 🎨 函数着色税：异步函数无法被同步函数直接调用，导致单次 I/O 修改需波及数十个文件，库必须选择支持同步或异步，生态系统分裂（如 Rust 的 Tokio vs async-std）
+- 🧩 顺序陷阱：await 让独立 I/O 操作串行执行，开发者必须手动分析依赖并使用 Promise.all 等组合器才能实现并行，反而隐藏了并发潜力
+- 💥 新类型死锁：异步 Rust 中出现了“futurelock”——持有锁的 future 被停止轮询，导致调试需要核心转储和反汇编器
+- 🔄 语言设计教训：Go 选择 goroutine、Java Loom 选择虚拟线程、Zig 移除语言级 async/await，都明确为避免函数着色问题
+- 📊 累积代价表格：每次迭代都解决前序问题但引入新结构性成本，从回调→Promise→async/await 的演进清晰展示了抽象层次不断产生新问题的模式
+
+### [为什么我不再在 JavaScript 中链式调用所有东西](https://allthingssmitty.com/2026/04/20/why-i-dont-chain-everything-in-javascript-anymore/)
+
+本文探讨了 JavaScript 中方法链式调用的优缺点，指出虽然链式调用看起来简洁流畅，但在代码可读性、调试便利性和性能方面存在隐患。作者建议将长链拆分为独立步骤，尤其在链长超过 3 步时更应如此，以提高代码的可维护性。
+
+- 🔗 **链式调用的陷阱**：看似干净的 `filter().map().sort().slice()` 链式调用，实际上增加了阅读时的认知负担（需要逐层推理每个步骤），且让调试变得困难
+- 📝 **分步代码的优势**：将链式调用拆分为命名变量（如 `const activeUsers = ...`），虽然行数增多，但每步逻辑一目了然，无需解码，调试也更方便
+- ⚡ **不必要的性能浪费**：`filter().map()[0]` 会处理整个数组，而 `find()` 找到第一个匹配项即停止，避免了对大量数据的无意义处理
+- 🐛 **调试的噩梦**：链式调试需在回调中插入 `console.log`，混淆逻辑和调试代码；独立步骤则可在任意位置自由检查中间结果
+- 🔄 **异步链的复杂性**：`.then().then().then()` 将网络请求与数据转换混在一条链中，拆分后 `await` 让异步流程更清晰
+- 📊 **实用规则参考**：建议 1 步随便写，2 步通常安全，3-4 步需考虑拆分，5 步以上必须拆分；长链是未来的隐患
+- 🏗️ **重构三步法**：① 命名中间值 ② 分离逻辑变换 ③ 仅保留清晰的短链（如 `names.sort()`）
+
+### [在 Next.js 中使用 LogLayer 进行日志记录：仪表化、控制台覆盖与结构化日志 | Yuri Mutti](https://yurimutti.com/posts/logging-nextjs-loglayer-instrumentation-console-override-structured-logs)
+
+本文介紹如何在 Next.js 中使用 LogLayer 統一伺服器、客戶端和邊緣運行時的日誌記錄，並通過 `instrumentation.ts` 攔截 `console.*` 調用，實現結構化日誌輸出。
+
+- 📋 **統一日誌模型**：LogLayer 提供一個共享 Logger 實例，讓伺服器、客戶端和邊緣日誌使用相同 API，解決 Next.js 多運行時日誌不一致問題。
+- 🛠️ **攔截 console.\* 調用**：在 `instrumentation.ts` 中覆蓋 `console.*` 方法（限 Node.js 運行時），將舊代碼和第三方庫的日誌導入 LogLayer，確保輸出結構化。
+- 🔧 **靈活傳輸層**：開發環境使用 `SimplePrettyTerminal` 輸出可讀日誌，生產環境伺服器端切換到 `PinoTransport`，並預留 Datadog、OpenTelemetry 等擴展接口。
+- 🏷️ **上下文與元數據管理**：`withContext()` 持久化上下文（如 `isServer`），`withMetadata()` 和 `withError()` 作用於單條日誌，支持錯誤序列化（`serialize-error`）。
+- 🖥️ **伺服器端演示**：通過 `force-dynamic` 確保每次請求執行，展示 `console.log` 攔截、直接 LogLayer 調用、以及鏈式上下文/元數據/錯誤附加的效果。
+- 📱 **客戶端演示**：在 `useEffect` 中使用相同 Logger API，客戶端日誌輸出到瀏覽器控制台，保持與伺服器端一致的開發體驗。
+- 🚀 **未來擴展**：支持 Datadog、OpenTelemetry 追蹤、邊緣運行時（使用 `@loglayer/transport-http` 並啟用 `enableNextJsEdgeCompat`），保持供應商無關的 API 邊界。
+
+### [Next.js 16 迁移指南：所有破坏性变更及修复方法 | Code With Seb](https://www.codewithseb.com/blog/nextjs-16-migration-guide-breaking-changes)
+
+以下是 Next.js 16 迁移指南的摘要，包含关键变更和修复方法：  
+Next.js 16 引入了重大变更，包括中间件重命名为代理、Turbopack 成为默认打包器、同步请求 API 完全移除，以及新的缓存组件。迁移过程有清晰的路径，并提供了代码示例。
+
+- 🔄 **中间件重命名为代理**：`middleware.ts` 变为 `proxy.ts`，默认运行时从 Edge 切换为 Node.js，提供完整 Node API 访问。使用 `npx @next/codemod@latest proxy-upgrade` 自动迁移。
+- ⚡ **同步请求 API 完全移除**：`cookies()`、`headers()`、`params` 和 `searchParams` 必须使用 `await`。运行 `npx @next/codemod@latest async-request-apis` 处理大部分情况，注意异步级联问题。
+- 🚀 **Turbopack 成为默认打包器**：`next dev` 和 `next build` 默认使用 Turbopack，性能提升显著（如开发服务器启动快 4.4 倍）。自定义 webpack 加载器需迁移至 `turbopack.rules` 配置。
+- 🗂️ **缓存组件与 'use cache' 指令**：移除隐式 fetch 缓存和 `unstable_cache`，改用显式 `'use cache'` 指令、`cacheLife()` 和 `cacheTag()` 进行细粒度缓存控制。提供预定义缓存生命周期配置文件。
+- ⚛️ **React 19.2 与 React Compiler 1.0**：默认启用 React Compiler，自动处理大部分 `useMemo`/`useCallback`，提升性能。新增 `ViewTransition` 和 `Activity` 组件。
+- 📋 **分步迁移指南**：升级依赖、运行代码转换工具、重新生成类型、更新 `next.config.ts`、修复类型错误、测试本地环境、验证缓存行为。注意常见陷阱，如忘记 `await params` 和第三方中间件包兼容性。
+
+### [构建无需断点的用户界面 – Frontend Masters 博客](https://frontendmasters.com/blog/building-a-ui-without-breakpoints/)
+
+本文探讨了现代响应式设计的新范式，主张从依赖视口断点的传统方法转向基于组件内在布局、流体值和容器查询的适应性设计，使界面更灵活、代码更简洁，同时将媒体查询重新聚焦于设备能力和用户偏好。
+
+- 📱 **断点方法的局限性**：传统视口断点虽曾解决多屏幕尺寸问题，但在组件化、嵌套复用的现代界面中，全局视口宽度常不适用于局部布局决策，导致代码冗余和耦合问题。
+- 🧩 **内在布局优先**：使用 CSS Grid 的`auto-fit`和`minmax()`等内在布局特性，让组件根据可用空间自动适应，无需硬编码断点，实现更流畅的响应行为。
+- 🌊 **采用流体值**：利用`clamp()`、`min()`和`max()`函数创建连续缩放的值，替代基于断点的离散调整，使排版、间距等属性平滑过渡。
+- 📦 **容器单位实现局部响应**：使用`cqi`等容器单位让组件样式基于其实际渲染尺寸而非视口宽度，提升组件在不同上下文中的可移植性和复用性。
+- 🔄 **容器查询处理结构变化**：通过容器查询针对组件自身可用空间触发布局调整，实现真正的结构性响应，使组件行为更可预测和独立。
+- 🛠️ **媒体查询的新角色**：将媒体查询重点转向检测设备能力（如悬停支持、指针精度）和用户偏好（如减少动画、高对比度），以提升可访问性和用户体验。
+- 📋 **渐进迁移策略**：提供从审计现有媒体查询、替换标量分支到逐步引入内在布局和容器查询的实践清单，鼓励逐步重构而非一次性重写。
+- 🧠 **设计思维转变**：强调从“断点编排”转向“意图驱动系统”，使响应式设计更贴近现代组件化开发模式，最终构建出更具弹性、易于维护的界面。
+
 ## 工具
 
+### [React Cosmos](https://reactcosmos.org/)
+
+React Cosmos 是一个用于开发和测试 React UI 组件的沙盒工具，支持 React 19、Next 15 等最新版本，提供快速、可扩展且易于安装的解决方案。
+
+- 🎉 支持 React 19、Next 15 等最新框架，保持技术前沿
+- 🏖️ 提供隔离环境，用于快速原型设计和轻松调试 UI 组件
+- 📂 基于文件系统的 Fixtures 模块，方便定义组件状态
+- 🖥️ 交互式用户界面，用于浏览 Fixtures 和操作组件
+- 🌐 支持静态导出，可部署到任何静态托管服务
+- 🔌 集成 Vite、Webpack、React Native、Next.js 及自定义设置
+- 🧩 全栈插件系统，可扩展 React Cosmos 的各个方面
+- ✅ 100% TypeScript 编写，最小依赖，精心设计和测试
+
+### [GitHub - sadmann7/tablecn: 支持服务端排序、筛选和分页的 Shadcn 表格](https://github.com/sadmann7/tablecn)
+
+tablecn 是一个基于 shadcn 的表格组件，支持服务端排序、筛选和分页，使用 Next.js、Tailwind CSS、TanStack Table 等技术栈构建。
+
+- 📊 **核心功能**：支持服务端分页、排序和筛选，列可自定义，并自动从列定义生成筛选器。
+- 🔍 **高级筛选**：提供类似 Notion/Airtable 的高级筛选功能，以及类似 Linear 的命令面板筛选菜单。
+- 🛠️ **技术栈**：基于 Next.js、Tailwind CSS、shadcn/ui、TanStack/react-table、PlanetScale 数据库、Drizzle ORM 和 Zod 验证。
+- 🚀 **快速部署**：提供 Docker 和手动两种本地运行方式，支持 Vercel、Netlify 和 Docker 部署。
+- 📝 **文档与贡献**：有详细文档，采用 MIT 许可证，欢迎贡献代码。
+- ⭐ **社区热度**：拥有 6.1k 星标、541 个分支和 22 个关注者，主要使用 TypeScript（99.2%）。
+
+### [GitHub - zion-off/giggles：内置电池的React框架，用于构建丰富的终端应用](https://github.com/zion-off/giggles)
+
+giggles 是一个功能完备的 React 框架，用于构建终端应用，基于 ink 开发，内置焦点管理、输入路由、屏幕导航和主题系统。
+
+- 🚀 每个组件独立处理键盘事件，未处理的按键会自动传递给父组件，无需全局输入处理器
+- 🧭 提供简单的视图导航 API，返回时自动恢复之前聚焦的组件状态
+- 🔧 包含丰富的钩子（如 useFocusScope、useFocusNode、FocusTrap、useNavigation）和组件库，覆盖文本输入、自动补全、虚拟列表等常见 TUI 场景
+- ⌨️ 内置快捷键注册表，可上下文感知地显示当前可用的按键操作
+- 📝 支持在终端中渲染 Markdown，包括语法高亮的代码块和差异显示
+- 🖥️ 可挂起 UI 并移交终端控制权给外部程序（如 vim 或 less），退出后干净恢复；也能生成子进程并流式输出到界面
+- 🎨 默认提供一致的外观，通过单个主题对象即可自定义
+- ⚡ 快速入门：运行 `npx create-giggles-app` 创建项目，文档和演示见 giggles.zzzzion.com
+
+### [命中区域](https://bazza.dev/craft/2026/hit-area)
+
+hit-area 是一套 Tailwind CSS 实用工具类，用于扩展交互元素的点击区域，解决交互死区问题，提升用户体验。
+
+- 🎯 通过 `hit-area-*` 类统一扩展所有方向的点击区域，不影响布局
+- 🧩 支持单独控制左、右、上、下四个方向，如 `hit-area-l-*`、`hit-area-r-*` 等
+- 📐 提供水平和垂直方向的简写 `hit-area-x-*` 和 `hit-area-y-*`
+- 🔄 可组合使用多个类，按预期叠加效果
+- ✏️ 支持自定义值，如 `hit-area-[21px]`，突破 Tailwind 间距系统限制
+- 🐛 使用 `hit-area-debug` 可视化显示点击区域，方便调试
+- 📋 实际应用案例：扩大表格中复选框的点击区域，提升行选择体验
+- 🗂️ 侧边栏场景：消除行间间隙造成的点击死区，使交互更连续
+
+### [GitHub - Agent-Field/agentfield: 像 API 和微服务一样构建、运行和扩展 AI 代理——从第一天起就具备可观测、可审计和身份感知能力。](https://github.com/Agent-Field/agentfield)
+
+AgentField 是一个开源 AI 后端控制平面，能将 AI 代理像 API 一样构建、部署和扩展，具备可观测性、身份认证和审计追踪能力。
+
+- 🚀 **核心功能**：将 Python、Go 或 TypeScript 编写的代理逻辑自动转为 REST 端点，支持结构化 AI 输出、跨代理调用、异步执行和人类审批。
+- 🔒 **身份与治理**：每个代理拥有 W3C 去中心化标识符（DID）和 Ed25519 密钥，执行生成防篡改的可验证凭证，支持基于标签的访问策略。
+- 📊 **可观测性**：自动生成工作流 DAG 图、Prometheus 指标、结构化日志和执行时间线，支持健康检查和关联 ID 追踪。
+- 🔧 **部署与运维**：支持金丝雀部署、A/B 测试、蓝绿部署，提供 Docker Compose 和 Kubernetes 就绪的部署方案，控制平面为无状态 Go 服务。
+- 🧠 **AI 与 LLM 集成**：支持 100+ LLM（通过 LiteLLM），提供结构化输出（Pydantic/Zod）、多模态输入、流式响应和多轮编码代理（Claude Code、Codex 等）。
+- 🌐 **代理网格与发现**：支持按标签发现代理、跨代理调用带追踪、自动上下文传播，以及并行执行和自动注册。
+- 💾 **分布式内存**：内置键值存储和向量搜索，支持全局、代理、会话和运行四种作用域，无需额外 Redis 依赖。
+- 👥 **人类参与**：支持持久化暂停/恢复、审批工作流 UI、可配置超时和自动升级，崩溃安全且状态持久。
+- 🛠️ **开发者体验**：提供 CLI 脚手架（`af init`）、本地仪表盘（`af server`）、热重载（`af dev`），以及 Python、Go、TypeScript SDK。
+- 📚 **适用场景**：适合构建生产级代理系统（如理赔处理、研究引擎、合规审查），而非简单聊天机器人或早期工作流。
+
+### [TypeScript 高级地理空间工具包 | Turf.js](https://turfjs.org/)
+
+Turf 是一个模块化、轻量级的 JavaScript 地理空间分析库，专注于处理 GeoJSON 数据，具有易用、快速和无需服务器端处理的特点。
+
+- 🧩 模块化设计：由小型独立模块组成，用户可按需选用所需功能
+- 🌍 专注 GeoJSON：所有函数均围绕 GeoJSON 数据格式设计，简单易懂
+- ⚡ 快速高效：采用最新算法，无需将数据发送至服务器即可完成分析
+- 🚀 基于 React 驱动：与 React 生态兼容，提升前端开发体验
+
+### [GitHub - icydotdev/nextmap: 你的 Next.js 所有路由的可视化交互地图。零配置。](https://github.com/icydotdev/nextmap)
+
+nextmap 是一个零配置的 Next.js 路由可视化工具，能自动扫描项目并生成交互式路由地图，支持 App Router、Pages Router 和混合项目。
+
+- 🗺️ 一键启动：使用 `npx nextmap` 即可自动扫描并打开浏览器显示路由地图
+- 🔍 全面路由支持：覆盖 App Router 和 Pages Router 的页面、API 路由、布局、中间件等
+- 🎨 交互式图表：基于 React Flow 实现可缩放、可拖拽的路由图，包含小地图导航
+- 🏷️ 智能识别：自动检测 HTTP 方法、动态路由、路由组、并行路由等特殊结构
+- 📂 源代码查看：点击任意路由可在详情面板中查看带语法高亮的源代码
+- 🔧 过滤与搜索：支持按类型、路由器筛选，以及按路径搜索
+- 🌓 主题切换：支持深色/浅色模式，并跟随系统偏好
+- 📸 SVG 导出：可通过 UI 或 CLI 命令导出静态 SVG 文件
+- 🔒 本地运行：所有操作均在本地完成，代码不会上传至外部服务
+- ⚡ 零配置：无需任何设置或注解，直接运行即可使用
+
+### [GitHub - heygen-com/hyperframes：编写HTML，渲染视频。专为智能体打造。· GitHub](https://github.com/heygen-com/hyperframes#readme)
+
+Hyperframes 是一个开源的视频渲染框架，允许用户通过 HTML 创建、预览和渲染视频合成，并优先支持 AI 代理工作流。
+
+- 🎬 **HTML 原生视频合成** – 使用 HTML 文件配合数据属性定义视频，无需 React 或专有 DSL，支持直接预览和渲染。
+- 🤖 **AI 优先设计** – 提供技能包（skills）让 AI 代理（如 Claude Code、Cursor）能直接编写正确的合成与动画，支持通过自然语言描述生成视频。
+- ⚙️ **确定性渲染** – 相同输入必得相同输出，适合自动化流水线，支持本地或 Docker 渲染至 MP4。
+- 🆚 **与 Remotion 对比** – 基于 HTML 而非 React，无需构建步骤；采用 Apache 2.0 开源协议，无渲染费用或团队规模限制。
+- 📦 **丰富资源与组件** – 提供 50+ 即用模块（转场、社交叠加层、数据图表等），可通过 CLI 快速添加，并有完整文档和 API 参考。
+- 🔧 **模块化架构** – 包含核心库、渲染引擎、编辑器 UI、播放器 Web 组件等多个独立包，并支持 GSAP 等动画库的帧适配器模式。
+- 🛠️ **便捷的工作流** – 可通过 `npx hyperframes init` 快速初始化项目，支持实时预览、渲染，并可随时交由 AI 代理迭代编辑。
+
 ## 更新
+
+### [发布 pnpm 11 RC 0 · pnpm/pnpm · GitHub](https://github.com/pnpm/pnpm/releases/tag/v11.0.0-rc.0)
+
+pnpm v11.0.0-rc.0 是一个重大版本更新，引入了多项破坏性变更和新功能，旨在提升性能、安全性和用户体验。
+
+- 🚀 **核心要求升级**：要求 Node.js 22+，放弃对 Node 18-21 的支持；pnpm 自身转为纯 ESM；独立 exe 版本需要 glibc 2.27 以上。
+- 🛡️ **供应链安全默认开启**：`minimumReleaseAge` 默认设为 1 天（新发布包 24 小时内不可解析），`blockExoticSubdeps` 默认启用。
+- ⚙️ **构建依赖配置简化**：用 `allowBuilds` 替代了旧的 `onlyBuiltDependencies`、`neverBuiltDependencies` 等多项设置。
+- 🗂️ **全局安装隔离化**：`pnpm add -g` 现在每个包拥有独立的 `package.json`、`node_modules` 和锁文件，并使用全局虚拟存储。
+- 🗄️ **新的 SQLite 存储索引**：存储版本升至 v11，使用 SQLite 数据库替代 JSON 文件，减少系统调用并加速安装。
+- 🎯 **原生发布流程**：`pnpm publish`、`login`、`logout`、`view`、`deprecate`、`unpublish`、`dist-tag` 和 `version` 不再依赖 npm CLI。
+- 📝 **配置迁移**：`.npmrc` 仅用于认证和注册表设置，其他配置需移至 `pnpm-workspace.yaml` 或全局 `config.yaml`；环境变量使用 `pnpm_config_*` 前缀。
+- ✨ **新增命令**：`pnpm ci`、`pnpm sbom`、`pnpm clean`、`pnpm peers check`、`pnpm runtime set`，以及短别名 `pn` 和 `pnx`。
+- 📦 **ESM pnpmfile 支持**：`.pnpmfile.mjs` 优先级高于 `.pnpmfile.cjs`。
+- 🔧 **安全修复新方式**：`pnpm audit --fix=update` 通过更新锁文件中的包来修复漏洞，而非添加覆盖。
+- ⚡ **性能大幅提升**：使用 undici 实现 Happy Eyeballs、直接写入 CAS、跳过暂存目录、预分配 tarball 下载、NDJSON 元数据缓存等优化。
+- ❌ **移除旧命令和 npm 回退**：不再回退到 npm CLI，移除 `pnpm server` 命令，以及 `useNodeVersion` 等字段支持。
+- 🔄 **锁文件格式简化**：`patchedDependencies` 格式从 `Record<string, { path, hash }>` 简化为 `Record<string, string>`。
 
 ## 设计
 
@@ -36,3 +230,11 @@ summary: ''
 - 🌍 **生态愿景**：希望打破 OC 文化的小众性，让每个人都能成为创作者，最终构建一个类似《头号玩家》的虚拟世界，实现精神世界的立体化交流。
 - 💰 **商业规划**：商业模式侧重内购（外观素材、AI 算力）与未来 UGC 激励，团队对 OC 市场的商业潜力充满信心，不担心模式被复制，反而期待行业共建生态。
 - 🚀 **未来展望**：团队将探索 AI 与具身智能、世界模型的结合，终极目标是创造平行于物理世界的虚拟空间，实现沉浸式交互体验。
+
+---
+
+每一种文化都会造就反映其最深层焦虑的英雄。
+
+硅谷最焦虑的，就是增长停滞，无法创造出大受市场欢迎的新产品，所以大肆宣传"英雄开发者"：他们能在午夜发布新功能，凭借着咖啡因带来的强大意志力，将白板上的涂鸦变成价值数十亿美元的独角兽企业。
+
+-- 《古典维护者的挽歌》
