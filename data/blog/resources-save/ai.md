@@ -19,8 +19,8 @@ summary: ''
 [LangChain 中文入门教程](https://liaokong.gitbook.io/llm-kai-fa-jiao-cheng)  
 [构筑大语言模型应用应用开发与架构设计](https://aigc.phodal.com/prelude.html)  
 [Prompt Engineering Guide](https://www.promptingguide.ai/)  
-[AiMonneyHunter](https://github.com/bleedline/aimoneyhunter)  
-[claude-code-harness](https://github.com/Chachamaru127/claude-code-harness)  
+[金融项目收集](/blog/resources-save/finance)  
+[claude-code-harness](https://github.com/Chachamaru127/claude-code-harness)
 
 ## AI Agent / Prompt 工程
 
