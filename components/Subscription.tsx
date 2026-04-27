@@ -64,10 +64,10 @@ export const Subscription = () => {
       },
       {
         name: 'ChatGPT Plus',
-        yearly: toFixed2Number(20 * 12 * DOLLAR2RMB * 2),
+        yearly: toFixed2Number(100 * 12 * DOLLAR2RMB),
         expiry: '2026-10-3',
         type: '效率',
-        extra: '两个账号',
+        extra: '100USD/Month',
       },
       {
         name: 'DeepSeek API',
