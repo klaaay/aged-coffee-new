@@ -50,4 +50,5 @@ yarn-error.log*
 data/blog/read-note/original-books/*
 
 /.codex
+/.cc-connect
 /.specify
