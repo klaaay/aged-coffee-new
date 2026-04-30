@@ -25,6 +25,9 @@ summary: ''
 ## AI Agent / Prompt 工程
 
 - [caveman：通过约束 LLM 表达方式来压缩 token 的 agent 技能与上下文压缩工具](/blog/resources-save/caveman)
+- [Shannon：面向 Web 应用和 API 的白盒 AI 渗透测试 agent，会结合源码分析和真实利用验证漏洞，适合在授权测试环境中做安全回归](https://github.com/KeygraphHQ/shannon)
+- [Manifest：面向 agent 和 AI 应用的智能模型路由器，可按请求选择模型、控制成本，并提供 fallback 与可观测能力](https://github.com/mnfst/manifest)
+- [context-mode：面向 AI coding agents 的上下文优化工具，通过 MCP/server/plugin 压缩工具输出、保留会话连续性，适合长任务开发协作](https://github.com/mksglu/context-mode)
 
 ## [Prompts](/blog/resources-save/prompts)
 
