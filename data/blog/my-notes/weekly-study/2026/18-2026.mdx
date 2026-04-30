@@ -12,6 +12,32 @@ summary: ''
 
 ## 技术
 
+### [从 Radix UI 迁移到 Base UI：分步指南](https://shadcnstudio.com/blog/migrate-from-radix-ui-to-base-ui)
+
+React UI 基座库领域正经历重大变革，Base UI 作为 Radix UI、Floating UI 和 Material UI 团队合作开发的现代替代方案，正在获得开发者广泛关注。它采用更清晰的 render prop 模式替代 asChild，统一包管理简化依赖，并承诺长期维护。
+
+- 🚀 **Base UI 核心价值**：由 Radix UI 创始人 Colm Tuite、Floating UI 创始人 James Nelson 及 Material UI 团队联合构建，提供更现代、可组合、可访问的组件基座。
+- 🔄 **API 关键转变**：用显式的`render` prop 替代 Radix 的`asChild`模式，消除抽象魔法，使组件层级更加直观。
+- 📦 **依赖管理简化**：从 Radix 的多个独立包（@radix-ui/react-\*）转变为单一`@base-ui/react`包，支持摇树优化。
+- ⚡ **shadcn/ui官方支持**：新项目可直接选择 Base UI 作为基座库，现有项目可通过 CLI 迁移，文档已包含所有组件的 Base UI 示例。
+- 📋 **迁移九步流程**：创建分支→配置 Base UI→更新自定义组件→将 asChild 改为 render→处理组件特定 API 差异→更新状态类名→清理依赖→全面测试→最终部署。
+- ⚠️ **组件特殊改动**：Accordion 的 type 改为 multiple 布尔值；Button 非按钮元素需加`nativeButton={false}`；HoverCard 延迟移至 trigger；Select 需用 items 数组；Tooltip 延迟改名且默认 sideOffset 改为 4。
+- 🎨 **样式属性迁移**：从 Radix 的`data-*`属性改为 Base UI 的标准 ARIA 属性（如`data-[state=open]`→`aria-expanded`）。
+- 🐛 **常见陷阱**：TypeScript 类型错误需更新类型导入；CSS 选择器需改为 ARIA；缺失 prop 参考官方文档；构建错误需清除缓存重装。
+- 🔮 **未来方向**：Base UI 获行业顶级团队长期支持，shadcn/ui 已明确将 Base UI 作为未来方向，新项目默认选择 Base UI。建议积极开发中的应用立即迁移，关键阶段项目可暂缓。
+
+### [React 如何无序流式输出 UI 却依然保持有序 | React 内部探秘](https://inside-react.vercel.app/blog/how-react-streams-ui-out-of-order)
+
+React 通过 Suspense 边界实现无序流式渲染，同时保持 DOM 顺序的正确性。其核心机制是：先发送立即可用的 HTML，用模板占位符标记未就绪的组件，待数据就绪后通过 JavaScript 动态替换。
+
+- 🧩 **核心问题**：传统 SSR 需等待所有数据加载完成才发送 HTML，导致页面阻塞；有序流式虽能逐步发送，但慢组件仍会阻塞后续内容。
+- ⚡ **无序流式方案**：React 18 的`renderToPipeableStream`允许组件按数据就绪顺序独立发送，通过`<Suspense>`包裹慢组件并指定 fallback UI。
+- 🏗️ **流式 HTML 结构**：服务器先发送`Navbar`、`Footer`及 Suspense 边界标记（`<!--$?-->`），每个边界包含`<template>`占位符和 fallback 内容。
+- 🔄 **组件回传机制**：数据就绪后，服务器以隐藏`<div>`发送真实组件（如`<div hidden id="S:0">`），随后注入`<script>$RC("B:0","S:0")</script>`触发替换。
+- 🛠️ **三大关键函数**：`$RC`负责匹配占位符和真实内容；`$RB`作为队列暂存待替换对；`$RV`在下一帧执行 DOM 替换，清除 fallback 并插入真实组件。
+- 🔄 **Suspense 生命周期**：状态从`$?`（等待中）→`$~`（已就绪）→`$`（完成），通过注释节点数据变化追踪边界状态。
+- ⚠️ **潜在风险**：若手动插入相同 ID 的`<template>`，React 会误替换该元素，导致 Suspense 边界失效。
+
 ### [懒惰的危险消失 | 观察台](https://bcantrill.dtrace.org/2026/04/12/the-peril-of-laziness-lost/)
 
 本文探讨了程序员“懒惰”这一美德在现代软件开发中的重要性，并批判了 LLM（大语言模型）缺乏这种美德，可能导致系统臃肿和低质量。
@@ -26,13 +52,87 @@ summary: ''
 
 ## 工具
 
+### [claude-devtools — 你的 Claude 在盲目编码](https://www.claude-dev.tools/)
+
+- 🔍 Claude Code 从版本 v2.1.20 开始隐藏了详细操作记录，仅显示模糊摘要，引发社区不满
+- 🛠️ claude-devtools 是一款开源工具，无需 API 密钥或配置，能读取本地 `~/.claude/` 会话日志，还原被隐藏的细节
+- 📊 上下文重构功能：按 7 个类别（如 CLAUDE.md、工具 I/O、思考步骤等）可视化每次对话的 token 使用和压缩过程
+- 🔧 工具调用检查器：可展开被折叠的“读取 3 个文件”等操作，显示语法高亮的代码、差异和子代理执行树
+- 🌳 团队与子代理树：为每个代理显示独立执行树，包含工具追踪、token 指标、耗时和成本
+- 🔔 通知触发器：支持对 .env 文件访问、工具错误、高 token 使用等设置系统通知和正则匹配
+- 🌐 SSH 远程会话：支持检查远程机器上的会话，兼容代理转发和密钥认证
+- ⌨️ 命令面板（Cmd+K）：跨会话搜索，显示上下文片段和高亮关键词，可直接跳转到特定消息
+- 📐 多面板布局：可并排打开多个会话，拖放标签页，分割视图，对比会话
+- 🖥️ 支持 macOS（Homebrew 或 .dmg）、Windows、Linux（AppImage/.deb/.rpm），以及 Docker 自托管（浏览器 UI，零出站网络调用）
+
+### [中间件/包/惯性 主分支 · honojs/中间件 · GitHub](https://github.com/honojs/middleware/tree/main/packages/inertia)
+
+这是一个为 Hono 框架设计的 Inertia.js 中间件，用于构建单页应用，无需额外的 REST 端点或客户端路由器。
+
+- 🚀 **核心功能**：中间件实现了完整的 Inertia 协议，支持 JSON 页面对象导航、首次加载的 HTML 渲染、资产版本不匹配时的 409 重定向，并能直接返回 JSON 响应。
+- 🛠️ **安装与使用**：通过`npm i @hono/inertia`安装，定义`rootView`函数生成 HTML 外壳，并使用`serializePage`助手嵌入页面对象。
+- 🔗 **React + Vite 集成**：与`vite-ssr-components`配合，支持 HMR 和模块脚本，通过`dangerouslySetInnerHTML`注入序列化页面。
+- ✅ **类型安全**：通过 Vite 插件生成`pages.gen.ts`文件，约束`c.render`的组件名和 props 类型，避免拼写错误。
+- ⚙️ **配置选项**：中间件支持`version`和`rootView`参数；Vite 插件可自定义页面目录、输出文件、扩展名、排除项等。
+- 📄 **示例应用**：提供完整的 Cloudflare Workers + React + Vite 示例，位于`yusukebe/hono-inertia-example`。
+
 ## 更新
+
+### [发布 shadcn@4.5.0 · shadcn-ui/ui · GitHub](https://github.com/shadcn-ui/ui/releases/tag/shadcn%404.5.0)
+
+shadcn/ui 发布了 v4.5.0 版本，主要新增了 CLI 的 `--pointer` 选项，用于为按钮启用指针样式。
+
+- 🎉 发布 shadcn@4.5.0 版本，包含新的 CLI 功能
+- 🖱️ 新增 `--pointer` 选项：`npx shadcn init --pointer` 可为按钮添加指针光标
+- 🔒 该版本已签名验证，确保安全性
+- 📦 附带 2 个资产文件供下载
 
 ## 设计
 
 ## AI
 
+### [智能体优先产品工程的黄金法则](https://newsletter.posthog.com/p/the-golden-rules-of-agent-first-product)
+
+代理优先的产品工程需将代理视为主要交互界面，而非附加功能，通过五大原则实现高效、可信赖的自主工作流。
+
+- 🎯 **原则一：赋予代理与用户同等能力**  
+  确保代理能执行用户所有操作（如 A/B 测试创建），避免因工具缺失被迫中断流程。实践中通过 OpenAPI 自动生成工具处理器，覆盖所有 API 端点。
+
+- 🧩 **原则二：匹配代理的抽象层级**  
+  使用代理“原生语言”（如 SQL）而非人类 UI 术语，减少上下文消耗。例如用单条 SQL 查询替代多次 API 调用，提升效率并释放创造力。
+
+- 📦 **原则三：前置通用上下文**  
+  在会话开始时加载产品特定知识（如术语、SQL 语法、硬性约束），避免代理重复探索。如 PostHog MCP 中预置事件分类和查询规则。
+
+- 📝 **原则四：技能文档聚焦隐性知识**  
+  技能文档应包含代理无法自行发现的内部规则（如默认使用`$pageview`事件），而非步骤说明书。通过注入领域专长，确保代理输出符合产品最佳实践。
+
+- 👤 **原则五：将代理视为真实用户**  
+  通过无头模式测试、人工追踪审查、构建评估用例等方式，理解代理行为模式。例如每周分析用户会话，将异常案例转化为自动化评估标准。
+
 ## 其他
+
+### [我们为何总无法触及真正重要的事 - 林耀进](https://yewjin.substack.com/p/why-we-never-get-to-what-matters)
+
+本文探讨了现代工作体系如何让人远离真正重要的事物，并分析了其背后的机制与代价。
+
+- 🎯 **逃避真实自我**：人们倾向于用忙碌（如收件箱清零、日历优化）来回避那些真正重要但令人恐惧的事（如面对真相、诚实写作），因为后者可能暴露自己的不足。
+- ⏳ **工作膨胀无边界**：知识工作继承了工厂的计时制，却失去了“完成”的边界。指标（OKR、晋升）取代了实际工作，导致任务无限膨胀，效率提升只会抬高期望而非节省时间。
+- 🔄 **效率成为棘轮**：速度提升后无法倒退，节省的时间会被新任务和更高期望填满。AI 被包装为解放工具，实则可能加剧这一循环。
+- 💔 **五种隐性代价**：包括持续的内疚感、重要事务被淹没、牺牲当下换取未来、因保护时间而陷入孤立、以及注意力萎缩（失去对生活细节的感知）。
+- ⚙️ **系统有效但残酷**：系统本身运作良好（公司增长、指标达成），但人类成本（健康、关系、感知力）被延迟到退休后，而那时已无力改变。
+- 🌱 **微小行动建议**：承认清单永远清不完；在分心冲动时坚持重要工作；优先做关键事；限制同时进行的项目数；预留无目的时间（如跑步、读书、闲聊）。
+
+### [如何做到直接且具有策略性 - 作者：赵越](https://news.theuncommonexecutive.com/p/how-to-be-direct-and-strategic)
+
+直接沟通不等于毫无策略地说话。高效沟通者会精心选择时机和方式，确保信息被正确接收。
+
+- 🎯 直接 ≠ 无过滤：策略性沟通需要管理“何时”与“如何”表达，并预判对方反应。
+- 🤔 常见误区：认为“好主意自会说话”“不想迎合他人”“直接说就是诚实”，这些想法可能阻碍职业发展。
+- 💡 策略≠操纵：为朋友考虑情绪叫同理心，为沟通选择时机和框架是专业表现，而非欺骗。
+- 🧠 高难度对话三问：对方当前信念是什么？可能触发什么情绪？第一句话该说什么？
+- 🔄 案例启示：同一位客户用同样建议，但先了解对方担忧再反馈，结果从被否定转为获得支持。
+- ✨ 核心结论：策略性沟通不损害真诚，反而能让你的正直与真实更闪耀。
 
 ### [掌控专注力，你需要做的和没必要做的](https://sspai.com/post/108977)
 
