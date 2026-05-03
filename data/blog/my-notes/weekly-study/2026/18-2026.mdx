@@ -12,6 +12,19 @@ summary: ''
 
 ## 技术
 
+### [滚动驱动动画 • 乔什·W·科莫](https://www.joshwcomeau.com/animation/scroll-driven-animations/)
+
+概述：本文介绍了 CSS Animation Timeline API，这是一种原生 CSS 方法，用于创建基于滚动驱动的动画，无需 JavaScript。文章涵盖了核心概念、定时函数、动画范围、入口和出口、范围百分比、滚动进度时间线、链接时间线以及高级用法。
+
+- 🎯 核心概念：将关键帧动画映射到滚动距离而非时间，通过`animation-timeline: view()`实现元素在视口中的进度驱动动画。
+- ⏱️ 定时函数：支持自定义缓动曲线，包括`cubic-bezier`和弹簧效果（`linear()`），使滚动动画更自然。
+- 📏 动画范围：使用`animation-range`属性（如`cover`、`contain`、`entry`、`exit`）控制动画开始和结束的视口位置。
+- 🚪 入口和出口：`entry`范围用于元素进入视口时动画（如淡入），`exit`范围用于元素离开时动画，可同时应用多个动画。
+- 🔢 范围百分比：通过`animation-range-start`和`animation-range-end`精确控制动画起止点，支持混合范围（如`contain 0%`到`exit 50%`）。
+- 📜 滚动进度时间线：使用`animation-timeline: scroll()`基于整体滚动进度（如阅读进度条）驱动动画，而非单个元素。
+- 🔗 链接时间线：通过`view-timeline`和`timeline-scope`属性，将一个元素的滚动进度应用到另一个元素的动画，实现分离测量与动画。
+- 🌟 表面探索：文章提及更高级功能（如`animation-trigger`属性用于滚动触发动画），并推荐相关课程（Whimsical Animations）以深入学习。
+
 ### [懒惰的危险消失 | 观察台](https://bcantrill.dtrace.org/2026/04/12/the-peril-of-laziness-lost/)
 
 本文探讨了程序员“懒惰”这一美德在现代软件开发中的重要性，并批判了 LLM（大语言模型）缺乏这种美德，可能导致系统臃肿和低质量。
@@ -26,7 +39,33 @@ summary: ''
 
 ## 工具
 
+### [GitHub - vercel-labs/portless: 用稳定、命名的本地 URL 替代端口号。适用于人类和智能体。](https://github.com/vercel-labs/portless)
+
+Portless 是一个开发工具，将本地开发中的端口号替换为稳定的、命名的 `.localhost` URL，支持 HTTPS 和 HTTP/2，适用于人类开发者和 AI 代理。
+
+- 🔧 **核心功能**：用 `portless run next dev` 替代 `next dev`，将 `http://localhost:3000` 变为 `https://myapp.localhost`，自动生成并信任本地 CA 证书
+- 🚀 **自动配置**：自动分配端口（4000-4999），支持 Next.js、Vite、Nuxt 等主流框架，自动注入 `--port` 和 `--host` 参数
+- 📁 **Monorepo 支持**：通过 `portless.json` 配置文件管理多包仓库，自动发现工作区包，支持子域名组织服务（如 `api.myapp.localhost`）
+- 🌿 **Git Worktree 支持**：自动检测 git 工作树，分支名作为子域名前缀，避免 URL 冲突
+- 🌐 **LAN 模式**：使用 `--lan` 开启 mDNS 发现，局域网内设备可通过 `<name>.local` 访问开发服务器
+- 🔗 **Tailscale 集成**：通过 `--tailscale` 或 `--funnel` 将开发服务器分享到 Tailscale 网络或公网
+- ⚙️ **灵活配置**：支持 `portless.json`、`package.json` 中的 `"portless"` 键、环境变量和 CLI 参数多种配置方式
+- 🛠 **实用命令**：提供 `portless list`（查看路由）、`portless trust`（信任 CA）、`portless clean`（清理状态）等管理命令
+- 🔒 **安全特性**：自动检测代理循环并返回 508 Loop Detected 错误，非交互环境优雅退出
+- 📦 **安装简单**：全局安装 `npm install -g portless` 或作为项目依赖，支持 Turborepo 集成
+
 ## 更新
+
+### [Rspack 2.0 发布公告 - Rspack](https://rspack.rs/blog/announcing-2-0#rsc-support)
+
+Rspack 2.0 正式发布，带来性能提升、输出优化和新功能，同时保持与 webpack 生态的兼容性。
+
+- 🚀 **性能大幅提升**：相比 1.7 版本整体性能提升约 10%，相比 1.0 版本提升高达 100%；启用持久缓存后构建性能再提升约 50%，内存使用降低超过 20%。
+- 📦 **依赖大幅减少**：`@rspack/dev-server` 依赖从 192 个降至 1 个，安装体积减少 90% 以上；`@rspack/cli` 实现零依赖。
+- 🔍 **静态分析增强**：支持 CommonJS `require` 解构、属性访问和动态 `import()` 的导出级 Tree Shaking，以及编译器注解 `#__NO_SIDE_EFFECTS__`。
+- 🌐 **ESM 支持改进**：核心包转为纯 ESM 包；支持 `import.meta` 属性保留、`import defer` 延迟加载，以及优化库构建的 `modern-module` 输出类型。
+- 🧩 **新功能亮点**：实验性支持 React Server Components（RSC）；支持 `#/` 子路径别名导入；简化目标配置和 `swc-loader` 配置；CSS 导入控制；哈希模块 ID；改进代码分割。
+- 🔗 **生态兼容与扩展**：继续兼容 webpack 生态，并已获得 Angular、Next.js、Nuxt、Storybook 等众多框架和工具的支持。
 
 ## 设计
 
