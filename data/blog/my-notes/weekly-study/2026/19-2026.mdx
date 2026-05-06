@@ -12,12 +12,97 @@ summary: ''
 
 ## 技术
 
+### [让您的网站对 LLM 可见：6 种有效技巧与 8 种无效方法——火星编年史，邪恶火星人团队博客](https://evilmartians.com/chronicles/how-to-make-your-website-visible-to-llms)
+
+**原文标题**: [Making your site visible to LLMs: 6 techniques that work, 8 that don't—Martian Chronicles, Evil Martians’ team blog](https://evilmartians.com/chronicles/how-to-make-your-website-visible-to-llms)
+
+概述：本文介绍了六种有效提升网站在 LLM 中可见性的技术，以及八种无效的方法，强调使用干净、结构化的内容，并指出当前标准尚未成熟，但实施成本低、潜在收益大。
+
+- 📄 **/llms.txt**：在网站根目录提供 Markdown 文件，作为 AI 系统的内容地图，是优先级最高的技术，创建仅需 5 分钟。
+- 📝 **.md 路由**：为每个页面提供 Markdown 版本，显著减少内容噪音（从 15,000 令牌降至 3,000 令牌），提升 LLM 理解效率。
+- 🔗 **`<link>`标签 + HTTP Link 头**：通过 HTML 和 HTTP 协议双重广告 Markdown 版本，覆盖不同客户端（如爬虫和自主代理）。
+- 🕵️ **隐藏`<div>`提示**：在页面中嵌入对 LLM 可见的文本提示，引导其找到 Markdown 版本，适用于用户粘贴 URL 到 AI 工具的场景。
+- 📚 **/llms-full.txt**：提供完整网站内容的单一文件，尤其适合文档站点，实际使用频率可能高于/llms.txt（如 Mintlify 数据显示 3-4 倍访问量）。
+- 🔄 **Accept: text/markdown内容协商**：基于 HTTP 标准，让客户端请求 Markdown 版本，无需站点特定知识，是未来最可能成为默认的技术。
+- ❌ **无效技术**：包括`<meta name="ai-content-url">`、`<meta name="llms">`、`/.well-known/ai.txt`、HTML 注释、人/AI 切换按钮、User-Agent 嗅探、专用 AI 信息页、Schema.org/JSON-LD，均缺乏证据或已被证明无效。
+- 📊 **测量与实施**：通过服务器端日志追踪 AI 端点流量（如 User-Agent 和来源主机），建议从/llms.txt 和.md 路由开始，逐步添加其他技术。
+
 ## 工具
 
 ## 更新
+
+### [OpenType.js 2.0](https://github.com/opentypejs/opentype.js/releases/tag/1.3.5)
+
+该更新日志记录了从版本 1.3.4 到 1.3.5 期间的大量变更，主要涉及字体解析、渲染、性能优化、安全修复以及新功能支持，包括 COLR/CPAL 颜色字体、可变字体（Variable Fonts）、SVG 表格、CFF2 解析等，并修复了多个漏洞和引入了众多新贡献者。
+
+- 🎨 新增 COLRv0 + CPALv0 颜色字形渲染支持
+- 🔄 实现对可变字体表格（fvar、STAT、avar、gvar、hvar、cvar、GVAR、CVAR）的解析与渲染
+- 🖼️ 新增 SVG 表格支持
+- 🛠️ 实现 CFF2 解析与 CFF PaintType/StrokeWidth的读写绘制
+- 🔧 修复多种字体表格解析 Bug（如 cmap、gasp、glyf 变换、fvar 轴解析等）
+- 🚀 性能优化：用 push 替换 concat、使用位运算替代模运算、实现 roundDecimal 缓存
+- 📦 依赖更新：多次升级 esbuild、eslint、mocha 等依赖库
+- 🛡️ 安全修复：修复 CFF 子程序递归漏洞、TrueType 提示循环漏洞及复合字形引用栈溢出
+- 🔍 新增测试覆盖：查找类型 6 格式、LONGDATETIME、cmap 格式 13、UVS 等
+- 👥 24 位新贡献者首次参与项目（包括@pwagland、@Balearica、@Connum 等）
+
+### [Zod 4.4](https://github.com/colinhacks/zod/releases/tag/v4.4.0)
+
+Zod v4.4.0 是包含多项正确性和健全性修复的次要版本。一些修复使 Zod 更加严格，可能需要对代码进行小型更新。
+
+- 🚨 **元组默认值修复** - 元组解析现在能正确输出默认值，可选尾部元素保持缺席状态，但显式 undefined 值会被保留
+- 🛡️ **z.undefined() 对象属性要求** - 值为 z.undefined() 的属性现在被视为必需，属性键必须存在，值可为 undefined
+- ⚠️ **.merge() 行为更安全** - 当接收方有 refinements 时，.merge() 会抛出错误，建议改用.extend() 或.safeExtend()
+- 📄 **JSON Schema 改进** - $defs 条目不再包含冗余的 id 字段，修复了 Draft-04/OpenAPI 3.0 兼容性
+- 🔒 **字符串验证更严格** - Base64 验证拒绝空格，CUID v1 已弃用，HTTP URL 验证拒绝协议后缺少斜杠的 URL
+- 🧩 **联合类型错误路径修复** - 嵌套联合路径在 z.treeifyError() 和 z.formatError() 中正确保留
+- 🔑 **记录键转换支持** - z.record() 现在能正确运行记录键的键转换
+- 🎨 **fromJSONSchema() 元数据改进** - JSON Schema 生成在处理 enum、const、not 等模式时更一致
+- 📦 **Map 和 Set 默认值克隆** - Map 和 Set 的默认值现在在每次解析时克隆，而非共享
+- 🚀 **性能提升** - 减少惰性绑定方法的内存使用，改进树摇支持，减小包体积
+- 🌐 **多语言支持** - 新增克罗地亚语、希腊语、罗马尼亚语、乌兹别克语翻译
+
+### [React Router v7 | Remix](https://remix.run/blog/react-router-v7)
+
+React Router v7 稳定版发布，整合 Remix 功能，支持 React 18 到 19 的过渡，并提供升级指南和新应用模板。
+
+- 🎉 宣布 React Router v7 稳定版发布，整合 Remix 核心功能
+- 🔄 鼓励 Remix v2 用户升级，v6 用户可通过“框架模式”获得新特性
+- 🛠️ v7 新增 Vite 编译器、服务端渲染、HMR、类型安全等增强
+- 📘 提供 v6 和 Remix v2 的升级指南，简化迁移路径
+- 🚀 新应用可选择库模式或框架模式，框架模式支持 Docker、Cloudflare Workers 部署
+- 📦 提供 create-react-router 和 create-vite 快速启动模板，包含 Tailwind 样式和部署流水线
+- 📚 完整文档可查阅官方指南，获取所有新功能详情
 
 ## 设计
 
 ## AI
 
 ## 其他
+
+### [如何进行一对一沟通 | 本·巴尔特](https://ben.balter.com/2026/04/27/one-on-one-playbook/)
+
+一对一沟通的核心是建立连接和促进成长，而非汇报状态。通过异步准备、聚焦同步讨论、保护会议时间，可以显著提升沟通效果。
+
+- 🚫 **避免状态更新**：一对一沟通不应沦为工作汇报，这些信息应通过异步方式提前分享。
+- 🎯 **聚焦同步话题**：只讨论需要实时互动的内容，如职业发展、辅导、反馈和人际关系。
+- 📝 **提前准备共享议程**：双方在会前添加议题并附上背景，确保会议高效且有重点。
+- ❤️ **从人性关怀开始**：先关心个人状态，再谈工作，这为后续的艰难对话奠定信任基础。
+- 💡 **多提问少给答案**：管理者应引导下属自己思考问题，而非直接给出解决方案。
+- 🗣️ **为未说出口的话留空间**：主动提出敏感话题，并以非防御态度回应，鼓励坦诚交流。
+- ✅ **明确后续行动**：会议结束时记录具体任务、责任人和截止日期，确保落实。
+- 🔄 **重视跨级沟通**：定期与上级的上级交流，有助于获得更广的视角和职业可见度。
+- ⚠️ **避免常见误区**：如无准备开会、频繁取消会议、管理者一言堂、下属单向汇报等。
+- 🛠️ **把会议视为系统**：像工程师一样持续优化会议流程，好的沟通是高效团队的基石。
+
+### [在团队中建立影响力 - 罗曼·尼古拉耶夫](https://highimpactengineering.substack.com/p/building-influence-within-the-team)
+
+一位新经理试图通过承担团队最讨厌的任务（维护脆弱的端到端测试）来建立影响力，但团队依然缺乏凝聚力，冲突不断，最终他选择放弃管理职位。真正的领导力并非来自自我牺牲或打鸡血，而是通过推动积极变革、以身作则和庆祝进步来逐步建立的。
+
+- 📉 错误方法：自我牺牲与空谈无法解决团队缺乏所有权和未解决的冲突，反而会消耗领导者的精力。
+- 👣 小步前进：影响力是通过持续、一致的行动逐步积累的，无法一蹴而就。
+- 🏆 以身作则：领导者需持续展示期望的行为，并公开表扬符合该行为的团队成员，以树立榜样。
+- 🤝 寻找盟友：与团队中的正式或非正式领导者合作，共同推动变革，能成倍放大影响力。
+- 🎉 庆祝进步：即使是微小的改进（如从零到一），也应及时庆祝，以提升团队士气和巩固领导力。
+- 🚫 避免弱点：缺乏主见（如“路由器型”管理者）或言行不一，会迅速摧毁领导者的影响力。
+- ⚙️ 聚焦管理职责：领导者应优先履行管理职责（如推动变革、解决冲突），而非沉迷于技术工作。真正的领导力源于赋能团队，而非替代团队。
