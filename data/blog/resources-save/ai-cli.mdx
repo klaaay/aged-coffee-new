@@ -8,6 +8,17 @@ summary: ''
 
 这个页面只收以命令行为主要入口的工具。桌面端、Web 客户端、平台类项目见 [AI DevTools](/blog/resources-save/ai-devtools) 和 [AI Apps](/blog/resources-save/ai-apps)。
 
+## 通用生成 CLI
+
+[ai-cli](https://github.com/vercel-labs/ai-cli)<br />
+Vercel Labs 出品的轻量级 AI 生成命令行工具，提供 `ai image`、`ai video`、`ai text` 和 `ai models` 等命令，适合在终端里快速生成文本、图片、视频，并把结果稳定输出为文件、标准输出或 JSON 元数据。
+
+- 入口简单：通过 `npm install -g ai-cli` 安装后，用 `ai image`、`ai video`、`ai text` 直接发起生成。
+- 模型接入统一：基于 Vercel AI SDK 和 AI Gateway，可通过 `creator/model-name` 指定模型，也支持只写模型名后自动解析。
+- 适合管道工作流：支持 stdin/stdout，可把 `cat notes.txt`、`git diff` 等内容直接接给 `ai text`，也能把图片生成结果继续传给视频生成。
+- 便于批量对比：`-m` 支持逗号分隔多个模型，`-n` 控制每个模型生成数量，适合快速做多模型效果比较。
+- 终端预览友好：在支持 Kitty graphics protocol 的终端中，可以内联预览生成的图片和视频帧。
+
 ## CodeAgent CLI
 
 [cc-cli](https://github.com/cjh-store/cc-cli)  
