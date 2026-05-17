@@ -58,6 +58,15 @@ OpenAgents Control 是一个以计划优先、基于批准执行的 AI 智能体
 [Ralph Orchestrator](https://github.com/mikeyobrien/ralph-orchestrator)  
 Ralph 是一个让 AI Agent 持续循环执行直到任务完成的编排框架。它支持 Claude Code、Gemini CLI、Codex、Copilot CLI、OpenCode 等后端，用 hat system 组织专门角色，并用测试、lint、typecheck 等 backpressure gate 拦住未完成结果。
 
+[Goal-Driven](https://github.com/lidangzzz/goal-driven)
+Goal-Driven 是一套给多 Agent 系统使用的长时间任务执行模板，适合 Claude Code、Codex、OpenClaw 等支持子代理的工具。核心是让 Master Agent 只盯最终目标和成功标准：创建 Subagent，定期检查活跃状态和阶段结果；如果结果没有满足标准，就要求继续或重启子代理，直到可验证标准达成。
+
+- 适合高度复杂但可验收的任务：编译器设计、数学定理证明、数据库架构、系统级设计、EDA 仿真等。
+- 重点不在堆更多 agent，而是把 `Goal` 和 `Criteria` 写清楚，让主代理用可验证标准控制循环。
+- 仓库给出过 C++ 实现 TypeScript 编译器、Rust 实现 SQLite、TypeScript 实现 Lean4 编译器等示例项目。
+- 作者明确提醒不要把这段 prompt 做成 skill 或插件，避免污染上下文；更适合作为需要时临时填目标和成功标准的模板。
+- 更适合放在 `AI Agents` 的“多 Agent 协作与编排”：它提供的是长时间自治工作的控制方法，而不是单个应用或开发工具。
+
 ## GUI 与设备操作 Agent
 
 [Browser Harness](https://github.com/browser-use/browser-harness)  

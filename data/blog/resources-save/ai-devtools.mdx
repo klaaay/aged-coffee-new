@@ -167,6 +167,15 @@ EnsoAI 是一款面向开发者的 AI 智能工作空间管理工具，通过集
 
 ## 运行时与服务
 
+[Personal AI Infrastructure - PAI](https://github.com/danielmiessler/Personal_AI_Infrastructure)
+PAI 是 Daniel Miessler 做的个人 AI 基础设施。它不是再造聊天客户端，而是在 Claude Code 之上搭一套“Life Operating System”：把个人目标、身份、偏好、记忆、Skills、Hooks、工作流和本地 Pulse Dashboard 串起来，让 Digital Assistant 能长期理解用户并持续改进。
+
+- 更适合放在 `AI DevTools` 的运行时与服务：它提供的是个人 AI 操作系统底座，而不是单个 Agent、Prompt 或 CLI。
+- Claude Code native：依赖 Claude Code 的 hooks、上下文和 agentic 能力，同时补上记忆、routing、skills、自我改进和身份层。
+- 偏文本化基础设施：强调 Markdown、文件系统、`rg` 和可读状态，尽量避免把个人上下文锁进不透明存储。
+- 有完整执行链路：v5.0.0 引入 Pulse daemon、DA identity、Algorithm 七阶段循环、ISA 文档原语、45 个 skills、171 个 workflows 和 37 个 hooks。
+- 适合参考个人 AI 工作台怎么组织长期上下文、目标系统、验证回路和可安装能力，也适合作为 Claude Code 深度定制样本。
+
 [OpenHarness - Open Agent Harness](https://github.com/HKUDS/OpenHarness)
 OpenHarness 是一个开源 Agent Harness，核心覆盖 tool-use、skills、memory、权限治理和多 Agent 协作。它更适合放在 `AI DevTools`，因为它提供的是一整套 agent 基础设施，而不是某个单点应用或单一 CLI 包装。
 
