@@ -12,6 +12,20 @@ summary: ''
 
 ## 技术
 
+### [Node.js 事件循环：阶段、微任务与 libuv](https://www.thenodebook.com/node-arch/event-loop-intro#what-the-nodejs-event-loop-does)
+
+Node.js 的架构核心在于事件循环，它由 libuv 的循环阶段和 Node.js 的 JavaScript 端优先级队列共同驱动。理解调用栈、微任务（microtasks）和宏任务（macrotasks）的执行顺序，是掌握 Node.js 异步行为的关键。
+
+- 🧱 **单一调用栈**：JavaScript 只有一个调用栈，所有代码都在此执行。当一个函数占用栈顶时，其他任何回调都无法运行，这就是“阻塞”的本质。
+- ⏱️ **事件循环的六大阶段**：一个完整的“tick”会依次经过定时器（Timers）、待定回调（Pending Callbacks）、轮询（Poll）、检查（Check）和关闭回调（Close Callbacks）等阶段，每个阶段处理对应的宏任务队列。
+- 🔄 **微任务与 `process.nextTick()`**：微任务（包括 `process.nextTick()` 和 Promise 回调）拥有最高优先级。在执行完任何一个宏任务后，事件循环会立即清空所有微任务队列，然后才进入下一阶段。
+- ⚠️ **`process.nextTick()` 的危险性**：递归调用 `process.nextTick()` 会无限循环，导致事件循环被“饿死”，从而使定时器和 I/O 操作永远无法执行。
+- 🔗 **V8、libuv 与 C++ 绑定**：V8 执行 JS 代码，libuv 提供异步 I/O 和事件循环，C++ 绑定层则作为桥梁，将 JS 调用转化为 libuv 能理解的系统请求。
+- 🧵 **libuv 线程池**：libuv 内部维护一个线程池（默认 4 个），用于处理阻塞性操作（如文件 I/O、DNS 查询、加密）。这些操作会在线程池中排队执行，不会阻塞主线程。
+- 🚦 **`setTimeout(..., 0)` 与 `setImmediate()` 的顺序**：在主模块中执行时，顺序不确定；但在 I/O 回调中执行时，`setImmediate()` 总是先于 `setTimeout(..., 0)` 运行。
+- 🐢 **性能陷阱**：大 JSON 解析、复杂正则表达式、以及 libuv 线程池的争用，都可能导致事件循环延迟。使用 `perf_hooks` 或简单的 `setInterval` 可以检测延迟。
+- ⚙️ **CPU 密集型任务**：对于需要大量计算的任务，应使用 `worker_threads` 将其卸载到独立线程，或使用 `setImmediate()` 将任务分块执行，以保持事件循环的响应性。
+
 ### [五种模型，一个 React 技术栈：为何每个大语言模型都构建相同的应用 | Sascha Becker](https://saschb2b.com/blog/llm-default-react-stack)
 
 当前主流 AI 模型（Claude、GPT、Gemini、DeepSeek、Qwen、v0、Lovable、Bolt）在构建 React 应用时，几乎都默认使用同一套技术栈：Next.js 或 Vite、TypeScript、Tailwind CSS、shadcn/ui、TanStack Query 和 Zustand。这种趋同并非巧合，而是由训练数据主导、Token 经济学和 AI 编码工具特性共同驱动的结果，并可能引发前端生态的“单一文化”问题。
@@ -28,6 +42,31 @@ summary: ''
 - ⚖️ **诚实结论**：默认栈的存在有其合理原因（Tailwind 适合 LLM、shadcn 适合编辑、React 赢得市场），但问题在于选择被系统冻结。保持工具多样性需要主动付出努力，否则将导致千篇一律的 Web。
 
 ## 工具
+
+### [GitHub - nodeca/pica: 在浏览器中高质量、高速调整图片大小 · GitHub](https://github.com/nodeca/pica)
+
+Pica 是一个高性能浏览器端图像缩放库，支持 WebWorker、WebAssembly 等多种技术，提供高质量缩放效果。
+
+- 🖼️ **高质量缩放**：自动选择最佳技术（WebWorker、WebAssembly、createImageBitmap、纯 JS），实现无像素化缩放。
+- ⚙️ **核心功能**：支持 Canvas/Image 缩放、转 Blob、原始 RGBA 缓冲区处理，并提供 Unsharp Mask 锐化滤镜。
+- 📦 **安装与使用**：通过 npm 安装，支持 ESM 和 CommonJS，提供工厂函数和类两种调用方式。
+- 🧩 **可配置选项**：支持 tile 分块处理、并发控制、缓存超时、自定义 worker URL 等参数。
+- 🚫 **注意事项**：受 JS 安全限制，仅处理同源或本地文件；iOS 有 Canvas 内存限制；不支持伽马校正，专业级图像可能精度不足。
+- 🖥️ **浏览器兼容**：主流浏览器均支持，Node.js 环境需额外配置 OffscreenCanvas，但推荐使用 sharp 库。
+- 🔄 **迁移指南**：v9 到 v10 需注意默认导出改为工厂函数，移除 createCanvas 选项，quality 参数改用 filter 对象。
+
+### [GitHub - franciscop/brownies: 🍫 更美味的 cookies、本地存储、会话存储和数据库存储，集成在一个小巧的包中。包含用于监听变化的 subscribe() 事件。](https://github.com/franciscop/brownies)
+
+Brownies 是一个轻量级的前端存储库，提供统一的 API 来操作 cookies、localStorage、sessionStorage 和异步数据库，并支持订阅存储变化。
+
+- 🍪 **cookies 操作**：通过简单的 getter/setter 接口读写 cookies，自动保留类型（数字、布尔、字符串、数组、对象），删除时返回 `null`。
+- 🗄️ **local 和 session 存储**：分别封装 `localStorage` 和 `sessionStorage`，支持类型保留，删除操作简单，可迭代遍历。
+- 🔄 **异步 db 存储**：提供异步接口，读取时需使用 `await`，适用于 IndexedDB 等场景。
+- 📡 **订阅变化**：使用 `subscribe()` 监听任何对象的属性变化，支持跨标签页同步，可通过返回的 id 或回调函数取消订阅。
+- ⚙️ **可配置选项**：支持全局配置 cookies 的过期时间、域名、路径和安全设置。
+- 🚀 **快速上手**：支持 npm 安装、CDN 引入或 JSFiddle 在线体验，代码简洁，API 直观。
+- 🎯 **迭代支持**：所有存储对象都支持 `Object.keys()`、`Object.values()`、`for...of` 等标准迭代方式。
+- 📦 **轻量且功能完整**：仅 2.4k 星，包含 TypeScript 类型定义，适合浏览器端存储需求。
 
 ## 更新
 
