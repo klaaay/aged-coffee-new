@@ -136,7 +136,7 @@ export const Subscription = () => {
       {
         name: 'Raycast Pro',
         yearly: toFixed2Number(192 * DOLLAR2RMB),
-        expiry: '2026-05-19',
+        expiry: '2027-05-19',
         type: '效率',
         extra: '',
       },
