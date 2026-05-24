@@ -43,6 +43,43 @@ Node.js 的架构核心在于事件循环，它由 libuv 的循环阶段和 Node
 
 ## 工具
 
+### [GitHub - CodeBoarding/CodeBoarding: 代码库的交互式架构图 · GitHub](https://github.com/CodeBoarding/CodeBoarding?utm_source=www.pythonweekly.com&utm_medium=newsletter&utm_campaign=python-weekly-issue-746-may-21-2026)
+
+CodeBoarding 是一个为开发者和 AI 编码代理提供代码库可视化地图的工具，通过静态分析与 LLM 推理生成架构图、组件文档和可导航输出，支持 IDE、CI 和文档等多种使用场景。
+
+- 🗺️ **核心功能**：生成高层系统架构图、深层组件图、Markdown 文档和 Mermaid 输出，支持增量更新。
+- 🛠️ **工作原理**：结合应用编排器、LLM 核心、静态分析器、代理工具接口、增量分析引擎和文档生成器，协同完成分析。
+- 🚀 **快速开始**：支持从源码运行（`uv sync --frozen`）或使用打包 CLI（`pipx install codeboarding`），输出至`.codeboarding/`目录。
+- ⚙️ **配置灵活**：支持 OpenAI、Anthropic、Google 等多种 LLM 提供商，环境变量优先于配置文件。
+- 💻 **使用场景**：CLI 用于本地/CI 分析，VS Code 扩展用于编辑器内可视化，GitHub Action 用于 CI 中保持图表更新。
+- 🌐 **支持范围**：覆盖Python、TypeScript、Java、Go、PHP、Rust、C#等语言，以及多种LLM提供商。
+
+### [GitHub - MinishLab/semble: 面向智能体的快速精准代码搜索。相比 grep+read，可减少约 98% 的令牌消耗](https://github.com/MinishLab/semble?utm_source=www.pythonweekly.com&utm_medium=newsletter&utm_campaign=python-weekly-issue-746-may-21-2026)
+
+Semble 是一个专为 AI 智能体设计的快速精准代码搜索库，能大幅节省 token 消耗，索引和搜索均在毫秒级完成，且完全在 CPU 上运行，无需任何外部服务或 API 密钥。
+
+- ⚡ **极速性能**：平均索引一个仓库约 250 毫秒，查询仅需 1.5 毫秒，全部在 CPU 上完成。
+- 🎯 **高精度检索**：NDCG@10 得分达 0.854，与代码专用 Transformer 模型性能相当，但体积和成本极低。
+- 💰 **节省 98% Token**：仅返回相关代码片段，相比传统的 grep+ 读取全文方式，平均节省约 98% 的 token。
+- 🔌 **零配置与多模式**：支持 MCP 服务器、命令行 (CLI) 和 Python 库三种使用方式，无需 API 密钥或 GPU。
+- 🤖 **智能体友好**：可作为 MCP 服务器集成到 Claude Code、Cursor 等主流 AI 编码工具中，也支持通过 AGENTS.md 配置 Bash 模式。
+- 🔍 **双检索器融合**：结合静态嵌入模型 (Model2Vec) 进行语义搜索和 BM25 进行词汇匹配，并通过倒数排名融合 (RRF) 优化结果。
+- 🧠 **代码感知重排序**：应用自适应权重、定义提升、标识符词干匹配、文件连贯性提升和噪声惩罚等多种信号，确保结果精准。
+- 📦 **使用灵活**：支持本地路径和 Git 远程仓库 URL，并提供 `semble savings` 命令统计 token 节省量。
+
+### [fontaine](https://github.com/nuxt-modules/fontaine)
+
+该模块通过自动生成本地字体备用规则并调整字体度量，显著降低累积布局偏移（CLS），提升网站性能，零运行时开销。
+
+- 🚀 **核心功能**：为 Nuxt 3 提供字体度量备用回退方案，减少 CLS（从 0.34 降至 0.013），性能评分提升（从 88 增至 98）
+- 📦 **自动生成**：自动扫描@font-face 规则，添加带正确度量（如上升、下降覆盖）的备用字体，如将'Roboto'变为'Roboto, Roboto fallback'
+- ⚡ **零开销**：纯 CSS 实现，无运行时性能影响，自动内联字体回退规则
+- 🔧 **简单安装**：通过`npx nuxi@latest module add fontaine`一键安装，只需在配置中添加模块名即可使用
+- 🌐 **Tailwind 适配**：需手动在 tailwind 配置中添加备用字体，例如`fontFamily: { sans: ['Roboto', 'Roboto fallback', ...] }`
+- 💡 **扩展兼容**：核心库 fontaine 支持 Nuxt 外独立使用，无需框架依赖
+- 🔮 **未来计划**：计划将完整 CSS 内联功能集成到 Nuxt 核心，彻底消除样式表加载导致的布局偏移
+- 🌟 **技术原理**：基于 Capsize 计算字体度量，参考 Google Aurora 团队的算法，生成精确的备用字体覆盖参数
+
 ### [HTML-in-Canvas WebGL 示例](https://chrome.dev/html-in-canvas/)
 
 该页面展示了“Canvas 中的 HTML”实验性 API，通过 WebGL 实现沉浸式 3D 体验和核心功能测试。
