@@ -12,6 +12,47 @@ summary: ''
 
 ## 技术
 
+### [React 文件夹结构最佳实践 [2026] - Robin Wieruch](https://www.robinwieruch.de/react-folder-structure/)
+
+本文详细介绍了 React 项目从单文件到多应用（Monorepo）的文件夹结构最佳实践，提供了一套可逐步扩展的架构指南。
+
+- 📂 **从单文件起步**：小型项目可从单个`App`组件开始，随着复杂度增加自然拆分，避免过早优化。
+- 📁 **多文件拆分**：将紧密耦合的组件（如`List`和`ListItem`）保留在同一文件中，仅将可复用组件独立为文件。
+- 🗂️ **组件文件夹化**：为每个组件创建独立文件夹（含`component.js`、`test.js`、`style.css`），使用`index.js`作为公共 API，但需注意避免过度使用 barrel 文件。
+- 🔧 **技术文件夹分层**：引入`components/`、`hooks/`、`context/`、`utils/`等技术文件夹，将可复用逻辑与组件解耦。
+- 🎯 **功能文件夹（Feature Folders）**：将业务相关组件放入`features/`文件夹，仅保留通用 UI 组件在`components/`中，实现功能内聚。
+- 🚫 **边界规则**：代码单向流动（共享层→功能层→页面），功能间不直接相互导入，每个功能通过`index.js`暴露公共 API。
+- 🏢 **领域文件夹（Domain Folders）**：当功能过多时，按业务领域（如`workspace/`、`core/`）分组，进一步降低导航复杂度。
+- 📦 **包文件夹（Packages）**：将共享代码提取为独立包（如`packages/shared/`），通过包名导入，强化边界。
+- 🏗️ **多应用架构（Monorepo）**：引入`apps/`和`domains/`，实现多个独立应用共享领域逻辑和工具包，依赖规则清晰。
+- 📄 **页面驱动结构**：在 Next.js 等框架中，页面文件夹（`app/`）与功能文件夹配合，实现路由与业务逻辑的分离。
+- 🔍 **功能内部细节**：生产级功能包含`queries/`、`actions/`、`components/`等子文件夹，通过`relations/`处理跨功能耦合。
+- 💡 **灵活演进**：所有结构均为指导而非规则，应根据项目规模自然演化，避免过度设计。
+
+### [Next.js 链接作为按钮 | Kitty Giraudel](https://kittygiraudel.com/2026/05/02/nextjs-link-as-a-button/)
+
+在 Next.js 中使用第三方按钮组件（如 Ant Design）进行路由导航时，直接传递 `href` 会导致全页刷新，而非客户端路由导航。文章介绍了两种解决方案。
+
+- 🚫 **方法一：命令式路由**：使用 `useRouter().push()` 实现导航，但会渲染 `<button>` 元素而非 `<a>`，不符合语义和可访问性标准。
+- 🔗 **方法二：无头链接**：结合 Next.js 的 `passHref` 和 `legacyBehavior` 属性，使 `<Link>` 不渲染 DOM，而是将 `href` 传递给子组件，从而让 Ant Design 的 `Button` 渲染为 `<a>` 元素，实现正确的路由导航。
+- ⚠️ **注意事项**：`legacyBehavior` 是旧版行为，未来可能被移除，此方法并非长期稳定方案。
+- 🧩 **可复用组件**：创建 `RouterButton` 封装组件，统一处理 `href` 和链接属性，同时保留 Ant Design 按钮的所有样式和功能，确保渲染出单一的 `<a>` 元素，支持 Next.js 路由且无全页刷新。
+
+### [LobeHub 的 Vite 路由模块预热实践](https://innei.in/posts/tech/lobehub-vite-route-module-prewarm)
+
+本文介绍了 LobeHub 在 Vite 插件层实现路由模块预热的工程方案。核心目标是在首屏加载稳定后，利用空闲期提前加载高频二级路由的 JS chunk，减少用户跳转时的等待时间。方案采用两级预热模型（首屏关键路径 preload + 空闲期 warmup），并引入模块 ID 归一化、过滤策略、运行时条件控制等机制，在不扩大首屏加载的前提下优化复杂 SPA 的路由体验。
+
+- 🧩 **代码分割的副作用**：大型 SPA 中代码分割是必要的，但会导致二级页面首次进入时产生 chunk 请求、解析与执行的串行等待，影响用户体验。
+- 🏢 **LobeHub 的挑战**：桌面端路由数量多，存在聊天、群组、资源库等多个高频工作区，单纯依赖 Vite 默认 modulepreload 或路由动态加载都无法满足性能需求。
+- 🎯 **核心目标**：在构建阶段理解路由 chunk 关系，将预热分为首屏关键路径 preload 与空闲期 warmup 两类，而非扩大首屏加载。
+- ⚙️ **两级预热模型**：第一层是首屏关键路由 preload（仅覆盖聊天启动路径），第二层是空闲期 warmup（覆盖更多桌面工作区），通过运行时脚本按批次追加 modulepreload。
+- 🔄 **模块 ID 归一化**：解决 Vite bundle 中模块 ID 不稳定的问题，去除构建 root、扩展名、平台后缀及末尾 /index，确保路由组配置能准确匹配平台特化文件。
+- 🚫 **过滤策略**：排除 i18n 语言包 chunk 和重渲染器依赖（Shiki、Mermaid 等），避免低概率路径占用带宽；首屏 HTML 中的 modulepreload 受 2048 字节阈值约束。
+- 🕒 **空闲期运行时控制**：脚本在页面 load 后延迟启动，支持 saveData、2g 网络跳过、页面可见性检查、requestIdleCallback 分批调度，避免在弱网络或后台消耗资源。
+- 🛠 **诊断工具治理**：构建图中的每一条边应有明确收益，建议将 react-scan 等诊断工具延迟为开发态动态 import，避免影响构建图。
+- 🧪 **测试分层模型**：浏览器可观察的加载行为归入 E2E 测试，无法脱离构建图验证的转换规则放在插件层测试，低价值快照应避免。
+- 📊 **方案本质**：在 Vite 构建产物与业务路由间建立薄的解释层，不改变 React Router 运行时模型，而是按业务路径补充浏览器可理解的预热信号，实现更可控的优化。
+
 ### [Node.js 事件循环：阶段、微任务与 libuv](https://www.thenodebook.com/node-arch/event-loop-intro#what-the-nodejs-event-loop-does)
 
 Node.js 的架构核心在于事件循环，它由 libuv 的循环阶段和 Node.js 的 JavaScript 端优先级队列共同驱动。理解调用栈、微任务（microtasks）和宏任务（macrotasks）的执行顺序，是掌握 Node.js 异步行为的关键。
@@ -127,9 +168,35 @@ Brownies 是一个轻量级的前端存储库，提供统一的 API 来操作 co
 
 ## 更新
 
-## 设计
+### [Tailwind CSS v4.3：滚动条、新颜色及更多功能 - Tailwind CSS](https://tailwindcss.com/blog/tailwindcss-v4-3)
 
-## AI
+Tailwind CSS v4.3 和 v4.2 版本带来了大量新功能和改进，包括新调色板、性能优化、实用工具和 CSS 功能支持。
+
+- 🎨 新增四种中性调色板：mauve、olive、mist 和 taupe，为设计提供更多个性选择
+- ⚡ 推出专为 webpack 优化的 @tailwindcss/webpack 加载器，构建速度提升超过 2 倍
+- 📐 新增逻辑属性工具：支持 block-start/end 边距、内联/块尺寸和逻辑定位
+- 🔤 新增 font-features-\* 工具，可直接控制 OpenType 字体特性
+- 🖱️ 新增滚动条样式工具：scrollbar-auto/thin/none 和颜色自定义
+- 📦 新增 @container-size 工具，支持基于块尺寸的容器查询
+- 🔍 新增 zoom-\* 工具，支持 CSS zoom 属性（所有浏览器已支持）
+- 📝 新增 tab-\* 工具，控制制表符渲染宽度
+- 🔗 增强 @variant 支持：堆叠变体和复合变体
+- ⚙️ 函数式工具支持默认值，简化自定义工具 API 设计
+
+### [很快我们就能把 JavaScript 彻底放逐到 ShadowRealm 了](https://css-tricks.com/soon-we-can-finally-banish-javascript-to-the-shadowrealm/)
+
+本文介绍了 JavaScript 中"ShadowRealm"提案，这是一种新的隔离执行环境，允许开发者在同一线程内创建独立的作用域，避免全局污染和代码干扰。文章解释了 JavaScript 的单线程特性、Realm 的概念，以及 ShadowRealm 如何通过`evaluate`和`importValue`方法实现代码隔离，同时强调该提案目前仍在开发阶段（Stage 2.7）。
+
+- 😄 "ShadowRealm"这个名称很有趣，作者幽默地承认这个名字让人忍俊不禁
+- 🧵 JavaScript 虽然是单线程语言，但可以通过 Web Workers 等机制在多个线程中执行代码
+- 🌐 **Realm**是代码执行的环境，每个浏览器标签、Web Worker 或 iframe 都有自己独立的 Realm
+- 🚫 不同 Realm 拥有各自的全局对象和内置对象（如 Array），它们互不相同且不能直接访问
+- 📦 第三方库、框架和广告等会导致全局作用域污染，ShadowRealm 能提供"干净房间"解决此问题
+- 🔮 ShadowRealm 是一种"暗影"Realm，没有自己的执行线程，代码仍在宿主线程上运行
+- ✨ `shadow.evaluate()`方法允许在 ShadowRealm 中运行代码，且不影响外部全局作用域
+- 📥 `shadow.importValue()`方法可动态导入模块并获取其导出值，类似安全版`eval`
+- 🛡️ ShadowRealm 提供的是**完整性边界**而非安全边界，内部代码仍可推断外部信息
+- 🚧 该提案目前处于 Stage 2.7，尚未在浏览器中实现，但开发者可提前了解准备
 
 ## 其他
 
