@@ -13,6 +13,11 @@ summary: '金融项目、金融 Agent 与投资研究工具收集。'
 - [Fincept Terminal](https://github.com/Fincept-Corporation/FinceptTerminal)  
   开源金融智能终端。项目介绍中提到，它提供 CFA 级分析、AI 自动化、100+ 数据连接器、实时交易、量化分析、组合研究和可视化工作流。
 
+## 金融数据 / SDK
+
+- [stock-sdk](https://github.com/chengzuopeng/stock-sdk)  
+  面向前端和 Node.js 的股票行情 JavaScript SDK。无需 Python 或后端服务，可在浏览器或 Node.js 中获取 A 股、港股、美股、公募基金的实时行情与 K 线数据。适合做行情看板、金融数据可视化、课程 Demo、量化策略原型和 Node 定时抓取。官方说明里提到，实时行情来自腾讯财经、东方财富等公开接口，通常有数十秒到数分钟延迟，不适合高频交易决策。
+
 ## 金融 Agent / 自动化
 
 - [TradingAgents Telegram Bot](https://github.com/IvanWng97/TradingAgents-Telegram)
