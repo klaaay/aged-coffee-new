@@ -82,6 +82,15 @@ GOD 是一个面向 Agent 社会的实时控制台，用来观察、回放和干
 [Browser Harness](https://github.com/browser-use/browser-harness)  
 Browser Harness 是一个基于 Chrome DevTools Protocol 的浏览器操作 harness。它把浏览器控制能力暴露给 LLM，并允许 Agent 在任务中补写缺失 helper，适合研究浏览器自动化、网页操作 Agent 和可自愈 harness。
 
+[Webwright](https://github.com/microsoft/Webwright)
+
+Webwright 是 Microsoft 开源的浏览器 Agent 框架。它把浏览器任务交给 coding agent 在终端里编写、运行和修复 Playwright 脚本，而不是让模型逐步预测点击、输入或坐标动作。每次任务都会沉淀为可重跑的 Python 脚本，并把轨迹、截图和调试产物写入工作区，适合研究长链路网页任务、可复用浏览器自动化和 agent harness 设计。
+
+- 核心思路是 `code-as-action`：浏览器会话可以丢弃，真正保留的是代码、日志和截图。
+- 框架较轻量：核心 agent loop、Playwright 环境、CLI 和模型后端都保持在较小代码量，便于阅读和 fork。
+- 支持 OpenAI、Anthropic、OpenRouter 后端，也提供 Claude Code、Codex、OpenClaw、Hermes 的插件或 Skill 接入方式。
+- 适合放在 `GUI 与设备操作 Agent`：它关注浏览器操作能力和长任务执行，不只是普通开发工具或提示词集合。
+
 [Open Computer Use](https://github.com/iFurySt/open-codex-computer-use)  
 Open Computer Use 是一个开源 Computer Use 服务，以 MCP 形式暴露给 Codex、Claude Code、Gemini CLI、opencode 等客户端。它支持 macOS、Linux 和 Windows，适合研究非侵入式桌面操作、Accessibility 驱动的 CUA 和 Codex Computer Use 替代方案。
 
