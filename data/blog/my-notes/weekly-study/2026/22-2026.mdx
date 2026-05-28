@@ -12,15 +12,111 @@ summary: ''
 
 ## 技术
 
+### [Linear 为何如此之快？技术解析](https://performance.dev/how-is-linear-so-fast-a-technical-breakdown)
+
+Linear 通过将数据库置于浏览器、本地优先同步、激进代码拆分和键盘优先设计，实现了毫秒级的响应速度，其核心是消除网络延迟对用户体验的影响。
+
+- 🚀 **浏览器即数据库**：UI 直接从 IndexedDB 读取数据，本地修改后异步同步到服务器，彻底消除网络等待。
+- ⚡ **即时首屏加载**：通过模块预加载、Service Worker 缓存、内联关键 CSS/JS 和字体优化，实现秒级启动。
+- 🔄 **同步引擎三支柱**：本地数据立即可用、乐观更新无需等待网络、细粒度响应式更新（仅重绘变更的单元格）。
+- 🎯 **键盘优先设计**：所有操作支持快捷键，全局命令面板（⌘K）基于本地内存搜索，无需网络请求。
+- 🖌️ **克制动画**：仅对 GPU 加速属性（transform/opacity）进行动画，持续时间控制在 100ms 内，避免布局抖动。
+- 🧩 **极简技术栈**：React + MobX + TypeScript + Postgres，无 SSR/边缘数据库等复杂架构，专注客户端渲染优化。
+- 🔐 **乐观认证**：假设用户已登录，直接渲染本地数据，后台异步验证会话有效性。
+- 📦 **极致代码拆分**：每个 npm 包独立分块，按需加载，支持离线使用。
+
+### [TanStack 路由器和查询](https://tkdodo.eu/blog/tan-stack-router-and-query)
+
+TanStack Router 和 TanStack Query 的整合指南，探讨如何结合两者优势进行数据管理。
+
+- 🔗 **路由器缓存 vs 查询缓存**：路由器缓存适用于路由专属数据，但全局数据需用 TanStack Query 的全局查询缓存，通过唯一 `queryKey` 跨路由共享。
+- 🚀 **在加载器中使用查询**：在路由加载器中调用 `queryClient.ensureQueryData` 或 `prefetchQuery` 可提前启动数据获取，确保组件渲染时数据已就绪，避免瀑布请求。
+- ⚙️ **配置要点**：需将 `QueryClient` 添加到路由器上下文，并设置 `defaultPreloadStaleTime: 0` 关闭路由器内建缓存，避免缓存冲突。
+- 🧩 **选择 useSuspenseQuery 或 useQuery**：`useSuspenseQuery` 与路由器的 Suspense 边界完美整合，适合阻塞数据；`useQuery` 用于非阻塞数据，可显示内联骨架加载器。
+- ⏳ **加载器中的 await 决策**：不 `await` 加载器中的查询，可将阻塞/非阻塞决策交给组件；`useSuspenseQuery` 自动处理阻塞，`useQuery` 处理延迟数据。
+- 🌐 **SSR 支持**：使用 TanStack Start 时，`setupRouterSsrQueryIntegration` 自动将服务器数据流传输到客户端缓存；`useSuspenseQuery` 支持流式 SSR，无需额外 `await`。
+- 🛑 **避免使用 useLoaderData**：查询需通过 `useQuery` 或 `useSuspenseQuery` 创建观察者，否则无法自动重新获取、无效化后不更新，且可能被垃圾回收。
+- 🎯 **将加载器视为事件处理器**：加载器仅用于触发数据预取，不返回数据；组件始终依赖 `use(Suspense)Query`，确保查询活跃并获得完整功能。
+
+### [CSS 与 JavaScript • Josh W. Comeau](https://www.joshwcomeau.com/animation/css-vs-javascript/)
+
+本文探讨了 CSS 与 JavaScript 动画的性能差异，并提供了选择合适工具的建议。
+
+- 🎯 **核心结论**：CSS 动画因运行在独立线程而更流畅，不受主线程阻塞影响；JS 动画需与主线程任务竞争资源，可能导致卡顿。
+- ⚡ **性能对比**：CSS 关键帧动画和 Motion 库（基于 Web Animations API）能避免主线程干扰，而原生 JS 循环和 GSAP 则可能因主线程繁忙而卡顿或不同步。
+- 🔄 **同步问题**：JS 动画（如 GSAP）在帧延迟后可能无法保持与时间轴同步，而 CSS 动画能自动修正位置，确保时长一致。
+- 📦 **库的权衡**：JS 动画库（如 Motion 48kB、GSAP 27kB）需额外下载，但 Motion 通过 WAAPI 实现线程分离，GSAP 则优先流畅性而非同步。
+- 🛠️ **选择建议**：优先使用原生 CSS 动画；复杂场景选 Motion 等扩展性库；避免仅封装 CSS 功能的库（如基本过渡库），因其增加负担而无实质优势。
+- 🌟 **现代 CSS 能力**：View Transitions、linear()、Animation Timeline 等新 API 已减少对 JS 库的依赖，适合多数动画需求。
+
 ## 工具
 
+### [chartli](https://github.com/ahmadawais/chartli)
+
+chartli 是一个 CLI 工具，能将纯文字数字数据转换为终端机图表（如 ASCII、长条图、热力图、SVG 等），支持多种图表类型与灵活的标签设定。
+
+- 🚀 **快速安装与使用**：可通过 `npx chartli --help` 即时执行，或全局安装 `npm i -g chartli`，也支持代理技能安装 `npx skills add ahmadawais/chartli`
+- 📊 **多种图表类型**：支持 ascii、spark、bars、columns、heatmap、unicode、braille、svg 等格式，满足不同数据可视化需求
+- ⚙️ **丰富的选项参数**：可自定义图表宽高、类型、模式（SVG 支持 circles/lines），以及 x/y 轴标题、刻度标签、系列标签等
+- 🏷️ **标签与元数据功能**：通过 `--x-axis-label`、`--y-axis-label` 添加轴标题，`--x-labels` 设定刻度标签，`--series-labels` 自定义系列名称，`--data-labels` 显示原始数值
+- 📂 **示例数据与指令**：提供多个示例数据文件（如 weekly-signups.txt），并展示完整指令组合，例如 `pnpm chartli examples/assets/core-single-series.txt -t ascii -w 24 -h 8`
+- 🖼️ **图像图表集**：支持将同一数据集以不同图表类型呈现，包括 ASCII 线图、Sparklines、水平长条图、直式长条图、热力图、Unicode 长条图、点字图与 SVG
+- 📄 **SVG 输出**：可将图表输出为 SVG 文件，适用于文档或网页嵌入，例如 `pnpm chartli examples/assets/image-data.txt -t svg -m lines -w 320 -h 120`
+- 👀 **标签化图表示例**：展示如何结合 `--first-column-x` 与资料标签，生成更清晰、具备自动轴标题和刻度标签的图表
+
+### [GitHub - eslint/css: ESLint 的 CSS 语言插件](https://github.com/eslint/css)
+
+ESLint CSS 语言插件允许使用 ESLint 原生检查 CSS 文件，需要 ESLint v9.15.0+ 和新配置系统。
+
+- 📦 **安装方式多样**：支持 npm/yarn/pnpm/bun 安装 `@eslint/css`，Deno 用户可用 `jsr:@eslint/css` 实验性安装。
+- ⚙️ **配置简洁**：在 `eslint.config.js` 中导入插件并设置 `language: "css/css"`，可使用 `recommended` 配置启用推荐规则。
+- 🛡️ **规则丰富**：提供 14 条规则，包括 `no-empty-blocks`、`no-important`、`no-invalid-properties` 等，支持注释内单独配置。
+- 🌐 **语言支持**：内置 CSS 解析器，支持严格模式和宽容模式（`tolerant: true`），兼容 PostCSS 等自定义语法。
+- 🔧 **自定义语法**：通过 `customSyntax` 选项可扩展 CSS 语法，支持对象或函数形式，并专门提供 Tailwind CSS 配置方案。
+- 💻 **编辑器集成**：支持 VS Code 和 JetBrains WebStorm，需配置 `eslint.validate` 包含 `css` 文件。
+
+### [GitHub - KurtGokhan/tegaki: 网页手写动画。支持任意字体或文字。](https://github.com/KurtGokhan/tegaki)
+
+Tegaki（手書き）是一个能将任何字体转换为手写动画的开源工具，无需手动路径编辑或原生依赖，只需选择字体即可使用。
+
+- 🎨 **一键手写动画**：支持任何字体，文字会以自然笔顺逐笔绘制，无需手动设定路径
+- 🚀 **快速安装与使用**：通过 `npm install tegaki` 安装，React 示例只需几行代码即可执行
+- 🔧 **多框架支持**：兼容 React、Svelte、Vue、SolidJS、Astro、Vanilla JS 及 Web Components
+- 📦 **内置多种字体**：包含 Caveat、Italianno、Klee One 等七种手写字体，涵盖拉丁、希伯来、阿拉伯、天城文及日文
+- 🌐 **完整文档与整合**：提供详细指南、API 参考，并可整合 Sli.dev 简报与 Remotion 视频
+
 ## 更新
+
+### [高级树计数：使用 sibling-index() 和 sibling-count() 的数学布局 — Smashing Magazine](https://www.smashingmagazine.com/2026/05/mathematical-layouts-sibling-index-sibling-count/)
+
+本文介绍了 CSS 中新增的`sibling-index()`和`sibling-count()`函数，它们允许开发者直接在样式表中获取元素的兄弟索引和兄弟总数，从而无需 JavaScript 或复杂的`:nth-child()`规则即可实现动态布局和动画效果。
+
+- 🎯 **核心功能**：`sibling-index()`返回元素在父级中的位置（从 1 开始），`sibling-count()`返回父级元素总数，两者均为整数类型，可直接用于`calc()`等数学函数。
+- ⚡ **动画简化**：一行代码即可实现交错动画效果，如`animation-delay: calc(sibling-index() * 100ms)`，无需为每个元素单独编写规则。
+- 🔄 **动态布局**：可自动计算等宽宽度（`width: calc(100% / sibling-count())`）、均匀色相分布、圆形菜单布局等，元素增删时自动调整。
+- ⚠️ **注意事项**：Shadow DOM 中只计算影子树内的元素；`display: none`的元素仍会计入索引；自定义属性需直接应用于目标元素而非父级；大规模 DOM 变更可能影响性能。
+- 🌐 **浏览器支持**：Chrome/Edge 138 和 Safari 26.2 已支持，Firefox 尚未稳定支持，建议使用`@supports`实现渐进增强。
+- ♿ **可访问性**：这些函数仅影响视觉呈现，屏幕阅读器和键盘导航仍遵循 DOM 顺序，需要额外使用 JavaScript 同步 ARIA 属性。
+- 🚀 **未来展望**：CSSWG 正在讨论增加`of <selector>`参数（类似`:nth-child()`的筛选功能）以及`children-count()`和`descendant-count()`等新函数。
 
 ## 设计
 
 ## AI
 
 ## 其他
+
+### [AI 辅助的工程师正在精疲力竭，这真的没问题吗？——火星编年史，邪恶火星人团队博客](https://evilmartians.com/chronicles/ai-assisted-engineers-are-burning-out-is-this-fine)
+
+AI 辅助工程师正在经历新型职业倦怠，这种倦怠源于认知过载、工作强度激增和成就感缺失的恶性循环。文章分析了 AI 工具如何改变工作本质，并提出可持续使用 AI 的实践建议。
+
+- 🔥 **新型倦怠现象**：AI 辅助编程导致高强度认知负荷，开发者每天仅能维持 4-5 小时高效工作，之后大脑完全疲劳
+- ⚡ **效率陷阱**：AI 看似提升 2 倍速度，但实际将工作强度提升至传统编程的 2 倍，且剥夺了自然休息时间
+- 🧠 **认知债务**：开发者失去对代码库的直觉理解，从创作者退化为监督者，监督自己不懂的系统极其消耗精力
+- 💔 **成就感流失**：AI 生成代码取代了编程中"规划→创作→成果"的愉悦过程，导致工作满足感大幅降低
+- 🎭 **隐性职业转型**：工程师角色悄然转变为 AI 协调员，但职位名称未变，造成身份认知冲突
+- 📉 **虚假期望陷阱**：AI 带来的初始高效会形成不切实际的基准线，当效率回落时产生巨大压力
+- 🔄 **审查瓶颈**：AI 生成代码量远超人工审查能力，高级工程师被迫承担不成比例的风险和认知负荷
+- 🛠️ **可持续方案**：记录每日成就、规划 AI 使用时段、保留纯手工编码时间、严格执行工作边界、探索新技能领域
 
 ### [关于直言不讳的反馈](https://shreyasdoshi.substack.com/p/on-blunt-feedback)
 
