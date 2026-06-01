@@ -91,6 +91,23 @@ TanStack Router 和 TanStack Query 的整合指南，探讨如何结合两者优
 
 ## 工具
 
+### [pip-it-up — 现代文档画中画工具包](https://pip-it-up.vercel.app/)
+
+这是一个用于将任何 UI 组件弹出为画中画窗口的库，支持零配置、自动调整大小和框架无关的核心。
+
+- 🖼️ **核心功能**：通过`PipWrapper`和`PipTrigger`组件，轻松将任意 UI 组件弹出为浮动画中画窗口，保留内容和光标状态。
+- 🔄 **实时样式同步**：使用`MutationObserver`实时同步样式、主题和 CSS-in-JS 变更，确保弹出窗口样式一致。
+- 🎮 **多种 DOM 策略**：支持移动、克隆和传送门三种模式，移动模式保留状态，传送门保持组件树完整。
+- 📏 **自动调整与响应式**：窗口自动适应内容大小，支持`isInsidePip`属性实现响应式画中画布局。
+- ⌨️ **键盘转发**：Cmd+S、Cmd+K 等快捷键在画中画窗口中正常工作，提升编辑体验。
+- 🌐 **优雅降级**：Firefox 和 Safari 回退到新标签页或自定义处理程序（如模态框），兼容性良好。
+- 🛡️ **SSR 安全**：无缝支持 Next.js、Remix 和 Vite，无 hydration 不匹配问题。
+- 🔗 **解耦触发器**：通过命名注册表，任何触发器可连接任意包装器，无需共享上下文。
+- 📝 **TypeScript 优先**：提供泛型类型钩子、完整 IntelliSense，无需类型转换。
+- 🧩 **编辑器支持**：与 Tiptap、Monaco、CodeMirror 等编辑器完美集成，保留状态和撤销历史。
+- 📊 **浏览器支持**：基于文档画中画 API，Chrome/Edge 116+ 完全支持，Firefox/Safari 回退，需 HTTPS 和用户手势。
+- 🚀 **路线图**：计划支持视频/Canvas 画中画、Vue/Svelte/Angular 绑定，以及 v1.0 稳定版发布。
+
 ### [aimock](https://github.com/CopilotKit/aimock)
 
 🧪 概述：该工具提供一个统一的模拟服务器，用于测试 AI 应用中的所有外部依赖，包括 LLM API、多媒体生成、搜索、数据库和代理协议等。
