@@ -14,6 +14,16 @@ summary: ''
 
 一个面向 AI 编码代理的本地代码语义索引工具，支持 Claude Code、Cursor、Codex 等多种工作台。它会在项目内构建 `.codegraph/` 索引，把符号关系、调用链和结构化上下文暴露给代理，减少盲目 `grep/read` 探索带来的 token 与工具调用开销。
 
+[context-mode - 编码 Agent 的上下文压缩与会话连续性 MCP](https://github.com/mksglu/context-mode)
+
+Context Mode 是一个面向 Claude Code、Codex CLI、Gemini CLI、VS Code Copilot、OpenCode 等编码代理的跨平台 MCP 插件 / 服务器。它的重点不是再包一层普通工具，而是控制“大输出怎样进入上下文窗口”：把高体积工具结果沙箱化，只把摘要、指针或检索结果交给模型，同时用 SQLite + FTS5/BM25 保存会话事件和可检索知识。
+
+- 核心价值是“省上下文而不丢能力”：README 和 benchmark 主打把大体积工具输出压到原来的很小一部分，在保留可检索性的同时减少上下文爆炸。
+- 同时补会话连续性：文件编辑、git 操作、任务、错误和用户决策会被记录下来，压缩会话后可按需检索，而不是整段重新塞回 prompt。
+- 提供的能力比较完整：`ctx_execute`、`ctx_execute_file`、`ctx_index`、`ctx_search`、`ctx_fetch_and_index` 这类工具，把“先写代码分析，再只返回结果”的工作流做成基础设施。
+- 更适合重度 coding agent 使用：它强调 hook / SessionStart 注入，让代理默认优先走省上下文路径，而不是直接裸跑 `read`、`bash` 或 `web fetch`。
+- 更适合放在 `AI DevTools` 的“MCP 与环境桥接”：虽然它也带记忆和命令入口，但本质仍是给现有编码代理补上下文路由、沙箱执行和检索层。
+
 [mobile-use - AI 操作安卓和 iOS 应用程序](https://github.com/minitap-ai/mobile-use)
 
 [claude-context - 代码搜索 mcp](https://github.com/zilliztech/claude-context)
