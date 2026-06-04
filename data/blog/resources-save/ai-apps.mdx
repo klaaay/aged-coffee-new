@@ -18,6 +18,15 @@ summary: ''
 
 MineContext 是一个开源的主动上下文感知 AI 伙伴。它通过屏幕截图和内容理解持续收集用户的数字工作上下文，再主动生成洞察、日/周总结、待办、提示和活动记录。项目强调 local-first，数据默认存本地，也支持兼容 OpenAI API 的本地模型服务，适合研究个人 context engineering、ChatGPT Pulse 类产品和长期上下文助手。
 
+[Feynman - 开源 AI 研究 Agent](https://github.com/companion-inc/feynman)
+
+Feynman 是一个面向研究任务的开源 AI Agent，重点覆盖论文检索、文献综述、深度研究、论文与代码一致性审计、实验复现和训练 recipe 生成。它既能作为独立终端工具使用，也能只安装 skills，让 Codex、Claude Code、OpenCode 直接继承这套研究工作流。
+
+- 任务入口很清晰：`deepresearch`、`lit`、`review`、`audit`、`replicate`、`recipe` 等命令把“搜资料、交叉验证、模拟审稿、实验复现”收敛成固定工作流。
+- 不只是网页搜索：会结合论文搜索、Web、Hugging Face、代码仓库和历史 session 做证据汇总，更像研究工作台而不是普通聊天壳。
+- 对 agent 工作流兼容度高：官方提供 skills-only 安装方式，可装到 `~/.codex/skills/feynman`，也支持仓库级 `.agents/skills/feynman` 和 `.opencode/skills/feynman`。
+- 更适合放在 `AI-Apps` 的“知识处理”：虽然它带技能包和 agent runtime，但核心价值仍是直接产出研究结论、综述和实验方案，而不是服务日常软件开发流程。
+
 [llm_wiki - 可自我构建的个人知识库](https://github.com/nashsu/llm_wiki/blob/main/README_CN.md)
 
 LLM Wiki 是一个跨平台桌面应用，目标不是做一次性的 RAG 问答，而是让 LLM 持续把你的文档整理成结构化、可交叉引用、可长期维护的个人 Wiki。它基于 Karpathy 的 `llm-wiki` 方法论，但做成了完整产品，适合把 PDF、Markdown、Office 文档、网页剪藏等资料沉淀成长期知识库。
