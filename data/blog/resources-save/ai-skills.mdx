@@ -227,6 +227,17 @@ Claude AI 实用技能和指令集锦
 
 Kami 是一个面向 AI 时代的文档设计系统 Skill，主打“好内容应该落在好纸上”。它用一套约束语言覆盖一页纸、长文档、信件、作品集、简历和幻灯片 6 种格式，支持中英文一等公民体验，并提供日文 best-effort 路径。适合让 Agent 输出可直接交付的研究报告、简历、演示文稿和品牌资料页。
 
+## 动画 / 多媒体 Skills
+
+[spine-animation-ai](https://github.com/GenielabsOpenSource/spine-animation-ai)
+
+一个面向 Spine 2D 骨骼动画生产的 Claude Skill。它的重点不是教模型“怎么画动画”，而是把角色拆件、骨骼结构、部件定位、基础动作生成和预览产物串成一条可执行流水线，适合拿来研究 AI 如何直接介入 2D 角色动画制作。
+
+- 产物链路完整：从分离好的角色 PNG 部件出发，可自动定位部件、生成骨骼 JSON、打包 atlas，并产出可直接打开的 HTML5 动画预览。
+- 不只处理静态拼装：README 明确包含 idle、walk、run、attack、wave、jump 等基础动画生成，还支持对已有 skeleton 做 AI 辅助校正。
+- 兼顾 Skill 和脚本双入口：既能把 `SKILL.md` 直接塞进 Claude Project Knowledge 使用，也能脱离 Claude，单独运行仓库里的 Python 脚本走完整管线。
+- 适合做动画自动化参考：项目把 SIFT + RANSAC 部件定位、Spine JSON 构建、Web Player 预览这些步骤公开出来，比单纯“动画生成 demo”更适合收藏作方法样本。
+
 ## 通用技能 Skill
 
 [Humanizer-zh: AI 写作去痕工具（中文版）](https://github.com/op7418/Humanizer-zh)
