@@ -114,6 +114,7 @@ summary: ''
 
 - [ni](https://github.com/antfu/ni)
 - [git-open](https://github.com/paulirish/git-open)
+- [Orval - 基于 OpenAPI / Swagger 生成 TypeScript API client、类型、hooks 与 mock，适合 React Query、SWR、fetch 等方案](https://github.com/orval-labs/orval)
 - [awesome-cli-apps - 精选命令行应用列表](https://github.com/agarrharr/awesome-cli-apps)
 
 ### 常见替代
