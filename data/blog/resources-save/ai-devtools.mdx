@@ -89,6 +89,14 @@ Agent Orchestrator 是一个面向并行 AI 编码代理的编排层，重点解
 - 更像编排系统而不是单个 agent：你主要操作的是 orchestrator 和 dashboard，而不是手动盯每个终端会话。
 - 插件位设计比较完整：agent、runtime、workspace、tracker、SCM、notifier、terminal 都能替换，适合需要长期扩展工作流的团队。
 
+[sandcastle - 沙箱化编码 Agent 编排库](https://github.com/mattpocock/sandcastle)
+Sandcastle 是一个面向 AI 编码代理的 TypeScript 编排库，核心是用一次 `sandcastle.run()` 把 agent 放进隔离沙箱里执行，并按可配置分支策略把改动合并回仓库。它更像给现有开发流程补一个“可编排、可隔离、可回写”的执行层，适合做并行 AFK agent、批量改造或 review pipeline。
+
+- 编排入口比较薄：通过 JS API 调用，初始化后会生成 `.sandcastle/` 目录来承载 prompt、环境变量和入口脚本，适合直接嵌进现有 TypeScript 工具链。
+- 沙箱提供者可替换：内置 Docker、Podman、Vercel，也支持 `noSandbox()` 和自定义 provider，适合在本地容器、云端微 VM 与自建环境之间切换。
+- 不只是“把命令丢进容器里跑”：它把分支策略、commit 收集和 merge 回写作为一等能力，比较适合接入真实仓库工作流。
+- 更适合放在 `AI DevTools` 的“工作流与测试”：它服务的是编码代理执行与交付链路，不是单个 agent 应用，也不只是通用容器工具。
+
 [expect](https://github.com/millionco/expect)
 Expect 是一个让 AI agent 在真实浏览器里测试代码改动的工具。它会扫描未提交改动或分支 diff，生成测试计划，再驱动浏览器执行验证并输出通过或失败结果。
 

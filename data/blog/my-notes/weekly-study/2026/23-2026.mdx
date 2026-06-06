@@ -12,6 +12,64 @@ summary: ''
 
 ## 技术
 
+### [领域专长始终是真正的护城河](https://www.brethorsting.com/blog/2026/05/domain-expertise-has-always-been-the-real-moat/)
+
+概述总结
+
+- 🤖 AI 工具削弱了传统编程技能的价值，但无法替代领域知识
+- 🧠 编写代码从来不是难点，真正的挑战是在头脑中构建准确的领域模型
+- 🔗 智能代理切断了“理解领域”与“编写代码”之间的必然联系
+- 👨‍💼 领域专家（如物流调度员、精算师）虽不懂编程，但能判断 AI 输出是否正确
+- 🛠️ 通用工程师能构建可靠系统，但缺乏领域知识时无法验证输出的正确性
+- 📉 过去工程师可通过学习领域知识获得优势，而领域专家难以掌握编程技能
+- ⚖️ 智能代理使工程师的编程优势贬值，但领域专家的判断力价值不变
+- 🎯 最稀缺的人才：同时具备领域知识和验证能力，能双重判断代码与结果正确性
+- 💡 建议工程师：深耕某个行业或领域知识，这将成为 AI 无法替代的核心竞争力
+
+### [使用 CSS 字母间距显示文本](https://css-tricks.com/revealing-text-with-css-letter-spacing/)
+
+本文介绍了如何利用 CSS 的 `letter-spacing` 属性、`::first-letter` 伪元素和文本对齐等现有功能，在不使用 `::nth-letter()` 选择器的情况下，实现字母重叠、文字揭示和隐藏等文本特效。
+
+- 🎯 **核心难点**：CSS 无法直接定位单个字符（缺乏 `::nth-letter()`），但可通过 `letter-spacing` 动画间接实现字符级别的效果。
+- 🔀 **字母重叠与分离**：通过设置 `letter-spacing: -1ch` 使字母完全重叠，再结合 `color: transparent` 隐藏文字，在 `:checked` 状态下动画恢复至 `0ch` 并显示颜色，形成揭示效果。
+- 🎨 **对齐位置定制**：利用 `text-align: center/right` 配合负值 `letter-spacing`，让字母从指定对齐位置（如居中或右对齐）展开，产生差异化动画。
+- 🔄 **文本切换动画**：在复选框切换时，第一段文字通过 `letter-spacing: -2ch` + `text-indent` 收缩隐藏，第二段文字从 `-1ch` 恢复至 `0ch` 并显示，结合 `cubic-bezier` 弹性曲线实现流畅过渡。
+- 📝 **首字母保留效果**：利用 `::first-letter` 设置黑色保持可见，其余字母用 `color: transparent` 并赋予负 `letter-spacing`，在 `:hover` 时展开完整单词（如 UNICEF 首字母缩写揭示全称）。
+- ✨ **现有功能的创造力**：尽管缺乏 `::nth-letter`，但通过 `letter-spacing` 动画、伪元素、对齐属性和 `overflow: clip` 的组合，已能实现丰富的字符级文本特效。
+
+### [GitHub - AllThingsSmitty/typescript-tips-everyone-should-know：精选实用TypeScript模式集，提升安全性、可读性、可维护性与开发者体验。](https://github.com/AllThingsSmitty/typescript-tips-everyone-should-know)
+
+本指南提供了实用的 TypeScript 模式，旨在提升代码的安全性、可读性和可维护性。
+
+- 🛡️ 优先使用 `unknown` 而非 `any`，强制进行类型验证，防止类型泄露。
+- 🤖 让类型推断自动工作，减少显式类型注解，避免过度注解带来的维护负担。
+- ✅ 使用 `satisfies` 替代 `as`，在验证类型的同时保留类型推断的精确性。
+- 🔄 从值中派生类型，使用 `as const` 和 `typeof` 保持运行时值与类型同步。
+- 🧩 用可辨识联合建模不可能状态，通过穷举检查（`never`）将未来重构错误转化为编译错误。
+- 📌 对配置和常量使用 `as const`，将宽泛类型（如 `string`）缩小为字面量类型。
+- 🔍 使用类型谓词连接运行时检查与编译时智能，尤其在 API 和外部输入边界处。
+- 🏗️ 通过 `Pick`、`Omit` 等工具类型从现有类型构建新类型，避免重复。
+- 🌐 在运行时验证外部数据（如 API 响应），因为 TypeScript 不保证运行时安全。
+- 🚫 大多数情况下避免使用 `enum`，改用 `as const` 和字面量联合类型，更易重构和序列化。
+- ⚙️ 优先使用可自动推断的泛型，减少手动指定泛型参数。
+- 🔧 启用严格编译器选项（如 `strict`、`noUncheckedIndexedAccess`），显著提升代码正确性。
+- 🎨 学习模板字面量类型，用于路由、事件名、CSS 工具类等场景。
+- ⚠️ 记住“类型安全”不等于“运行时安全”，TypeScript 改善正确性但不替代验证。
+
+### [Hocuspocus | Tiptap 协作文档](https://tiptap.dev/docs/hocuspocus/getting-started/overview)
+
+Hocuspocus 是一套基于 Y.js 的协作工具套件，旨在为应用添加实时同步、离线优先和冲突解决功能，支持从简单集成到百万级用户扩展。
+
+- 🧩 基于 Y.js 构建，可实现无冲突的实时数据合并与同步
+- ⚡ 采用 CRDT 技术，性能卓越，变更顺序不影响最终结果（类似 Git）
+- 📡 提供 WebSocket 后端服务器，支持快速集成与扩展
+- 🔄 支持离线优先应用，后期同步变更并自动解决冲突
+- 🖊️ 集成协作文本编辑（兼容 Tiptap、Slate、Quill、Monaco 等编辑器）
+- 🔗 可融入现有应用，并通过 Webhook 发送变更
+- 📈 借助 Redis 可扩展至百万用户
+- 💻 使用 TypeScript 编写，支持 Node.js、Bun、Deno 及 Cloudflare Workers
+- ⚛️ 提供 React 官方绑定（@hocuspocus/provider-react）
+
 ### [为何你的发布比想象中更难](https://newsletter.optimistengineer.com/p/why-your-releases-feel-harder-than)
 
 软件发布常因系统性问题而非部署本身感到困难，真正的解决方案在于提前设计更清晰、一致和可信任的系统，而非在发布时临时补救。
@@ -26,7 +84,31 @@ summary: ''
 
 ## 更新
 
+### [DevTools 新功能 (Chrome 149)  |  博客  |  Chrome 开发者](https://developer.chrome.com/blog/new-in-devtools-149)
+
+Chrome 149 开发者工具更新概览：AI 辅助、WebMCP 调试与 CSS 代码补全等重大升级
+
+- 🤖 **DevTools for Agents 稳定版发布**：v1.1.1 版本新增自定义第三方工具、WebMCP 调试和自定义 HTTP 头模拟功能，部分功能仍为实验性。
+- 🧠 **AI 辅助面板全面升级**：新增代理演练小部件、一键复制对话到编码助手、集成 Lighthouse 分析、采用 Gemini 3 模型提升响应质量，并支持方向键导航历史对话。
+- 🔧 **实验性 WebMCP 调试工具**：在 Application 面板侧边栏新增工具，可检查客户端工具、手动执行、跟踪调用事件并监控状态，需启用实验性标志。
+- 🎨 **CSS 代码补全功能上线**：Styles 选项卡现支持 Gemini 驱动的 CSS 代码补全，帮助快速生成复杂样式如渐变、阴影和网格布局。
+- 🌈 **APCA 对比度指南正式稳定**：高级感知对比度算法从实验阶段转为标准设置，可在设置中启用，替代传统 AAA/AA 指南。
+- 📱 **动态设备模式用户代理**：响应式设备模式不再使用硬编码 UA 字符串，改为基于当前年份动态生成，确保兼容现代网站。
+- 🛠️ **其他改进**：Console 新增折叠/展开切换按钮；Application 中存储桶链接可点击导航；修复 Service Worker 崩溃；支持表单提交预渲染事件；新增设备绑定会话凭据管理；Elements 动态更新问题高亮；Network 支持 SSE 序列化导出；Performance 修复 Core Web Vitals 跟踪和内存泄漏。
+
 ## 设计
+
+### [Vercel 产品设计团队实际使用的工具 | Hannah Hearth](https://www.hannahhearth.com/posts/tools-the-vercel-product-design-team-actually-uses)
+
+Vercel 产品设计团队分享了当前实际使用的设计工具，反映了 AI 工具在设计工作流中的现状：团队内工具使用高度分化，AI 在设计领域相比工程领域仍显笨拙，但已出现一些创新实践。
+
+- 🛠️ **工具分化明显**：即使在小团队内，每位设计师使用的工具也完全不同，AI 使用程度从重度依赖到完全怀疑不等。
+- 🤖 **AI 设计工具滞后**：相比工程领域的 AI 工具，设计工作流的 AI 工具仍显笨拙且落后，但已出现创新用法（如 Claude+Codex 双模型协作）。
+- 🔄 **并行线程提升效率**：通过同时运行多个 AI 任务（如 Conductor 中开不同标签页处理 UX、数据、小修复），避免等待 AI 时刷社交媒体，保持心流状态。
+- 🏗️ **以生产环境为设计源头**：由于实现成本降低，设计文件常落后于实际代码。设计师使用 Paper 浏览器扩展、自定义 Chrome 扩展等工具从生产环境反向获取样式，并用 Slack 机器人直接修改代码。
+- 🎨 **浏览器作为设计画布**：Sam 开发的 UI Fork 工具允许在本地开发环境中创建组件多版本，通过浏览器切换预览，最终合并选定版本的差异。
+- 📐 **Figma 仍有价值但显慢**：部分设计师发现 AI 设计流程后回归 Figma 进行广泛探索，但 Figma 相比 AI 编码工具显得缓慢。Figma MCP 可用于填充设计稿的真实内容。
+- 🚫 **非 AI 工具同样有效**：Timeless（屏幕连续录制回放）、Cleanshot Pin（截图叠加对比）等非 AI 工具在特定场景下仍不可或缺。
 
 ## AI
 
