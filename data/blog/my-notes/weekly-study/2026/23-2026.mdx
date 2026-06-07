@@ -12,9 +12,46 @@ summary: ''
 
 ## 技术
 
-### [领域专长始终是真正的护城河](https://www.brethorsting.com/blog/2026/05/domain-expertise-has-always-been-the-real-moat/)
+### [使用 TanStack Start 构建应用 | Lovable](https://lovable.dev/blog/building-apps-using-tanstack-start)
 
-概述总结
+Lovable 平台已将其应用构建框架从 React + Vite（客户端渲染）升级为 TanStack Start（服务端渲染），以提升性能和 SEO。
+
+- 🚀 **新框架核心**：新项目默认使用 TanStack Start，支持服务端渲染 (SSR)、静态站点生成 (SSG) 和客户端渲染 (CSR)，无需手动配置。
+- ⚙️ **技术栈对比**：旧栈使用 Vite + React Router 和静态托管；新栈采用 TanStack Start、Cloudflare Workers，并集成了服务端函数。
+- 🧩 **选择 TanStack Start 的原因**：它基于 React、开源、可独立部署、支持 SSR，并由成熟的团队维护，同时提供强大的类型系统，便于 AI 生成代码。
+- 📈 **SEO 显著提升**：SSR 使页面内容直接包含在 HTML 中，对爬虫更友好，现有应用通过预渲染已实现有机搜索流量增长 2.9%，AI 工具流量增长 98.5%。
+- 🛠️ **代码执行模型**：`createServerFn` 允许在组件文件中编写服务端逻辑，构建过程自动处理客户端/服务端分离，简化了开发流程。
+- 🚢 **发布流程不变**：发布操作与之前相同，但后台构建的是服务端渲染的应用，并自动预生成静态路由，部署为边缘 Worker。
+- 🔐 **密钥管理优化**：服务端密钥独立于代码包存储，作为绑定注入，可即时轮换，无需重新构建或部署。
+- 🤖 **AI 适配新框架**：Lovable 的 AI 已通过注入 TanStack 特定规则，学习并生成符合新框架模式的代码，确保准确性。
+- 🎯 **对现有项目的影响**：现有项目无需迁移，仍正常运行，并已从预渲染中受益。未来将逐步为新旧项目提供更多新栈功能。
+
+### [React 性能优化：停止记忆化，开始优化——Depender Sethi](https://www.sethi.io/blog/react-performance-from-sluggish-to-lightning)
+
+React 性能优化的核心在于减少不必要的工作，而非盲目添加记忆化。通过状态下移、并发特性、代码分割和合理分析，可以显著提升应用性能。
+
+- 🚗 **状态下移是首要优化**：将状态放在实际使用的组件中，避免整个子树不必要的重新渲染，这是最有效的性能改进方法。
+- 🧒 **子组件模式**：通过将子组件作为`children`传递，避免父组件状态更新时子组件重新渲染，无需记忆化。
+- 🛑 **停止滥用记忆化**：`useMemo`和`useCallback`有额外开销，React 编译器（React 19+）已自动处理大部分记忆化，手动添加只在真正必要时进行。
+- 🚀 **使用并发特性**：`useTransition`和`useDeferredValue`可让非紧急更新在后台处理，保持用户输入流畅，是 2026 年最被低估的性能工具。
+- 🧩 **代码分割与懒加载**：通过`lazy()`和`Suspense`按需加载页面和重型组件，但避免过度分割。
+- 📊 **先分析再优化**：使用 React DevTools 分析器、Chrome 性能标签和 Core Web Vitals 指标，找到真正的瓶颈（如 16ms 以上渲染或 50ms 以上长任务）。
+- ⚠️ **避免常见陷阱**：不要在组件内定义组件、使用稳定 key、拆分上下文、合并`useEffect`链、将静态 JSX 对象移出组件。
+
+### [Node.js 24 vs 25 vs 26 完整基准测试](https://www.repoflow.io/blog/node-js-24-vs-25-vs-26-complete-benchmark)
+
+本报告对 Node.js 24.15.0、25.9.0 和 26.2.0 进行了全面的性能基准测试，包括合成应用负载和针对性操作基准。测试结果显示，各版本性能接近，但 Node 26 在内存使用上略有优势，建议用户根据自身服务进行实际测试以做出选择。
+
+- 📊 **合成应用测试**：模拟了混合请求（健康检查、读写、计算等），以 50 req/s 的固定速率运行，便于比较尾延迟和内存表现。
+- ⏱️ **p95 延迟**：Node 26.2.0 在尾延迟方面表现最佳，数值最低。
+- 💾 **峰值内存**：Node 26.2.0 的峰值 RSS 内存使用最少，内存效率最高。
+- 📉 **内存随时间变化**：在稳定运行阶段，三个版本的内存增长趋势相似，但 Node 26 整体更低。
+- 🔄 **CPU 随时间变化**：所有版本在固定负载下 CPU 使用率接近，稳定性良好。
+- 🚀 **针对性操作基准**：测试了 HTTP 吞吐量、JSON 解析/序列化、SHA-256 哈希等，Node 26 在多数项目中表现略优或持平。
+- 🔧 **测试设置**：在 Apple M4 Mac mini 上执行，合成应用运行 3600 秒，操作基准重复 10 次取中位数。
+- 📝 **结论**：各版本性能接近，Node 26 在内存和部分延迟上稍有优势。建议用户用自身服务测试 Node 26，以确认实际效果。
+
+### [领域专长始终是真正的护城河](https://www.brethorsting.com/blog/2026/05/domain-expertise-has-always-been-the-real-moat/)
 
 - 🤖 AI 工具削弱了传统编程技能的价值，但无法替代领域知识
 - 🧠 编写代码从来不是难点，真正的挑战是在头脑中构建准确的领域模型
@@ -82,6 +119,127 @@ Hocuspocus 是一套基于 Y.js 的协作工具套件，旨在为应用添加实
 
 ## 工具
 
+### [GitHub - desko27/react-call: 调用与等待 React 组件 · GitHub](https://github.com/desko27/react-call)
+
+react-call 是一个轻量级 React 库，允许你将组件像异步函数一样调用，并通过 `await` 获取返回值。它体积小于 1KB，无外部依赖，支持 SSR 和 React Native，适用于对话框、确认弹窗、表单、通知等场景。
+
+- ⚛️ **核心功能**：通过 `createCallable()` 将组件转为可 `await` 的调用，使用 `call.end()` 返回响应值
+- 📡 **挂载方式**：将 Callable 组件作为 Root 挂载在应用顶层（如 App.tsx），所有调用自动渲染
+- ▶️ **调用与等待**：使用 `Confirm.call({ message: 'Continue?' })` 并 `await` 获取布尔结果
+- 🔄 **高级用法**：支持从调用者作用域结束调用、动态更新 props、使用 `upsert()` 确保单实例
+- 🎨 **动画支持**：通过 `call.ended` 布尔值和延迟卸载参数实现退出动画
+- 🧩 **Root 属性**：可传递 Root 专属 props（如用户名），通过 `call.root` 访问
+- ⚡ **突变流程**：`useMutationFlow` 钩子管理异步操作，支持可选的 `mutationFn` 和 payload 类型
+- 🔥 **热重载**：支持 Fast Refresh，可通过 `displayName` 或 Vite 插件保留打开对话框状态
+- 🏗️ **多预览环境**：提供 `mount()` 辅助函数，在 Storybook 等工具中避免 Root 冲突
+- ❓ **常见问题**：Root 作为调用栈支持多调用；只能有一个 Root 实例；TypeScript 类型完整导出
+- 📦 **懒加载**：支持 `React.lazy` 包裹组件，首次调用时按需加载代码块
+- 🖥️ **SSR 支持**：兼容服务端渲染，但 `call()` 方法需在客户端触发
+- 🤖 **AI 辅助**：提供官方 skill 插件，帮助 AI 编码助手正确生成 Callable 代码
+
+### [GitHub - Mergifyio/alembic-git-revisions: 基于 Git 提交历史自动链式管理 Alembic 迁移](https://github.com/Mergifyio/alembic-git-revisions)
+
+alembic-git-revisions 是一个开源工具，通过 Git 提交历史自动解决 Alembic 数据库迁移中的多分支冲突问题，避免手动修复。
+
+- 🚀 **解决问题**：自动处理 Alembic 的“Multiple head revisions”错误，无需手动 rebase 或修改 down_revision
+- 🔗 **工作原理**：基于 `git log` 确定迁移文件首次提交顺序，自动线性链接动态迁移，兼容已有静态迁移
+- ⚙️ **安装与配置**：通过 `pip install` 安装，替换 Alembic 的 `script.py.mako` 模板，使用 `get_down_revision()` 自动生成链
+- 🐳 **无 Git 环境支持**：在 Docker 或 CI 中，通过 `alembic-git-revisions` 命令预生成 `revision_chain.json` 文件，需完整 Git 历史
+- 📂 **迁移类型**：支持动态（自动链）、静态（手动管理）和混合（链接动态迁移）三种分类
+- 🛠️ **API 功能**：提供 `get_down_revision()`、`generate_chain_file()` 和 `build_chain()` 函数，支持缓存清除
+
+### [GitHub - MordechaiHadad/rustgate: 一个基于 Rust 的、支持令牌感知的 FastAPI 速率限制器 · GitHub](https://github.com/MordechaiHadad/rustgate)
+
+Rustgate 是一个基于 Rust 的 FastAPI 后端，利用 PyO3 扩展实现 AI token 感知的速率限制，并依赖 Redis 进行滑动窗口限流。
+
+- 🔧 **架构**: 包含 Rust 绑定（bindings/）和 FastAPI 后端（backend/），通过 PyO3/maturin 实现 Python 与 Rust 交互
+- 🚀 **快速启动**: 使用 `uv sync` 安装依赖并构建 Rust 扩展，`uv run uvicorn` 启动服务器
+- ⚙️ **环境配置**: 通过 `RUSTGATE_REDIS_URL` 环境变量配置 Redis 连接，默认地址为 `redis://127.0.0.1:6379/0`
+- 📡 **API 端点**: 提供 GET `/health` 健康检查，以及 POST `/models/auto`、`/models/gpt-5`、`/models/gpt-4` 等模型路由端点
+- 🛡️ **速率限制**: 基于滑动窗口（10 分钟）和 IP 识别，总预算 5000 单位，gpt-4 每 token 1 单位，gpt-5 每 token 25 单位
+- 🧮 **Token 计数**: 使用 tiktoken-rs 库，gpt-4 用 Cl100kBase 分词器，gpt-5 用 O200kBase 分词器，零 token 查询绕过限制
+- 📊 **性能基准**: 负载测试显示 `/models/auto` 端点平均延迟 88.76ms，每秒处理 1128 请求；`/health` 端点平均延迟 66.90ms，每秒处理 1496 请求
+- ❌ **模型支持**: 仅支持 gpt-4 和 gpt-5 系列，不支持 gpt-4o、gpt-4o-mini、gpt-5-mini 或 o3 等模型
+
+### [GitHub - interviewstreet/hiring-agent: 用于评估和评分简历的 AI 代理。](https://github.com/interviewstreet/hiring-agent)
+
+Hiring Agent 是一个从简历 PDF 中提取结构化数据、结合 GitHub 信号进行公平、可解释评估的 AI 工具。
+
+- 📄 **核心功能**：将简历 PDF 转换为 Markdown，提取结构化 JSON 数据，结合 GitHub 信息进行客观评分
+- 🏗️ **架构流程**：PDF 提取→LLM 分节解析→GitHub 数据增强→严格评分→CSV 输出
+- 🔧 **技术栈**：Python 3.11+，支持 Ollama（本地）或 Google Gemini（云端）作为 LLM 后端
+- 📁 **关键模块**：`pdf.py`处理 PDF，`github.py`获取 GitHub 数据，`evaluator.py`执行评分，`score.py`协调全流程
+- ⚙️ **配置灵活**：通过`.env`文件设置 LLM 提供商、模型和 API 密钥，支持开发模式（缓存+CSV 导出）
+- 🚀 **使用简单**：运行`python score.py /path/to/resume.pdf`即可获得完整评估报告
+- 📊 **评分维度**：涵盖开源贡献、个人项目、生产经验和技术技能，包含加分和扣分机制
+
+### [GitHub - gajus/babel-plugin-zod-hoist: 将 Zod 模式定义提升至文件顶部。](https://github.com/gajus/babel-plugin-zod-hoist)
+
+本插件可将 Zod schema 定义提升至文件顶部，大幅提升性能。
+
+- 🚀 **性能提升显著**：通过避免重复初始化，schema 执行速度提升 113–627 倍
+- 🧠 **零心智负担**：正常编写 Zod 代码，提升操作自动完成
+- 🔧 **无需修改代码**：兼容现有代码库，无需任何改动
+- 📦 **安装简便**：通过 `npm install --save-dev babel-plugin-zod-hoist` 安装
+- ⚙️ **配置灵活**：支持通过 `schemaNamePattern` 选项自定义匹配模式
+- 🔗 **支持派生 schema**：可提升通过 `.extend()`、`.pick()` 等组合器生成的 schema
+- 🛡️ **安全提升**：仅提升由导入和字面量构建的 schema，避免引用局部变量或 `this` 的 schema
+- 📊 **性能数据**：简单对象提升 402 倍，嵌套对象提升 218 倍，判别联合提升 627 倍
+
+### [flue](https://github.com/withastro/flue)
+
+Flue 是一个面向 TypeScript 的"Agent 框架"，旨在构建下一代自主智能体。它借鉴了 Claude Code 的使用体验，但完全无头化、可编程，不依赖人工操作。Flue 类似于 AI 领域的 Astro 或 Next.js——一次编写，可部署到 Node.js、Cloudflare、GitHub Actions 等多种环境。框架核心包括运行时、CLI 工具、虚拟沙箱、工作流、会话管理等功能模块，支持消息驱动、CI 集成、远程 MCP 工具等场景。
+
+- 🧠 **核心定位** — Flue 是"Agent Harness 框架"，使用体验类似 Claude Code，但完全无头化、可编程，核心逻辑定义在 Markdown 文件中（技能、上下文、AGENTS.md）。
+- 📦 **包结构** — 主要包含两个包：`@flue/runtime`（运行时：harness、会话、工具、沙箱）和`@flue/cli`（CLI 及构建/开发工具）。
+- ⚡ **快速上手示例** — 创建一个翻译 Agent 只需几行代码：定义 createAgent、启动 harness、调用 session.prompt()，支持通过 Valibot 进行结构化的结果类型校验。
+- 🛠️ **多沙箱支持** — 默认使用虚拟沙箱（无需容器），也可使用`local()`沙箱（CI 场景直接访问主机）或 Daytona 远程容器沙箱（完整 Linux 环境）。
+- 🔄 **Agent/Harness/会话架构** — Agent 是源文件，init() 创建 harness（配置句柄），harness.session() 打开会话。同一 URL `<id>`可延续会话，新 ID 开启新对话。
+- 📡 **部署方式** — 支持多种运行目标：`flue dev`本地开发（Node 或 Cloudflare）、`flue run` CLI 触发工作流、`flue build`构建生产部署。端口默认 3583。
+- 🔌 **MCP 工具集成** — `connectMcpServer()`可将远程 MCP 服务器工具接入 runtime，支持 streamable HTTP，通过 headers 传递认证凭据。
+- 👤 **支持 Agent 示例** — 可在 Cloudflare 上运行，使用虚拟沙箱，`session.fs`操作文件系统，支持内置 grep、glob、read 工具搜索内容。
+- 🤖 **CI 问题分类 Agent** — 使用`local()`沙箱直接访问 GitHub CLI 工具，通过`session.skill('triage')`调用预定义技能，返回结构化的严重性评估。
+- 👨‍💻 **完整编码 Agent** — 通过 Daytona 创建远程 Linux 容器，克隆仓库，安装依赖，在项目目录中启动第二个 harness 发现 AGENTS.md 和技能。
+- 📋 **任务 (Task) 机制** — `session.task()`运行一次性子 Agent，共享沙箱但拥有独立消息历史，支持定义可复用的 Agent 配置档案（`defineAgentProfile`）。
+- 🔑 **Provider 配置** — `configureProvider()`支持企业 API 网关、自定义端点、托管凭证等场景，通过 provider ID 设置基础 URL、请求头和 API 密钥。
+- 📚 **技能导入** — 支持工作区技能（`.agents/skills/`目录）和静态导入技能，Vite 会验证 SKILL.md 规范并打包允许的支持文件，自动排除密钥和凭证文件。
+- 🔗 **连接器 (Connector)** — 不是 npm 包，而是 Markdown 安装指令。`flue add`命令列出可用连接器，管道传递给 AI 编码 Agent 自动安装。
+- 📊 **可观测性** — 支持外部追踪、指标和错误报告，提供官方`@flue/opentelemetry`适配器、Braintrust 追踪示例和 Sentry 错误报告示例。
+- 🌐 **消息驱动 Agent** — 通过 HTTP 或 WebSocket 在`/agents/:name/:id`端点接收消息，支持`dispatch()`异步分发输入到 agent 会话。
+- 🗄️ **会话持久化** — Cloudflare 上由 Durable Objects 支持跨请求持久化，Node.js 默认内存存储（可自定义存储）。
+
+### [figma-console-mcp](https://github.com/southleft/figma-console-mcp)
+
+Figma Console MCP 服务器是一个将设计系统转化为 API 的工具，通过 Model Context Protocol 桥接设计与开发，让 AI 助手能够完整访问 Figma 进行设计提取、创建、调试和双向令牌同步。该工具支持 106 个工具（本地模式），提供四种连接方式，并已修复了关键的"未重连直到重启"错误。
+
+- 🐛 **v1.31.0 修复"僵尸连接"错误** - 解决了桌面桥接断开连接后无法自动恢复的问题，通过强制终止僵尸进程、每 5 分钟清理端口范围、新增自动重连看门狗和一键重连按钮，彻底修复了需要手动重启的问题
+- 🎨 **设计系统提取** - 拉取变量、组件和样式，将 Figma 变量导出为 DTCG JSON + CSS 自定义属性，可替代 Style Dictionary 和 Tokens Studio 的导出流程
+- 📸 **视觉调试** - 截取屏幕截图获取上下文，监控控制台日志，实时追踪设计变更
+- ✏️ **设计创作** - 直接在 Figma 中创建 UI 组件、框架和布局，支持组件实例化、自动布局和样式应用
+- 🔧 **变量管理** - 创建、更新、重命名和删除设计令牌，支持批量操作（一次创建最多 100 个变量），完整支持多主题模式
+- 🎞️ **版本历史与时间序列感知** - 列出版本、差异快照、生成 Markdown 变更日志，通过二分搜索追踪属性/变体的引入
+- 📌 **FigJam 白板** - 创建便签、流程图、表格和代码块，支持批量创建和自动排列
+- ♿ **无障碍扫描** - 14 项 WCAG 设计检查，包含合规性等级标记、组件评分卡和设计到代码的一致性检查
+- ☁️ **云模式支持** - 网络 AI 客户端（Claude.ai、v0、Replit）可通过云配对在 Figma 中设计，无需安装 Node.js
+- 🔄 **四种连接方式** - NPX（推荐，10 分钟设置）、云模式（5 分钟）、本地 Git（15 分钟）、远程 SSE（2 分钟，仅读取）
+- 🔁 **双向令牌同步** - 将 Figma 变量导出到代码库（DTCG JSON + CSS 自定义属性），并将代码端修改推回 Figma，差异感知合并确保往返安全
+- 🛡 **多 MCP 身份标识** - 每个工具响应携带 `_mcp: "figma-console-mcp"`，错误前缀为`[figma-console-mcp]`，确保在运行多个 Figma MCP 的代理中归属明确
+- 🧩 **MCP 应用（实验性）** - 交互式令牌浏览器和设计系统健康仪表板，支持过滤、搜索和点击复制功能
+- 🤝 **与 Figma 官方 MCP 对比** - 本工具专注调试、数据提取和设计创建（106 个工具），官方 MCP 专注代码生成，两者可互补使用
+
+### [open-code-review](https://github.com/alibaba/open-code-review/blob/main/README.zh-CN.md)
+
+Open Code Review 是阿里巴巴开源的一款 AI 代码审查 CLI 工具，采用“确定性工程+Agent”混合驱动架构，解决了纯语言驱动方案在代码审查中的覆盖不全、位置漂移、效果不稳定等问题，支持行级精准审查。
+
+- 🛠️ **核心架构**：确定性工程负责文件筛选、打包、规则匹配等强约束环节，Agent 负责动态决策与上下文召回，两者各司其职
+- 🔍 **精准定位**：具备独立评论定位与反思模块，系统性提升 AI 反馈的位置准确性和内容准确性
+- 📦 **智能分治**：将关联文件归并为同一审查单元，sub-agent 独立处理，支持并发审查，超大变更场景表现更稳定
+- ⚙️ **场景化工具集**：基于大量线上数据分析沉淀专属工具集，行为更可预测、效果更稳定
+- 🚀 **多方式安装**：支持 NPM 全局安装、GitHub 二进制下载、源码编译，适配 macOS/Linux/Windows 多平台
+- 🔗 **灵活集成**：可作为 CLI 独立使用，也可集成到编程 Agent（Skill/Plugin/命令文件）及 CI/CD 流水线（GitHub Actions/GitLab CI）
+- 📜 **四层规则链**：按优先级依次为 CLI 参数、项目配置、全局配置、系统内置规则，支持 Glob 路径匹配与自定义 JSON 规则
+- 🌐 **遥测支持**：内置 OpenTelemetry 可观测性集成，可导出 spans、metrics 及 LLM 提示词内容
+
 ## 更新
 
 ### [DevTools 新功能 (Chrome 149)  |  博客  |  Chrome 开发者](https://developer.chrome.com/blog/new-in-devtools-149)
@@ -109,8 +267,6 @@ Vercel 产品设计团队分享了当前实际使用的设计工具，反映了 
 - 🎨 **浏览器作为设计画布**：Sam 开发的 UI Fork 工具允许在本地开发环境中创建组件多版本，通过浏览器切换预览，最终合并选定版本的差异。
 - 📐 **Figma 仍有价值但显慢**：部分设计师发现 AI 设计流程后回归 Figma 进行广泛探索，但 Figma 相比 AI 编码工具显得缓慢。Figma MCP 可用于填充设计稿的真实内容。
 - 🚫 **非 AI 工具同样有效**：Timeless（屏幕连续录制回放）、Cleanshot Pin（截图叠加对比）等非 AI 工具在特定场景下仍不可或缺。
-
-## AI
 
 ## 其他
 
