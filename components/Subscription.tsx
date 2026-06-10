@@ -122,7 +122,7 @@ export const Subscription = () => {
       {
         name: '100 云服务器 55R 型号租用一年',
         yearly: 89,
-        expiry: '2026-06-12',
+        expiry: '2027-06-12',
         type: '效率',
         extra: '',
       },
