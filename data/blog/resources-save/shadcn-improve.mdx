@@ -1,0 +1,101 @@
+---
+title: shadcn improve
+date: '2026-06-11'
+tags: ['resources-save']
+draft: false
+summary: '一个先审计代码库、再生成可执行计划、最后交给便宜模型落实的 agent skill。'
+---
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 项目链接
+
+- [shadcn/improve](https://github.com/shadcn/improve)
+- [示例计划](https://github.com/shadcn/improve/blob/main/examples/001-extract-shadow-config-resolution.md)
+
+## 这是什么
+
+`improve` 是一个面向 AI coding agent 的工作流型 skill。
+
+它的核心目标不是直接改代码，而是先用更强的模型做三件高杠杆的事情：
+
+- 理解代码库
+- 审计出真正值得做的问题
+- 写出足够自包含的实施计划
+
+然后再把真正的实现、测试和交付，交给更便宜的模型或人去执行。
+
+它自己反复强调一句话：
+
+> plan is the product
+
+也就是，这个 skill 的主要产物不是 patch，而是 `plans/` 目录里的执行计划。
+
+## 它的工作方式
+
+按照 README，它大致分成几步：
+
+1. `Recon`：先摸清仓库技术栈、约定和真实可运行的 build/test/lint 命令
+2. `Audit`：并行审计 correctness、security、performance、test coverage、tech debt、DX、docs 等多个维度
+3. `Vet`：重新核对每条发现的证据，减少子代理误报
+4. `Prioritize`：按影响、工作量和置信度排序
+5. `Plan`：把选中的问题写成一份份可执行计划，落到 `plans/`
+
+这个思路和“直接让模型边看边改”不一样。它把“判断”与“执行”拆开，把高成本智能尽量花在审计和规划上。
+
+## 常用入口
+
+README 里给出的核心命令包括：
+
+- `/improve`：完整审计，输出优先级排序后的 findings 和计划
+- `/improve quick`：便宜版快速扫一遍热点
+- `/improve deep`：更彻底的全量审计
+- `/improve branch`：只审当前分支改动
+- `/improve plan <description>`：跳过全量审计，直接规划某个需求
+- `/improve review-plan <file>`：审查和收紧已有计划
+- `/improve execute <plan>`：把计划交给更便宜的执行者，并回头 review
+- `/improve reconcile`：刷新 backlog，验证 done、重写 blocked、清理 drift
+
+安装方式也很直接：
+
+```bash
+npx skills add shadcn/improve
+```
+
+## 为什么这个项目值得收录
+
+- 它不是“再来一个编程 skill 列表”，而是明确提出了 advisor / executor 分层
+- 它把计划写作当成第一产物，而不是实现附属品
+- 它把验证命令、边界、停止条件都写进计划，明显是在为更弱的执行者设计
+- 它把 `execute` 和 `reconcile` 也设计进闭环，不是写完 spec 就结束
+
+这套方法尤其适合：
+
+- 大仓库技术债梳理
+- 多 agent 协作
+- 想把强模型预算集中花在“判断”而不是“重复实现”上
+- 希望需求 / 修复计划能脱离会话长期存在
+
+## 示例计划为什么值得看
+
+仓库里附带的示例计划很有代表性。它不是一句“去重构某个模块”，而是把下面这些信息都写全了：
+
+- 计划对应的 git commit
+- 漂移检查命令
+- 当前代码摘录
+- 只允许修改的文件范围
+- 明确 out-of-scope
+- 每一步要跑的验证命令和预期结果
+- stop conditions
+
+这其实就是把“怎么让更小的模型别乱发挥”写成了一套工程协议。
+
+## 我的备注
+
+如果后面我要整理自己的 agent 工作流，这个项目最值得借鉴的点有三个：
+
+- 先把审计、判断、规划和执行拆层，而不是让一个 agent 全程即兴
+- 计划必须为最弱执行者而写，不能依赖“上文语境”
+- backlog 不是一次性产物，`reconcile` 这种回收和校验机制很关键
+
+它更像 `spec writer + tech lead reviewer + task dispatcher` 的组合，而不是普通代码生成 skill。
