@@ -35,7 +35,46 @@ summary: ''
 
 ## 工具
 
+### [GitHub - honojs/cli: 面向人类与 AI 的 Hono 命令行工具 · GitHub](https://github.com/honojs/cli)
+
+Hono CLI 是一个专为人类和 AI 设计的命令行工具，提供针对 Hono 框架的专用子命令，支持文档搜索、请求测试、服务器启动和代码优化等功能。
+
+- 📚 **文档查阅**：使用 `hono docs [path]` 直接在终端查看 Hono 文档，支持指定路径如 `/docs/api/context`
+- 🔍 **智能搜索**：通过 `hono search <query>` 进行模糊搜索，支持 `--pretty` 友好输出和 `--limit` 限制结果数
+- 🚀 **请求测试**：`hono request [file]` 无需启动服务器即可测试应用，支持 GET/POST、自定义头、JSON 输出和文件写入
+- 🌐 **快速启动**：`hono serve [entry]` 启动 Hono 应用服务器，支持端口设置、路由展示和中间件加载
+- ⚡ **代码优化**：`hono optimize` 自动移除未使用的请求体/响应/Hono API，支持 minify 和 target 设置，减少打包体积
+- 🤖 **AI 集成**：专为 AI 代码代理设计，可在 CLAUDE.md 中配置工作流：搜索文档 → 阅读详情 → 测试实现
+- 🔧 **管道兼容**：`search` 命令默认输出 JSON，可配合 `jq` 等工具实现自动化流水线
+- 📦 **安装简单**：通过 `npm install -g @hono/cli` 全局安装，支持 TypeScript/JSX 语法
+
+### [GitHub - xdevplatform/xdk-typescript: XDK 自动生成代码的 TypeScript 仓库。](https://github.com/xdevplatform/xdk-typescript)
+
+xdk-typescript 是一个功能全面的 TypeScript SDK，专为 X API（原 Twitter API）设计，支持多种认证方式、智能分页、实时流式数据处理和完整的类型安全。
+
+- 🔐 **多认证支持**：提供 OAuth1.0a、OAuth2.0 用户上下文和 Bearer Token 应用认证，满足不同场景需求。
+- 🔄 **智能分页**：自动分页并支持异步迭代，可手动控制页面获取，方便处理大量数据。
+- 📡 **实时流式处理**：支持事件驱动流式连接，具备自动重连和错误处理功能，适合实时数据监控。
+- 📚 **完整类型安全**：所有端点和参数均有 TypeScript 定义，无需额外类型包，提升开发效率。
+- 🎯 **全面 API 覆盖**：支持用户、帖子、列表、书签、社区等 X 平台核心功能。
+- 📱 **多平台兼容**：可在 Node.js、浏览器和 React Native 中直接运行，无需额外 polyfill。
+- ⚡ **快速上手**：提供简洁的客户端配置和示例代码，支持环境变量管理敏感凭证。
+- 🛠️ **错误与速率限制处理**：分页和流式操作中内置错误捕获和速率限制检测，便于调试和恢复。
+
 ## 更新
+
+### [React Router v8.0.0 预发布版](https://raw.githubusercontent.com/remix-run/react-router/v8/CHANGELOG.md)
+
+React Router v8.0.0 预发布版已推出，这是首个采用开放治理模型的重大版本。它提高了最低支持版本，移除或调整了多项未来特性标志，并进行了全面现代化改造。
+
+- 🎯 **新治理与发布节奏**：采用开放治理模型，计划每年发布一个主要版本，与 Node.js LTS 生命周期对齐。
+- ⏫ **最低版本要求提升**：Node 22.22.0+、React 19.2.6+、Vite 7+，并转为纯 ESM 模块。
+- 🚩 **未来标志默认启用**：移除了`v8_trailingSlashAwareDataRequests`、`v8_middleware`等标志，其行为现为默认。
+- 🗑️ **移除`react-router-dom`**：该包已被移除，所有导入需切换至`react-router`和`react-router/dom`。
+- 🔄 **路由模块拆分**：`future.v8_splitRouteModules`移至顶层配置`splitRouteModules`，并默认启用。
+- ⚙️ **核心依赖升级**：更新了`cookie`、`set-cookie-parser`、`express`、`@babel`等多项依赖。
+- 🛠️ **构建工具迁移**：从`tsup`迁移至`tsdown`，并升级至 TypeScript 6。
+- 🐛 **错误处理优化**：确保客户端中间件错误能正确触发懒加载路由的错误边界。
 
 ### [TanStack Table V9：成型 | TanStack 博客](https://tanstack.com/blog/tanstack-table-v9-taking-form)
 
@@ -55,6 +94,18 @@ TanStack Table V9 Beta 正式发布，带来多项重大改进，包括全新的
 ## AI
 
 ## 其他
+
+### [薪酬区间与晋升——菲利普·苏](https://molochinations.substack.com/p/compensation-bands-and-promotions)
+
+本文探讨了薪资增长与职业晋升的关系，强调中期职业生涯的薪资远超早期，并指出专注于技能提升比追求快速晋升更能带来长期高回报。
+
+- 💰 **中期薪资主导**：职业生涯中期（如 40 岁）的薪资远高于早期（如 20 岁），优化中期薪资比纠结初期 offer 更重要。
+- 📈 **薪资增长呈几何级**：公司通常按固定百分比加薪，导致薪资随时间呈几何增长，而非线性。
+- 🏆 **超额表现优于快速晋升**：在同一级别持续超额完成任务，往往比快速晋升但仅达标的人赚得更多，并获得更多优质机会。
+- ⚖️ **薪资区间重叠**：不同职级的薪资范围有大量重叠，优秀低级别员工可能比平庸高级别员工收入更高。
+- 🚀 **技能积累是核心**：选择能最大化技能成长的岗位，而非单纯追求高薪；薪资是稀缺且有价值技能的自然结果。
+- 🎯 **晋升时机需谨慎**：在准备好胜任新级别后再晋升，可避免“勉强达标”的困境，并维持“超额交付”的良性循环。
+- 📉 **薪资增长不均衡**：薪资变化呈“间断平衡”状态，可能有多年停滞或降薪（如加入初创公司），但长期趋势向上。
 
 ### [快速优于缓慢](https://dubroy.com/blog/fast-is-better-than-slow/)
 
