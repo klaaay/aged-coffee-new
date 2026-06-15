@@ -53,6 +53,19 @@ Loop Engineering（循环工程）是一种新的 AI 编程范式，核心是设
 
 ## 工具
 
+### [NodeAV](https://seydx.github.io/node-av/)
+
+NodeAV 是一个原生 Node.js 的 FFmpeg 绑定库，提供完整的 TypeScript 支持，包括类型安全的编解码器、格式、滤镜和比特流滤镜选项，并支持硬件加速和自动资源管理。
+
+- 🎯 **核心特性**：提供低层和高层 API，支持硬件加速、流处理、设备捕获和 FFmpeg 二进制访问
+- 📦 **安装与使用**：通过 npm 安装，支持多种导入方式（api/lib/constants/layouts）以实现最佳 tree shaking
+- 🚀 **性能表现**：与 FFmpeg CLI 性能相当，在 H.264/H.265 转码中差异极小，内存使用更优
+- 🛠️ **API 层级**：低层 API 提供直接 C 绑定，高层 API 简化常见任务，Pipeline API 支持链式处理
+- 💻 **平台支持**：提供 Windows、Linux、macOS 的预编译二进制，支持 Electron 应用
+- 📹 **高级功能**：支持 Whisper 语音识别、复杂滤镜链、浏览器流式传输、RTSP 双向通信和图像缩放
+- 🔄 **资源管理**：使用 Disposable 模式自动清理资源，支持同步和异步操作
+- 🎨 **类型安全**：所有 FFmpeg 选项都经过类型化，支持自动补全和编译时验证
+
 ### [GitHub - honojs/cli: 面向人类与 AI 的 Hono 命令行工具 · GitHub](https://github.com/honojs/cli)
 
 Hono CLI 是一个专为人类和 AI 设计的命令行工具，提供针对 Hono 框架的专用子命令，支持文档搜索、请求测试、服务器启动和代码优化等功能。
