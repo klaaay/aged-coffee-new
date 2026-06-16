@@ -24,6 +24,16 @@ Context Mode 是一个面向 Claude Code、Codex CLI、Gemini CLI、VS Code Copi
 - 更适合重度 coding agent 使用：它强调 hook / SessionStart 注入，让代理默认优先走省上下文路径，而不是直接裸跑 `read`、`bash` 或 `web fetch`。
 - 更适合放在 `AI DevTools` 的“MCP 与环境桥接”：虽然它也带记忆和命令入口，但本质仍是给现有编码代理补上下文路由、沙箱执行和检索层。
 
+[rtk - AI 编码代理的命令输出压缩代理](https://github.com/rtk-ai/rtk)
+
+rtk 是一个面向 AI 编码代理的高性能 CLI 代理。它的核心思路不是替代现有工具，而是在 `git diff`、`rg`、`cat`、测试命令、构建命令等输出进入模型上下文之前，先做过滤、分组、截断和去重，把真正重要的信息保留下来，减少无意义日志和重复内容。
+
+- 核心价值是“先压输出，再进上下文”：相比事后再总结，rtk 更像在 Shell 与模型之间加了一层输出压缩和上下文保护。
+- 适合高频终端工作流：对 `git status`、`git diff`、`grep/rg`、`cargo test`、`npm test`、`pytest` 这类高体积命令尤其有价值。
+- 对现有 agent 侵入很低：支持通过 hook 或初始化命令接到 Claude Code、Codex、Gemini CLI、Cursor、Windsurf 等工作流里，不需要重写日常命令习惯。
+- 工程形态够轻：单个 Rust 二进制、零额外依赖、支持上百个常见命令，比较适合作为本机常驻的开发基础设施。
+- 更适合放在 `AI DevTools` 的“MCP 与环境桥接”：虽然入口是 CLI，但它服务的是 AI 编码流程里的上下文管理问题，而不是普通终端生成工具。
+
 [mobile-use - AI 操作安卓和 iOS 应用程序](https://github.com/minitap-ai/mobile-use)
 
 [claude-context - 代码搜索 mcp](https://github.com/zilliztech/claude-context)
