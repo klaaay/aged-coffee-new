@@ -12,6 +12,28 @@ summary: ''
 
 ## 技术
 
+### [`</>` htmx ~ 代码更廉价](https://htmx.org/essays/code-is-cheap/)
+
+AI 使代码生成更便宜，但理解代码的成本上升，复杂性仍是核心挑战，需要培养“减法工程师”思维。
+
+- 🤖 **代码成本下降**：AI 能快速生成大量质量尚可的代码，这是无法否认的现实。
+- 🧠 **理解成本上升**：生成代码缺乏内在理解，阅读他人代码比编写更困难，尤其当 AI 产出速度远超人类理解能力时。
+- ⚠️ **编译器 vs LLM 误区**：编译器确定性、保留源码、输出领域受限；而 LLM 非确定、不保留源码、输出泛化，两者不可类比。
+- 🎬 **魔法学徒陷阱**：AI 像失控的扫帚，快速生成代码可能引发复杂度失控，唯有“巫师”（理解代码者）能掌控局面。
+- 📈 **复杂性仍是天敌**：人类难以感知指数级增长，LLM 无惧复杂性却可能加速系统崩溃，需警惕代码膨胀。
+- 🛠️ **减法工程师**：核心是“说不”——严格审查 AI 输出、移除冗余代码、简化系统层级，像雕塑家而非建造者。
+- 🏗️ **系统设计仍需建设**：在组件组合层面保留“建造者”思维，但减法心态同样有用：消除不必要的系统边界和交互。
+- 🌟 **核心矛盾**：代码变便宜，复杂性仍是顶级掠食者，需在 AI 时代保留编程艺术。
+
+### [npm v12 即将到来的破坏性变更 - GitHub 更新日志](https://github.blog/changelog/2026-06-09-upcoming-breaking-changes-for-npm-v12/)
+
+npm v12 将于 2026 年 7 月发布，引入安全相关的默认变更，影响`npm install`命令。当前 npm 11.16.0+ 版本可预览警告。
+
+- 🔒 `allowScripts`默认关闭：`npm install`不再自动执行依赖中的`preinstall`、`install`、`postinstall`脚本（包括原生`node-gyp`构建），需通过`npm approve-scripts`显式允许信任的包，并提交更新后的`package.json`。
+- 🌐 `--allow-git`默认`none`：`npm install`不再解析 Git 依赖（直接或间接），防止通过`.npmrc`覆盖 Git 可执行文件的安全风险。
+- 📦 `--allow-remote`默认`none`：`npm install`不再解析远程 URL 依赖（如 https tarball），需显式允许。
+- 🛠️ 准备步骤：升级到 npm 11.16.0+，运行正常安装并查看警告；使用`npm approve-scripts --allow-scripts-pending`识别脚本包，批准信任的包，提交更新。未批准的脚本将在升级后停止运行。
+
 ### [不必要的异步的隐忧 - 马特·史密斯](https://allthingssmitty.com/2026/06/08/the-quiet-problem-with-unnecessary-async/)
 
 文章讨论了 JavaScript 中不必要的`async`关键字如何悄然增加代码复杂性，强调`async`应仅用于真正的异步边界，而非未来的假设需求。
@@ -24,6 +46,36 @@ summary: ''
 - ✅ **保持 API 诚实**：函数应反映当前行为，而非未来可能。同步函数保持同步，直到真正的异步需求出现再引入`async`。
 
 ## 工具
+
+### [SkillSpector](https://github.com/NVIDIA/SkillSpector)
+
+SkillSpector 是一款专为 AI Agent 技能（如 Claude Code、Codex CLI 等）设计的安全扫描工具。研究表明，26.1% 的技能存在漏洞，5.2% 可能包含恶意意图。该工具通过两阶段分析检测漏洞和恶意模式，帮助用户判断技能是否安全可安装。
+
+- 🔍 **核心功能**：支持多格式输入（Git 仓库、URL、ZIP、目录、单文件），检测 64 种漏洞模式，涵盖 16 个类别，包括提示注入、数据窃取、权限提升、供应链攻击等
+- ⚡ **两阶段分析**：第一阶段为快速静态分析（正则匹配+AST 行为分析 + 实时 CVE 查询），第二阶段为可选的 LLM 语义分析，可将精确度提升至约 87%
+- 📊 **风险评估**：0-100 分评分系统，结合严重性标签（LOW/MEDIUM/HIGH/CRITICAL）和明确建议（SAFE/CAUTION/DO NOT INSTALL）
+- 🚀 **快速安装**：支持通过 pip/uv 或 Docker 运行（无需 Python 环境），Docker 镜像基于 Python 3.12 slim
+- 🖥️ **多种输出格式**：终端、JSON、Markdown、SARIF，方便集成到 CI/CD 和 IDE 工具中
+- 🔐 **实时漏洞查询**：SC4 模式通过 OSV.dev API 实时检查依赖的已知 CVE，支持离线回退和 1 小时缓存
+- 🧩 **LLM 分析集成**：支持 OpenAI、Anthropic、NVIDIA 等多种提供商，也可连接本地 Ollama 等兼容端点
+- 📋 **报告样例**：包含风险评分、严重性、建议、组件列表、问题详情（含位置、置信度、解释）以及配置信息
+- 🔄 **Python API**：提供 LangGraph 工作流接口，可直接集成到代码中获取扫描结果
+- 📚 **研究背景**：基于对 42,447 个技能的大规模研究，发现带有可执行脚本的技能漏洞风险高出 2.12 倍
+
+### [GitHub - gajus/zod-compiler: 在构建时将 Zod 模式编译为零开销的验证函数。支持 Vite、webpack、esbuild、Rollup 等](https://github.com/gajus/zod-compiler)
+
+zod-compiler 是一个在构建时编译 Zod 架构的工具，可将验证速度提升 2-75 倍，无需更改代码。
+
+- ⚡ **性能飞跃**：通过构建时编译，将 Zod 架构转换为零开销的验证函数，性能提升 2-75 倍，嵌套对象和数组的增益最大。
+- 🔧 **多种使用模式**：支持自动模式（零代码更改）、显式 `compile()` 包裹模式，以及 CLI 命令行模式，适应不同项目需求。
+- 🛠 **广泛构建工具支持**：兼容 Vite、webpack、esbuild、Rollup、Rolldown、rspack、Bun、Farm 等主流构建工具。
+- 🧩 **完整 API 保留**：编译后的架构保留原始 Zod 对象的完整 API（如 `.parse()`、`.safeParse()`、`.shape`、`instanceof`），与 tRPC、Hono、React Hook Form 等库无缝集成。
+- 🚀 **双阶段验证架构**：生成“快速路径”（零分配的布尔表达式链）和“慢速路径”（错误收集验证），有效输入立即返回，无效输入才触发详细错误。
+- 📦 **优化包体积**：通过共享运行时模块和结构去重，减少生成的验证器代码体积，同时保持高性能。
+- 🔍 **架构诊断工具**：提供 `npx zod-compiler check` 命令，分析架构编译覆盖率、快速路径资格，并给出优化建议。
+- 🧪 **全面编译支持**：完全编译大多数标准 Zod 类型（字符串、数字、对象、数组、联合等），对包含捕获变量的 `transform`/`refine` 等回调则回退到 Zod 运行时。
+- ⚠️ **行为差异注意**：默认情况下，编译后的验证器在成功解析时返回输入值本身（而非重建），因此 `z.object()` 不会剥离未知键；可通过 `stripUnknownKeys` 选项启用剥离行为。
+- 🏗 **架构提升**：自动将函数体内定义的 Zod 架构提升到模块作用域，避免每次调用时重复构建，显著提升性能。
 
 ### [Figma Chrome 扩展：把线上网页直接带回 Figma 作为可编辑图层](https://chromewebstore.google.com/detail/figma/fkmaohpngenfoccdgceedjkfhkdcohmg)
 
