@@ -12,6 +12,19 @@ summary: ''
 
 ## 技术
 
+### [field-sizing CSS 属性 - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/field-sizing)
+
+`field-sizing` CSS 属性允许表单控件根据内容自动调整尺寸，覆盖默认固定大小行为，适用于文本输入框、文本域、文件输入和选择框等元素，并可与最小/最大尺寸属性配合使用。
+
+- 📏 **核心功能**：通过 `field-sizing: content` 让表单控件（如 `<input>`、`<textarea>`）根据内容自动收缩或扩展尺寸，替代默认的固定大小。
+- 🎯 **适用元素**：影响文本输入类型（email、password、text 等）、文件输入、文本域和选择框（`<select>`），其中选择框会根据类型（下拉或列表框）动态调整宽度或显示全部选项。
+- ⚙️ **属性值**：`content` 使元素自适应内容；`fixed` 为固定大小（默认值）。
+- 🔗 **与其他属性交互**：避免同时设置固定 `width`/`height`，但可结合 `min-width`/`max-width` 控制范围；`maxlength` 属性可限制输入框最大尺寸。
+- 📝 **文本域行为**：宽度受限时自动增加高度；`rows`/`cols` 属性在 `field-sizing: content` 下无效。
+- 📋 **选择框效果**：下拉菜单始终匹配当前选项宽度；多选列表框显示所有选项无需滚动；`size` 属性仅用于判断下拉或列表模式。
+- 🖥️ **浏览器支持**：此功能非 Baseline，部分浏览器尚未完全实现，需查看兼容性表。
+- 📚 **实际示例**：通过 HTML/CSS 展示文本字段和选择框在 `field-sizing: content` 下的动态尺寸变化，包括占位符、最大长度限制等场景。
+
 ### [`</>` htmx ~ 代码更廉价](https://htmx.org/essays/code-is-cheap/)
 
 AI 使代码生成更便宜，但理解代码的成本上升，复杂性仍是核心挑战，需要培养“减法工程师”思维。
@@ -46,6 +59,29 @@ npm v12 将于 2026 年 7 月发布，引入安全相关的默认变更，影响
 - ✅ **保持 API 诚实**：函数应反映当前行为，而非未来可能。同步函数保持同步，直到真正的异步需求出现再引入`async`。
 
 ## 工具
+
+### [prop-for-that：CSS 响应，JS 仅监听](https://prop-for-that.netlify.app/)
+
+该工具库"prop-for-that"通过自定义属性`data-props-for`，让 CSS 直接读取各种实时状态，无需 JavaScript 处理。
+
+- 🚀 **快速入门**：只需导入一次`prop-for-that/auto`，在元素上添加`data-props-for`属性并列出所需属性名即可。
+- 👆 **指针追踪**：`pointer-local`为元素提供`--live-local-pointer-x-ratio`等属性，实现鼠标跟随、倾斜效果。
+- 📜 **滚动触发**：`visibility`提供`--const-has-entered`（进入后锁定）和`--live-visible`（实时可见），实现一次性显示动画。
+- 🎚️ **范围滑块**：`range`绑定滑块值，多个元素可读取同一`--live-value`，并通过`@container style()`查询实现离散状态。
+- 🎨 **样式查询**：`@container style()`可根据精确值切换整块 CSS 规则，替代`var()`无法实现的逻辑分支。
+- ✏️ **输入字段**：`field`实时提供`--live-length`等属性，配合`minlength`/`maxlength`实现字符计数和状态反馈。
+- 📐 **三角函数**：`pointer-local`结合 CSS 的`atan2()`、`cos()`、`sin()`，实现纯 CSS 的眼球追踪效果。
+- ⏰ **时钟**：`clock`每秒更新`--live-seconds`，配合`calc()`旋转指针，仅需一个`setInterval`。
+- 🌐 **全局状态**：`online`、`battery`、`fps`等全局属性写入`:root`，CSS 可直接读取网络、电量等环境信息。
+- ⚡ **滚动速度**：`scroll-velocity`提供带惯性的`--live-scroll-velocity`，实现滚动跟随动画。
+- 📏 **元素尺寸**：`size`通过 ResizeObserver 提供`--live-aspect`，无需媒体查询即可判断横竖屏。
+- 🎬 **媒体播放**：`media`提供`--live-progress`，配合`@property`实现平滑的进度环动画。
+- 🔋 **省电模式**：`battery`结合`@container style()`，在低电量时自动移除动画和重绘。
+- 🖱️ **拖拽**：`pointer-local`和`size`结合，实现纯 CSS 拖拽，松开后自动回弹。
+- 📋 **表单状态**：`form-state`和`field-state`追踪表单交互历史（脏、触摸、更改、提交），驱动进度条和提交按钮。
+- 🖼️ **图片色彩**：`img-color`提取图片主色、强调色等 5 种颜色，用于阴影、背景等效果。
+- 🎥 **视频色彩**：`video-color`实时采样视频主色，实现动态背光效果。
+- 📚 **参考列表**：提供所有可用属性源（全局/元素）及其对应的`--live-*`变量名和功能说明。
 
 ### [SkillSpector](https://github.com/NVIDIA/SkillSpector)
 
@@ -98,6 +134,19 @@ rtk 是一个很贴近 AI 编码工作流的命令行代理工具。它的核心
 - 🧰 **适合接在现有工具链前面**：像 `ls`、`cat`、`rg`、`git status`、`git diff`、测试命令这类高频操作都能直接受益，不需要重写原有工作方式
 
 ## 更新
+
+### [Babel 8：仅支持 ESM，放弃 ES5 默认，并提供平滑迁移路径 · Babel](https://babeljs.io/blog/2026/06/16/8.0.0/)
+
+Babel 8 正式发布，专注于核心现代化，为未来 8 年做准备，同时提供平滑迁移路径。
+
+- 🚀 Babel 8 现在仅支持 ESM，不再默认编译为 ES5 和 CommonJS，推动 JavaScript 生态系统向前发展。
+- 📦 所有 Babel 包现在都提供 TypeScript 类型，无需额外安装 `@types/babel__*` 包。
+- 🔧 默认目标从 ES5 变为基于 Browserslist 的“默认”查询（当前约为 ES2023），并自动适应新浏览器。
+- ⚠️ 弃用 `loose` 和 `spec` 选项，建议使用更细粒度的 `assumptions` 配置。
+- 🧩 将 polyfill 注入功能提取到独立包 `babel-plugin-polyfill-corejs3`，替代 `corejs`/`useBuiltIns` 选项。
+- 📉 尽管下载量激增（从 2018 年 170 万到 2026 年 6.51 亿/周），但捐款持续下降，项目需要社区支持。
+- 🛡️ Babel 7 将停止功能更新，但提供一年安全支持（至 2027 年 6 月）。
+- 💡 核心团队强调，若无德国主权技术机构和 Igalia 的资助，项目难以维持高质量标准。
 
 ## 设计
 
