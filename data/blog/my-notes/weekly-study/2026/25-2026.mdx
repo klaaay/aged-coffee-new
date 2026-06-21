@@ -12,6 +12,18 @@ summary: ''
 
 ## 技术
 
+### [您的网站准备好迎接 AI 代理了吗？](https://isitagentready.com/)
+
+该工具可扫描网站，评估其对 AI 代理的兼容性，涵盖可发现性、内容可访问性、协议发现和商业支持等多个新兴标准。
+
+- 🔍 **可发现性检查**：验证 robots.txt、Sitemap、链接响应头及 DNS for AI Discovery (DNS-AID) 等标准。
+- 📄 **内容可访问性**：检查是否支持 Markdown 内容协商，确保 AI 代理能解析网站内容。
+- 🤖 **机器人访问控制**：评估 robots.txt 中的 AI 机器人规则、内容信号及 Web 机器人认证。
+- 🔗 **协议发现**：检测 MCP 服务器卡、Agent Skills、WebMCP、API 目录、OAuth 发现及保护资源。
+- 🛒 **商业支持**：检查 x402、MPP、UCP、ACP 等商业标准，支持代理化交易。
+- 🚀 **快速提升分数**：发布有效的 robots.txt（含 AI 规则和站点地图）并优化主页发现元数据。
+- 📚 **学习资源**：参考 Cloudflare Agents 文档，构建和部署能浏览、交互及交易的 AI 代理。
+
 ### [field-sizing CSS 属性 - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/field-sizing)
 
 `field-sizing` CSS 属性允许表单控件根据内容自动调整尺寸，覆盖默认固定大小行为，适用于文本输入框、文本域、文件输入和选择框等元素，并可与最小/最大尺寸属性配合使用。
@@ -59,6 +71,83 @@ npm v12 将于 2026 年 7 月发布，引入安全相关的默认变更，影响
 - ✅ **保持 API 诚实**：函数应反映当前行为，而非未来可能。同步函数保持同步，直到真正的异步需求出现再引入`async`。
 
 ## 工具
+
+### [tracesage](https://github.com/kjgpta/tracesage)
+
+tracesage 是一个专为 LangChain 和 LangGraph 多智能体系统设计的零基础设施、生产级可观测性工具。只需两行代码集成，即可在本地浏览器中实时查看智能体执行轨迹。
+
+- 🚀 **极简集成**：仅需两行代码（`pip install tracesage[langchain]` + 在 `ainvoke` 中添加一个回调），即可捕获所有 LangChain 回调事件（链启动/结束、工具调用、LLM 调用、检索、错误等），无需 Docker、Postgres 或任何外部服务。
+- 📊 **实时交互式 UI**：自动生成 SVG 拓扑图（无框架依赖）和事件时间线，支持悬停、点击、回放执行过程，并内置深色/浅色主题和键盘快捷键。
+- 🔒 **生产级安全**：处理器永不抛出异常，不会导致管道崩溃；提供 Bearer Token 认证、路径遍历防护、每运行事件上限（熔断器）、内存状态限界以及环境变量开关（`TRACESAGE_ENABLED=false` 完全禁用）。
+- 🔗 **MCP 感知**：自动识别并归因来自 MCP 服务器的工具，在拓扑图中显示 `mcp:server` 节点和服务器来源标签，区分服务器工具与硬编码工具。
+- 🛠️ **OpenTelemetry 导出**：可选将所有追踪数据导出为 OTel 跨度（span），桥接到 Tempo、Jaeger、Datadog、Honeycomb 等生产级可观测性后端，且与本地 SQLite 存储并行运行。
+- 🗄️ **本地持久化**：使用 SQLite + gzip 压缩存储所有追踪数据，数据默认保存到 `~/.tracesage` 目录，支持后续通过 CLI 重新打开查看。
+- 🧪 **开发者工具链**：提供丰富的 CLI 命令（`tracesage show` 终端树形渲染、`tracesage watch` 实时尾随、`tracesage diff` 运行对比、`tracesage view` 直接打开导出文件）以及 pytest 测试夹具（`tracesage_capture`）用于自动化测试。
+- 📚 **30 个实践案例**：涵盖客户支持、RAG、多智能体、MCP、推理循环、金融/法律/保险等领域的 30 个前后对比示例，每个都提供 `before.py` 和 `after.py` 清晰展示集成差异。
+- ⚡ **性能表现**：Linux x86 + NVMe 磁盘上可维持 800–1200 事件/秒（p99 写入延迟 80–150 ms，零丢包）；Windows NTFS 上为 60–100 事件/秒（可调整批处理参数优化）。
+
+### [gitagent](https://github.com/open-gitagent/gitagent)
+
+Gitagent 是一个以 Git 仓库为核心的 AI 智能体框架，将智能体的身份、规则、记忆、工具和技能全部版本控制化，实现“智能体即仓库”的范式。支持一键安装、多模型集成、CLI/SDK 使用、插件系统、生命周期钩子、合规审计、OpenTelemetry 遥测等功能，适用于从开发调试到生产部署的全场景。
+
+- 🏠 **智能体即仓库**：所有配置（agent.yaml、SOUL.md、RULES.md、memory/、tools/、skills/、hooks/）均以 Git 版本控制文件形式存在，可分支、Fork、Diff、查看历史日志
+- ⚡ **一键安装**：通过 `bash <(curl -fsSL ...)` 完成全局安装、API 密钥配置和语音 UI 启动，支持 Slim 模式（约 85 kB）和完整模式（含语音）
+- 🚀 **快速启动**：一行命令运行智能体 `gitagent --dir ~/my-project "解释项目并改进"`，自动创建配置文件并进入交互模式
+- 🌐 **本地仓库模式**：克隆 GitHub 仓库后运行智能体，自动提交到会话分支，支持断点续传 `--session` 参数
+- 🧩 **SDK 集成**：通过 `query()` 函数实现程序化调用，支持流式消息类型（delta、assistant、tool_use、tool_result、system），自定义工具使用 `tool()` 函数
+- 🔧 **声明式工具**：在 `tools/*.yaml` 中定义工具名称、描述、输入模式和实现脚本，内置 cli/read/write/memory 工具
+- 🎣 **生命周期钩子**：支持 `preToolUse`、`onError` 等钩子，可阻塞、修改参数或记录日志，脚本钩子通过 stdin/stdout 交互
+- 💡 **技能模块**：在 `skills/<name>/` 目录中定义可组合的技能，包含 SKILL.md 指令和脚本，通过 `/skill:code-review` 调用
+- 🔌 **插件系统**：通过 `plugin.yaml` 声明工具、技能、提示、钩子和记忆层，支持本地/全局/安装插件发现，提供程序化 API（registerTool、registerHook、addPrompt）
+- 🧬 **继承与组合**：支持 `extends` 继承基础智能体，`dependencies` 引入共享工具，子智能体自动委派
+- 📋 **合规与审计**：内置风险等级、人工介入、数据分类、监管框架配置，审计日志写入 `.gitagent/audit.jsonl`
+- 📊 **OpenTelemetry 遥测**：自动检测环境变量启用，发射 HTTP 客户端跨度、gen_ai.chat 跨度（含 token 用量和成本）、gitagent.tool.execute 跨度，导出指标到 OTLP 端点
+- 🐛 **调试工具**：设置 `OTEL_TRACES_EXPORTER=console` 将跨度输出到控制台，或使用 Jaeger Docker 容器可视化追踪
+- 🧪 **开发贡献**：MIT 开源许可，提供 CONTRIBUTING.md 指南，支持 GitHub Issues 求助
+
+### [quien](https://github.com/retlehs/quien/)
+
+`quien` 是一款功能强大的域名和 IP 情报工具，提供交互式终端界面，集成了 WHOIS、DNS、邮件配置、SSL/TLS、HTTP 头、SEO 分析和技术栈检测等多种功能。支持多种安装方式，可输出 JSON 格式数据，并具备自动重试和智能主题切换等特性。
+
+- 🔍 **RDAP 优先查询** - 支持 RDAP 查询并自动回退到 WHOIS，覆盖广泛 TLD 域名，通过 IANA 自动发现 WHOIS 服务器
+- 🌐 **IP 深度分析** - 支持 IP 查询包含反向 DNS、网络信息、滥用联系人和 ASN 发现，集成 BGP 回退和 PeeringDB 数据
+- 📧 **邮件配置审计** - 全面检查 MX、SPF（含展开树）、DMARC、DKIM 和 BIMI，支持自定义 DKIM 选择器
+- 📈 **SEO 分析** - 包含索引性检查、页面元素分析、结构化数据检测和性能提示，支持 CrUX 核心网页指标
+- 🛠️ **技术栈检测** - 识别 WordPress 插件、JS/CSS 框架和外部服务，从 HTML 解析获取
+- 📦 **多安装方式** - 支持 Homebrew、APT、Arch Linux、Nix 和 Go 安装，还提供 SSH 试用：`ssh quien.sh`
+- 🎨 **智能主题** - 自动检测终端背景切换亮/暗主题，可在 tmux、SSH 等环境中手动覆盖
+- 🔧 **实用功能** - 所有查询支持自动重试和指数退避，可通过环境变量配置默认解析器
+- 📊 **JSON 子命令** - 提供`quien whois`、`quien dns`、`quien seo`等独立 JSON 输出子命令，便于脚本集成
+- ⚡ **灵活使用** - 交互模式、域名/IP 查询、自定义 DKIM 选择器、指定 DNS 解析器，可设置别名替代系统 whois
+
+### [hippo-memory](https://github.com/kitfunso/hippo-memory)
+
+Hippo Memory 是一个受人类海马体启发的 AI 代理记忆系统，其核心哲学是“善忘胜过善记”。与传统“保存一切再搜索”的记忆方案不同，Hippo 通过生物机制——默认衰减、使用强化、每次回忆都有出处——让代理从错误中学习，跨工具保留记忆，并随着时间自然遗忘无用信息。
+
+- 🧠 **生物启发设计** — 模拟海马体的三層架構（缓冲区/情景/语义），记忆默认衰减（7 天半衰期），每次检索强化记忆，错误记忆自动获得双倍存续时间。
+- 🔄 **跨工具无缝迁移** — 一套 `.hippo/` 存储服务于 Claude Code、Cursor、Codex 等多种代理，周一用 Claude 写代码，周二用 Cursor，记忆完美延续。
+- 🚫 **杜绝重复错误** — 标记 `--tag error` 的错误记忆衰减更慢，代理再次遇到相同代码区域时会自动触发教训回忆。
+- 📦 **零运行时依赖** — 基于 SQLite，仅需 Node.js 22.5+，`npm install -g hippo-memory` 一行命令即可安装使用。
+- 🔍 **95.6% 检索准确率**（LongMemEval R@5）— 使用本地 MiniLM-L6 嵌入模型（零依赖默认）即达到业界领先水平，可选的 voyage-3-large 嵌入器提升至 99.8%。
+- 📡 **自动 Git 学习** — `hippo learn --git` 自动扫描近期提交历史，从 fix/revert/bug 提交中提取教训，检测迁移/破坏性变更时自动弱化相关旧记忆。
+- 🛌 **睡眠整合机制** — `hippo sleep` 执行衰减、合并、压缩：将 3 个以上相关情景记忆合并为语义记忆，删除衰减过度的记忆。
+- 🏆 **奖励比例衰减** — 基于结果反馈动态调整记忆半衰期：5 次正面结果延长 42%，3 次负面结果加速近 2 倍衰减。
+- 🔐 **隐私与合规设计** — 每条记忆携带完整出处（`kind`、`scope`、`owner`、`artifact_ref`），支持 GDPR 合规的单 API 调用删除，多租户隔离经过严格负面测试。
+- 🔌 **丰富集成生态** — 支持 MCP 服务器、OpenClaw 原生插件、自动代理钩子安装，可从 ChatGPT/Claude/Cursor/Slack 等导入已有记忆。
+
+### [GitHub - unadlib/localspace：一个将IndexedDB、localStorage及其他存储的API统一为一致API的库](https://github.com/unadlib/localspace)
+
+localspace 是一个现代化的存储工具包，兼容 localForage 的 API，同时支持 async/await、TypeScript 和无遗留包袱的设计。它提供统一的存储接口，涵盖 IndexedDB、localStorage、内存和 React Native AsyncStorage 等多种驱动，并包含批量操作、事务、插件系统（TTL、加密、压缩、同步、配额）和实验性写入合并等功能。
+
+- 🚀 **核心特性**：支持 async/await、TypeScript 类型安全、零遗留技术债务，兼容 localForage API，无需重写代码即可迁移。
+- 📦 **安装与使用**：通过 `pnpm add localspace` 安装，提供 `setItem`、`getItem` 等基础 API，支持泛型类型推断。
+- 🧩 **插件系统**：内置 TTL、加密（AES-GCM）、压缩（LZ-string）、多标签同步（BroadcastChannel）和配额（LRU 淘汰）插件，可自定义策略。
+- ⚡ **批量操作**：`setItems` 和 `getItems` 在 IndexedDB 中通过单事务执行，性能比循环快约 6-7.7 倍。
+- 🔄 **事务支持**：`runTransaction` 提供原子性操作，适用于 IndexedDB，但 localStorage 等驱动仅顺序执行。
+- 🧪 **实验性写入合并**：IndexedDB 专属，通过 `coalesceWrites` 选项合并短时间内的写入，减少事务开销。
+- 📱 **React Native 支持**：通过 `localspace/react-native` 导入，集成 AsyncStorage 驱动，支持 Jest 和 Detox 测试。
+- 🔧 **配置灵活**：支持数据库名称、版本、驱动顺序、持久化级别（relaxed/strict）、批量大小和插件错误策略（lenient/strict）。
+- 📚 **文档与许可**：提供完整 API 参考、插件文档和迁移指南，采用 MIT 许可证。
 
 ### [prop-for-that：CSS 响应，JS 仅监听](https://prop-for-that.netlify.app/)
 
@@ -135,6 +224,42 @@ rtk 是一个很贴近 AI 编码工作流的命令行代理工具。它的核心
 
 ## 更新
 
+### [Remix 3 测试版预览 | Remix](https://remix.run/blog/remix-3-beta-preview)
+
+Remix 3 Beta 预览版发布，这是一个更简化、更贴近 Web 的全栈框架，强调组合性与开发体验。
+
+- 🚀 Remix 3 Beta 预览版发布，但尚未生产就绪，欢迎测试反馈。
+- 🧩 从“中心栈”转向“全栈”，覆盖路由、渲染、数据、认证、上传等所有环节。
+- 🌐 路由基于 Fetch API，控制器返回响应，中间件管理请求生命周期，表单提交至 URL。
+- 🖼️ 引入“帧”（Frame）概念：服务端渲染的 UI 片段可独立加载、导航和更新。
+- 💻 组件采用过程式风格，状态与异步逻辑清晰，支持可组合的混入行为。
+- 📦 采用“去捆绑化”策略，运行时为真相源，不依赖预分析，对 AI 友好。
+- 🔧 减少依赖，内置核心功能（路由、会话、认证、表单、上传等），开箱即用。
+- 🧪 可通过 `npx remix@next new my-remix-app` 快速开始，鼓励实验与反馈。
+
+### [React Router v8 | Remix](https://remix.run/blog/react-router-v8)
+
+- 🎉 **React Router v8 正式发布** - 这是继 v7 之后的又一个"无聊"大版本，团队致力于让升级过程尽可能平稳无痛
+- 📅 **年度大版本发布计划** - 从 v8 开始采用每年一次的大版本发布节奏，让版本更新更加可预测和稳定
+- 🔧 **v7 回顾** - 引入了框架模式，支持类型安全路由模块 API、智能代码分割、多种渲染策略（SPA/SSR/静态渲染）和数据加载/变更功能
+- 🚀 **v8 新增功能** - 包含中间件/上下文支持、分割路由模块、类型安全 href、性能优化、RSC 支持（不稳定）等 40+ 个版本更新
+- ⚠️ **破坏性变更** - 最低支持 Node 22.22+、React 19.2.7+、Vite 7+；采用 ESM-only 模块；移除 react-router-dom；部分 API 弃用
+- 🔄 **升级指南** - 更新依赖、采用未来标志、移除弃用 API，然后运行`pnpm i react-router@latest`即可
+- 🛡️ **生命周期管理** - React Router v6 和 Remix v2 正式进入 EOL 状态，不再接收安全更新；v7 继续接收安全更新
+- 🔮 **未来展望** - 计划稳定支持 Server Components 和 Server Actions（目前仍为不稳定状态）；坚持"少即是多"的设计理念
+- 💡 **Remix 项目新方向** - Remix 将发展为真正的全栈、零依赖 JavaScript Web 框架，而 React Router 继续专注于 React 生态
+
+### [feat(es/react-compiler): 由 magic-akari 添加 React 编译器 · 拉取请求 #11917 · swc-project/swc · GitHub](https://github.com/swc-project/swc/pull/11917)
+
+SWC 项目合并了 React 编译器的实验性支持，通过 Rust 桥接实现了 SWC 与 React 编译器 AST/作用域的转换。
+
+- 🚀 新增 `swc_ecma_react_compiler` 桥接，支持 SWC 与 React 编译器 AST/作用域转换
+- ⚙️ 添加 `.swcrc` 配置中的 `jsc.transform.reactCompiler` 选项
+- 📦 引入 JS/WASM 选项类型，并移植了上游 SWC 集成测试
+- 🧩 修复了静态块变量作用域、JSX 内建标签引用和默认导出绑定等关键问题
+- 📈 二进制体积增加约 5MB，可通过优化 Rust 结构体返回而非 JSON 序列化来改善
+- 🔄 使用 `oxc-project/forked-react-compiler` 进行测试，待官方 Rust crate 发布后替换临时依赖
+
 ### [Babel 8：仅支持 ESM，放弃 ES5 默认，并提供平滑迁移路径 · Babel](https://babeljs.io/blog/2026/06/16/8.0.0/)
 
 Babel 8 正式发布，专注于核心现代化，为未来 8 年做准备，同时提供平滑迁移路径。
@@ -163,6 +288,25 @@ Babel 8 正式发布，专注于核心现代化，为未来 8 年做准备，同
 ## AI
 
 ## 其他
+
+### [可靠的团队陷阱 - 凯文·戈德史密斯](https://kevingoldsmith.substack.com/p/the-reliable-team-trap)
+
+可靠交付虽能赢得信任，却可能悄然限制职业发展，因为执行与战略影响力是两种不同的“货币”。要突破“可靠团队陷阱”，需有意识地展示判断力、培养下属、主动声明贡献，并为自己所在领域设定方向。
+
+- 🎯 **可靠性的陷阱**：出色完成工作会换来更多同类任务，而非更高决策权；你越可靠，越可能被固化在执行角色中，甚至被视为“太重要而无法调动”。
+- 🧠 **两种不同的回报**：执行可靠赢得的是“执行信任”，而战略影响力来自“方向判断力”的可见性；组织会分别奖励这两者，且往往不重叠。
+- 🚪 **运行组织 vs. 领导组织**：若你不主动设定方向，你的上司就会代劳；你只是在“运行”组织，而缺乏“领导”所需的战略话语权。
+- 👥 **两个案例对比**：一位领导者因埋头执行而团队过载、晋升无望；另一位通过主动展示战略思考，赢得了更多自主权和晋升机会。
+- 🔄 **四项关键转变**：
+  - 💡 **展示思考**：在汇报中加入决策逻辑和权衡，而不仅仅是状态更新。
+  - 👥 **培养梯队**：通过授权和指导，为自己腾出战略思考的时间。
+  - 📢 **声明贡献**：主动将团队成果与业务价值关联，避免价值被忽视。
+  - 🗺️ **设定方向**：对领域未来提出明确观点，让上司重复你的话语。
+- ⚖️ **需要平衡**：仅做可见性动作而无能力支撑会耗尽精力；仅培养能力而不展示则无法改变认知；两者缺一不可。
+- 🔍 **自我检查信号**：职责范围扩大但决策权未增；上司仍为你设定愿景；业绩较弱的同级却更有影响力；持续正面反馈未转化为战略对话。
+- 🛠️ **具体行动起点**：在下次一对一会议中用一次决策分析替换一条状态更新；每季度写 2-3 句连接团队工作与业务成果的话；针对一个领域趋势形成未来 6 个月与 2 年的看法。
+- ⚠️ **常见误区**：不要用更努力执行来应对被忽视的感觉——这会加深陷阱；输出是让你走到这里的肌肉，但在需要影响力时却是错误的杠杆。
+- 🏆 **最终启示**：可靠是地板，而非天花板；要获得决策信任，必须让判断力可见，并保护拥有判断力的能力；这需要你主动为之，无人代劳。
 
 ### [如何跨职能和跨部门建立影响力？| 安迪·罗伯茨 – 高管教练 | 领导力培训师 | 引导师](https://andiroberts.com/leadership-questions/how-to-build-influence-without-authority-matrix-organisation)
 
