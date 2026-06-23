@@ -25,6 +25,7 @@ import {
   DietAndExerciseTable2026,
   SleepTableApp2026,
 } from './LifeData/2026'
+import { MbtiDataTable, MbtiTrendChart } from './LifeData/mbti'
 
 export const components: MDXComponents = {
   Image,
@@ -47,4 +48,6 @@ export const components: MDXComponents = {
   SleepTableApp2026,
   DietAndExerciseTable2026,
   BooksAndMediaTable2026,
+  MbtiTrendChart,
+  MbtiDataTable,
 }
