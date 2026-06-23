@@ -13,7 +13,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import type { TooltipProps } from 'recharts'
+import type { TooltipContentProps } from 'recharts'
 import { mbtiRecords } from './data'
 import { dimensionConfig, enrichMbtiRecord } from './utils'
 
@@ -21,7 +21,7 @@ const chartData = mbtiRecords.map(enrichMbtiRecord)
 
 type ChartPayload = (typeof chartData)[number]
 
-function MbtiTooltip({ active, payload }: TooltipProps<number, string>) {
+function MbtiTooltip({ active, payload }: TooltipContentProps<number, string>) {
   if (!active || !payload?.length) return null
 
   const point = payload[0]?.payload as ChartPayload | undefined
@@ -103,7 +103,7 @@ export const MbtiTrendChart: React.FC = () => {
               strokeWidth={1}
             />
             <Tooltip
-              content={<MbtiTooltip />}
+              content={MbtiTooltip}
               cursor={{ stroke: 'currentColor', strokeWidth: 1, strokeDasharray: '4 4' }}
             />
             <Legend
