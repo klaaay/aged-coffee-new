@@ -21,6 +21,12 @@ const chartData = mbtiRecords.map(enrichMbtiRecord)
 
 type ChartPayload = (typeof chartData)[number]
 
+const stickyDateColumnClass =
+  'sticky left-0 z-10 w-[112px] min-w-[112px] whitespace-nowrap bg-white px-3 py-2 text-left dark:bg-gray-950'
+const stickyTypeColumnClass =
+  'sticky left-[112px] z-10 w-[184px] min-w-[184px] whitespace-nowrap bg-white px-3 py-2 text-left shadow-[1px_0_0_0_var(--color-gray-200)] dark:bg-gray-950 dark:shadow-[1px_0_0_0_var(--color-gray-700)]'
+const traitColumnClass = 'w-[116px] min-w-[116px] whitespace-nowrap px-3 py-2 text-right'
+
 function MbtiTooltip({ active, payload }: TooltipContentProps<number, string>) {
   if (!active || !payload?.length) return null
 
@@ -30,7 +36,7 @@ function MbtiTooltip({ active, payload }: TooltipContentProps<number, string>) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white/95 px-3 py-2 text-xs shadow-sm backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/95">
       <div className="mb-1 font-medium text-gray-900 dark:text-gray-100">{point.label}</div>
-      <div className="mb-2 text-primary-600 dark:text-primary-400">
+      <div className="text-primary-600 dark:text-primary-400 mb-2">
         {point.typeName} · {point.type}
       </div>
       <div className="space-y-1 text-gray-600 dark:text-gray-300">
@@ -70,11 +76,7 @@ export const MbtiTrendChart: React.FC = () => {
       <div className="h-[360px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 8, right: 12, left: 0, bottom: 8 }}>
-            <CartesianGrid
-              strokeDasharray="3 3"
-              vertical={false}
-              stroke="var(--color-gray-200)"
-            />
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-gray-200)" />
             <XAxis
               dataKey="date"
               tickFormatter={tickFormatter}
@@ -162,13 +164,13 @@ export const MbtiDataTable: React.FC = () => {
 
   return (
     <div className="not-prose overflow-x-auto">
-      <table className="w-full min-w-[640px] border-collapse text-sm">
+      <table className="w-max min-w-full border-collapse text-sm">
         <thead>
           <tr className="border-b border-gray-200 dark:border-gray-700">
-            <th className="px-3 py-2 text-left font-medium">日期</th>
-            <th className="px-3 py-2 text-left font-medium">类型</th>
+            <th className={`${stickyDateColumnClass} z-20 font-medium`}>日期</th>
+            <th className={`${stickyTypeColumnClass} z-20 font-medium`}>类型</th>
             {dimensionConfig.map(({ positive, negative }) => (
-              <th key={positive} className="px-3 py-2 text-right font-medium">
+              <th key={positive} className={`${traitColumnClass} font-medium`}>
                 {positive}/{negative}
               </th>
             ))}
@@ -179,25 +181,22 @@ export const MbtiDataTable: React.FC = () => {
             const previous = rowIndex > 0 ? chartData[rowIndex - 1] : null
 
             return (
-              <tr
-                key={record.date}
-                className="border-b border-gray-100 dark:border-gray-800"
-              >
-                <td className="px-3 py-2">{record.label}</td>
-                <td className="px-3 py-2 whitespace-nowrap">
+              <tr key={record.date} className="border-b border-gray-100 dark:border-gray-800">
+                <td className={stickyDateColumnClass}>{record.label}</td>
+                <td className={stickyTypeColumnClass}>
                   {record.type}
                   <span className="ml-1 text-gray-500 dark:text-gray-400">({record.typeName})</span>
                 </td>
                 {record.traits.map(({ key, label, value }) => {
-                  const change =
-                    previous !== null ? record[key] - previous[key] : null
+                  const change = previous !== null ? record[key] - previous[key] : null
                   const changeLabel =
-                    change !== null && change !== 0
-                      ? `${change > 0 ? '+' : ''}${change}`
-                      : null
+                    change !== null && change !== 0 ? `${change > 0 ? '+' : ''}${change}` : null
 
                   return (
-                    <td key={key} className="relative px-3 py-3 text-right tabular-nums">
+                    <td
+                      key={key}
+                      className="relative w-[116px] min-w-[116px] px-3 py-3 text-right whitespace-nowrap tabular-nums"
+                    >
                       {changeLabel && (
                         <span
                           className="absolute top-1 right-1 text-[10px] leading-none tabular-nums"
