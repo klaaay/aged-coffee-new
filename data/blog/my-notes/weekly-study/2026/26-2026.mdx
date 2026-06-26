@@ -12,9 +12,69 @@ summary: ''
 
 ## 技术
 
+### [`<Fragment>（<>...</>）`– React](https://react.dev/reference/react/Fragment)
+
+`<Fragment>`（常写作 `<>...</>`）用于在不添加额外 DOM 节点的情况下对元素进行分组。Canary 版本支持 `ref`，允许直接操作 Fragment 内的 DOM 节点。
+
+- 📦 **核心用途**：使用 `<>...</>` 或 `<Fragment>` 将多个元素分组，无需包装节点，且不影响布局样式。
+- 🔑 **Key 属性**：在循环中渲染 Fragment 列表时，必须使用显式 `<Fragment key={...}>` 语法，不能使用 `<>...</>`。
+- 🆕 **Canary 特性**：Fragment 支持 `ref`，提供 `FragmentInstance` 对象，用于操作内部 DOM 节点。
+- 🎯 **事件监听**：通过 `addEventListener` 和 `removeEventListener` 管理 Fragment 内所有第一级 DOM 子元素的事件。
+- 🔄 **焦点管理**：`focus()`、`focusLast()` 和 `blur()` 方法可深度优先搜索并管理 Fragment 内所有嵌套子元素的焦点。
+- 📜 **滚动控制**：`scrollIntoView(true/false)` 可滚动 Fragment 的第一个或最后一个子元素到视图中。
+- 👁️ **可见性观察**：使用 `observeUsing` 和 `unobserveUsing` 附加或分离 `IntersectionObserver` 或 `ResizeObserver`。
+- 🗂️ **缓存优化**：通过 `reactFragments` 属性（每个 DOM 子元素上的 `Set`）实现全局 `IntersectionObserver` 共享，避免重复创建。
+- ⚠️ **注意事项**：`scrollIntoView` 不接受对象参数；`observeUsing` 不适用于纯文本子元素；`addEventListener` 不会应用于隐藏的 `<Activity>` 树。
+
+### [window.showDirectoryPicker 开启了一个全新的世界](https://steveharrison.dev/showdirectorypicker-opens-up-a-whole-new-world/)
+
+Chrome 的新 API `window.showDirectoryPicker()` 让网页应用能直接读写用户本地文件夹，开启本地优先应用的新可能。
+
+- 📂 **本地优先应用**：用户可授权网站访问本地文件夹，如笔记应用直接操作 Markdown 文件，数据归用户所有而非云端存储。
+- 🎨 **仿 Aperture 界面**：利用该 API 创建类似苹果 Aperture 或 Lightroom 的 UI，网页应用能管理本地照片，支持创建文件夹和移动文件。
+- 🖼️ **照片视频编辑**：浏览器内实现强大的照片/视频编辑应用，直接处理本地源文件，已有 WebGPU 视频编辑器在探索此方向。
+- 🧩 **节点合成应用**：基于苹果 Shake 灵感，创建节点式合成应用，可绘制多边形并叠加到源图像上。
+- 🤖 **零手写代码**：以上所有功能均通过 AI（如 Claude）生成，无需手动编写代码，展示了技术发展的惊人之处。
+
 ## 工具
 
 ## 更新
+
+### [Astro 7.0 | Astro](https://astro.build/blog/astro-7/)
+
+Astro 7 正式发布，专注于性能提升，带来了多项重大更新，包括 Rust 重写的编译器、更快的 Markdown 处理、新的渲染引擎、高级路由、缓存功能和对 AI 开发的支持。
+
+- 🚀 **性能大幅提升**：构建速度提升 15-61%，部分站点甚至快两倍以上。这得益于 Rust 重写的 `.astro` 编译器、新的 Rust Markdown/MDX 处理管道、更快的队列式渲染引擎，以及升级到 Vite 8 和其新的 Rolldown 打包工具。
+- 🦀 **Rust 编译器**：全新的 `.astro` 编译器完全用 Rust 编写，不再进行 HTML 修正，对未闭合标签等错误更严格，并采用 JSX 风格的空白处理方式。
+- 📝 **Rust 驱动的 Markdown 与 MDX**：默认使用新的 Rust 处理器 Sätteri，它原生支持 GFM、数学公式、标题 ID 等多种 Markdown 特性，无需额外插件，显著加快 Markdown 密集型站点的构建。
+- ⚙️ **队列式渲染**：新的队列式渲染引擎取代了递归方法，速度提升约 2.4 倍，并且内存占用更少。
+- 🗺️ **高级路由**：新增 `src/fetch.ts` 入口点，允许开发者通过标准 `fetch` 处理器模式完全控制 Astro 的请求管道，并兼容 Hono 框架，可灵活组合中间件。
+- 💾 **路由缓存与 CDN 缓存**：稳定了路由缓存功能，提供平台无关的 `Astro.cache` API。新增对 Netlify、Vercel 和 Cloudflare 的实验性 CDN 缓存提供商支持，可将缓存指令推送至边缘网络。
+- 🤖 **AI 增强**：为 AI 编码代理优化开发体验，包括可后台运行的开发服务器（`astro dev --background`）、自动检测代理环境、以及可配置的 JSON 日志输出，便于机器解析。
+- 🎉 **社区与升级**：感谢所有贡献者。现有项目可通过 `@astrojs/upgrade` CLI 工具升级，新项目使用 `npm create astro@latest` 创建。
+
+### [Vite 8.1 发布！| Vite](https://vite.dev/blog/announcing-vite8-1)
+
+Vite 8.1 已发布，带来多项实验性功能和性能改进，旨在提升大型应用的开发体验。
+
+- 🚀 **实验性打包开发模式**：通过 `--experimental-bundle` 或配置 `experimental.bundledDev: true` 启用，可将打包引入开发过程。测试显示，加载 10,000 个 React 组件时，启动速度提升约 15 倍，全页重载快约 10 倍，同时保持即时 HMR，尤其适合大型应用。
+- 🧩 **实验性块导入映射**：利用导入映射解决输出包中块哈希级联变化的问题，提高缓存效率。基于 Rolldown 功能构建，但注意当前不支持 `experimental.renderBuiltUrl`。
+- 🌐 **Wasm ESM 集成支持**：现在可直接导入 `.wasm` 文件并使用其导出函数，例如 `import { add } from './add.wasm'`，简化 WebAssembly 使用。
+- ⚡ **更接近默认使用 Lightning CSS**：Vite 8.1 新增了 PostCSS 中已有的功能（如外部 CSS 文件导入和插件注册文件依赖），为未来默认切换做准备。可通过 `css.transformer: 'lightningcss'` 试用。
+- 🔍 **`import.meta.glob` 不区分大小写匹配**：新增 `caseSensitive: false` 选项，用于不区分大小写地匹配文件。
+- 🖼️ **自定义 HTML 元素和属性资产发现**：通过 `html.additionalAssetSources` 选项，可为自定义元素（如 `<html-import>`）和属性（如 `data-src-dark`）指定资产来源，扩展资产发现范围。
+- 📈 **下载量增长**：Vite 8 每周下载量达 4160 万次，接近 Vite 7 的总和，社区贡献者超过 1200 人。
+
+### [Jarred-Sumner 的 JavaScriptCore 共享内存线程（实验性，尚未完成）· 拉取请求 #249 · oven-sh/WebKit · GitHub](https://github.com/oven-sh/WebKit/pull/249)
+
+这是一个为 JavaScriptCore 引擎添加实验性共享内存线程支持的 Pull Request，旨在让 JavaScript 拥有真正的多线程能力，而非依赖 Web Workers 的消息传递模型。
+
+- 🧵 核心 API：`new Thread(fn)` 在另一个核心上运行函数，共享同一堆内存和对象，无需结构化克隆或消息传递，通过 `join()` 或 `asyncJoin()` 获取结果。
+- 🚀 并行能力：支持并行 `map`、共享缓存、原子操作 (`Atomics.*` 扩展至普通对象属性)、取消标志、实时进度追踪，以及基于 `Lock` 和 `Condition` 的条件变量同步。
+- 🏗️ 设计基础：基于 Filip Pizlo 2017 年的设计，使用 TID 标记的扁平蝴蝶结、分段蝴蝶结、每对象单元锁和线程本地监视点，以最小化非共享代码的性能开销。
+- ⚙️ 实现状态：已完成两阶段中的第一阶段（GIL 下），第二阶段（移除 GIL）正在进行中。线程测试套件在真实并行下通过，但尚未完成模糊测试、线程清理器修复和长期稳定性测试。
+- 📊 性能与权衡：非共享代码性能损失约 0.45%；共享写入较慢；GC 在共享模式下目前是同步的；内存占用比 Worker 低得多（~150KB–1MB 对比 5–15MB）。
+- 🧪 测试与验证：包含约 95 个测试的套件、线程清理器零未抑制报告、一个可扩展性基准测试（在 16 线程时 JavaScript 性能约为 Java 的 0.89 倍），以及一个包含 20 个 CVE 机制类的审计。
 
 ## 设计
 
