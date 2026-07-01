@@ -16,6 +16,28 @@ summary: ''
 
 ## 更新
 
+### [Prettier 3.9：重大解析器升级与格式化改进 · Prettier](https://prettier.io/blog/2026/06/27/3.9.0)
+
+Prettier 3.9 版本发布，带来了主要解析器升级和大量格式化改进，涵盖 Markdown、YAML、Flow、GraphQL、Angular 以及 JavaScript/TypeScript 等多个领域。
+
+- 🚀 **主要解析器升级**：Markdown 解析器升级至最新的 micromark v4，YAML 解析器升级至 yaml v2，Flow 采用新的 Rust 解析器，GraphQL 支持 v17 语法。
+- 🐛 **JavaScript 格式化修复**：修复了 `--no-semi` 模式下注释、括号、空行、IIFE 函数、JSDoc 等多处问题，并优化了逻辑表达式、模板插值、成员链等格式。
+- 🛠️ **TypeScript 改进**：修复了成员链换行、类型断言、联合类型、条件类型、类继承、枚举键引用、映射类型注释等多处问题，并优化了 `no-semi` 模式下的分号处理。
+- 💧 **Flow 增强**：新增对 Flow 记录、匹配实例模式、隐式声明函数/组件、`writeonly`/`in`/`out` 方差修饰符的支持，并修复了可选返回类型、注释格式等问题。
+- 📝 **Markdown 与 YAML 修复**：修复了 Markdown 中 CJK 换行、列表缩进代码块、setext 标题等问题；YAML 修复了键换行、块标量空格、空行保留等问题。
+- 🎨 **CSS/SCSS/HTML/Angular 改进**：修复了 CSS 属性值换行、SCSS 尾逗号、HTML 注释与预格式化元素、Angular `@content` 块支持等问题。
+- 🔧 **CLI 与杂项**：修复了特殊字符目录名崩溃、EditorConfig 搜索范围、缓存策略、文件名引号等问题，并更新了实验性 CLI 和 Printer 接口。
+
+### [使用 TypeScript 7 更快迭代](https://code.visualstudio.com/blogs/2026/06/26/iterating-faster-with-ts-7)
+
+VS Code 团队通过渐进式方法成功迁移至 TypeScript 7，实现了 7 倍类型检查加速和 4 倍构建速度提升，同时通过紧密协作帮助 TypeScript 团队完善了工具链。
+
+- ⚡ **性能飞跃**：类型检查从 36 秒降至 5 秒（7 倍提速），`npm run watch`从 80 秒缩短至 20 秒，编辑器语言工具加载时间从近 1 分钟降至 10 秒。
+- 🧩 **渐进式迁移策略**：分阶段推进（探索→TS6 桥接→并行运行→逐扩展迁移→全面切换），每个步骤都降低风险并持续反馈问题。
+- 🔄 **双向协作价值**：VS Code 团队通过日常使用发现格式化差异、功能缺失等真实场景 bug，推动 TypeScript 团队优先修复，最终使 TS7 更稳定可靠。
+- 🛠 **工具链简化**：迁移过程中用 esbuild 替代 webpack，结合`tsgo`（TS7）实现更简洁的构建流程，减少生产与开发环境差异。
+- 🚀 **开发者体验提升**：日常编辑循环显著加速，代理辅助迭代更高效，开发者无需频繁等待编译或切换语言版本。
+
 ## 设计
 
 ## AI
