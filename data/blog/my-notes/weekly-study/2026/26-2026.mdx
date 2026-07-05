@@ -12,30 +12,6 @@ summary: ''
 
 ## 技术
 
-### [Python：在 WeakKeyDictionary 中为对象存储额外数据 - Adam Johnson](https://adamj.eu/tech/2026/06/27/python-weak-key-dict-pattern/)
-
-本文介绍了使用 `WeakKeyDictionary` 为 Python 对象存储额外数据的方法，避免了直接属性存储的缺点，并解释了其优势与适用条件。
-
-- 📦 **问题背景**：需要为对象（如 `ast.Module`）关联额外数据，但直接属性存储存在限制（如不支持任意属性、命名冲突、干扰 `vars()` 等）。
-- 🔑 **解决方案**：使用 `WeakKeyDictionary` 以对象为键存储数据，利用弱引用在对象不再被引用时自动清理条目，保持 O(1) 查找性能。
-- ✅ **对象要求**：对象必须可哈希（默认满足）且可弱引用（大多数用户类默认支持，内置类型如 `int`、`str` 等不支持，但可通过在 `__slots__` 中添加 `__weakref__` 实现）。
-- ⚠️ **与 `functools.cache` 对比**：`functools.cache` 使用强引用，会阻止对象被垃圾回收，导致内存泄漏；而 `WeakKeyDictionary` 自动释放未引用对象的内存。
-- 🛠️ **实现示例**：通过 `try-except` 模式检查缓存，若不存在则计算并存储结果，确保高效且安全地管理额外数据。
-
-### [使用 AI 驱动的堆快照分析在几分钟内调试 Node.js 内存泄漏](https://nodesource.com/blog/debug-nodejs-memory-leak-ai-heap-snapshot-analysis)
-
-本文介绍了如何使用 N|Solid 扩展在 VS Code 等编辑器中，通过 AI 驱动的堆快照分析，快速定位并修复 Node.js 内存泄漏问题。
-
-- 🧠 **问题描述**：内存泄漏是生产环境中最令人头疼的问题之一，表现为内存持续增长、GC 频繁、性能下降甚至进程崩溃。
-- 🔍 **检测方法**：通过 N|Solid 扩展在编辑器中直接观察运行时内存指标，无需切换外部仪表盘，发现内存持续上升。
-- 📸 **堆快照捕获**：直接捕获堆快照，AI 自动分析内存图，快速识别出模块级数组 `leak` 是泄漏根源。
-- 🎯 **根因定位**：AI 报告指出 `leak.push(JSON.parse(resp))` 导致对象被永久保留，并重建了保留路径：GC 根 → http.Server → requestListener → 模块作用域 → leak。
-- 🛠️ **修复方案**：移除不必要的数组保留，修正后的代码不再存储请求对象，让 GC 能正常回收内存。
-- ✅ **验证修复**：部署修复后再次捕获堆快照，AI 分析确认无活动泄漏，无增长的对象集合，泄漏模式消失。
-- 💡 **核心价值**：将生产调试工作流整合到编辑器中，减少上下文切换，缩短从发现问题到理解修复的时间。
-- 🎬 **完整演示**：提供视频链接展示从泄漏检测到根因分析再到验证的完整流程。
-- 🚀 **开始使用**：N|Solid 扩展支持 VS Code、Cursor、Windsurf 和 Antigravity，可直接从编辑器调试生产问题。
-
 ### [`<Fragment>（<>...</>）`– React](https://react.dev/reference/react/Fragment)
 
 `<Fragment>`（常写作 `<>...</>`）用于在不添加额外 DOM 节点的情况下对元素进行分组。Canary 版本支持 `ref`，允许直接操作 Fragment 内的 DOM 节点。
