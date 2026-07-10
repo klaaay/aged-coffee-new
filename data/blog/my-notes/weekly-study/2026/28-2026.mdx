@@ -12,6 +12,19 @@ summary: ''
 
 ## 技术
 
+### [使用 FastAPI 服务前端：实用指南](https://modernpython.io/serving-a-frontend-with-fastapi-a-practical-guide/)
+
+FastAPI 的 `app.frontend()` 功能允许开发者直接从后端服务静态前端应用，实现 API 和前端在同一服务中运行，简化部署流程。
+
+- 🚀 **核心功能**：`app.frontend()` 可服务静态前端构建目录（如 React、Vue、Svelte 等），同时保持 API 路由优先级
+- ⚡ **路由优先级**：FastAPI 路径操作优先于前端文件，确保 API 不会被前端路由覆盖
+- 🔄 **SPA 支持**：通过 `fallback="index.html"` 参数处理客户端路由，如 `/dashboard` 直接返回 `index.html`
+- 📁 **项目结构**：典型结构包含 `dist/` 目录（存放构建后的 HTML、CSS、JS）和 `app/` 目录（存放 FastAPI 代码）
+- 🎯 **使用场景**：适合内部仪表盘、管理界面、原型或小型产品；不适合需要 SSR、CDN 或独立部署的大型项目
+- 🛠️ **开发建议**：本地开发使用前端开发服务器（如 Vite），生产部署时由 FastAPI 服务构建后的静态文件
+- 🔗 **前缀支持**：通过 `APIRouter` 和 `prefix` 参数可将前端服务在 `/admin` 等子路径下
+- ⚠️ **注意事项**：服务静态构建输出而非 SSR；大文件应使用 CDN；前端构建工具需正确配置基础路径
+
 ### [使用 progress() 实现流式排版 – Master.dev 博客](https://master.dev/blog/fluid-typography-with-progress/)
 
 本文探讨了使用现代 CSS 进行流体排版的新方法，通过`progress()`函数解决传统预计算方式中忽略用户字体大小偏好的问题，并提供了完整的实现步骤与未来展望。
@@ -68,6 +81,38 @@ summary: ''
 
 ## 工具
 
+### [宣布 TypeScript 7.0 - TypeScript](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)
+
+**原文标题**: [Announcing TypeScript 7.0 - TypeScript](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)
+
+TypeScript 7.0 正式发布，这是一个用 Go 重写的原生版本，速度提升高达 10 倍，并带来多项性能与体验改进。
+
+- 🚀 **原生性能飞跃**：TypeScript 7.0 使用 Go 重写，实现原生代码速度与共享内存多线程，全量构建速度提升 8-12 倍，例如 VS Code 代码库从 125.7 秒降至 10.6 秒。
+- 💻 **编辑器体验革新**：编辑器加载项目近乎瞬时，查找引用、自动补全和诊断速度大幅提升，VS Code 扩展已可用，Visual Studio 将自动启用。
+- ⚙️ **并行化与精细控制**：引入 `--checkers` 和 `--builders` 标志，可调整类型检查与项目构建的并行度，`--singleThreaded` 模式用于调试或资源受限环境。
+- 🔄 **改进的 `--watch` 模式**：基于 Parcel 文件监听器重构，提供高效稳定的跨平台文件监控，资源占用显著降低。
+- ✅ **生产级稳定性**：经过微软内部团队及 Bloomberg、Google 等外部公司大规模测试，语言服务器命令失败率降低 80% 以上，崩溃率降低 60%。
+- 🔗 **与 TypeScript 6.0 并行运行**：提供 `@typescript/typescript6` 兼容包，支持 `tsc6` 可执行文件，便于工具过渡。
+- 🧩 **模板字面量类型改进**：现在正确处理 Unicode 码点，将 `😀` 视为单个字符，而非拆分为代理对。
+- 📜 **JavaScript 支持重构**：JSDoc 类型推断更一致，废弃了 `@enum`、`@class` 等旧模式，采用更严格的 TypeScript 风格分析。
+- 🚧 **嵌入式语言支持待完善**：Vue、MDX、Svelte 等框架尚需等待 API 稳定，建议 CLI 使用 7.0，编辑器暂用 6.0。
+- 🎯 **未来路线图**：7.1 版本将推出新 API，团队将回归新功能与性能优化，预计每 3-4 个月发布一个功能版本。
+
+---
+
+### [10 倍更快的 TypeScript](https://devblogs.microsoft.com/typescript/typescript-native-port/)
+
+TypeScript 团队宣布将 TypeScript 编译器移植到原生代码，实现 10 倍性能提升，大幅改善开发体验。
+
+- 🚀 原生移植将编辑器启动速度提升 8 倍，构建时间减少 10 倍，内存占用降低约一半
+- ⚡ 实测性能：VS Code 代码库从 77.8 秒降至 7.5 秒，Playwright 从 11.1 秒降至 1.1 秒
+- 🗓️ 时间线：2025 年中预览命令行类型检查，年底实现完整项目构建和语言服务
+- 🔄 版本规划：JS 版继续发展至 6.x，原生版将作为 TypeScript 7.0 发布
+- 🛠️ 新特性：即时全项目错误列表、高级重构、更深层代码洞察，为 AI 工具提供支持
+- 📡 采用语言服务器协议 (LSP)，与行业标准对齐
+- 💻 可在 GitHub 仓库获取 Go 语言实现代码进行测试
+- 🔒 长期维护 6.x 版本直到 7.x 足够成熟，确保平稳过渡
+
 ### [PocketJS — 裸机现代网页](https://pocketjs.dev/)
 
 PocketJS 是一个能在 8MB 内存下运行现代 Web 界面的框架，通过将繁重工作移至构建时和 Rust 核心，让开发者使用熟悉的前端工具在 PSP 等受限硬件上构建流畅的 60 FPS 界面。
@@ -116,6 +161,14 @@ shadcn/ui 现已将 Base UI 设为默认组件库，但 Radix 仍受支持且不
 ## AI
 
 ## 其他
+
+AI 明显大大提高了我现在的工作效率，我可以同时高效地处理五件事。问题是，这种工作方式使得我整天都在切换上下文，能够真正进入心流状态的时间大大减少。
+
+不久前，程序员的工作还属于冥想类工作。现在变了，更像不停接到厨房出菜的餐厅服务员。
+
+-- 《程序员们现在需要开始冥想了》
+
+---
 
 ### [我为何停止与人争论 | 一个极客的页面](https://wangcong.org/2026-06-30-why-i-stopped-arguing-with-people.html)
 
