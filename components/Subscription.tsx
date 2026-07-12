@@ -56,6 +56,13 @@ export const Subscription = () => {
         extra: '',
       },
       {
+        name: 'Notion Plus',
+        yearly: toFixed2Number(798),
+        expiry: '2027-7-12',
+        type: '效率',
+        extra: 'AppleStore 自动续费',
+      },
+      {
         name: 'Google AI Pro',
         yearly: toFixed2Number(126.76 * 12),
         expiry: '2026-4-8',
