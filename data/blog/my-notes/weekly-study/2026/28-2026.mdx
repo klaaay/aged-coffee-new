@@ -81,37 +81,21 @@ FastAPI 的 `app.frontend()` 功能允许开发者直接从后端服务静态前
 
 ## 工具
 
-### [宣布 TypeScript 7.0 - TypeScript](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)
+### [GitHub - jonas-grgt/ktea: Kafka TUI 客户端 · GitHub](https://github.com/jonas-grgt/ktea)
 
-**原文标题**: [Announcing TypeScript 7.0 - TypeScript](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/)
+ktea 是一个基于终端的 Kafka 客户端工具，旨在简化与 Kafka 集群的交互操作，支持多集群管理、主题操作、记录消费、消费者组监控、Schema Registry 和 Kafka Connect 集成等功能。
 
-TypeScript 7.0 正式发布，这是一个用 Go 重写的原生版本，速度提升高达 10 倍，并带来多项性能与体验改进。
-
-- 🚀 **原生性能飞跃**：TypeScript 7.0 使用 Go 重写，实现原生代码速度与共享内存多线程，全量构建速度提升 8-12 倍，例如 VS Code 代码库从 125.7 秒降至 10.6 秒。
-- 💻 **编辑器体验革新**：编辑器加载项目近乎瞬时，查找引用、自动补全和诊断速度大幅提升，VS Code 扩展已可用，Visual Studio 将自动启用。
-- ⚙️ **并行化与精细控制**：引入 `--checkers` 和 `--builders` 标志，可调整类型检查与项目构建的并行度，`--singleThreaded` 模式用于调试或资源受限环境。
-- 🔄 **改进的 `--watch` 模式**：基于 Parcel 文件监听器重构，提供高效稳定的跨平台文件监控，资源占用显著降低。
-- ✅ **生产级稳定性**：经过微软内部团队及 Bloomberg、Google 等外部公司大规模测试，语言服务器命令失败率降低 80% 以上，崩溃率降低 60%。
-- 🔗 **与 TypeScript 6.0 并行运行**：提供 `@typescript/typescript6` 兼容包，支持 `tsc6` 可执行文件，便于工具过渡。
-- 🧩 **模板字面量类型改进**：现在正确处理 Unicode 码点，将 `😀` 视为单个字符，而非拆分为代理对。
-- 📜 **JavaScript 支持重构**：JSDoc 类型推断更一致，废弃了 `@enum`、`@class` 等旧模式，采用更严格的 TypeScript 风格分析。
-- 🚧 **嵌入式语言支持待完善**：Vue、MDX、Svelte 等框架尚需等待 API 稳定，建议 CLI 使用 7.0，编辑器暂用 6.0。
-- 🎯 **未来路线图**：7.1 版本将推出新 API，团队将回归新功能与性能优化，预计每 3-4 个月发布一个功能版本。
-
----
-
-### [10 倍更快的 TypeScript](https://devblogs.microsoft.com/typescript/typescript-native-port/)
-
-TypeScript 团队宣布将 TypeScript 编译器移植到原生代码，实现 10 倍性能提升，大幅改善开发体验。
-
-- 🚀 原生移植将编辑器启动速度提升 8 倍，构建时间减少 10 倍，内存占用降低约一半
-- ⚡ 实测性能：VS Code 代码库从 77.8 秒降至 7.5 秒，Playwright 从 11.1 秒降至 1.1 秒
-- 🗓️ 时间线：2025 年中预览命令行类型检查，年底实现完整项目构建和语言服务
-- 🔄 版本规划：JS 版继续发展至 6.x，原生版将作为 TypeScript 7.0 发布
-- 🛠️ 新特性：即时全项目错误列表、高级重构、更深层代码洞察，为 AI 工具提供支持
-- 📡 采用语言服务器协议 (LSP)，与行业标准对齐
-- 💻 可在 GitHub 仓库获取 Go 语言实现代码进行测试
-- 🔒 长期维护 6.x 版本直到 7.x 足够成熟，确保平稳过渡
+- 🫖 概述：ktea 是一款 Kafka TUI 客户端，类似 k9s 的终端界面，方便用户高效管理 Kafka 集群。
+- 🌟 多集群支持：可无缝连接并切换多个 Kafka 集群，支持 TLS 和 SASL 认证。
+- 📋 主题管理：支持列出、创建、删除和修改主题，包括分区和偏移量详情。
+- 🔍 记录消费：支持文本、JSON 和 Avro 格式的记录消费，并具备强大搜索功能。
+- 👥 消费者组监控：可查看消费者组成员和偏移量，跟踪消费滞后情况。
+- 🗂️ Schema Registry 集成：轻松浏览、查看和注册 Avro 模式。
+- 🔗 Kafka Connect 集成：支持浏览、查看和更新 Kafka Connect 集群。
+- 🛠️ 安装便捷：支持 Mac（brew）、Linux 和 Windows 二进制包。
+- ⌨️ 导航友好：使用 vi 风格快捷键（j/k 上下移动，d/u 翻页）。
+- ⚙️ 配置灵活：所有配置存储在 ~/.config/ktea/config.yaml，可通过 TUI 管理。
+- 🚀 开发支持：提供 Docker Compose 测试集群和测试数据生成工具。
 
 ### [PocketJS — 裸机现代网页](https://pocketjs.dev/)
 
@@ -155,10 +139,6 @@ shadcn/ui 现已将 Base UI 设为默认组件库，但 Radix 仍受支持且不
 - 📄 **迁移结果透明**：每次迁移会生成工作代码、每个组件的详细报告（位于 `.migration/` 目录），以及清晰的 Git 历史记录（每个组件一个提交）。
 - 🧠 **为何用技能而非代码转换**：因为用户自定义了代码，技能让 AI 代理理解并保留这些自定义修改，而非机械替换。
 - 🚀 **推荐使用 Base UI**：Base UI 已稳定（1.6.0 版本，周下载量超 600 万），社区选择比例已达 2:1，官方推荐新项目使用。
-
-## 设计
-
-## AI
 
 ## 其他
 
