@@ -12,6 +12,50 @@ summary: ''
 
 ## 技术
 
+### [Telegram 机器人 API](https://core.telegram.org/bots/api)
+
+Telegram Bot API 是一个基于 HTTP 的接口，用于开发者构建 Telegram 机器人。它提供了发送消息、管理群组、处理支付、创建游戏等多种功能，并支持通过 webhook 或长轮询接收更新。近期版本引入了富消息、临时消息、社区、访客模式、直播照片等多项新特性。
+
+- 🤖 **机器人认证与请求**：每个机器人拥有唯一令牌，所有 API 请求需通过 HTTPS 发送至 `https://api.telegram.org/bot<token>/METHOD_NAME`，支持 GET/POST 及多种参数传递方式。
+- 📩 **接收更新**：支持 `getUpdates`（长轮询）和 `setWebhook`（webhook）两种方式，更新以 JSON 格式的 `Update` 对象传递，包含消息、回调查询等多种类型。
+- 💬 **发送消息**：提供 `sendMessage`、`sendPhoto`、`sendVideo` 等方法，支持文本、媒体、贴纸、位置、投票、发票等丰富内容类型，并可设置回复键盘、内联键盘等交互界面。
+- 🎨 **富消息 (Rich Messages)**：自 API 10.1 起支持高度结构化的富文本消息，包含标题、列表、表格、媒体、公式、折叠块等，可通过 Markdown 或 HTML 格式发送。
+- 👻 **临时消息 (Ephemeral Messages)**：API 10.2 引入，允许机器人在群组中向特定用户发送仅该用户可见的临时消息，并支持回复和编辑。
+- 🏘️ **社区 (Communities)**：API 10.2 支持将多个超级群组、频道和机器人链接在一起，形成围绕共同主题的社区。
+- 🚪 **访客模式 (Guest Mode)**：API 10.0 允许机器人接收非成员聊天中的消息并回复，通过 `guest_query_id` 和 `answerGuestQuery` 实现。
+- 📸 **直播照片 (Live Photos)**：API 10.0 新增，可发送包含短视频的静态照片，并支持作为付费媒体发送。
+- 📊 **投票增强**：API 10.0 起投票选项可包含媒体（图片、视频等），支持仅限成员投票、国家代码限制，并可将选项数降至最少 1 个。
+- 🎮 **游戏与支付**：支持创建和发送 HTML5 游戏，记录高分榜；支持通过 Telegram Stars 或第三方支付提供商处理付款、订阅和退款。
+- 🛡️ **安全与本地服务器**：可运行本地 Bot API 服务器以突破文件大小限制，并支持自定义 webhook 端口和 IP 地址。Mini App 安全已增强，默认禁止跨域调用。
+
+### [如何在 CSS 中创建令人惊叹的交错动画 - LogRocket 博客](https://blog.logrocket.com/css-staggered-animations/)
+
+本文介绍了如何使用现代 CSS 实现交错动画，并探讨了其优势、实现方法及无障碍性考量。
+
+- 📝 **交错动画定义**：通过为多个元素设置不同的动画延迟，使其依次启动，形成连贯、自然的视觉效果，避免所有元素同时运动。
+- 🎯 **使用原因**：引导用户注意力、建立 UI 层次、让信息分块呈现，提升用户体验。
+- ⚙️ **核心实现**：利用 CSS 函数 `sibling-index()` 和 `sibling-count()` 计算延迟，通过 `animation-delay` 属性设置，实现递增或递减的交错效果。
+- 🧩 **代码示例**：列表项淡入放大动画，使用 `calc((sibling-index() - 1) * 100ms)` 计算延迟，支持重叠与非重叠效果。
+- 🔄 **方向控制**：通过 `sibling-count() - sibling-index()` 实现反向交错，适用于关闭或移除元素的动画。
+- 🎨 **应用场景**：英雄区内容引导、聊天界面逐字动画等，让用户逐步消费内容。
+- 🛠️ **JavaScript 必要性**：用于触发交互（如点击展开/收起）、退出动画（元素移除时）及复杂逻辑动画（如电影卡片选择）。
+- 📉 **降级方案**：使用 `@supports not` 规则，为不支持 `sibling-index()` 的浏览器提供备用样式（如 `nth-child` 或自定义属性）。
+- ♿ **无障碍性**：通过 `prefers-reduced-motion` 媒体查询关闭或简化动画，避免引发用户不适。
+- 🌐 **浏览器支持**：`sibling-index()` 和 `sibling-count()` 在 Chromium 和 Safari 中支持，覆盖约 75% 浏览器，可作为渐进增强使用。
+
+### [我们还需要构建工具吗？](https://olliewilliams.xyz/blog/no-build/)
+
+2026 年，前端构建工具在大型项目中仍不可或缺，但必要性因项目规模而异。CSS 方面，前缀处理、语法降级和预处理器需求减少，但文件合并和压缩仍推荐；JavaScript 方面，模块打包、依赖管理和转译在复杂场景下至关重要，但小型项目可跳过构建步骤。
+
+- 📦 **CSS 构建工具需求降低**：自动前缀工具（如 Autoprefixer）对标准属性非必需；语法降级（如 PostCSS）存在局限性，无法完美模拟新功能；Sass 等预处理器因 CSS 原生特性（如嵌套、颜色函数）而失宠。
+- 🔗 **文件合并仍推荐**：通过`@import`或构建工具合并 CSS 文件可减少 HTTP 请求，提升压缩效率（如 gzip/brotli），即使 HTTP/2 下，大量请求仍会造成瓶颈。
+- ⚡ **JavaScript 打包优势明显**：打包可优化压缩效率、消除未用代码、减少请求瀑布流，尤其适用于模块数量超过 100 或依赖树深度大于 5 的项目。
+- 🌐 **模块预加载替代打包**：使用`<link rel="modulepreload">`可并行加载模块，避免瀑布流，但需手动管理预加载语句，复杂项目可能繁琐。
+- 📚 **依赖管理仍依赖工具**：NPM 包管理器处理传递依赖，但直接使用`node_modules`不现实；CDN（如 esm.sh）有维护和安全隐患；现代打包器（如 esbuild、Rolldown）仍是可靠选择。
+- 🔄 **转译器需求减少**：Babel 等工具默认不再转译为 ES5，避免不必要的代码膨胀；等待新特性获得浏览器原生支持是有效策略。
+- 🛠️ **框架与类型检查**：JSX、TypeScript 和 Tailwind 等流行技术仍需构建步骤；JSDoc 可在无构建时提供类型检查，但语法不友好。
+- 😣 **开发者满意度未提升**：构建工具复杂度、配置和性能仍是主要痛点，但完全放弃构建在大型项目中不可行。
+
 ### [GitHub - dcrousso/proposal-Map-take · GitHub](https://github.com/dcrousso/proposal-Map-take)
 
 该提案建议为 `Map` 和 `WeakMap` 添加 `take(key)` 方法，用于在单次操作中移除并返回指定键的值。
@@ -37,6 +81,24 @@ summary: ''
 - ⚖️ **命令选择**：`close` 用于无条件关闭；`request-close` 用于需要拦截确认的场景，类似浏览器 Escape 键行为。
 
 ## 工具
+
+### [GitHub - yagop/node-telegram-bot-api: 适用于 NodeJS 的 Telegram Bot API](https://github.com/yagop/node-telegram-bot-api)
+
+这是一个用于 Node.js 的现代 Telegram Bot API 库，支持多种运行环境，提供简洁的中间件、键盘构建器和文件上传功能。
+
+- ✨ 支持 Bun、Node.js、Deno、Cloudflare Workers 和 Vercel Functions 等多种运行环境
+- 📦 通过 `npm install node-telegram-bot-api@next` 安装，v2 版本完全重写，不兼容 v1
+- 🚀 提供 `Bot` 类，支持命令、正则匹配和消息事件的中间件处理
+- 📡 提供 `Api` 类，1:1 映射 Telegram Bot API 方法，支持直接调用
+- 🧩 支持 koa 风格中间件，包含 `use`、`on`、`command`、`hears` 和 `catch` 方法
+- ⌨️ 提供 `InlineKeyboardBuilder`、`ReplyKeyboardBuilder` 和 `EntityBuilder` 构建键盘和富文本
+- 📤 支持文件上传，包括磁盘路径、原始字节和流式上传，并自动处理重试
+- 🪝 支持 Webhooks，兼容 Express、Next.js 和边缘运行时
+- ⚠️ 错误处理提供结构化字段（如 `TelegramApiError`、`NetworkError`），支持自动重试 429 错误
+- 🛡️ 内置弹性机制，包括自动重试、限流（全局和每聊天）和长轮询恢复
+- 🌊 提供 `longPoll` 异步生成器，支持灵活的低级更新流处理
+- 🐛 支持 `DEBUG` 环境变量进行调试，跟踪请求生命周期和轮询
+- 🛠️ 开发工具包括类型生成、代码检查和构建脚本
 
 ## 更新
 
