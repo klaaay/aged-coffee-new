@@ -12,6 +12,19 @@ summary: ''
 
 ## 技术
 
+### [GitHub - dcrousso/proposal-Map-take · GitHub](https://github.com/dcrousso/proposal-Map-take)
+
+该提案建议为 `Map` 和 `WeakMap` 添加 `take(key)` 方法，用于在单次操作中移除并返回指定键的值。
+
+- 📋 **核心功能**：`Map.prototype.take(key)` 和 `WeakMap.prototype.take(key)` 可一步完成"读取并删除"操作，返回键对应的值（键不存在时返回 `undefined`）。
+- 🚀 **解决痛点**：当前需用 `get()` 和 `delete()` 两次查找同一键，存在性能开销、易写错（如先删后读）和重复实现的问题。
+- 🔍 **语义清晰**：行为与 `get()` 后执行 `delete()` 完全一致，返回 `undefined` 时无法区分"键不存在"和"值为 undefined"（与 `get` 相同）。
+- 🌍 **广泛先例**：Rust、Python、Java、C# 等多数语言的标准库均提供"移除并返回值"的操作，Rust 的 `HashSet::take` 直接启发了命名。
+- 🔗 **与 `pop` 类比**：类似 `Array.prototype.pop()` 移除并返回末尾元素，`take` 是键控集合的对应操作（按键而非按位置移除）。
+- 📊 **社区需求**：GitHub 搜索显示大量 `getAndDelete`、`popEntry` 等自定义实现，以及 `map.get` 后接 `map.delete` 的代码模式（约 10 万 + 文件）。
+- 💡 **命名考量**：`take` 简洁且与 Rust 一致；`getAndDelete` 是备选，能明确体现"先读后删"的关系。
+- 🛠️ **Polyfill 可用**：提供兼容性 polyfill，通过 `get` 和 `delete` 方法实现，可安全安装到 `Map` 和 `WeakMap` 原型上。
+
 ### [如何在 React 中使用 request-close 防止模态对话框关闭 by sergiodxa](https://sergiodxa.com/tutorials/prevent-a-modal-dialog-from-closing-with-request-close-in-react)
 
 本文介绍了在 React 中使用 `request-close` 命令防止模态对话框意外关闭的方法，通过拦截 `cancel` 事件实现条件性关闭，并支持传递返回值。
