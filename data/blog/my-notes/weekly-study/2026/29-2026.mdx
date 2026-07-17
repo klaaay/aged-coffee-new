@@ -12,6 +12,15 @@ summary: ''
 
 ## 技术
 
+### [JavaScript 哈希速度对比：MD5 与 SHA-256](https://lemire.me/blog/2025/01/11/javascript-hashing-speed-comparison-md5-versus-sha-256/)
+
+- 🧩 **哈希算法**将输入数据转换为固定长度的哈希值，是一种不可逆的单向函数，常用于数据完整性、密码存储和数字签名。
+- ⚖️ **MD5 与 SHA-256 对比**：MD5 较旧，结构简单，但已被认为存在安全漏洞；SHA-256 更安全，输出 256 位哈希值。
+- 💻 **性能测试**：作者编写 JavaScript 程序，对 1GB 随机数组分别使用 MD5 和 SHA-256 进行哈希计算，并在不同平台（ARM 和 Intel）上通过 Bun 和 Node.js 23 运行。
+- 📊 **测试结果**：在 ARM 系统上，Bun 运行 MD5 略快于 Node.js；但总体而言，SHA-256 在大多数测试中速度超过 MD5，例如在 Apple M2 上 SHA-256 达 2.6 GB/s，而MD5仅0.6–0.7 GB/s。
+- 🔒 **结论**：MD5 不仅速度更慢，且安全性不足，因此应优先使用 SHA-256，现代处理器通常支持加密扩展以加速 SHA-256。
+- 📂 **代码可用**：相关代码已在 GitHub 上公开。
+
 ### [Telegram 机器人 API](https://core.telegram.org/bots/api)
 
 Telegram Bot API 是一个基于 HTTP 的接口，用于开发者构建 Telegram 机器人。它提供了发送消息、管理群组、处理支付、创建游戏等多种功能，并支持通过 webhook 或长轮询接收更新。近期版本引入了富消息、临时消息、社区、访客模式、直播照片等多项新特性。
