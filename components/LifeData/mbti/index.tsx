@@ -22,9 +22,9 @@ const chartData = mbtiRecords.map(enrichMbtiRecord)
 type ChartPayload = (typeof chartData)[number]
 
 const stickyDateColumnClass =
-  'sticky left-0 z-10 w-[112px] min-w-[112px] whitespace-nowrap bg-white px-3 py-2 text-left dark:bg-gray-950'
+  'sticky left-0 z-10 w-[92px] min-w-[92px] whitespace-nowrap bg-white px-2 py-2 text-left dark:bg-gray-950'
 const stickyTypeColumnClass =
-  'sticky left-[112px] z-10 w-[184px] min-w-[184px] whitespace-nowrap bg-white px-3 py-2 text-left shadow-[1px_0_0_0_var(--color-gray-200)] dark:bg-gray-950 dark:shadow-[1px_0_0_0_var(--color-gray-700)]'
+  'sticky left-[92px] z-10 w-[148px] min-w-[148px] whitespace-nowrap bg-white px-2 py-2 text-left shadow-[1px_0_0_0_var(--color-gray-200)] dark:bg-gray-950 dark:shadow-[1px_0_0_0_var(--color-gray-700)]'
 const traitColumnClass = 'w-[116px] min-w-[116px] whitespace-nowrap px-3 py-2 text-right'
 
 function MbtiTooltip({ active, payload }: TooltipContentProps<number, string>) {
