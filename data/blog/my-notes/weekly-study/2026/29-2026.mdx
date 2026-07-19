@@ -12,6 +12,28 @@ summary: ''
 
 ## 技术
 
+### [使用 Web 标准的暗黑模式](https://olliewilliams.xyz/blog/dark-mode/?ref=tailwindweekly.com)
+
+本文介绍了使用 Web 标准实现深色模式的方法，重点是如何通过`color-scheme`和`prefers-color-scheme`媒体查询来尊重用户系统设置，同时提供网站内的手动切换功能。
+
+- 🌓 **默认尊重系统设置**：使用`<meta name="color-scheme" content="light dark">`标签，让网站首次加载时自动匹配用户操作系统偏好。
+- 🔄 **支持用户手动覆盖**：通过 JavaScript 切换`<meta>`标签的`content`属性值为`light`、`dark`或`light dark`，并将选择保存到`localStorage`中。
+- 🎨 **`color-scheme`影响范围**：包括`light-dark()`函数中的颜色、系统颜色（如`Canvas`）、滚动条颜色、HTML 元素默认颜色、iframe 样式（需内嵌文档同意）以及使用`light-dark()`或`prefers-color-scheme`的 SVG。
+- 🚫 **`color-scheme`不影响**：`prefers-color-scheme`媒体查询（除非在 iframe 或 SVG 中），因此无法通过它实现页面内切换；`<picture>`元素中的媒体查询也不受影响。
+- 🖼️ **`light-dark()`扩展应用**：支持渐变和图片切换，例如根据模式使用不同渐变或图片资源（需 Chrome/Edge 150+、Firefox 150+、Safari TP）。
+- 🛠️ **处理非颜色变化**：通过 CSS 自定义属性（如`--dark`）和样式查询（`@container style()`）实现阴影、边框等非颜色元素的模式切换。
+- 🔮 **未来展望**：可能通过 JavaScript 覆盖`prefers-color-scheme`媒体查询（Chrome Canary 有原型，但 Safari 团队反对）。
+
+### [ReactBench](https://www.reactbench.com/)
+
+ReactBench 是一个评估编码智能体在实际 React 开发中表现的基准测试。传统测试只检查行为是否正确，但忽略了性能、可访问性和代码质量等关键问题。
+
+- 📊 测试显示，即使是顶级模型（如 GPT 5.6 Sol）的 Pass@1 也仅达 43%，说明模型在真实 React 代码中仍有大量缺陷。
+- 💰 评分与成本并非正相关，例如 Fable 5 成本高达 $9.05，但评分仅 41.2%，而 GPT 5.6 Sol 成本仅 $1.35，评分却更高。
+- 🚨 模型生成的 React 代码易导致生产事故，包括：因 `useEffect` 错误引发的服务宕机、界面卡顿造成的收入损失，以及无障碍问题带来的法律风险。
+- 🛠️ 基准测试包含 51 个真实任务，涵盖列拖拽调整大小、修复反模式、事件泄漏等实际场景。
+- 🔒 为确保数据纯净，ReactBench 使用了 `reactbench-canary` 标识符，防止测试数据混入训练语料。
+
 ### [JavaScript 哈希速度对比：MD5 与 SHA-256](https://lemire.me/blog/2025/01/11/javascript-hashing-speed-comparison-md5-versus-sha-256/)
 
 - 🧩 **哈希算法**将输入数据转换为固定长度的哈希值，是一种不可逆的单向函数，常用于数据完整性、密码存储和数字签名。
@@ -91,6 +113,33 @@ Telegram Bot API 是一个基于 HTTP 的接口，用于开发者构建 Telegram
 
 ## 工具
 
+### [GitHub - QuadDepo/env.style · GitHub](https://github.com/QuadDepo/env.style)
+
+env.style 是一个开源工具，能在构建时为不同环境（如开发、预览、生产）自动给现有网站图标（favicon）添加不同颜色，帮助开发者避免混淆环境。它采用 Vercel 风格，生产环境图标保持不变。项目使用 TypeScript 编写，支持 Next.js 和 Vite 框架，已获得 192 个星标和 3 个复刻。
+
+- 🎨 自动为不同环境（开发、预览、生产）的网站图标添加不同颜色，避免混淆
+- 🚀 支持 Next.js 和 Vite 框架，通过简单配置即可集成
+- 🔧 构建时处理，生产环境图标不受影响
+- 📦 使用 pnpm 管理依赖，包含示例和开发指南
+- ⭐ 开源项目，MIT 许可证，拥有 192 个星标和 3 个复刻
+- 🛠️ 主要使用 TypeScript（98.8%），少量 CSS 和 JavaScript
+
+### [一个功能完备的 TypeScript 存储 SDK——跨不同提供商的统一便携接口](https://storagesdk.dev/?utm_date=2026-07-18)
+
+这是一个统一的 TypeScript 存储 SDK，支持快照和分支，可在多个存储提供商之间切换。
+
+- 🔄 **统一 API**：在所有提供商（Tigris、S3、R2、GCS、Azure 等）上使用相同的 API，只需更改导入即可切换提供商。
+- 📸 **快照与分支**：内置快照和分支功能，支持冻结状态、创建沙盒环境，并在完成后合并或丢弃分支。
+- 🤖 **AI 集成**：可直接与 Vercel AI SDK、Mastra 或 MCP 服务器集成，让模型自动进行快照和分支操作。
+- 🖥️ **CLI 工具**：通过 `@storagesdk/cli` 在命令行中使用熟悉的 `ls`、`cp`、`mv` 等命令，支持 `storage://` 协议。
+- 🌊 **流式传输**：支持 Web 流（`ReadableStream<Uint8Array>`）的上传和下载，背压和中断端到端传播。
+- 🔗 **签名 URL**：支持预签名 PUT 和 POST，可设置 `maxSize` / `contentType` 限制。
+- 🛠️ **逃生口**：通过 `storage.raw` 访问原生客户端，支持提供商特定功能，类型安全。
+- 🚫 **中止信号**：每个操作支持 `AbortSignal`，可取消上传、列表扫描和快照。
+- ❌ **类型化错误**：使用 `StorageError` 代码（如 `NotFound`、`Conflict`、`Aborted`）保持可移植性。
+- 📦 **轻量级**：ESM 仅限，Node 20+，核心零运行时依赖，适配器作为可选对等依赖。
+- 🌟 **开源**：Apache 2.0 许可，由 Tigris 团队构建，适用于所有人。
+
 ### [GitHub - yagop/node-telegram-bot-api: 适用于 NodeJS 的 Telegram Bot API](https://github.com/yagop/node-telegram-bot-api)
 
 这是一个用于 Node.js 的现代 Telegram Bot API 库，支持多种运行环境，提供简洁的中间件、键盘构建器和文件上传功能。
@@ -108,12 +157,6 @@ Telegram Bot API 是一个基于 HTTP 的接口，用于开发者构建 Telegram
 - 🌊 提供 `longPoll` 异步生成器，支持灵活的低级更新流处理
 - 🐛 支持 `DEBUG` 环境变量进行调试，跟踪请求生命周期和轮询
 - 🛠️ 开发工具包括类型生成、代码检查和构建脚本
-
-## 更新
-
-## 设计
-
-## AI
 
 ## 其他
 
