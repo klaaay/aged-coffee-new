@@ -12,6 +12,19 @@ summary: ''
 
 ## 技术
 
+### [Web Locks API - Web API | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Locks_API)
+
+Web Locks API 允许在多个标签页或 Worker 中运行的脚本异步获取锁，协调资源共享，防止冲突。锁基于来源（origin）隔离，支持独占和共享模式，并提供诊断和死锁防护功能。
+
+- 🔒 **核心功能**：脚本可异步获取锁，执行任务后自动释放，确保同一时间只有一个执行上下文能访问共享资源。
+- 🌐 **跨标签页协调**：通过锁名称（如 "my_net_db_sync"）实现领导者选举，仅一个标签页执行同步操作。
+- 📝 **使用方式**：调用 `navigator.locks.request()` 传入锁名称和异步回调，锁在回调完成后自动释放。
+- ⚙️ **可选选项**：支持 `mode`（独占/共享）、`ifAvailable`（非阻塞获取）、`steal`（抢占锁）、`signal`（通过 AbortSignal 超时取消）。
+- 🔍 **诊断监控**：`navigator.locks.query()` 可查询来源的锁状态，包括持有和等待的锁及其模式，便于调试。
+- 🚫 **死锁防护**：避免嵌套或无序请求锁，可通过超时或良好顺序策略防止死锁，仅影响锁本身，不影响浏览器或其他脚本。
+- 🛠️ **接口**：`Lock` 提供锁名称和模式，`LockManager` 通过 `navigator.locks` 获取，用于请求和查询锁。
+- ✅ **兼容性**：自 2022 年 3 月起广泛可用，需安全上下文（HTTPS），支持 Web Workers。
+
 ### [我不再解构一切——马特·史密斯](https://allthingssmitty.com/2026/07/13/i-stopped-destructuring-everything/)
 
 作者反思了过度使用解构赋值的习惯，指出解构虽能简化代码编写，但可能增加阅读时的认知负担，因此现在更注重代码的可读性而非简洁性。
@@ -25,6 +38,18 @@ summary: ''
 - 💡 **核心原则**：解构前自问“移除对象是否让代码更易理解，还是仅仅更短？”——优先考虑可读性而非简洁性。
 
 ## 工具
+
+### [pi](https://github.com/earendil-works/pi)
+
+该文本介绍了 Pi 代理工具链项目，包括核心包、权限说明、贡献指南、开发流程及供应链安全措施，并鼓励共享开源编码会话。
+
+- 📦 **核心包介绍**：Pi 项目包含三个主要包：`pi-coding-agent`（交互式编码代理 CLI）、`pi-agent-core`（代理运行时，支持工具调用和状态管理）、`pi-ai`（统一多供应商 LLM API，支持 OpenAI、Anthropic、Google 等）。
+- 🔒 **权限与容器化**：Pi 默认无内置权限系统，运行于用户进程权限下；如需更强隔离，可采用 Gondolin 扩展、Docker 或 OpenShell 模式进行容器化或沙盒化。
+- 🤝 **贡献与开发**：贡献指南见 CONTRIBUTING.md，开发命令包括`npm install --ignore-scripts`安装依赖、`npm run build`构建、`./test.sh`运行测试及`./pi-test.sh`从源码运行 Pi。
+- 🛠️ **构建独立二进制**：从 GitHub 发布版源码提取后，运行`./scripts/build-binaries.sh --platform linux-x64`即可构建独立二进制文件。
+- 🔐 **供应链安全**：依赖管理严格，直接外部依赖固定版本，使用`save-exact=true`和`min-release-age=2`，锁文件为依赖基准，CI 使用`npm ci --ignore-scripts`安装，并定期运行`npm audit`。
+- 📢 **共享编码会话**：鼓励开源用户使用`badlogic/pi-share-hf`共享编码会话数据，以改进代理性能，支持 Hugging Face 账户和 CLI 操作。
+- 📄 **许可证与资源**：项目采用 MIT 许可证，更多信息可访问 pi.dev 网站、阅读文档或直接让代理自我解释。
 
 ## 更新
 
