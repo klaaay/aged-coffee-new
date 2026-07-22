@@ -1,0 +1,116 @@
+{
+  "site": {
+    "description": "A place to record books, films, music, and reflections on life."
+  },
+  "nav": {
+    "blog": "Blog",
+    "tags": "Tags",
+    "life": "Life",
+    "manual": "Manual",
+    "tools": "Tools",
+    "ai": "AI",
+    "about": "About"
+  },
+  "home": {
+    "latest": "Latest",
+    "noPosts": "No posts found.",
+    "readMore": "Read more →",
+    "readMoreAria": "Read more: {title}",
+    "allPosts": "All posts →",
+    "allPostsAria": "View all posts"
+  },
+  "common": {
+    "publishedOn": "Published on",
+    "previous": "Previous",
+    "next": "Next",
+    "scrollToTop": "Scroll to top"
+  },
+  "pagination": {
+    "status": "Page {current} of {total}"
+  },
+  "list": {
+    "searchArticles": "Search articles",
+    "noPosts": "No posts found."
+  },
+  "page": {
+    "allPosts": "All Posts",
+    "life": "Life",
+    "lifeDescription": "Life notes and annual reviews",
+    "projects": "Projects",
+    "projectsDescription": "A showcase of my projects and work",
+    "tags": "Tags",
+    "tagsDescription": "Browse posts by tag",
+    "about": "About"
+  },
+  "tags": {
+    "noTags": "No tags found.",
+    "viewTagged": "View posts tagged {tag}",
+    "metaDescription": "All posts tagged {tag} on {site}"
+  },
+  "notFound": {
+    "title": "Sorry, we could not find this page.",
+    "description": "You can return to the homepage and keep exploring.",
+    "backHome": "Back to homepage"
+  },
+  "search": {
+    "open": "Search",
+    "placeholder": "Search articles…",
+    "content": "Content",
+    "loading": "Loading…",
+    "noResults": "No results for your search."
+  },
+  "theme": {
+    "switcher": "Theme switcher",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "language": {
+    "switchToEnglish": "Switch to English",
+    "switchToChinese": "切换到中文"
+  },
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu"
+  },
+  "comments": {
+    "load": "Load comments",
+    "scrollTo": "Scroll to comments"
+  },
+  "toc": {
+    "title": "Table of Contents"
+  },
+  "post": {
+    "authors": "Authors",
+    "name": "Name",
+    "twitter": "Twitter",
+    "tags": "Tags",
+    "previousArticle": "Previous Article",
+    "nextArticle": "Next Article",
+    "previousAria": "Previous post: {title}",
+    "nextAria": "Next post: {title}",
+    "backToBlog": "← Back to the blog",
+    "backToBlogAria": "Back to the blog",
+    "discussOnTwitter": "Discuss on Twitter",
+    "viewOnGitHub": "View on GitHub"
+  },
+  "author": {
+    "avatar": "Avatar"
+  },
+  "card": {
+    "linkTo": "Link to {title}",
+    "learnMore": "Learn more →"
+  },
+  "subscription": {
+    "name": "Name",
+    "plan": "Plan",
+    "expiry": "Expiry",
+    "daysLeft": "Days left",
+    "type": "Type",
+    "notes": "Notes",
+    "yearMonth": "¥{yearly} / year (¥{monthly} / month)",
+    "efficiencyTotal": "Productivity total: ¥{total}/month",
+    "entertainmentTotal": "Entertainment total: ¥{total}/month",
+    "total": "Total: ¥{total}/month"
+  }
+}

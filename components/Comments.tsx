@@ -1,21 +1,34 @@
 'use client'
 
-import { Comments as CommentsComponent } from 'pliny/comments'
+import { Comments as CommentsComponent, CommentsConfig } from 'pliny/comments'
 import { useState } from 'react'
 import siteMetadata from '@/data/siteMetadata'
+import { useTranslation } from './LanguageProvider'
 
 export default function Comments({ slug }: { slug: string }) {
+  const { locale, t } = useTranslation()
   const [loadComments, setLoadComments] = useState(false)
 
   if (!siteMetadata.comments?.provider) {
     return null
   }
+  const commentsConfig: CommentsConfig =
+    siteMetadata.comments.provider === 'giscus'
+      ? {
+          ...siteMetadata.comments,
+          giscusConfig: {
+            ...siteMetadata.comments.giscusConfig,
+            lang: locale === 'zh-CN' ? 'zh-CN' : 'en',
+          },
+        }
+      : siteMetadata.comments
+
   return (
     <>
       {loadComments ? (
-        <CommentsComponent commentsConfig={siteMetadata.comments} slug={slug} />
+        <CommentsComponent commentsConfig={commentsConfig} slug={slug} />
       ) : (
-        <button onClick={() => setLoadComments(true)}>Load Comments</button>
+        <button onClick={() => setLoadComments(true)}>{t('comments.load')}</button>
       )}
     </>
   )

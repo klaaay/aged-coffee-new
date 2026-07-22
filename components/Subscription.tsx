@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+import { useTranslation } from './LanguageProvider'
 
 type SubscriptionItem = {
   name: string
@@ -39,6 +40,7 @@ const compareSubscriptions = (a: SubscriptionItem, b: SubscriptionItem) => {
 }
 
 export const Subscription = () => {
+  const { t } = useTranslation()
   const [subscriptions, setSubscriptions] = useState<SubscriptionItem[]>(
     [
       {
@@ -238,20 +240,21 @@ export const Subscription = () => {
   const totals = calculateTotal()
 
   const columns: ColumnsType<SubscriptionItem> = [
-    { title: '名称', dataIndex: 'name', key: 'name', fixed: 'left', width: 160 },
+    { title: t('subscription.name'), dataIndex: 'name', key: 'name', fixed: 'left', width: 160 },
     {
-      title: '套餐',
+      title: t('subscription.plan'),
       key: 'plan',
-      render: (_, record) => `￥${record.yearly} / 年 (￥${record.monthly} / 月)`,
+      render: (_, record) =>
+        t('subscription.yearMonth', { yearly: record.yearly!, monthly: record.monthly! }),
     },
-    { title: '到期时间', dataIndex: 'expiry', key: 'expiry' },
+    { title: t('subscription.expiry'), dataIndex: 'expiry', key: 'expiry' },
     {
-      title: '剩余天数',
+      title: t('subscription.daysLeft'),
       key: 'daysLeft',
       render: (_, record) => daysUntilExpiry(record.expiry),
     },
-    { title: '类型', dataIndex: 'type', key: 'type' },
-    { title: '备注', dataIndex: 'extra', key: 'extra' },
+    { title: t('subscription.type'), dataIndex: 'type', key: 'type' },
+    { title: t('subscription.notes'), dataIndex: 'extra', key: 'extra' },
   ]
 
   return (
@@ -265,9 +268,13 @@ export const Subscription = () => {
         rowClassName={(record) => (daysUntilExpiry(record.expiry) > 0 ? '' : 'line-through')}
       />
       <div>
-        <p>效率总计：¥{totals.efficiencyTotal.toFixed(2)}/月</p>
-        <p>娱乐总计：¥{totals.entertainmentTotal.toFixed(2)}/月</p>
-        <p>总计：¥{totals.total.toFixed(2)}/月</p>
+        <p>{t('subscription.efficiencyTotal', { total: totals.efficiencyTotal.toFixed(2) })}</p>
+        <p>
+          {t('subscription.entertainmentTotal', {
+            total: totals.entertainmentTotal.toFixed(2),
+          })}
+        </p>
+        <p>{t('subscription.total', { total: totals.total.toFixed(2) })}</p>
       </div>
     </div>
   )

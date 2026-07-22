@@ -1,0 +1,116 @@
+{
+  "site": {
+    "description": "一个记录书影音和生活随想的地方～"
+  },
+  "nav": {
+    "blog": "记录",
+    "tags": "分类",
+    "life": "生活",
+    "manual": "手册",
+    "tools": "工具",
+    "ai": "AI",
+    "about": "关于"
+  },
+  "home": {
+    "latest": "最近",
+    "noPosts": "暂时没有文章。",
+    "readMore": "阅读全文 →",
+    "readMoreAria": "阅读全文：{title}",
+    "allPosts": "全部文章 →",
+    "allPostsAria": "查看全部文章"
+  },
+  "common": {
+    "publishedOn": "发布于",
+    "previous": "上一页",
+    "next": "下一页",
+    "scrollToTop": "返回顶部"
+  },
+  "pagination": {
+    "status": "第 {current} 页，共 {total} 页"
+  },
+  "list": {
+    "searchArticles": "搜索文章",
+    "noPosts": "没有找到文章。"
+  },
+  "page": {
+    "allPosts": "全部文章",
+    "life": "生活",
+    "lifeDescription": "生活记录与年度回顾",
+    "projects": "项目",
+    "projectsDescription": "展示我的项目与作品",
+    "tags": "分类",
+    "tagsDescription": "按分类浏览文章",
+    "about": "关于"
+  },
+  "tags": {
+    "noTags": "暂时没有分类。",
+    "viewTagged": "查看分类“{tag}”下的文章",
+    "metaDescription": "{site} 上所有分类为“{tag}”的文章"
+  },
+  "notFound": {
+    "title": "抱歉，没有找到这个页面。",
+    "description": "别担心，你可以返回首页继续浏览其他内容。",
+    "backHome": "返回首页"
+  },
+  "search": {
+    "open": "搜索",
+    "placeholder": "搜索文章…",
+    "content": "内容",
+    "loading": "正在加载…",
+    "noResults": "没有找到相关内容。"
+  },
+  "theme": {
+    "switcher": "切换主题",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统"
+  },
+  "language": {
+    "switchToEnglish": "Switch to English",
+    "switchToChinese": "切换到中文"
+  },
+  "menu": {
+    "open": "打开菜单",
+    "close": "关闭菜单"
+  },
+  "comments": {
+    "load": "加载评论",
+    "scrollTo": "滚动到评论区"
+  },
+  "toc": {
+    "title": "目录"
+  },
+  "post": {
+    "authors": "作者",
+    "name": "姓名",
+    "twitter": "Twitter",
+    "tags": "分类",
+    "previousArticle": "上一篇",
+    "nextArticle": "下一篇",
+    "previousAria": "上一篇：{title}",
+    "nextAria": "下一篇：{title}",
+    "backToBlog": "← 返回文章列表",
+    "backToBlogAria": "返回文章列表",
+    "discussOnTwitter": "在 Twitter 上讨论",
+    "viewOnGitHub": "在 GitHub 上查看"
+  },
+  "author": {
+    "avatar": "头像"
+  },
+  "card": {
+    "linkTo": "前往项目：{title}",
+    "learnMore": "了解更多 →"
+  },
+  "subscription": {
+    "name": "名称",
+    "plan": "套餐",
+    "expiry": "到期时间",
+    "daysLeft": "剩余天数",
+    "type": "类型",
+    "notes": "备注",
+    "yearMonth": "￥{yearly} / 年（￥{monthly} / 月）",
+    "efficiencyTotal": "效率总计：¥{total}/月",
+    "entertainmentTotal": "娱乐总计：¥{total}/月",
+    "total": "总计：¥{total}/月"
+  }
+}

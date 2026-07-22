@@ -1,4 +1,7 @@
 const { withContentlayer } = require('next-contentlayer2')
+const createNextIntlPlugin = require('next-intl/plugin')
+
+const withNextIntl = createNextIntlPlugin()
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
@@ -62,22 +65,20 @@ const unoptimized = process.env.UNOPTIMIZED ? true : undefined
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
 module.exports = () => {
-  const plugins = [withContentlayer, withBundleAnalyzer]
+  const plugins = [withContentlayer, withBundleAnalyzer, withNextIntl]
   return plugins.reduce((acc, next) => next(acc), {
     output,
     basePath,
+    outputFileTracingRoot: process.cwd(),
     reactStrictMode: true,
     trailingSlash: false,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-    eslint: {
-      dirs: ['app', 'components', 'utils', 'layouts', 'scripts'],
-    },
-    images: {
-      domains: ['cdn.jsdelivr.net'],
-      dirs: ['app', 'components', 'layouts', 'scripts'],
-    },
     images: {
       remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'cdn.jsdelivr.net',
+        },
         {
           protocol: 'https',
           hostname: 'picsum.photos',

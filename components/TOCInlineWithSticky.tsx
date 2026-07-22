@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import { Toc } from 'pliny/mdx-plugins/remark-toc-headings'
+import { useTranslation } from './LanguageProvider'
 
 export interface TOCInlineProps {
   toc: Toc
@@ -26,6 +27,7 @@ const TOCInlineWithSticky = ({
   noSticky = false,
   hiddenToc = false,
 }: TOCInlineProps) => {
+  const { t } = useTranslation()
   const tocRef = useRef<HTMLDivElement>(null)
   const [isSticky, setIsSticky] = useState(false)
   const [innerNoSticky, setInnerNoSticky] = useState(noSticky)
@@ -85,7 +87,7 @@ const TOCInlineWithSticky = ({
 
   const tocMarkup = asDisclosure ? (
     <details open={!collapse}>
-      <summary className="ml-6 pb-2 pt-2 text-xl font-bold">Table of Contents</summary>
+      <summary className="ml-6 pt-2 pb-2 text-xl font-bold">{t('toc.title')}</summary>
       <div className="ml-6">{tocList}</div>
     </details>
   ) : (
