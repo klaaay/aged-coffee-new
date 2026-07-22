@@ -4,6 +4,7 @@ const headerNavLinks: { href: string; titleKey: TranslationKey }[] = [
   { href: '/blog', titleKey: 'nav.blog' },
   { href: '/tags', titleKey: 'nav.tags' },
   { href: '/life', titleKey: 'nav.life' },
+  { href: '/subscriptions', titleKey: 'nav.subscriptions' },
   // { href: '/projects', title: 'Projects' },
   { href: '/blog/resources-save/tech-manual', titleKey: 'nav.manual' },
   // { href: '/blog/resources-save/tech-note', title: '笔记' },

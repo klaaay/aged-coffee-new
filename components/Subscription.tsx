@@ -1,243 +1,24 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Table } from 'antd'
+import { Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+import { subscriptions, type SubscriptionItem } from '@/data/subscriptions'
+import {
+  calculateSubscriptionTotals,
+  getDaysUntilExpiry,
+  getExpiringSubscriptions,
+  sortSubscriptions,
+} from '@/utils/subscriptions'
 import { useTranslation } from './LanguageProvider'
 
-type SubscriptionItem = {
-  name: string
-  yearly?: number
-  monthly?: number
-  expiry: string
-  type: string
-  extra?: string
-}
-
-export const DOLLAR2RMB = 7.5
-
-export const toFixed2Number = (num: number) => parseFloat(num.toFixed(2))
-
-const daysUntilExpiry = (expiryDate: string) => {
-  const today = new Date()
-  const expiry = new Date(expiryDate)
-  const difference = expiry.getTime() - today.getTime()
-  const days = Math.ceil(difference / (1000 * 3600 * 24))
-  return days > 0 ? days : 0
-}
-
-const isSubscriptionActive = (expiryDate: string) => daysUntilExpiry(expiryDate) > 0
-
-const compareSubscriptions = (a: SubscriptionItem, b: SubscriptionItem) => {
-  const isAActive = isSubscriptionActive(a.expiry)
-  const isBActive = isSubscriptionActive(b.expiry)
-
-  if (isAActive !== isBActive) {
-    return isAActive ? -1 : 1
-  }
-
-  return daysUntilExpiry(a.expiry) - daysUntilExpiry(b.expiry)
-}
+const EXPIRY_WARNING_DAYS = 30
 
 export const Subscription = () => {
   const { t } = useTranslation()
-  const [subscriptions, setSubscriptions] = useState<SubscriptionItem[]>(
-    [
-      {
-        name: '夸克扫描王',
-        yearly: 88,
-        expiry: '2026-11-28',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: 'Figma Full Seat',
-        yearly: toFixed2Number(16 * 12 * DOLLAR2RMB),
-        expiry: '2026-9-27',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: 'Notion Plus',
-        yearly: toFixed2Number(798),
-        expiry: '2027-7-12',
-        type: '效率',
-        extra: 'AppleStore 自动续费',
-      },
-      {
-        name: 'Google AI Pro',
-        yearly: toFixed2Number(126.76 * 12),
-        expiry: '2026-4-8',
-        type: '效率',
-        extra: '2900JPY/Month',
-      },
-      {
-        name: 'ChatGPT Plus',
-        yearly: toFixed2Number(100 * 12 * DOLLAR2RMB),
-        expiry: '2026-10-3',
-        type: '效率',
-        extra: '100USD/Month',
-      },
-      {
-        name: 'DeepSeek API',
-        monthly: 10,
-        yearly: toFixed2Number(10 * 12),
-        expiry: '2030-01-01',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: '薄荷记账',
-        yearly: 25.6,
-        expiry: '2030-09-10',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: 'LobeChat 自助',
-        yearly: 428.73,
-        expiry: '2026-02-17',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: 'Cursor Pro',
-        yearly: toFixed2Number(192 * DOLLAR2RMB),
-        expiry: '2026-11-18',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: '苹果 iCloud 2TB',
-        yearly: 68 * 12,
-        expiry: '2030-01-01',
-        type: '效率',
-        extra: '每月自动续订',
-      },
-      {
-        name: '夸克网盘 VIP',
-        yearly: 198,
-        expiry: '2026-8-14',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: 'aged-coffee.me',
-        yearly: 229,
-        expiry: '2027-4-15',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: '100 云服务器 55R 型号租用一年',
-        yearly: 89,
-        expiry: '2027-06-12',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: '100 云服务器 V2R 型号租用一年',
-        yearly: 165,
-        expiry: '2026-09-30',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: 'Raycast Pro',
-        yearly: toFixed2Number(192 * DOLLAR2RMB),
-        expiry: '2027-05-19',
-        type: '效率',
-        extra: '',
-      },
-      {
-        name: 'ReadWise',
-        yearly: toFixed2Number(95.88 * DOLLAR2RMB),
-        expiry: '2025-01-26',
-        type: '效率',
-        extra: '退订',
-      },
-      {
-        name: 'WiseOne',
-        yearly: toFixed2Number(99 * DOLLAR2RMB),
-        expiry: '2025-03-19',
-        type: '效率',
-        extra: '退订',
-      },
-      {
-        name: 'PopAi',
-        yearly: toFixed2Number(99.9 * DOLLAR2RMB),
-        expiry: '2025-01-07',
-        type: '效率',
-        extra: '退订',
-      },
-      {
-        name: '多邻国 MAX',
-        yearly: 798,
-        expiry: '2026-12-04',
-        type: '娱乐',
-        extra: '续订 12/4 Apple 付款',
-      },
-      {
-        name: 'Apple Music',
-        yearly: 17 * 12,
-        expiry: '2030-01-01',
-        type: '娱乐',
-        extra: '家庭',
-      },
-      {
-        name: '阿里云盘',
-        yearly: 168,
-        expiry: '2027-03-12',
-        type: '效率',
-        extra: '续订 3/12 Apple 付款',
-      },
-      { name: '胃之书', yearly: 98, expiry: '2025-05-08', type: '效率', extra: '退订' },
-      { name: '芒果会员', yearly: 195, expiry: '2025-05-17', type: '效率', extra: '退订' },
-      { name: 'FoodCare', yearly: 28, expiry: '2024-08-01', type: '娱乐', extra: '退订' },
-      { name: '知乎盐选', yearly: 198, expiry: '2024-06-21', type: '娱乐', extra: '退订' },
-      { name: '微博 SVIP', yearly: 262, expiry: '2025-05-27', type: '娱乐' },
-      {
-        name: 'QQ 音乐',
-        yearly: 158,
-        expiry: '2026-03-06',
-        type: '娱乐',
-        extra: '续订 3/6 Apple 付款',
-      },
-      { name: '网易云音乐', yearly: 158, expiry: '2027-05-29', type: '娱乐' },
-      {
-        name: '哔哩哔哩超级大会员',
-        yearly: 178,
-        expiry: '2026-12-19',
-        type: '娱乐',
-        extra: '续订 7/5 Apple 付款',
-      },
-    ]
-      .map((item: SubscriptionItem) => {
-        return {
-          ...item,
-          monthly: item.monthly ? item.monthly : Number((item.yearly! / 12).toFixed(2)),
-          yearly: item.yearly ? item.yearly : item.monthly! * 12,
-        }
-      })
-      .sort(compareSubscriptions)
-  )
-
-  const calculateTotal = () => {
-    let efficiencyTotal = 0
-    let entertainmentTotal = 0
-    subscriptions
-      .filter((item) => daysUntilExpiry(item.expiry) > 0)
-      .forEach((sub) => {
-        if (sub.type === '效率') {
-          efficiencyTotal += parseFloat(String(sub.monthly))
-        } else {
-          entertainmentTotal += parseFloat(String(sub.monthly))
-        }
-      })
-    return { efficiencyTotal, entertainmentTotal, total: efficiencyTotal + entertainmentTotal }
-  }
-
-  const totals = calculateTotal()
+  const now = new Date()
+  const sortedSubscriptions = sortSubscriptions(subscriptions, now)
+  const expiringSubscriptions = getExpiringSubscriptions(subscriptions, EXPIRY_WARNING_DAYS, now)
+  const totals = calculateSubscriptionTotals(subscriptions, now)
 
   const columns: ColumnsType<SubscriptionItem> = [
     { title: t('subscription.name'), dataIndex: 'name', key: 'name', fixed: 'left', width: 160 },
@@ -245,36 +26,80 @@ export const Subscription = () => {
       title: t('subscription.plan'),
       key: 'plan',
       render: (_, record) =>
-        t('subscription.yearMonth', { yearly: record.yearly!, monthly: record.monthly! }),
+        t('subscription.yearMonth', { yearly: record.yearly, monthly: record.monthly }),
     },
     { title: t('subscription.expiry'), dataIndex: 'expiry', key: 'expiry' },
     {
       title: t('subscription.daysLeft'),
       key: 'daysLeft',
-      render: (_, record) => daysUntilExpiry(record.expiry),
+      render: (_, record) => {
+        const days = getDaysUntilExpiry(record.expiry, now)
+        if (days < 0) return <Tag>{t('subscription.expired')}</Tag>
+        if (days === 0) return <Tag color="red">{t('subscription.expiresToday')}</Tag>
+        return (
+          <Tag color={days <= EXPIRY_WARNING_DAYS ? 'orange' : 'green'}>
+            {t('subscription.days', { days })}
+          </Tag>
+        )
+      },
     },
-    { title: t('subscription.type'), dataIndex: 'type', key: 'type' },
+    {
+      title: t('subscription.type'),
+      key: 'category',
+      render: (_, record) => t(`subscription.category.${record.category}`),
+    },
     { title: t('subscription.notes'), dataIndex: 'extra', key: 'extra' },
   ]
 
   return (
-    <div>
+    <div className="space-y-6">
+      <section
+        className={`rounded-lg border p-4 ${
+          expiringSubscriptions.length
+            ? 'border-amber-300 bg-amber-50 text-amber-950 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-100'
+            : 'border-emerald-300 bg-emerald-50 text-emerald-950 dark:border-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-100'
+        }`}
+      >
+        <h2 className="font-semibold">{t('subscription.monitoringTitle')}</h2>
+        <p className="mt-1 text-sm opacity-80">{t('subscription.monitoringDescription')}</p>
+        {expiringSubscriptions.length ? (
+          <ul className="mt-3 space-y-1 text-sm">
+            {expiringSubscriptions.map((item) => (
+              <li key={`${item.name}-${item.expiry}`}>
+                {t('subscription.expiringItem', {
+                  name: item.name,
+                  date: item.expiry,
+                  days: getDaysUntilExpiry(item.expiry, now),
+                })}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-3 text-sm">{t('subscription.noUpcomingExpiry')}</p>
+        )}
+      </section>
+
       <Table<SubscriptionItem>
         columns={columns}
-        dataSource={subscriptions}
+        dataSource={sortedSubscriptions}
         rowKey={(record) => `${record.name}-${record.expiry}`}
         pagination={false}
         scroll={{ x: 'max-content' }}
-        rowClassName={(record) => (daysUntilExpiry(record.expiry) > 0 ? '' : 'line-through')}
+        rowClassName={(record) =>
+          getDaysUntilExpiry(record.expiry, now) >= 0 ? '' : 'line-through opacity-60'
+        }
       />
-      <div>
-        <p>{t('subscription.efficiencyTotal', { total: totals.efficiencyTotal.toFixed(2) })}</p>
+
+      <div className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+        <p>{t('subscription.efficiencyTotal', { total: totals.productivity.toFixed(2) })}</p>
         <p>
           {t('subscription.entertainmentTotal', {
-            total: totals.entertainmentTotal.toFixed(2),
+            total: totals.entertainment.toFixed(2),
           })}
         </p>
-        <p>{t('subscription.total', { total: totals.total.toFixed(2) })}</p>
+        <p className="font-semibold text-gray-900 dark:text-gray-100">
+          {t('subscription.total', { total: totals.total.toFixed(2) })}
+        </p>
       </div>
     </div>
   )
