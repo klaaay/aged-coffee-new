@@ -20,5 +20,6 @@
   },
   "peacock.color": "#68B984",
   "autocorrect.formatOnSave": true,
-  "cSpell.words": ["Zustand"]
+  "cSpell.words": ["Zustand"],
+  "i18n-ally.localesPaths": ["i18n", "messages"]
 }
