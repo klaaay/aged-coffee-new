@@ -107,10 +107,6 @@
     "learnMore": "了解更多 →"
   },
   "subscription": {
-    "monitoringTitle": "到期监控",
-    "monitoringDescription": "系统每天检查一次，并通过 Telegram 提醒 30 天内即将到期的订阅。",
-    "expiringItem": "• {name}：{date}（剩余 {days} 天）",
-    "noUpcomingExpiry": "未来 30 天内没有即将到期的订阅。",
     "name": "名称",
     "plan": "套餐",
     "expiry": "到期时间",

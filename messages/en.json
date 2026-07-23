@@ -107,10 +107,6 @@
     "learnMore": "Learn more →"
   },
   "subscription": {
-    "monitoringTitle": "Expiry monitoring",
-    "monitoringDescription": "The system checks daily and sends a Telegram reminder for subscriptions expiring within 30 days.",
-    "expiringItem": "• {name}: {date} ({days} days left)",
-    "noUpcomingExpiry": "No subscriptions expire within the next 30 days.",
     "name": "Name",
     "plan": "Plan",
     "expiry": "Expiry",
