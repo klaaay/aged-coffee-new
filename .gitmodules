@@ -1,6 +1,3 @@
-[submodule "weekly-gen"]
-	path = weekly-gen
-	url = git@github.com:klaaay/weekly-gen.git
 [submodule "books-collection"]
 	path = books-collection
 	url = git@github.com:klaaay/books-collection.git
