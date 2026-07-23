@@ -74,7 +74,9 @@
   },
   "menu": {
     "open": "打开菜单",
-    "close": "关闭菜单"
+    "close": "关闭菜单",
+    "desktop": "主导航",
+    "more": "更多导航"
   },
   "comments": {
     "load": "加载评论",
