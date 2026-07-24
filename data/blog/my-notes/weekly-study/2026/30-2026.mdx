@@ -39,6 +39,23 @@ Web Locks API 允许在多个标签页或 Worker 中运行的脚本异步获取�
 
 ## 工具
 
+### [GitHub - piscinajs/piscina: 一个快速、高效的 Node.js 工作线程池实现 · GitHub](https://github.com/piscinajs/piscina)
+
+Piscina 是一个高性能的 Node.js 工作线程池库，支持多种任务调度、灵活的线程管理和丰富的功能特性。
+
+- ⚡ 支持线程间快速通信，适用于固定任务和可变任务场景
+- 🔧 提供灵活的线程池大小配置，支持最小/最大线程数限制
+- 📊 内置运行时间和等待时间统计，包含平均值、百分位数等详细指标
+- 🛑 支持任务取消，可通过 AbortController 或 EventEmitter 实现
+- 🧩 兼容 CommonJS、ESM 和 TypeScript，支持多函数导出
+- 🗂️ 提供自定义任务队列接口，内置高性能 FixedQueue 实现
+- 🖥️ 支持 Linux 线程优先级设置（需安装 @napi-rs/nice 模块）
+- 🔄 支持背压控制，通过 maxQueue 和 drain 事件管理任务流
+- 📡 支持 BroadcastChannel 实现主线程与工作线程的广播通信
+- 🛡️ 提供资源限制功能，可设置内存、栈大小等限制
+- 🧹 支持优雅关闭（close）和强制销毁（destroy）两种停止方式
+- 📈 提供利用率计算，帮助评估线程池的负载情况
+
 ### [Componentry — 适用于 React 的优美动画 UI 组件](https://componentry.dev/)
 
 - 🚀 由 Vercel OSS 计划支持，提供精美的 React 动画 UI 组件
