@@ -183,10 +183,7 @@ export const MbtiDataTable: React.FC = () => {
             return (
               <tr key={record.date} className="border-b border-gray-100 dark:border-gray-800">
                 <td className={stickyDateColumnClass}>{record.label}</td>
-                <td className={stickyTypeColumnClass}>
-                  {record.type}
-                  <span className="ml-1 text-gray-500 dark:text-gray-400">({record.typeName})</span>
-                </td>
+                <td className={stickyTypeColumnClass}>{record.type}</td>
                 {record.traits.map(({ key, label, value }) => {
                   const change = previous !== null ? record[key] - previous[key] : null
                   const changeLabel =
