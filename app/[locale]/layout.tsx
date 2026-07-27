@@ -1,4 +1,4 @@
-import 'css/tailwind.css'
+import '@/css/tailwind.css'
 import 'remark-github-blockquote-alert/alert.css'
 
 import type { Metadata } from 'next'
