@@ -12,6 +12,31 @@ summary: ''
 
 ## 技术
 
+### [为了性能，该使用哪个 React Native 动画库？](https://andrei-calazans.com/posts/2026-07-15-which-react-native-animation-library/)
+
+本文通过构建 60 个盒子同时动画的测试环境，在 Android 90Hz 设备上对比了 React Native 三种动画库（Animated、Reanimated、Ease）在触摸、状态更新、手势拖动和循环动画四种场景下的性能（帧率、内存、CPU 占用），并给出了选型建议，最后补充了 Reanimated 的 Bundle Mode 可大幅降低内存开销的更新。
+
+- 🎯 **测试环境**：Android 90Hz 设备，New Architecture，Release 构建，60 个盒子同时动画，使用 Maestro 自动化驱动，确保可重复。
+- 📊 **四种动画类型**：触摸弹出、状态更新（平移 + 渐变）、手势拖动、45 秒循环旋转（60 盒子）。
+- ⚡ **触摸与状态**：三种库都依赖原生驱动，JS 线程几乎空闲（CPU≈4-5%），Ease 帧率最高，Animated 和 Reanimated 差距不大。
+- 🖐️ **手势拖动是关键分水岭**：Animated 使用 JS 线程逐帧设置值，JS CPU 飙至 29% 且 25% 帧丢失；Reanimated 全程在 UI 线程，JS 几乎空闲（2.9% CPU）；Ease 需每次 React 重渲染，JS CPU 13%。
+- 🌀 **循环动画**：Reanimated 每个节点每帧运行 useAnimatedStyle，主线程 CPU 高达 62%，帧丢失最多；Ease 和 Animated 更轻，Ease 帧率最高。
+- 💾 **内存对比**：Reanimated 默认比 Animated/Ease 多约 50MB（主要在 native heap 140MB vs 98MB）。但启用 Bundle Mode 后，内存降至与对手相当，节省约 100MB。
+- 🔧 **选型建议**：手势拖动必选 Reanimated（保持 JS 空闲）；其他场景（触摸、状态、循环）推荐 Ease（最轻、低 CPU）或 Animated（无额外依赖）；切勿用 JS 驱动的 Animated.setValue 做拖动。
+- ⚠️ **60 节点的限制**：测试特意惩罚每节点开销，真实场景单个英雄元素时 Reanimated 的 UI 线程负担基本消失，仍是交互最佳选择。
+- 🔄 **Bundle Mode 更新**：仅需修改 babel 配置和 Metro 配置，即可实现约 45% 内存降低，且不影响帧率和 CPU，强烈建议启用。但首次构建需先运行一次 bundle 以生成 worklet 文件。
+
+### [管理的绝对状态](https://infrequently.org/2026/07/state-management/)
+
+本文批判前端生态中“状态管理”一词的滥用，指出多数流行库（如 Redux、MobX 等）仅实现状态传播，缺乏时间维度和冲突解决能力。真正的状态管理需要内置向量时钟等机制，以支持有序更新和协作。文章推荐 Y.js、Zero、Fluid 等真正管理状态的系统，它们能实现离线优先和实时协作，呼吁开发者升级认知。
+
+- 🗣️ React 生态中“状态管理”实为概念混乱，这些库只是状态传播工具，并非真正管理。
+- 🕰️ 真正的状态管理必须内建时间与顺序概念（如向量时钟），才能正确处理变更与冲突。
+- 📦 列举多个流行库（React、Redux、MobX、Zustand 等），它们均不具备时间感知能力。
+- 💡 对比真正状态管理系统：Y.js（CRDT）、Zero（同步协作）、Fluid（微软 OT）等，支持离线与实时。
+- 🔄 采用这些系统可自然实现离线优先和实时协作，是前端开发的未来方向。
+- 🤔 建议开发者正视当前“状态管理”的不足，转向更合适的工具与模式。
+
 ### [Web Locks API - Web API | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Locks_API)
 
 Web Locks API 允许在多个标签页或 Worker 中运行的脚本异步获取锁，协调资源共享，防止冲突。锁基于来源（origin）隔离，支持独占和共享模式，并提供诊断和死锁防护功能。
@@ -38,6 +63,23 @@ Web Locks API 允许在多个标签页或 Worker 中运行的脚本异步获取�
 - 💡 **核心原则**：解构前自问“移除对象是否让代码更易理解，还是仅仅更短？”——优先考虑可读性而非简洁性。
 
 ## 工具
+
+### [GTKX 1.0 RC1：面向 GNOME 栈的灵活 React 平台 | GTKX](https://gtkx.dev/blog/gtkx-1-0-rc-1)
+
+GTKX 1.0 RC1 是对框架的彻底重写，从 React reconciler 转变为通用平台，支持 TypeScript 直接驱动 GLib 和 GObject，绑定由本地机器根据 GObject-Introspection 实时生成，React 模型类似 React DOM，同时提供高级组件库、单线程核心、OpenGL 独立包、完整工具链、测试库和 AI 辅助文档，本次 RC 包含大量破坏性变更，迁移路径清晰。
+
+- 🚀 发布候选版本，核心从 React 调和器扩展为通用 GObject 平台，支持 TypeScript 驱动 GLib 和 GObject
+- ⚙️ 绑定不再预编译，改为通过 CLI 在本地根据系统安装的 .gir 文件自动生成，始终匹配实际 GTK4 版本
+- 🧩 React 模型类似 React DOM，使用 `createRoot().render()` 启动，GTK 应用本身作为组件，JSX 组件可任意嵌套
+- 📦 高级组件（ListView、GridView、ColumnView、DropDown、Menu 等）移入独立包 `@gtkx/components`，CSS 引擎重构支持嵌套选择器
+- 🧵 原生核心从双线程 Neon 重写为单线程 napi-rs，GLib 主循环运行在 Node 线程，无需跨线程通信
+- 🎮 OpenGL 支持移至独立包 `@gtkx/gl`，基于 Khronos 注册表生成，覆盖 OpenGL 4.6 核心特性
+- 🔧 CLI 工具完善：代码生成、文档生成、带热重载的开发服务器、GResource 资产管道、类型化 GSettings schema
+- 🧪 测试库 `@gtkx/testing` 大幅增强，提供完整测试函数、Widget 匹配器、自动化清理、用户事件 API，`@gtkx/vitest` 支持每工作线程无头 Wayland
+- 🤖 AI 辅助：`@gtkx/mcp` 服务器支持 AI 助手浏览项目 API 参考，文档站点新增指南、教程和 API 参考
+- ⚡ 破坏性变更：所有导入路径改变，启动方式改为 `createRoot()` + `<GtkApplication>`，配置从 package.json 移到 `gtkx.config.ts`，最低 Node.js 版本要求 24
+- 🚀 RC 已发布，使用 `npm create gtkx@rc` 初始化，要求 Linux、GTK4 开发库、GLib、Adwaita 及 Node.js 24+
+- 🗺️ 最终版本发布前收集反馈，通过 GitHub Discussions 或 Issue 提交迁移问题与绑定意外
 
 ### [GitHub - piscinajs/piscina: 一个快速、高效的 Node.js 工作线程池实现 · GitHub](https://github.com/piscinajs/piscina)
 
@@ -102,6 +144,17 @@ Open Slide 是一个面向 coding agent 的幻灯片框架。用户用自然语�
 
 ## 更新
 
+### [useTypeScriptCli](https://nextjs.org/docs/app/api-reference/config/next-config-js/useTypeScriptCli)
+
+此文档涵盖 Next.js 的完整功能、API 参考、配置及实验性功能，重点介绍了 `useTypeScriptCli` 配置项的使用方法和行为。
+
+- 📚 提供全面的文档结构，包括 App Router 入门、指南、API 参考、配置项及社区资源
+- 🧪 `useTypeScriptCli` 为实验性选项，让 `next build` 直接调用本地 `tsc` 命令而非 JavaScript API
+- 🔧 需手动启用 `experimental.useTypeScriptCli: true`，并仅适用于 TypeScript 7+
+- ⚠️ 启用后，Next.js 不再应用自定义错误重写和代码帧，诊断输出直接来自 `tsc`
+- 📄 会检查 tsconfig 指定的完整项目（含测试文件和 `.next/dev/types`），并忽略 `--debug-build-paths`
+- 🛠️ `typescript.tsconfigPath` 和 `typescript.ignoreBuildErrors` 仍可配合使用
+
 ### [Astro 7.1 | Astro](https://astro.build/blog/astro-710/)
 
 Astro 7.1 发布，带来更精细的控制和性能优化。
@@ -113,10 +166,6 @@ Astro 7.1 发布，带来更精细的控制和性能优化。
 - 🧪 **实验性内容存储分块**：通过 `experimental.collectionStorage: "chunked"` 将数据拆分为多个文件（每 10MB），突破文件大小限制。
 - 📝 **日志系统改进**：支持通过 URL 配置自定义日志记录器，并提供 `AstroRuntimeLogger` 类型。
 - 🤝 **社区致谢**：感谢所有贡献者，包括核心团队和外部开发者。
-
-## 设计
-
-## AI
 
 ### [Claude Code 系统提示词演进对比（2.1.141 → 2.1.215）](https://phistory.cc/?agent=claude-code&from=2.1.141&to=2.1.215)
 
