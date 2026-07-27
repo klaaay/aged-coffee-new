@@ -27,6 +27,20 @@ RSC Boundary 是一款轻量级开发工具，用于在 React Server Component �
 - 🤖 提供编码代理技能，可快速执行安装步骤（如 `npx skills add foxted/rsc-boundary --skill install-next`）。
 - 📜 版本号统一，使用 Changesets 管理发布，遵循 MIT 许可证，包含贡献指南和安全策略。
 
+### [GitHub - clawkwork/clawk: 给 Coding Agent 一台一次性 Linux VM，而不是你的电脑](https://github.com/clawkwork/clawk)
+
+clawk 是一个面向本地 Coding Agent 的隔离运行环境。进入项目目录运行 `clawk`，即可让 Claude Code、Codex 或 Shell 在独立、可销毁的 Linux VM 中工作；代码和 Agent 会话保留在宿主机，系统环境则可随时重建。
+
+- 🛡️ **以 VM 作为安全边界**：Agent 在独立 Linux 内核中以 root 权限运行，宿主机文件系统、钥匙串和未挂载内容默认不可见，隔离不依赖提示词或进程级权限规则。
+- 🌐 **默认限制出站网络**：通过 VM 外部的 DNS 感知白名单过滤网络请求，常用代码仓库和包管理服务预先放行，也可按项目添加域名并查看被拒绝的访问记录。
+- ♻️ **环境可随时销毁重建**：执行 `clawk destroy && clawk` 即可获得全新 VM；代码、Git 分支以及 Claude/Codex 的会话和记忆保存在宿主机，不会随 VM 磁盘一起删除。
+- 📦 **直接使用 OCI 镜像**：无需 Docker、QEMU、Dockerfile 或 devcontainer 配置，clawk 会将任意 OCI 镜像转换为 VM 根文件系统，并通过写时复制降低多沙箱的磁盘成本。
+- 🤖 **支持多种 Agent**：默认可运行 Claude Code，也可通过 `clawk run codex`、`clawk run opencode` 或 `clawk run shell` 启动其他工具；外部沙箱允许 Agent 免逐条确认执行命令，也提供 `--safe` 模式恢复确认提示。
+- 🔑 **密钥留在宿主机**：通过转发 SSH Agent 完成 Git 签名和推送，私钥本身不会进入 VM；但已挂载文件和白名单目标仍可能被 Agent 读取或发送，需要遵循最小共享原则。
+- 🧰 **覆盖完整开发工作流**：支持端口转发、环境变量与文件共享、启动钩子、暂停/恢复、内存快照，以及每项目独立的 `clawk.mod` 配置。
+- 🎫 **支持多仓库工单模式**：可按 Ticket 为多个仓库创建协调的 worktree、分支和沙箱，并在完成后批量推送和创建相互关联的 PR。
+- 💻 **平台与成熟度限制**：目前主要支持 Apple silicon 上的 macOS 14+，Linux Firecracker 仍属实验性，暂不支持 Intel Mac 和 Windows；项目处于 1.0 之前的快速迭代阶段，可能出现破坏性变更。
+
 ## 更新
 
 ## 设计
