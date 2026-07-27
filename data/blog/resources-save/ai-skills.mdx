@@ -124,6 +124,25 @@ Vercel - 技能是 AI 代理可重复使用的能力。通过单一命令安装�
 
 [ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 
+[jakubkrehel/skills - 面向界面质量的 Agent Skills](https://github.com/jakubkrehel/skills)
+
+一组专门帮助 Coding Agent 构建和审查高质量界面的 Skills，覆盖视觉细节、排版、颜色、无障碍、布局和 UX 文案。相比只强调“做得更好看”的单一提示，它把界面质量拆成六个明确领域，并提供 `better-interface` 作为统一审查入口。
+
+- `better-interface`：协调其余六个 Skill，对页面、流程或功能做跨领域界面审查；支持 `quick` 和 `full` 两种模式，并按用户影响对问题排序。
+- `better-ui`：聚焦圆角、阴影、图标、动效和微交互等 Design Engineering 细节，强调光学对齐、可中断动画和克制使用动效。
+- `better-typography` 与 `better-colors`：分别处理字体选择、文本间距、换行与可读性，以及 OKLCH 调色板、对比度、色域和主题设计。
+- `better-accessibility`：覆盖焦点状态、键盘操作、ARIA、表单、屏幕阅读器、点击区域和减少动态效果等无障碍要求。
+- `better-layout` 与 `better-writing`：前者关注分组、对齐、阅读顺序、渐进披露和自适应断点，后者负责按钮、错误提示、设置项与空状态等界面文案。
+- 审查流程强调证据：要求先识别项目技术栈与设计约定，再结合源码位置和实际界面状态给出分级结论，默认只审查、不直接修改代码。
+
+安装全部 Skills：
+
+```bash
+npx skills add jakubkrehel/skills --skill '*'
+```
+
+只安装需要的 Skill，也可以运行 `npx skills add jakubkrehel/skills` 后交互选择。
+
 [taste-skill](https://github.com/Leonxlnx/taste-skill)
 
 一个面向前端视觉质量的 Agent Skills 集合，目标是减少 AI 生成界面里的模板感。它不是单个 `SKILL.md`，而是在 `skills/` 目录下提供多套可单独安装的 skill，覆盖高级 UI、动效、重设计、图片到代码、品牌板和移动端设计图生成。
