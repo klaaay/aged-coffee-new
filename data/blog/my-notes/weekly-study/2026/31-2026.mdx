@@ -41,6 +41,19 @@ clawk 是一个面向本地 Coding Agent 的隔离运行环境。进入项目目
 - 🎫 **支持多仓库工单模式**：可按 Ticket 为多个仓库创建协调的 worktree、分支和沙箱，并在完成后批量推送和创建相互关联的 PR。
 - 💻 **平台与成熟度限制**：目前主要支持 Apple silicon 上的 macOS 14+，Linux Firecracker 仍属实验性，暂不支持 Intel Mac 和 Windows；项目处于 1.0 之前的快速迭代阶段，可能出现破坏性变更。
 
+### [GitHub - lightningpixel/modly: 使用本地 AI 将图片生成 3D 模型](https://github.com/lightningpixel/modly)
+
+Modly 是一款开源桌面应用，可将照片转换为 3D 网格模型。模型推理完全在本地 GPU 上运行，无需把图片上传到云端，并支持 Windows、Linux 和 Apple Silicon Mac。
+
+- 🖼️ **图片转 3D**：通过“Image → Generate Mesh → Add to Scene”工作流，把单张图片生成可继续编辑和导出的 3D 模型。
+- 🔒 **本地 AI 推理**：模型在用户自己的 GPU 上运行，素材和生成过程留在本机，兼顾隐私与离线使用。
+- 🧩 **可扩展模型系统**：支持从 GitHub 安装外部扩展，官方扩展覆盖 Hunyuan3D 2 Mini、TripoSG 和 Trellis2 GGUF 等模型及其变体。
+- 🔗 **节点式工作流**：可组合图像、网格生成和场景处理节点；运行前会校验连接关系，并在界面中展示日志和错误。
+- 🛠️ **内置网格优化**：导入的网格可直接在应用中执行平滑和减面，优化结果会写回当前工作区。
+- 🤖 **面向 Agent 的 CLI**：脚本或 Coding Agent 可通过命令行查询模型、启动与取消工作流、检查运行状态，并将结果导出为 GLB，无需操作桌面 UI。
+- 💻 **跨平台桌面端**：可直接下载 Windows、Linux 和 Apple Silicon macOS 安装包，也支持克隆仓库后通过启动脚本运行。
+- 📜 **开源许可**：项目采用 MIT 许可证，二次开发和分发时需要保留对 Modly 与原作者 Lightning Pixel 的署名。
+
 ## 更新
 
 ## 设计
