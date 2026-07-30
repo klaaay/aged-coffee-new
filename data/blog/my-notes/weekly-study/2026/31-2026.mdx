@@ -12,7 +12,34 @@ summary: ''
 
 ## 技术
 
+### [SVG 滤镜文字效果：凸版印刷、墨迹增益、木活字](https://www.carmenansio.com/articles/svg-filters-on-type/)
+
+本文介绍了如何使用 SVG 滤镜在网页文字上复现传统印刷术的视觉效果（如油墨扩散、木刻阴影、金属凸起等），并详细演示了多种滤镜原语的组合应用。
+
+- ✒️ **真实外描边**：使用 `feMorphology operator="dilate"` 让字形轮廓向外扩展，配合 `feFlood` 染色，得到完全在字体外部的描边（CSS `text-stroke` 无法实现）。
+- 💡 **金属凸起特效**：通过 `feSpecularLighting` 将模糊的 `SourceAlpha` 视为高度图，模拟点光源下的金属字表面高光，支持鼠标交互移动光源。
+- 🪵 **阴影木活字**：堆叠多个 `feOffset` 生成阶梯状阴影，再用 `feComposite operator="out"` 切掉原字形，可自由控制阴影方向和颜色。
+- 🖨️ **磨损印刷效果**：`feTurbulence` 产生噪声，经 `feDisplacementMap` 扭曲字形，模拟老旧铅字边缘破损或油墨晕开，效果强弱可调。
+- 🫧 **粘稠融合**：高模糊（`feGaussianBlur`）后通过 `feColorMatrix` 设置陡峭的 alpha 阈值，使相邻字形融合成流动形状，适合表现液态感。
+- 🌈 **色差分裂**：用三个 `feColorMatrix` 分别提取 R、G、B 通道，将红蓝通道进行 `feOffset` 偏移后叠加，模拟印刷套版不准的彩色边缘。
+- 💡 **霓虹发光**：先对 `SourceAlpha` 染色，再用两个不同半径的模糊产生内亮外晕的效果，合并后叠加原文字，可制作管状发光文字。
+- 🎨 **镀金首字母**：组合 `feMorphology` 外描边、金色渐变填充与 `feSpecularLighting` 高光，配合 `shape-outside` 实现文字环绕，模拟中世纪手稿金箔装饰。
+- ⚙️ **应用方式**：SVG `<filter>` 既可直接用在 SVG `<text>` 上，也可通过 CSS `filter: url(#id)` 应用于任意 HTML 元素；滤镜定义需放在可见但隐藏的内联 SVG 中（避免 `display:none`）。
+- ⚡ **性能与兼容**：`feTurbulence`、`feDisplacementMap` 和 `feSpecularLighting` 较耗性能，建议用 `requestAnimationFrame` 驱动动画，并使用 `IntersectionObserver` 和 `prefers-reduced-motion` 优化；需扩展滤镜边界（`x、y、width、height`）以防像素裁剪。
+
 ## 工具
+
+### [Markdy — 开源动画 DSL 引擎](https://markdy.com/)
+
+Markdy 是一个轻量级、零依赖的动画场景脚本语言和渲染引擎，基于纯 TypeScript 和 Web Animations API，适合 AI 生成、框架无关，并提供丰富的生态系统与交互式学习工具。
+
+- 📦 核心特性：零依赖、纯 TypeScript 解析器；基于 Web Animations API 和 CSS 变换的原生渲染；AI 友好的结构化 DSL；框架无关，支持 Astro 组件。
+- 🧩 轻量包体系：`@markdy/core`（解析器+AST，~12KB）和 `@markdy/renderer-dom`（浏览器渲染器，~22KB）为必需，Astro、MDX、CLI 为可选扩展。
+- 🛠 工具与插件：语言服务器（LSP）提供诊断、自动补全；可选 actor 包（stdlib-systems）用于系统架构图；CLI 支持终端渲染与预览。
+- 🎮 交互式示例与编辑器：提供多个真实示例（如爱情故事、战斗场面），内置编辑器支持自动补全和实时预览，可一键运行。
+- 📚 学习指南：从场景设置（画布、帧率）、角色定位与修饰符、时间线和动作（进入、移动、淡入淡出）、说话与效果（气泡、抖动）、表情与肢体控制（关节旋转、拳打脚踢），到资产加载、变量模板和序列封装，逐步进阶。
+- 🤖 AI 友好设计：通过 `AGENT.md` 完整文档让 AI 理解语法，用户用自然语言描述场景即可生成合法脚本，支持 Claude、ChatGPT 等 AI 工具。
+- 🌐 社区与案例：已有真实项目在生产中使用，如 Astro 场景、安全漏洞演示等。
 
 ### [GitHub - foxted/rsc-boundary: 用于可视化 Next.js App Router 中 React 服务端](https://github.com/foxted/rsc-boundary)
 
