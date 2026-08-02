@@ -12,6 +12,32 @@ summary: ''
 
 ## 技术
 
+### [font-family 并不像你想的那样回退](https://csswizardry.com/2026/04/font-family-doesnt-fall-back-the-way-you-think/?ref=tailwindweekly.com)
+
+本文讨论了 `font-family` 的一个常见误区：在子元素上单独声明字体时，若该字体尚未加载，浏览器不会继承父元素的字体栈作为回退，而是直接使用浏览器默认字体（通常是 Times），导致出现难看的字体闪烁甚至布局偏移。解决方案是每次声明 `font-family` 时都提供完整的字体栈（至少包含通用字体族），以避免回退到不合适的默认字体。
+
+- 🔍 **关键问题**：`font-family` 是自包含的，子元素声明只会从自身列表中回退，不会向上继承父元素的字体栈。
+- ⚠️ **常见后果**：仅指定单个 Web 字体时，加载期间会闪回 Times 或 Times New Roman，造成视觉突兀。
+- 🛠️ **修复方法**：所有自定义字体变量都要补全栈，例如 `"Clan Pro", sans-serif`，确保回退到同类字体。
+- 📐 **性能影响**：字体回退若与目标字体尺寸/比例差异过大，真正加载替换时会导致 CLS（布局偏移）恶化。
+- 💡 **核心原则**：既然某个 `font-family` 值得覆盖默认值，就值得定义完整、正确的字体栈。
+
+### [您的单页应用正在泄漏内存。对它进行浸泡测试。](https://denodell.com/blog/your-spa-is-leaking-memory-soak-test-it)
+
+这篇文章介绍了单页应用（SPA）内存泄漏的问题，并详细说明了如何用 Playwright 进行前端浸泡测试（Soak Test）来检测内存泄漏。文章解释了内存泄漏的成因、测试方法、关键代码实现，以及如何通过伪造时钟和网络来加速测试，使测试结果更贴近真实使用场景。
+
+- 🔍 内存泄漏是 SPA 的常见问题：页面不刷新，监听器、定时器和缓存不断累积，最终导致浏览器标签页崩溃或卡顿。
+- 🧪 后端团队早已用浸泡测试检测内存泄漏，前端同样需要此类测试，因为 SPA 长期运行，内存不会自动释放。
+- 📊 一项对 500 个 React、Vue 和 Angular 仓库的分析发现，86% 的代码存在未移除的监听器、定时器或订阅。
+- 🛠️ 使用 Playwright 构建前端浸泡测试：在单一浏览器上下文中重复运行同一用户流程，对比测试前后的内存指标。
+- 📈 通过 Chrome DevTools 协议（CDP）收集页面指标，包括堆大小、DOM 节点数和监听器数量，用于判断是否存在泄漏。
+- ⏳ 测试前需进行数次预热循环，避免首次加载代码和数据造成的假阳性；同时需执行两次垃圾回收以确保节点计数准确。
+- 🔁 断言通常关注监听器数量不增长，以及 DOM 节点数的增长控制在允许范围内（例如 100 个节点）。
+- ⏱️ 使用 Playwright 的时钟伪造功能模拟时间流逝，可在短时间内覆盖数小时的真实使用场景，从而检测定时器泄漏。
+- 📡 还需模拟网络请求（如 API 响应和 WebSocket），确保定时器频率与真实情况一致，并避免真实网络延迟干扰测试。
+- 🧩 若检测到泄漏，可通过 Chrome DevTools 的堆快照和“Detached”过滤器定位持有已删除 DOM 节点的引用。
+- ✅ 浸泡测试应纳入夜间自动化任务，以便在问题进入生产环境前及时发现并修复，而不是等用户反馈后紧急处理。
+
 ### [SVG 滤镜文字效果：凸版印刷、墨迹增益、木活字](https://www.carmenansio.com/articles/svg-filters-on-type/)
 
 本文介绍了如何使用 SVG 滤镜在网页文字上复现传统印刷术的视觉效果（如油墨扩散、木刻阴影、金属凸起等），并详细演示了多种滤镜原语的组合应用。
@@ -28,6 +54,136 @@ summary: ''
 - ⚡ **性能与兼容**：`feTurbulence`、`feDisplacementMap` 和 `feSpecularLighting` 较耗性能，建议用 `requestAnimationFrame` 驱动动画，并使用 `IntersectionObserver` 和 `prefers-reduced-motion` 优化；需扩展滤镜边界（`x、y、width、height`）以防像素裁剪。
 
 ## 工具
+
+### [shadscan](https://github.com/TheOrcDev/shadscan)
+
+Shadscan 是一个针对 React shadcn 应用的确定性 UI 审计工具，通过 59 条静态规则从 0 到 100 评分并展示每项发现的证据，支持本地命令行、CI 集成、AI Agent 工作流以及 Web 扫描，帮助开发团队发现容易被忽略的界面细节。
+
+- 🔍 审计范围：检查命令菜单、主题快捷键、路由状态、无障碍控件、表单反馈、元数据和移动端行为等易被推迟的产品细节
+- ⚡ 快速开始：通过 `pnpm dlx @shadscan/cli`、`npx` 或 `bunx` 即可运行，默认扫描当前目录，也可指定目标路径
+- 🛡️ 安全默认：扫描是确定性且只读的，不启动应用、不修改文件、不调用 AI 模型、不上传源码，也无需应用密钥
+- 📋 报告格式：支持交互式、JSON、prompt、CI 等输出模式，报告分为修复（Fixes）、决策（Decisions）、建议（Advisories）和不适用（Not applicable）四类
+- 🚀 GitHub Action：可直接作为复合 Action 使用，写入 job summary、强制分数下限，并可创建或更新包含 AI 修复方案的 issue
+- 🤖 Agent 交接：`--prompt` 生成粘贴即用的修复计划，包含优先级分组、规则 ID、证据、建议修复和验收标准；`--apply` 可显式启动已安装的编码 Agent
+- 📊 评分模型：六类加权类别（基础、交互、状态、无障碍、表单与数据输入、生产优化），高/中置信度失败扣分，低置信度作为不影响分数的建议
+- 🧩 框架兼容：支持 Next.js App Router、Pages Router、混合模式、React Router、TanStack Start、Laravel+Inertia、Astro、Vite React 及通用 React 应用
+- 📦 Monorepo 支持：自动发现并审计工作区中所有 React 应用并合并评分，库包仅扫描不计分，支持 pnpm、npm、yarn、bun 等包管理器
+- 🌐 Web 扫描与托管 API：通过 Web 扫描器可在浏览器中审计公共 GitHub 仓库，另有版本化托管 API 供 Agent 和服务集成
+- 🔧 开发与许可证：仓库使用 Node.js 24 和 pnpm 11.15.1 开发，发布的 CLI 兼容 Node.js 18，项目基于 MIT 许可证
+
+### [react-css-highlight](https://github.com/yairEO/react-css-highlight)
+
+这是一个使用现代 CSS Custom Highlight API 的 React 文本高亮组件，基于 TreeWalker 实现高效 DOM 遍历，零依赖且框架无关。
+
+- 🚀 性能极快：使用 TreeWalker 遍历，比传统方法快约 500 倍，无 DOM 突变，非阻塞（requestIdleCallback）
+- 🧩 非侵入：不修改 DOM 结构或组件树，不注入 `<mark>` 标签
+- 🔧 使用灵活：提供组件（Ref-based / Wrapper）、Hook 和纯 JS 三种模式，支持 React、Vue、Svelte、Angular 等
+- 🎨 样式可定制：通过 CSS 变量和预定义变体（primary / secondary / success / error 等）自定义高亮颜色
+- 🌐 多词高亮：支持同时高亮多个搜索词，并为每个词分配不同样式
+- 📊 字符串差异比较：内置 `createCompareHighlight`，实现位置差异高亮，支持自定义差异算法（如 word-level diff）
+- ⚡ 同步计数异步渲染：匹配数立即返回，高亮效果在浏览器空闲时应用，不阻塞交互
+- 🛡 浏览器兼容：Chrome/Edge 105+、Safari 17.2+、Firefox 140+（Firefox 不支持 text-decoration / text-shadow）
+- 📦 零依赖：纯 React + 现代浏览器 API，TypeScript 完整类型支持
+- 🧪 调试友好：提供 `isSupported`、`onError`、`onHighlightChange` 等用于检测和容错
+
+### [open-connector](https://github.com/oomol-lab/open-connector)
+
+OpenConnector 是一个开源连接器网关，专为 AI 智能体设计，提供超过 1000 个服务商和 10000+ 预构建 Action，支持多种部署方式与开发工具，旨在让智能体安全、可审计地访问用户已有的应用账户。
+
+- 🔌 **核心定位**：作为 Pipedream/Composio 的替代品，通过统一网关连接用户应用账户，向智能体暴露共享的服务目录与 Action 契约。
+- 📦 **丰富目录**：内置 GitHub、Gmail、Notion、BigQuery、Slack 等主流服务连接器，支持 API Key、OAuth2、自定义凭证及无认证模式。
+- 🛠️ **多形态接入**：提供 Connector SDK、oo CLI、MCP、HTTP/OpenAPI 和 Web 控制台，适配不同客户端与智能体宿主。
+- 🔐 **安全边界**：凭证、作用域、策略与运行日志保留在可检查的运行时内，智能体只获所需元数据和执行结果，避免泄露提供商密钥。
+- 🚀 **灵活部署**：支持本地 Docker/Node.js、Fly.io（持久化 SQLite）、Cloudflare Workers（D1/R2/静态资源）以及 OOMOL 托管运行时。
+- 📜 **可检查契约**：每个 Action 都有请求/响应 Schema、必需作用域和惰性加载的执行源码，便于调试与审计。
+- 🧩 **策略控制**：提供连接身份、运行时令牌、Action 允许/阻止策略、临时文件传输及脱敏运行日志等管理能力。
+- 🌐 **统一接口**：开源与商业 SaaS 部署共用相同的 provider ID、Action ID、Schema 和契约，便于迁移与混合部署。
+- ⚡ **快速开始**：通过 `docker compose up` 启动，打开本地控制台（localhost:3000），即可运行如 Hacker News 等无认证 Action 验证。
+- 🔗 **OAuth 示例**：GitHub 可使用个人访问令牌快速连接，OAuth2 流程、加密凭证和令牌刷新详见文档。
+- ☁️ **Cloudflare 支持**：支持 Workers 运行时 + D1 状态 + R2 传输文件 + Static Assets 控制台，并有视频教程。
+- 🛫 **Fly.io 支持**：提供 Node Docker 运行时 + Fly volume 持久化 SQLite，支持 TLS、健康检查与自定义域名。
+- 🖥️ **本地 Dashboard**：可浏览连接器、配置凭证、创建运行时令牌、检查 Action Schema 并查看运行日志。
+- 📚 **文档丰富**：包含快速入门、开发者工具、OAuth 教程、运行时 API、部署指南、配置与凭证说明、目录格式等。
+- 🤖 **生态协作**：与桌面 Agent 项目 Wanta 搭配，可使用本地模型或托管服务，支持自定义和二次开发。
+
+### [pi-openai-server-compaction](https://github.com/algal/pi-openai-server-compaction)
+
+概述：这是一个 Pi 扩展，为 OpenAI 模型引入 Codex 风格的服务端压缩机制，在保留 Pi 原有功能的同时提升跨压缩边界的连续性；实测其原生压缩策略在默认配置下召回率更高，但代价是更大的上下文消耗和输出成本，且存在可靠性波动。扩展目前为实验性状态，支持项目级安装、配置开关和故障回退。
+
+- 🧩 扩展用途：在 Pi 的压缩流程中并行调用 OpenAI Responses 压缩协议，生成不透明的服务端压缩产物，同时保留 Pi 的文本摘要，兼顾高保真连续性与可移植性。
+- ⚖️ 基准结论：默认配置下，该扩展的原生策略精确召回 78.0%，Pi 默认压缩器为 48.0%，完整上下文为 100%；但原生策略输出压缩 token 多 4.58 倍，下游计费上下文大 29%。
+- 📉 可靠性波动：大工件几乎全部完美保留，三个小工件表现较差，说明服务端压缩并不总能稳定检测并分配足够的容量。
+- 🔄 对比限定：该结果对比的是本扩展重建的 Codex 风格压缩，而非完整 Codex CLI；早期“匹配容量”基准因方法不对称已被新报告取代。
+- 🔐 安全与数据：扩展会设置 store: true，对话会发送到 OpenAI 压缩协议；不透明压缩产物保存在本地会话 JSONL 中，且不可人类阅读。
+- 🛠 安装方式：推荐项目级安装 `pi install -l git:github.com/algal/pi-openai-server-compaction`，也可全局安装或一次性运行；要求 Node >=22、Pi >=0.80.9 < 0.81.0。
+- ⚙️ 配置要点：通过全局或项目级 JSON 配置，支持 `enabled`、`thresholdRatio`、`usePreviousResponseId`、`notify` 等；也可用 `PI_OPENAI_SERVER_COMPACTION_ENABLED` 等环境变量覆盖。
+- 🚫 故障排查：快速禁用可设环境变量为 0，或使用 `--no-extensions` 绕过；可用 `/reload` 重新初始化，`pi remove` 卸载，并检查 JSONL 中的 `details.remoteCompaction`。
+- 🧪 测试方式：提供离线 `npm run smoke` 和真实后端 `npm run test:live`；支持通过 `PI_OPENAI_SERVER_COMPACTION_TEST_MODEL` 指定测试模型。
+- 📌 已知限制：Pi 本地 JSONL 树仍为权威；远程压缩产物仅用于兼容的 OpenAI Responses 模型；跨模型切换会回退到文本摘要；压缩成本尚未纳入 `get_session_stats()`。
+- 📁 项目结构：包含扩展入口、远程压缩逻辑、WebSocket 流、配置/状态管理、测试脚本、基准目录、架构文档和许可证说明。
+
+### [滚动遮罩 Tailwind CSS 工具 — 蒂姆·威尔逊](https://twilson.net/scroll-mask)
+
+scroll-mask 是一个基于 Tailwind CSS 的工具集，利用 `animation-timeline: scroll()` 和 `mask-image` 实现滚动容器边缘淡出效果，无需 JavaScript。它提供了多种轴方向和自定义淡出范围的实用类。
+
+- 📜 集合了 Tailwind CSS 实用程序，用于根据滚动位置淡出滚动容器的边缘。
+- 🎨 使用 `animation-timeline: scroll()` 和 `mask-image` 的线性渐变来实现动画，无需 JavaScript。
+- 🛠️ 安装只需将提供的 CSS 添加到 Tailwind CSS v4 样式表中。
+- 🔄 提供 `scroll-mask-y` 和 `scroll-mask-x` 分别控制垂直和水平滚动的淡出。
+- 🔽 提供 `scroll-mask-t`、`scroll-mask-b`、`scroll-mask-l`、`scroll-mask-r` 分别控制上、下、左、右单边淡出。
+- ⚙️ 通过 `-from-*` 后缀自定义渐变不透明停止位置，类似 Tailwind 的 `mask-*` 体系。
+- 📐 支持自定义长度和百分比值，如 `scroll-mask-b-from-80%` 或 `scroll-mask-r-from-[calc(100%-2rem)]`。
+- 🌐 需要浏览器支持 `animation-timeline: scroll()`。
+
+### [GitHub - izeigerman/claude-thermos: 为你保持 Claude 会话活跃 · GitHub](https://github.com/izeigerman/claude-thermos)
+
+claude-thermos 是一款工具，用于在 Claude Code 主代理等待子代理时自动保持其缓存活跃，避免因缓存过期导致的高昂重新编码费用，可节省约 22% 的成本。它通过本地反向代理监控流量，在主代理空闲且子代理活跃时发送轻量热身请求，并支持命令行和守护进程模式。
+
+- 🔥 解决主代理等待子代理超 5 分钟导致的缓存过期问题，节省约 22% 的费用
+- 🚀 通过 `uvx claude-thermos` 直接替代 `claude` 命令，自动在后台执行热身
+- ⏱ 可自定义空闲等待时间、热身间隔、最大循环数等参数（如 `--idle` 和 `--interval`）
+- 🌐 守护进程模式（`serve`）为 IDE 和多个终端共享一个热身代理，通过设置环境变量接入
+- 💰 热身仅消耗缓存读取成本（0.1x），避免昂贵的缓存写入（1.25x），大幅降低费用
+- 📊 生成事件日志和汇总报告（`summary.json`），清晰显示节省的 token 和费用
+
+### [querytuner](https://github.com/AutoShiftOps/querytuner)
+
+QueryTuner 是一个 AI 驱动的 SQL 查询诊断工具，无需连接数据库即可分析并优化 SQL 性能，面向非 DBA 开发者群体，支持 5 种数据库方言，提供启发式引擎和可选的 AI 分析层。
+
+- 🗄️ 支持 PostgreSQL、MySQL、Oracle、SQL Server、SQLite 五种数据库方言
+- ⚡ 启发式引擎内置 12 条确定性规则，无需外部 API，可即时检测常见性能反模式
+- 🗂️ 可粘贴建表 DDL，让索引建议从“估计”升级为“确认”，基于真实表名列名分析
+- 🔧 生成方言正确的索引 DDL（如 PostgreSQL 的 CREATE INDEX CONCURRENTLY）
+- 🤖 双 AI 提供者可选：HuggingFace（默认免费）或 OpenAI，输出结构化 JSON 或可读文本
+- 🔍 结果按严重性分级：Critical → High → Medium → Low
+- 📋 输出可直接运行的优化 SQL 改写
+- 🔗 每个分析生成永久分享链接（/report/:id）
+- 📈 集成 Google Analytics 4 事件跟踪
+- 🛡️ 检测 SQL 注入模式和危险结构
+- 📊 提供可读性评分，用于代码审查
+- 🔒 客户端查询脱敏器：替换专有表名列名，分析后可一键恢复，映射仅存于浏览器内存
+- 🔌 提供 REST API，可集成到 CI/CD 流水线
+- 🚫 完全基于粘贴的查询文本工作，无需数据库连接（DDL 可选用于确认模式）
+- 🏗️ 后端：Python FastAPI + Pydantic + sqlparse + LangChain；前端：React + Tailwind CSS
+- 🧩 支持本地运行，环境变量配置 HuggingFace/OpenAI API 密钥
+- 📄 包括清晰的目录结构、路线图及已知限制说明
+
+### [modern-tar](https://github.com/ayuhito/modern-tar)
+
+modern-tar 是一个零依赖、跨平台、基于 Web Streams API 的流式 tar 归档库，支持所有主流 JavaScript 运行时（浏览器、Node.js、Cloudflare Workers 等），并提供完善的 USTAR/PAX 格式兼容、gzip 压缩/解压和 TypeScript 类型支持。
+
+- 🚀 流式架构：支持大文件归档，无需将全部数据加载到内存
+- 📋 标准兼容：完整支持 USTAR 格式与 PAX 扩展，兼容 GNU/BSD tar
+- 🗜️ 压缩支持：内置 gzip 压缩/解压，利用原生压缩流
+- 📝 TypeScript 优先：全类型安全，附带详细 TypeDoc 文档
+- ⚡ 零依赖：无外部依赖，极小的包体积
+- 🌐 跨平台：浏览器、Node.js、Cloudflare Workers 等均可运行
+- 📁 Node.js 集成：提供高阶文件系统 API，支持目录打包与解包
+- 📦 核心 API：`packTar`/`unpackTar` 用于简单打包/解包，`createTarDecoder`/`createTarPacker` 用于流式处理
+- 🗂️ Node.js 文件系统：支持过滤、映射、剥离目录、权限控制等高级选项
+- 🏗️ 多源打包：可混合文件、目录、内容字符串、流等多种输入源
+- ⚖️ 高性能：小文件归档速度远超同类库，大文件接近 I/O 瓶颈
+- 🌟 兼容性：Node.js 18+，浏览器 Chrome 85+/Edge 85+/Firefox 102+/Safari 14.1+
 
 ### [Markdy — 开源动画 DSL 引擎](https://markdy.com/)
 
@@ -83,8 +239,15 @@ Modly 是一款开源桌面应用，可将照片转换为 3D 网格模型。模�
 
 ## 更新
 
-## 设计
+### [ReactDOM `browser()` API](https://github.com/react/react/pull/37143)
 
-## AI
+React 核心团队合入了一个新 PR，为 react-dom 新增 `browser()` API，用于表达“组件应在服务端挂起、在浏览器中渲染”的意图，从而规范化“仅浏览器”渲染模式。
 
-## 其他
+- 🆕 新增 `browser()` API：从 `react-dom` 导入，返回一个“可用”（usable）对象，在 SSR 渲染时会报错，在浏览器渲染时正常解析。
+- 💻 客户端专用特性：此 API 在 `react-server` 环境中不可用，因为“浏览器”概念不适用于通用 React，因此归属于 `react-dom`。
+- 🔄 典型用法：通过 `use(browser())` 配合 `Suspense`，让组件在服务端进入挂起状态，并在浏览器端渲染实际内容，避免服务端渲染无关组件。
+- ⚠️ 使用限制：`use(browser())` 必须在 Suspense 边界内使用，否则会因其无法从根恢复而报错，未来可能放宽该限制。
+- 🧠 实现机制：将该场景建模为“可恢复错误”，同时刻意抑制错误日志；也支持 `abort(browser())` 以中止服务端流式渲染，且不会在浏览器水合时记录错误。
+- 🔖 设计权衡：选择“可用的对象”而非 `useBrowser()` hook，是为了支持按条件调用；也避免了直接抛出导致被任意捕获的风险。
+- 🚦 特性开关：实现带有 kill switch，可在稳定版发布前快速禁用；目前以无前缀形式进入代码库。
+- 📦 体积影响：PR 包含 sizebot 报告，多个 bundle（如 react-dom 生产版）有 0.02%–3.78% 不等的体积增加。
