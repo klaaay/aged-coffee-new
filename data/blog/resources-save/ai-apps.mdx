@@ -55,6 +55,16 @@ BookDS · Book Deep Summary 是一个利用先进 AI Agent 对书籍进行深度
 - 有视频库和任务状态：支持查看所有生成视频，并追踪排队中、处理中、已完成、失败等状态。
 - 适合参考小说 IP 自动化、AI 分镜、角色/场景资产管理和第三方视频生成 API 接入。
 
+[InkOS - 故事创作 AI Agent](https://github.com/Narcooo/inkos)
+
+InkOS 是一个面向小说、剧本、互动叙事与长文翻译的开源 AI 创作工作台。它不只让模型生成单段文本，而是把人物、设定、伏笔、章节目标、审稿记录和世界状态持续沉淀到项目中；同时提供 Studio、TUI、CLI 与结构化 Agent 接口，适合长期维护一部作品或搭建互动叙事原型。
+
+- 长短篇创作：可由创作简报生成世界观、角色、卷纲和章节意图，并按「写作 → 审稿 → 必要修订 → 状态结算」推进；短篇可输出正文、大纲、卖点、封面提示词及可选封面图。
+- 互动叙事：InkOS Play 支持分支剧情、变量与旗标、角色关系、物品、证据、结局和场景配图；既可制作点击选项式互动，也可运行支持自由动作的开放世界。
+- 翻译交付：支持 EPUB、文本型 PDF、TXT 和 Markdown 的分章节、分语义段翻译，可维护术语表、生成对照审校报告并导出 TXT、Markdown 或 EPUB。
+- 多种工作方式：Studio 适合图形化配置与对话创作，`inkos tui` 提供终端全屏交互，CLI 可用于建书、续写、审阅和导出；外部 Agent 可通过 `inkos interact --json --message "..."` 接入。
+- 最小上手：`npm i -g @actalk/inkos` 后执行 `inkos init my-novel && cd my-novel && inkos`；项目采用 AGPL-3.0，部署或二次集成前需确认许可证义务。
+
 [banana-slides](https://github.com/Anionex/banana-slides)
 
 这是一个基于 nano banana pro 模型的原生 AI PPT 生成应用，旨在通过多种灵活的创作路径、强大的素材解析能力以及自然语言交互，帮助用户快速生成美观且专业的演示文稿。
