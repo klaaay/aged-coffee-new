@@ -168,6 +168,19 @@ QueryTuner 是一个 AI 驱动的 SQL 查询诊断工具，无需连接数据库
 - 🧩 支持本地运行，环境变量配置 HuggingFace/OpenAI API 密钥
 - 📄 包括清晰的目录结构、路线图及已知限制说明
 
+### [fastapi-redis-sdk - Redis 官方 FastAPI 集成](https://github.com/redis/fastapi-redis-sdk)
+
+`fastapi-redis-sdk` 是 Redis 官方提供的 FastAPI SDK，将连接池生命周期、依赖注入式缓存、缓存失效和分布式限流整合为 FastAPI 原生的 `Depends()` 工作流。它适合希望避免自行拼装 Redis 客户端、缓存装饰器和限流中间件的服务端项目。
+
+- 🚀 **链式初始化**：`FastAPIRedis(app).lifespan().caching()` 将连接池挂接到 FastAPI lifespan；也可单独启用限流能力。
+- 🗃️ **依赖注入缓存**：`cache()`、`cache_evict()` 与 `cache_put()` 可直接作为 `Depends()` 工厂使用，分别处理读取缓存、失效和 write-through；复杂场景可使用 `CacheBackend` 命令式读写或按分组删除。
+- 🌐 **HTTP 缓存语义**：缓存响应自带 `ETag`、`Cache-Control` 与 `X-Redis-Cache: HIT/MISS`，并支持 `304 Not Modified`，适合 API 响应直接复用浏览器和代理缓存机制。
+- ⏱️ **分布式限流**：`rate_limit("10/second")` 以依赖形式保护端点；可在同一接口叠加短窗口和长窗口限制，并返回 `429`、`Retry-After` 及 `X-RateLimit-*` 响应头。
+- 🧩 **多实例一致性**：缓存键、失效组和限流计数都存于 Redis，因此多个 worker 或 Pod 共享同一套缓存与配额状态。
+- 🧪 **测试友好**：完整支持 FastAPI 的 `dependency_overrides`，无需通过 monkey patch 替换 Redis 依赖。
+- ⚙️ **配置方式**：基于 Pydantic 校验配置，可从 `.env` 或 `REDIS_*` 环境变量读取连接地址、TLS、连接池、Cluster、键前缀和默认 TTL 等设置。
+- 📦 **依赖要求**：支持 Python 3.10–3.14、FastAPI 0.115+、redis-py 6.0+、Pydantic 2.0+ 与 Redis Server 7.4+；采用 MIT 许可证。
+
 ### [modern-tar](https://github.com/ayuhito/modern-tar)
 
 modern-tar 是一个零依赖、跨平台、基于 Web Streams API 的流式 tar 归档库，支持所有主流 JavaScript 运行时（浏览器、Node.js、Cloudflare Workers 等），并提供完善的 USTAR/PAX 格式兼容、gzip 压缩/解压和 TypeScript 类型支持。

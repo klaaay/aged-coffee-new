@@ -285,6 +285,17 @@ Claude AI 实用技能和指令集锦
 
 Kami 是一个面向 AI 时代的文档设计系统 Skill，主打“好内容应该落在好纸上”。它用一套约束语言覆盖一页纸、长文档、信件、作品集、简历和幻灯片 6 种格式，支持中英文一等公民体验，并提供日文 best-effort 路径。适合让 Agent 输出可直接交付的研究报告、简历、演示文稿和品牌资料页。
 
+[codex-ppt-skill - 图片式 PPT 生成 Skill](https://github.com/ningzimu/codex-ppt-skill)
+
+`codex-ppt` 是一个面向 Codex 的演示文稿生成 Skill，也兼容 Claude Code、OpenClaw、Hermes Agent 等支持 `SKILL.md` 的环境。它把文章、报告、论文、课程笔记等材料转为整页图片式幻灯片：先确认大纲和视觉方向，生成样张后再逐页生成图片，最后由本地脚本组装成 `.pptx`。
+
+- 🧭 **阶段化生成**：先确认页数、`outline.md`、每页要点、视觉风格和生图后端，再生成样张并经确认后完成整套，减少大批量生成后的返工。
+- 🎨 **风格与素材**：内置 12 种演示风格，可分析图片、PDF 或 PPT/PPTX 来复刻版式；还可把满意的风格保存到 `~/.codex-ppt-skill/references/`，以便后续复用。
+- 📚 **输入与输出**：可从文章、报告、论文、Markdown、PDF、Word 或大纲开始；产出独立项目目录，其中包含最终幻灯片图片、`outline.md`、`speech.md` 和 `.pptx`，演讲稿会写入每页备注。
+- 🤖 **多 Agent 与图片后端**：在 Codex 中优先使用内置图像能力；其他环境可配置 `gpt-image-2`、第三方图像 API 或 OpenAI 兼容接口。样张确认后可用子 Agent 并行生成页面并检查一致性。
+- ⚠️ **适用边界**：主产物是强视觉统一的图片式 PPT，页内元素不可直接编辑；需要可编辑内容时，可在生成后结合 `image-to-editable-ppt-skill` 转换。
+- 📦 **安装**：可通过 `npx -y skills@latest add ningzimu/codex-ppt-skill --skill codex-ppt --agent codex --global` 安装到 Codex 全局 Skill 目录；项目采用 MIT 许可证。
+
 ## 动画 / 多媒体 Skills
 
 [spine-animation-ai](https://github.com/GenielabsOpenSource/spine-animation-ai)

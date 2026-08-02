@@ -55,6 +55,17 @@ BookDS · Book Deep Summary 是一个利用先进 AI Agent 对书籍进行深度
 - 有视频库和任务状态：支持查看所有生成视频，并追踪排队中、处理中、已完成、失败等状态。
 - 适合参考小说 IP 自动化、AI 分镜、角色/场景资产管理和第三方视频生成 API 接入。
 
+[Modly - 本地 AI 图片转 3D 桌面应用](https://github.com/lightningpixel/modly)
+
+Modly 是一款开源桌面应用，可将照片转换为可继续编辑和导出的 3D 网格模型。模型推理完全在本地 GPU 上运行，不需要把素材上传到云端；提供 Windows、Linux 与 Apple Silicon macOS 版本，适合本地化生成 3D 资产和探索图像转网格工作流。
+
+- 🖼️ **图片转网格**：通过「Image → Generate Mesh → Add to Scene」的节点式工作流，把输入图片生成 3D 模型；运行前会校验工作流连接并展示错误信息。
+- 🔒 **本地优先**：推理、模型和素材均留在本机 GPU，兼顾离线使用与隐私；macOS 当前仅支持 Apple Silicon。
+- 🧩 **可扩展模型**：可从 GitHub 安装外部扩展，官方扩展覆盖 Hunyuan3D 2 Mini、TripoSG 与 Trellis2 GGUF 等模型及其变体。
+- 🛠️ **网格处理**：导入或生成的网格可在应用内平滑、减面，优化后的结果会写回当前工作区。
+- 🤖 **自动化接口**：随附 Python CLI，可供脚本或 Coding Agent 查询模型、运行与取消工作流、检查状态，并将生成物导出为 GLB。
+- 📜 **开源使用**：项目采用 MIT 许可证；二次开发时应保留项目与作者的署名说明。
+
 [InkOS - 故事创作 AI Agent](https://github.com/Narcooo/inkos)
 
 InkOS 是一个面向小说、剧本、互动叙事与长文翻译的开源 AI 创作工作台。它不只让模型生成单段文本，而是把人物、设定、伏笔、章节目标、审稿记录和世界状态持续沉淀到项目中；同时提供 Studio、TUI、CLI 与结构化 Agent 接口，适合长期维护一部作品或搭建互动叙事原型。

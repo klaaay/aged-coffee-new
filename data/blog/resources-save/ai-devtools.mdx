@@ -219,6 +219,18 @@ Multica 是一个把 coding agent 变成“团队成员”的开源托管平台�
 - 强调能力复用：项目把 skills 视为可沉淀的团队资产，不只是这次任务用完即弃的 prompt。
 - 技术栈清晰：前端是 Next.js，后端是 Go + WebSocket，数据库是 PostgreSQL + pgvector，整体更像“agent 协作基础设施”而不是单个桌面客户端。
 
+[Multigent - 人机协作的 Agent 控制面](https://github.com/multigent/multigent)
+
+Multigent 是一个面向团队的人机协作平台，把人员、Agent、项目、任务、工作流、共享上下文、模型账号与外部工具收敛到同一控制面。它不试图替换既有的 GitHub、Jira、Linear、飞书或 Slack，而是为这些系统之上的 Agent 协作提供任务编排、权限边界、审查节点和可观测运行记录。
+
+- 🧩 **统一协作模型**：工作区、团队与角色、项目、人员和 Agent、任务、工作流、文档、Skill、模型账号和工具均为一等对象，可让人和 Agent 在同一项目空间交接工作。
+- 🔁 **可视化 SOP**：可在看板上定义工作流步骤、输入输出、分支条件与审核环节，再将真实任务绑定到流程中，由人或 Agent 分别承担步骤。
+- ⏰ **异步持续执行**：支持任务触发、心跳、Cron、手动唤醒与协作事件唤醒；人可以在关键节点审核、批准、驳回或重定向，而无需全程同步驱动 Agent。
+- 🔐 **权限与隔离**：以 RBAC 控制成员、Agent、工具凭据和审批范围；Agent 在沙箱中运行，并按显式配置获得所需工具与凭据，而非默认读取整个工作区。
+- 📊 **运行可观测**：Web 控制台可查看任务历史、工作流步骤、会话、日志、Token 用量与审计事件，便于追踪交接过程和排查失败。
+- 🛠️ **接入与部署**：可通过安装脚本、Homebrew、npm 包或 Docker 自托管启动；支持 Codex、Claude Code、Cursor 等本地 Agent 运行时，运行沙箱需要 Docker。
+- ⚠️ **许可证限制**：项目采用 PolyForm Noncommercial License 1.0.0，商业使用需另行取得书面商业许可证。
+
 [OpenClaw Dashboard](https://github.com/xmanrui/OpenClaw-bot-review)
 OpenClaw Dashboard 是一个轻量级 Web 仪表盘，用来集中查看 OpenClaw 的 Bots、Agents、Models 和 Sessions 状态。它直接读取 `~/.openclaw/openclaw.json` 和本地会话文件，不依赖数据库，适合监控多平台 Agent、模型配置、Gateway 健康、Token 消耗和会话连通性。
 
