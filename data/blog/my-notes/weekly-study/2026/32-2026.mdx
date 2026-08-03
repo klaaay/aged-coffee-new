@@ -14,6 +14,18 @@ summary: ''
 
 ## 工具
 
+### [thinking-orbs](https://github.com/Jakubantalik/thinking-orbs)
+
+thinking-orbs 是一个面向 AI 与 Agent 界面的 React 加载状态组件：它在 2D Canvas 上绘制由点组成的“思考球”，把抽象的处理中状态分成搜索、推理、撰写等六种可辨识的动画。组件为聊天头像和行内文本分别调校了 64px 与 20px 两个尺寸，并兼顾主题切换、无障碍和低功耗场景。
+
+- 🧠 **六种状态语义**：`working`（倾斜轨道粒子）、`searching`（扫描经线）、`solving`（散乱后归位的环带）、`listening`（穿过圆环的波形）、`composing`（起伏多带）和 `shaping`（圆形、三角形、方形间变形），让 Agent 的当前行为更直观。
+- 📐 **不是简单缩放**：`64` 适用于聊天头像，`20` 适用于行内提示；两者分别设定了点数、点径与动画速度，避免小尺寸图标因等比缩放而失去辨识度。
+- ⚛️ **React 接入简单**：安装 `thinking-orbs` 后即可使用 `<ThinkingOrb state="searching" size={64} />`；`speed`、`paused`、`aria-label` 以及普通 Canvas 属性均可传入。
+- 🌓 **自动适配主题**：默认 `theme="auto"` 会优先读取祖先元素的 `data-theme` 或 `dark`/`light` 类，其次监听系统色彩偏好；借助 `MutationObserver` 可在项目主题改变时立即更新，并避免 SSR 阶段错误绘制。
+- ♿ **无障碍设计**：组件默认具有 `role="img"` 和与状态相符的标签；检测到 `prefers-reduced-motion` 时会展示静态代表帧，而非继续播放动画。
+- ⚡ **低开销动画**：实例在离开视口或标签页隐藏时自动暂停，恢复后与共享时钟同步；底层只使用 Canvas 2D 圆弧，不依赖 WebGL 或滤镜，并将设备像素比限制为 2，以兼顾跨浏览器一致性与性能。
+- 📄 **许可**：项目采用 MIT License，适合在自定义 AI 产品界面中作为状态反馈组件引入。
+
 ## 更新
 
 ## 设计
