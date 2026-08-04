@@ -22,6 +22,15 @@ summary: ''
 
 [skill-prompt-generator - 基于 Claude Code Skills 的智能提示词生成系统](https://github.com/huangserva/skill-prompt-generator)
 
+[microsoft/skill-recorder - 将一次操作录制成可复用 Skill](https://github.com/microsoft/skill-recorder)
+
+Microsoft 开源的桌面应用：录制一次真实工作过程后，它会借助 GitHub Copilot CLI 把屏幕操作还原为任务意图与有序步骤，并生成可复用的 `SKILL.md`，或创建按计划、触发器执行的 Automation。
+
+- 不机械回放点击：产出的 Skill 会优先使用 `gh`、`web_fetch` 等 agent 原生工具，并从单次示范中泛化出可重复执行的流程。
+- 适合沉淀个人操作经验：例如把某次表单提交、跨应用处理或网页操作，转成可审阅、编辑和持续复用的 agent 工作流。
+- 有明确的数据边界：录制及本地处理默认在设备上完成；只有选择分析后，事件时间线、提取的屏幕图像、旁白文本等才会发送给 GitHub 云端处理，切勿录入密码、令牌、密钥或其他敏感信息。
+- 运行条件：需要具备 Copilot 访问权限的 GitHub 账户；以 macOS 为主要目标，也支持 Windows 11，项目采用 MIT 许可证。
+
 [colleague-skill - 把同事蒸馏成 AI Skill](https://github.com/titanwings/colleague-skill)
 
 一个偏“人格 + 工作方式”建模的 Skill 生成器。它支持基于飞书消息、钉钉文档、邮件、截图和主观描述，生成可在 Claude Code / OpenClaw 中调用的“同事 Skill”，让智能体尽量复现某位同事的技术规范、表达风格和决策习惯。
@@ -208,6 +217,17 @@ Claude AI 实用技能和指令集锦
 
 [everything-claude-code](https://github.com/affaan-m/everything-claude-code)  
 [seedance-prompt-skill](https://github.com/songguoxs/seedance-prompt-skill)  
+
+## 安全研究与逆向 Skills
+
+[reverse-skill - 授权安全研究的 AI 技能路由包](https://github.com/zhaoxuya520/reverse-skill)
+
+一个面向 Claude Code、Codex、Cursor、Cline 等代码智能体的安全研究工作流包。它将 APK / iOS / 二进制 / 前端 JS 逆向、HTTP 流量分析、恶意软件分析、CTF、API 与供应链安全等场景映射到相应的技能、工具和脚本，避免 agent 在不匹配的工具之间盲目尝试。
+
+- 路由先于执行：通过主路由和任务矩阵，为不同目标选择 jadx、apktool、Frida、IDA、Ghidra、Burp Suite 等工具链，并可检查本地工具是否已就绪。
+- 过程可追溯：将授权范围与网络配置作为前置条件，随后沉淀时间线、证据、发现与报告，适合参考如何把安全分析过程做成可复用 SOP。
+- 覆盖面较完整：除常见的移动端、二进制和 JS 逆向外，还包括固件 / IoT、YARA、补丁差异、LLM 安全、CTF 等专项路径。
+- 使用边界明确：仅适用于已获授权的安全测试、研究或竞赛环境；涉及真实目标时，应先确认范围、权限和数据处理要求。
 
 ## 编程 SDD(Specification Driven Development)
 
