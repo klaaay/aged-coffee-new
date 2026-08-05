@@ -28,6 +28,48 @@ thinking-orbs 是一个面向 AI 与 Agent 界面的 React 加载状态组件：
 
 ## 更新
 
+### [发布 v4.13.0 · honojs/hono · GitHub](https://github.com/honojs/hono/releases/tag/v4.13.0)
+
+Hono v4.13.0 正式发布，重点提升了核心性能（最高 1.25 倍加速），新增了对 HTTP QUERY 方法的一流支持，并引入了 Method Not Allowed 中间件，同时包含多项中间件与 JSX 相关改进。
+
+- 🚀 性能大幅提升：核心请求/响应路径经多项底层优化后，常见路由速度最高提升 1.25 倍（如 JSON 路由从 528ns 降至 422ns）。
+- ⚡ 具体优化手段：跳过不必要的 Headers 分配、用 indexOf 替代正则测试、惰性分配内部状态、优化 URL 解码等。
+- 🆕 新增 QUERY 方法支持：遵循 RFC 10008，可通过 `app.query()` 定义处理逻辑，请求体可作为查询条件。
+- 🔄 内置中间件适配 QUERY：Cache 中间件按请求体哈希缓存，ETag 支持条件请求，CORS 默认允许 QUERY 方法。
+- 🛑 新增 Method Not Allowed 中间件：路径匹配但方法不允许时返回 405 和 Allow 头，并支持自定义响应。
+- 📦 RegExpRouter 改进：在路由注册时即检测不支持的路径并抛错，实现启动时快速失败，同时注册与首次匹配速度提升约 20%。
+- 🧩 其他改进：headers 工具同步 IANA 注册表、JWT/JWK 中间件支持 realm 选项、JSX useRef 对齐 React 19、函数组件可返回数组等。
+
+### [Next.js 16.3: AI Improvements](https://nextjs.org/blog/next-16-3-ai-improvements)
+
+Next.js 16.3 预览版推出一系列面向 AI 代理（agent）开发体验的改进，重点是让代理基于版本匹配的本地文档、可操作的错误提示和浏览器内省能力，更高效地编写和维护 Next.js 应用。
+
+- 📦 **AGENTS.md 自动管理文档**：`next dev` 会自动写入或更新 `AGENTS.md` 指针，引导代理阅读 `node_modules` 中本地捆绑的版本匹配文档，避免依赖过时的训练数据；已有项目可通过 codemod 补齐。
+- 🛠️ **新增三个官方 Skills**：`next-dev-loop` 让代理驱动完整开发反馈循环；`next-cache-components-adoption` 逐步采用 Cache Components；`next-cache-components-optimizer` 将路由优化为即时加载；稳定版还追加了第四个 Skill。
+- 🌐 **agent-browser 支持 React 内省**：`next-browser` 合并入通用 `agent-browser` CLI，v0.27 起可查看组件树、检查 fiber、分析重渲染和 Suspense 状态，让代理能验证运行时渲染结果。
+- ⚠️ **可操作错误提示**：Instant Insights 在 overlay 和终端中提供标记的修复菜单（Stream / Cache / Block），并附“Copy prompt”按钮，直接生成给代理的修复指令；构建和 CI 日志同样适用。
+- 📄 **为代理编写的错误文档**：每个错误都有独立的 `/docs/messages` 页面，统一包含 Patterns、Trade-offs 和 Gotchas，帮助代理理解修复边界和易错点。
+- 🧩 **精简 MCP 服务器**：移除知识库相关工具，新增 `get_compilation_issues` 和 `compile_route`，让代理直接从运行中的 dev server 快速检查编译，无需反复运行完整构建。
+- 📝 **文档支持 Markdown 输出**：任意 `nextjs.org/docs` URL 追加 `.md` 即可获得纯文本版，也支持 `Accept: text/markdown`，并提供 `/docs/llms.txt` 与 `/docs/llms-full.txt` 索引。
+
+### [[Next.js 16.3](https://nextjs.org/blog/next-16-3)
+
+Next.js 16.3 正式发布，带来多项性能优化与全新功能，包括大幅降低开发内存占用、加快构建与渲染速度，并引入“Instant Navigations”套件以提升导航体验，同时提供实验性特性供开发者尝试。
+
+- 🚀 开发服务器内存占用最高减少 90%（如 vercel.com 从 21.5GB 降至 2GB），基于磁盘缓存与内存驱逐机制。
+- ⚡ `next build` 重复构建可使用缓存，CI 构建速度最高提升 5.5 倍；同时支持 TypeScript 7 进行更快类型检查。
+- 📈 服务端渲染改用原生 Node.js 流，替代 Web Streams，在负载下可多处理约 22% 的请求。
+- 🤖 AI 编码代理可自动读取与项目版本匹配的文档（通过 AGENTS.md 指向本地 node_modules），无需额外配置。
+- 🔗 预取请求合并小载荷，减少请求数量；不可变静态资源可在部署间复用，避免缓存失效问题。
+- 🛡️ 新增 `catchError` 自定义错误边界，支持重试失败的 Server Components，且不干扰 `notFound` 或 `redirect`。
+- 📂 内置 Vite 兼容的 `import.meta.glob` 导入，便于从文件系统加载多个模块并获得热更新支持。
+- 🌍 新增 Root Params（如 `lang`），可在任意 Server Component 直接访问根级动态参数，避免 prop-drilling。
+- ⚡ “Instant Navigations”套件上线：Instant Insights 自动检测慢导航；Partial Prefetching 精细控制预取内容。
+- ♻️ 改进 ISR：未预渲染的页面首访可显示即时加载壳，后台升级为完整预渲染页，后续访问直接命中缓存。
+- 🔍 新增 Navigation Inspector 工具，可暂停加载并可视化导航壳层；提供 Playwright `instant()` 测试助手防止回归。
+- 🧪 实验性 Rust 版 React Compiler 直接集成 Turbopack，冷构建提速约 34%，热构建约 46%；网络弹性功能 `useOffline` 支持断线重试。
+- 📦 升级方式：运行 `npm install next@latest`，并支持通过 `cacheComponents` 和 `partialPrefetching` 配置启用新特性。
+
 ## 设计
 
 ### [Anatomy Atelier — Learn anatomy like an artist](https://anatomy-livid.vercel.app/)
