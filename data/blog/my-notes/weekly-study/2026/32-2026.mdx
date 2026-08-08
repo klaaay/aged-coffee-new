@@ -142,6 +142,26 @@ ffmpeg-webCLI 是一个把 `ffmpeg.wasm` 封装成浏览器视频编辑器的开
 
 ## 更新
 
+### [React Router v8 | Remix](https://remix.run/blog/react-router-v8)
+
+React Router v8 正式发布！这次升级以“无聊”为最大特色，延续 v7 的平稳演进，大幅减少破坏性变更，引入年度主版本发布节奏。文章回顾了 v7 以来的 40+ 版本更新，列出 v8 的主要新特性、最低依赖要求、必要的破坏性改动、简单的升级步骤，并展望未来对 Server Components 的支持以及 Remix 项目的独立发展方向。
+
+- 🎉 宣布 React Router v8 发布，主打“最无聊”升级，并计划改为每年一次主版本发布，让升级更可预测。
+- 🏗️ 回顾 v7 的 Framework Mode：提供类型安全路由 API、智能代码分割、SPA/SSR/SSG 渲染策略、数据加载与变更等能力。
+- 🧩 继续支持三种使用模式：纯客户端路由、自定义数据模式、全栈框架模式，保持灵活性。
+- ✨ 列举 v8 新特性：中间件、Split Route Modules、类型安全 `href`、`fetcher.reset`、Vite Environment API、Link masking、可配置懒路由发现、子资源完整性、性能改进等。
+- 🖥️ 新增 `useRoute` / `useRouterState` / `useTransitions` 等 API，并加强 SPA 模式与预渲染能力。
+- 🧪 提供不稳定的 Server Components 和 Server Actions 支持，仍在迭代中，计划在 minor 版本稳定。
+- 🔧 最低依赖基线提升：Node 22.22.0+、React 19.2.7+、Vite 7+，并改为 ESM-only，tsconfig 目标更新为 ES2022。
+- 📅 Node 支持策略调整：官方支持所有 Active LTS 版本，以及 Maintenance LTS 的最新 minor 分支，安全补丁会触发最低版本提升。
+- 🚦 多个 v7 future flag 转为默认行为，包括 middleware、pass-through requests、Vite Environment API、Split Route Modules 等。
+- 🧹 弃用项清理：移除 `react-router-dom`、meta API 的 `data` 参数改用 `loaderData`、移除 Cloudflare dev proxy 等。
+- 🔄 升级只需三步：更新 peer dependencies、启用/确认 future flags、删除弃用 API，然后执行 `pnpm i react-router@latest`。
+- ⏳ React Router v6 和 Remix v2 正式进入 EOL，不再接收安全更新；v7 仍会继续获得安全维护。
+- 🌍 项目采用开放治理模式，鼓励社区提交提案和修复，继续坚持“少即是多、聚焦路由与数据、简单迁移路径、最低共同模式”的设计目标。
+- 🧭 Remix 将走向独立方向，成为全栈零依赖 JavaScript 框架；React Router 则继续作为成熟的 React meta-framework，两者并行发展。
+- 💡 选择建议：追求稳定就用 React Router；希望尝试前沿技术可关注 Remix 3 beta。
+
 ### [SWR v2.5.0](https://github.com/vercel/swr/releases/tag/v2.5.0)
 
 这是 SWR v2.5.0 版本的发布说明，重点带来了两个新功能：RSC 缓存预加载和新的 unload() API，同时修复了内部模块导出问题，并迎来了一位新贡献者。
