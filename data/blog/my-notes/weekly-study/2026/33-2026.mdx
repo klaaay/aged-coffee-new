@@ -12,9 +12,77 @@ summary: ''
 
 ## 技术
 
+### [让更多的 npm 包支持 jsDelivr 的 ESM 模式](https://www.jsdelivr.com/blog/making-more-npm-packages-work-with-jsdelivr-esm/)
+
+jsDelivr 团队升级了 `/+esm` 工具链，并通过生产环境 APM 数据定位和修复了大量 npm 包兼容性问题，涵盖依赖升级、CommonJS 互操作、Node.js polyfill、source map 和性能优化，使更多包可在浏览器中直接运行。
+
+- 🔄 升级后端为原生 ESM，并将 Rollup 从 2 代升到 4 代，同时修复了 JSON import attributes 等语法兼容问题。
+- 📜 对声明 `"type": "module"` 的包，其 `.js` 入口不再进行 CommonJS 转换，从而支持顶层 `await`。
+- 🌍 扩展 `NODE_ENV` 替换规则，覆盖 `globalThis.process`、`global.process`、括号属性写法等多种生成代码变体，同时避免误替换普通对象键。
+- 🐚 将包入口的 `#!` shebang 替换为 `//` 以保持 source map 行列对齐，并修复 `browser` 字段中的自映射逻辑。
+- 🔍 增强 CommonJS 命名导出检测：识别 TypeScript 的 `__exportStar`，合并两种 `cjs-module-lexer` 结果，支持条件分支赋值和非标识符属性名。
+- 🔗 修复 CommonJS 导入外部 ESM 依赖时的默认导出误判，保留命名导出，并移除人为合成的 `export default null`。
+- 📂 通过 `resolveImportMeta` 保留各模块发布时的 npm URL，使 `import.meta.url` 能正确解析同目录下的 `.wasm`、worker 等资源文件。
+- 🗺️ 修复 source map 中空源、非法 `sourceRoot` 及 `sourcesContent` 冲突导致的加载失败，并改进生成 map URL 的标识方式。
+- 🌳 将暂不支持的 Node.js 内置模块转为无副作用虚拟模块，先让 Rollup 进行 tree-shaking，若仍残留再返回原错误信息。
+- 🛠️ 扩展 Node.js 兼容层共 16 项，涵盖 `util`、URL/path、`timers/promises`、`crypto`、`fs` 等 API，并修复多个 polyfill 实现和解析问题。
+- ⚡ 对 ESM 包的最终压缩改用 esbuild 替代 Terser，大文件（>4MiB）同样走 esbuild；外部包 manifest 改为每包只拉取一次并复用。
+- 📱 识别直接在 `.js` 中发布 JSX 的 React Native 包，返回明确的“unsupported JSX”提示，而非当作未知崩溃。
+- ✅ 所有修复均配套回归测试；结合用户报告与生产数据，大幅减少了剩余兼容性积压，并让剩余失败原因更清晰。
+
 ## 工具
 
+### [hucre](https://github.com/productdevbook/hucre)
+
+hucre 是一款零依赖、纯 TypeScript 的电子表格引擎，支持 XLSX、CSV、ODS、JSON、NDJSON、XML 等多种格式的读写，具备流式处理、往返保留、密码保护、图表与透视表等丰富功能，可在 Node.js、Deno、Bun、浏览器及边缘运行时中运行。
+
+- 📦 零依赖、纯 TypeScript 实现，支持 XLSX、CSV、ODS、JSON、NDJSON、XML 等多格式读写。
+- 🌳 支持树摇（tree-shaking），按子路径导入可显著减小打包体积，gzip 后约 4–129 KB。
+- ⚡ 提供流式读写（streamXlsxRows、writeXlsxStream）与增量写入器，可处理数百万行数据并保持较低内存占用。
+- 🔒 内置 XLSX 密码保护（Agile 加密），基于 WebCrypto，零额外依赖，兼容 Node.js 与浏览器。
+- 📖 可读取旧版 XLSB 和 XLS（BIFF8）文件，支持共享字符串、公式缓存值、合并单元格等。
+- 🔄 支持往返保留（openXlsx/saveXlsx），未建模的部分按字节复制，图表、宏等可无损保留。
+- 📊 原生支持图表读取、写入与克隆，覆盖柱状、折线、饼图等主流类型；透视表可写入结构骨架。
+- 🧩 提供统一 API（read/write/readObjects/writeObjects），自动检测文件格式，简化对象操作。
+- 🖥️ 附带 CLI 工具，可执行 convert、inspect、validate 命令，支持多种格式互转。
+- 🛠️ 提供工作表操作（插入/删除行列、排序、克隆、移动）并智能更新公式和引用。
+- 📄 支持 HTML/Markdown 导出与 HTML 表格导入，另含 JSON/NDJSON/XML 处理工具。
+- 🔢 内置数字格式渲染器、日期工具、单元格引用解析和构建器 API（WorkbookBuilder）。
+- 📋 提供模板引擎（`{{placeholder}`} 填充）、Excel 2024 原生复选框、无障碍（WCAG 2.1 AA）审计功能。
+- ✅ 支持模式验证（validateWithSchema），含类型强制、正则、自定义校验和错误收集。
+- 🌍 跨平台支持：Node.js、Deno、Bun、现代浏览器、Cloudflare Workers 等。
+- 🏆 相比 SheetJS/ExcelJS 等库，依赖更少、ESM 原生、TypeScript 类型完善、支持流式与 ODS。
+- 🧱 架构模块化：内置 ZIP/XML 引擎，符合 CSP，无 eval，worker 友好。
+- 🛣️ 路线图中规划了公式计算、更多图表类型写入、流式 XML 读取、XLS/XLSB 写入等未实现功能。
+
+### [kitesurf](https://blog.cloudflare.com/kitesurf/)
+
+overview summary：Cloudflare 正式发布 Kitesurf，一个为 AI 代理设计的、运行在 Workers V8 隔离环境中的全新浏览器。它针对 AI 场景大幅优化了 CPU 与内存效率，并通过 CDP 协议兼容现有自动化工具，目前已在 Browser Run 中开放免费测试。
+
+- 🚀 Kitesurf 是 Cloudflare 专为 AI 代理构建的浏览器，完全运行在 Workers 上，可在 Browser Run 中免费试用（beta 版）。
+- ⚡ 相比 Chromium，Kitesurf 在常见代理任务中 CPU 消耗降低 3.1-3.8 倍，内存消耗降低 4.7-7 倍，但墙钟时间慢约 1.7 倍。
+- 🧩 核心设计原则：以测试驱动开发，使用 Rust 编译到 WebAssembly，强调异常安全、严格隔离与尽可能无状态。
+- 🏗️ 三大组件：Engine（处理 CDP API 与会话状态）、PageScript（用 Dynamic Workers 解析 DOM 并运行脚本）、PageRenderer（负责光栅化生成图片/PDF）。
+- 🎯 通过 215,000+ 项 Web Platform Tests，并针对真实网站进行集成与视觉回归测试。
+- 🖥️ 支持现有 CDP 客户端（Puppeteer、Playwright、chrome-remote-interface 等），只需添加 `browser=kitesurf` 参数即可使用。
+- ✅ 适合 AI 代理的页面渲染、HTML 提取、截图/PDF 等一次性 Quick Actions 场景。
+- ❌ 暂不支持视频、WebGL、复杂持久化会话或真实 TLS 指纹的 bot 挑战交互。
+- 🔮 未来规划：完善 CDP 覆盖、提升截图/PDF 保真度、增加 WPT 通过率，并计划开源 Kitesurf 供用户自部署。
+
 ## 更新
+
+### [pnpm 12 有什么不同 | pnpm](https://pnpm.io/blog/whats-different-in-pnpm-12)
+
+pnpm 12 是以 Rust 重写的版本，目前为发布候选版。它基本保持与 pnpm 11 兼容，但有三项关键差异：项目感知的全局 bin、Git 依赖解析方式变化，以及移除 `--resolution-only` 标志。
+
+- 🔄 pnpm 12 是 Rust 重写版，命令、标志、设置和 lockfile 格式均与 pnpm 11 兼容，文档对两个版本通用。
+- 📦 全局安装的 node、deno、bun 现在会优先使用当前项目固定的版本（通过 `devEngines.runtime` 或作为依赖安装），不再需要单独的版本管理器；由 `globalShims` 设置控制。
+- 🔗 GitHub、GitLab、Bitbucket 上的依赖说明符现在视为身份标识，统一通过规范的 HTTPS URL 解析，不再记录 SSH URL。
+- 📝 旧版 pnpm 生成的 lockfile 中若包含 SSH 形式条目，需用 `pnpm update <package>` 手动重新解析，pnpm 不会自动改写。
+- 🔑 访问私有仓库的 SSH 配置应通过 Git 的 `insteadOf` 重写实现，pnpm 会调用 git 自动应用该配置。
+- ❌ `pnpm install --resolution-only` 已被移除，相关功能改用 `pnpm peers check` 直接从 lockfile 读取 peer 依赖问题。
+- 🧪 pnpm 12 以 `next-12` 标签发布为 RC，可通过 npm 或 GitHub 预发布安装；Homebrew、winget、Scoop、Chocolatey 尚未提供。
+- 🐛 使用过程中遇到问题，请向官方报告。
 
 ## 设计
 
