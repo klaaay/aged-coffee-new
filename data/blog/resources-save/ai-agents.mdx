@@ -10,6 +10,17 @@ summary: ''
 
 ## 通用平台与框架
 
+[Prime Agent](https://github.com/PrimeIntellect-ai/prime-agent)
+
+Prime Agent 是 Prime Intellect 开源的编程与研究代理，面向通用且耗时较长的自治任务。它以 Recursive Language Model（RLM）和 Continual Harness 为核心：把上下文当作变量、把工具和子代理当作函数，在持久化 REPL 中用代码组织工作；同时把补充提示、记忆、技能和可复用子代理规格存为可演进、可回滚的持久状态。文档见 [prime-agent docs](https://app.primeintellect.ai/prime-agent/docs)。
+
+- 内置持久化 IPython 环境：文件读写、Shell、工具调用和上下文管理都以程序化方式完成；可用 `rlm(...)` 启动真实子代理并并行或后台执行。
+- `/refine` 会审视执行轨迹，把有证据支撑的经验写入 Harness；基础系统提示保持不可变，并记录快照以便回滚。
+- 由 daemon 支撑后台会话：终端断开后任务仍可运行，之后可 `attach` / `--resume` 接回；也支持持久目标、自动压缩、心跳、定时任务和有预算限制的自治模式。
+- 技能是可导入的 Python 包，内置技能创建器可将重复工作流沉淀为个人或项目技能；运行中的 agent 与保留的子代理可直接发现、通信和协作。
+- 安装后在项目目录执行 `prime-agent` 即可；首次使用通过 `/login` 选择订阅或 API Key。注意它不是安全沙箱，应在干净工作区或可回滚检查点中运行，并只接入可信仓库、指令与技能。
+- 更适合放在 `AI Agents` 的「通用平台与框架」：它提供的是可编程、可持久化、可逐步改进的长期 agent 运行时，而不只是单次聊天里的命令行助手。
+
 [craft-agents-oss](https://github.com/lukilabs/craft-agents-oss)
 
 一个面向 AI Agent 的开源工作台，更像“桌面化的 agent 操作系统”，而不只是单轮对话工具。它把多会话管理、模型接入、MCP / API / 本地资源连接、Skills、权限控制和代码 diff 查看整合到一个 Bun + Electron + React 的 monorepo 里，适合需要长期运行、多工具协作和可视化管理 agent 工作流的场景。
