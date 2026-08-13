@@ -12,6 +12,20 @@ summary: ''
 
 ## 技术
 
+### [为什么微小 JPEG 图元在 Chrome 中看起来不一样](https://guillaumetech.github.io/posts/jpg-scaling-chrome/)
+
+Chrome 在渲染小尺寸 JPEG 时，并未完整解码再缩放，而是采用“部分 IDCT 缩放”优化，跳过高频系数，只保留低频信息，导致图片在小尺寸下显得更粗/更厚。这种优化与 Firefox 等浏览器不同，因此出现渲染差异。
+
+- 🖼️ 发现现象：同事电脑上的同一张 Logo 在 Chrome 中看起来更粗，Firefox 中更接近原图，换用 SVG 可解决。
+- 🔍 最初怀疑是渲染 bug，后证实是 Chrome 的 JPEG 解码优化所致。
+- 📉 完整解压大图再缩放到小尺寸很浪费：2000×2000 解压约 12 MB，而 20×20 只需约 1.2 KB。
+- 🌲 缩小图片时，丢失的主要是高频细节（如树叶、树皮的纹理），低频信息（整体颜色和形状）保留下来。
+- 🧩 JPEG 将图像分为 8×8 块，通过 DCT 转换为频率域，低频是纯色，高频是棋盘格模式。
+- ⚡ 按 1/8 缩放时，每个 8×8 块只需一个像素，因此可跳过高频系数，仅用低频数据解码，节省内存和计算。
+- 🔧 Chrome 使用 Skia + libjpeg-turbo，在目标尺寸较小时自动执行部分 IDCT 缩放，再配合传统下采样算法达到最终尺寸。
+- ⚠️ 实际效果受 IDCT 缩放和后续缩放算法共同影响，并非单一原因。
+- 🚫 结论：不适合用 JPEG 做图标等小尺寸图像，JPEG 是为照片感知设计的格式。
+
 ### [让更多的 npm 包支持 jsDelivr 的 ESM 模式](https://www.jsdelivr.com/blog/making-more-npm-packages-work-with-jsdelivr-esm/)
 
 jsDelivr 团队升级了 `/+esm` 工具链，并通过生产环境 APM 数据定位和修复了大量 npm 包兼容性问题，涵盖依赖升级、CommonJS 互操作、Node.js polyfill、source map 和性能优化，使更多包可在浏览器中直接运行。
