@@ -86,7 +86,7 @@ const rawSubscriptions: RawSubscriptionItem[] = [
   {
     name: '夸克网盘 VIP',
     yearly: 198,
-    expiry: '2026-08-14',
+    expiry: '2027-08-14',
     category: 'productivity',
   },
   {
