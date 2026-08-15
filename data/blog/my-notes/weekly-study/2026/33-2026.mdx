@@ -112,6 +112,36 @@ overview summary：Cloudflare 正式发布 Kitesurf，一个为 AI 代理设计�
 
 ## 更新
 
+### [useReactCompiler](https://biomejs.dev/linter/rules/use-react-compiler/)
+
+该规则是 Biome 的实验性 lint 规则，用于通过 React Compiler 验证组件和 Hook 是否可安全编译，仅对 React 19 及以上项目生效，并支持多种编译模式配置。
+
+- 🔬 属于 `nursery` 组，处于实验阶段，行为可能随时变化，默认严重级别为“信息”。
+- ⚙️ 配置方式：在 `biome.json` 的 `linter.rules.nursery` 中设置 `useReactCompiler` 为 `"error"` 等。
+- 🚀 仅在最近的 `package.json` 声明 React 19 或更新版本时运行；React 18 及以下或无 React 依赖的项目会跳过。
+- ❌ 无效示例：在条件语句中调用 `useState` 会触发诊断，提示 Hook 必须始终在顶层以固定顺序调用。
+- ✅ 有效示例：组件内只返回 JSX 且不违反 Hook 规则时不会报错。
+- 🧩 提供 `compilationMode` 选项：`"infer"`（默认，分析符合 React 约定的函数）、`"annotation"`（仅分析带 `"use memo"` 指令的函数）、`"all"`（分析所有函数，可能在非 React 代码中产生诊断）。
+- 📦 使用 `"all"` 模式时，即使函数不符合 React 命名规范（如普通工具函数）也会检查外部变量修改等滥用问题。
+- 🩹 该规则仍在积极开发中，可能缺少功能或存在粗糙之处，可通过相关 GitHub 链接反馈问题。
+
+### [TanStack Form v2](https://tanstack.com/blog/announcing-tanstack-form-v2-alpha)
+
+TanStack Form v2 推出了 alpha 版本，这是基于 v1 一年来反馈进行的核心重写。v2 在保持基本 API 风格的同时，大幅改进了验证器、监听器、类型安全、SSR 等关键体验，并开放试用。
+
+- 🚀 Form v2 alpha 正式发布，核心重写，API 基本兼容 v1，运行时性能更快、类型更安全。
+- 🔄 验证器从事件键控对象改为管道模型，每个验证器独立声明自己的触发事件。
+- 📌 一个验证器可以同时绑定多个触发事件（如 change 和 blur），避免重复注册和重复报错。
+- 🔗 多个验证器可以共享同一触发事件，并通过 `bailIfInvalid` 控制执行顺序。
+- 🎯 新增 `when` 条件，支持只在特定条件下触发验证（例如首次提交后才验证 change）。
+- 🎧 监听器也改为同样的管道模型，支持多触发、多监听器共享触发以及条件执行。
+- 🧩 新增 `strictSchema` 和 `looseSchema` 模式，解决 defaultValues 与 schema 类型不匹配时的问题。
+- 🛡️ Form Composition 组件支持类型品牌约束，不兼容的组件（如字符串字段上的 `NumberInput`）会在编译期报错。
+- 🌐 SSR 改进：服务端验证器移入共享 formOpts，`serverValidate` 返回结果而非抛错，客户端直接使用 `serverState`，省去手动合并。
+- ⏳ v2 alpha 暂缺：内置表单持久化、非 React 适配器的 Form Composition、Submit meta。
+- 📚 试用 alpha 需要查阅迁移指南，并关注两个 RFC 议题（#2296 与 #1823）。
+- 🙏 感谢社区反馈，团队期待在 alpha 阶段收集更多意见以完善 v2。
+
 ### [pnpm 12 有什么不同 | pnpm](https://pnpm.io/blog/whats-different-in-pnpm-12)
 
 pnpm 12 是以 Rust 重写的版本，目前为发布候选版。它基本保持与 pnpm 11 兼容，但有三项关键差异：项目感知的全局 bin、Git 依赖解析方式变化，以及移除 `--resolution-only` 标志。
