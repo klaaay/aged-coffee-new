@@ -54,6 +54,25 @@ summary: ''
 
 ## 工具
 
+### [dbmate](https://github.com/amacneil/dbmate)
+
+dbmate 是一个独立、语言与框架无关的数据库迁移工具。它使用纯 SQL 管理迁移，通过时间戳减少多人协作时的版本冲突，并把数据库迁移、回滚、状态检查与 schema 快照统一到一个轻量 CLI 中，适合多语言服务共享同一套数据库工作流。
+
+- 🧩 与技术栈解耦：作为独立 CLI，可配合 Go、Node.js、Python、Ruby、PHP、Rust、C++ 等任意后端语言或框架使用。
+- 🗄️ 数据库覆盖广：核心支持 PostgreSQL、MySQL、MariaDB、SQLite 与 ClickHouse；文档还提供 BigQuery，以及通过 PGAdapter 连接 PostgreSQL 方言 Spanner 的方式。
+- 📝 直接编写 SQL：迁移文件用 `-- migrate:up` 和 `-- migrate:down` 划分升级与回滚逻辑，不引入额外 DSL。
+- 🕒 时间戳版本：文件名采用 `[version]_[description].sql`，默认以时间戳作为版本，降低多人同时创建迁移时的编号冲突。
+- ⚛️ 原子执行：支持事务的数据库默认在事务中运行整份迁移；遇到不能放入事务的 DDL，可用 `transaction:false` 显式关闭。
+- 🧰 命令完整：提供 `new`、`up`、`migrate`、`rollback`、`status`、`dump`、`load`、`create`、`drop` 和 `wait` 等常用操作。
+- 🔌 配置简单：默认从 `DATABASE_URL` 读取连接地址，并自动加载 `.env`；目录、迁移表与 schema 文件等设置也可通过参数或环境变量覆盖。
+- 🚀 开发体验顺滑：`dbmate up` 可在数据库不存在时自动创建并执行待处理迁移；只想迁移现有数据库时则使用 `dbmate migrate`。
+- 📄 自动维护 schema：迁移或回滚后会更新 `db/schema.sql`，便于在 Git 中审查结构变化，也可直接载入快照以快速初始化测试数据库。
+- 🔀 兼顾分支协作：待处理迁移按版本顺序执行；开启 `--strict` 后，发现迁移将被乱序应用时会直接失败。
+- ⏳ 适配容器启动：`wait` 或 `--wait` 会等待数据库服务就绪，可配置超时时间，减少 Docker 环境中的启动竞态。
+- 📦 分发方式丰富：可通过 npm、Homebrew、Scoop、Docker 或单个自包含二进制安装，不依赖应用自身的运行时。
+- 🧱 也可作为 Go 库使用：支持在 Go 程序中调用迁移能力，并可通过 `embed` 将迁移文件打进应用二进制。
+- ⚠️ 使用边界明确：`schema_migrations` 只记录版本号而不校验文件内容，因此已执行的迁移应先回滚再修改；schema 导出还依赖对应的 `pg_dump`、`mysqldump` 或 `sqlite3` 工具。
+
 ## 更新
 
 ## 设计
