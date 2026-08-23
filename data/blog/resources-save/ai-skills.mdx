@@ -327,6 +327,18 @@ Kami 是一个面向 AI 时代的文档设计系统 Skill，主打“好内容�
 - ⚠️ **适用边界**：主产物是强视觉统一的图片式 PPT，页内元素不可直接编辑；需要可编辑内容时，可在生成后结合 `image-to-editable-ppt-skill` 转换。
 - 📦 **安装**：可通过 `npx -y skills@latest add ningzimu/codex-ppt-skill --skill codex-ppt --agent codex --global` 安装到 Codex 全局 Skill 目录；项目采用 MIT 许可证。
 
+## 求职 / 简历 Skills
+
+[ASu Resume Skills - 高密度技术履历生成与证据优先简历审计](https://github.com/Claycui828/ASu-resume-skills)
+
+一组面向 Codex 的中文技术简历 Skills，用“生成 + 审计”两个独立能力串起简历整理流程：先基于真实经历生成高密度技术履历，再逐条核验角色、范围、指标与时间线，适合在强化表达的同时守住事实边界。
+
+- `$asu-resume-skill`：读取简历、晋升材料、截图和项目资料，梳理模块级 Owner、0→1、架构演进与技术链，输出来源映射 JSON、自包含 HTML、A4 PDF 和发布配文。
+- `$asu-resume-audit-skill`：将简历拆成原子主张和证据矩阵，检查学校 Title、角色强度、个人归因、指标口径、最高级表述及规划/交付时态。
+- 推荐按“生成履历 → 证据审计 → 补充设计文档、代码所有权、评审记录或指标看板 → 回写成品”的闭环使用。
+- 审计结论限定为“已证实”“部分证实”“存在直接矛盾”“缺乏支持”或“暂不可核验”，不会把缺少公开证据直接视为虚假。
+- 以标准 Codex 插件分发，仓库带有 HTML、PDF、JSON 成品示例与测试，采用 MIT License；处理真实材料时需注意移除个人和雇主敏感信息。
+
 ## 动画 / 多媒体 Skills
 
 [spine-animation-ai](https://github.com/GenielabsOpenSource/spine-animation-ai)
