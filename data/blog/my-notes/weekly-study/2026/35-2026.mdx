@@ -32,6 +32,19 @@ summary: ''
 
 ## 工具
 
+### [TermDOM | 使用 HTML、CSS 和 DOM 构建终端应用](https://termdom.org/)
+
+TermDOM 是一个 JavaScript/TypeScript 库，它把浏览器标准的 HTML、CSS 和 DOM 渲染到终端里，让开发者可以用原生前端技术或主流框架直接编写 TUI 和交互式 CLI，无需学习自定义控件 API，并自动处理布局、样式、事件与重绘。
+
+- 🖥️ **真实 DOM 渲染**：实现符合规范的 DOM 与 CSSOM，节点变更后自动重绘，无需手动调用渲染函数。
+- 🎨 **完整 CSS 支持**：支持样式表与内联样式，经级联计算后转换为 ANSI 转义序列，包括颜色、粗体、斜体、下划线等。
+- 📐 **浏览器级布局**：内置 flexbox、grid、表格、盒模型等算法，以字符单元格为长度单位（1px/1ch 代表一格），支持文本换行与终端尺寸自适应。
+- ⌨️ **原生事件系统**：解码 stdin 的转义序列并派发 DOM 事件（keydown、click、paste 等），支持 Tab 焦点移动和 :focus 样式。
+- 🧩 **前端生态兼容**：浏览器库无需修改即可运行，前端框架只需少量配置即可使用；示例展示了直接使用 Prism 做语法高亮。
+- 📊 **示例丰富**：提供 Solitaire、柱状图、表单、Flexbox 布局、代码高亮等演示，展示从静态界面到动态交互的能力。
+- 🔄 **实时动态更新**：通过标准 DOM API（如 innerHTML、style 修改）即可驱动终端画面更新，适合动画、实时数据等场景。
+- 📦 **快速上手**：通过 `npm install @b9g/termdom` 安装，支持入门指南、在线 playground 和 GitHub 源码，并提供浏览器特性兼容性表。
+
 ### [UI SFX](https://uisfx.com/)
 
 UI SFX 是一个开源的界面音效库，为 Web、移动端、SaaS 和游戏提供可直接试听与集成的交互反馈音效。它围绕 78 种语义化 UI 场景，提供 12 套可切换的声音风格，共计 936 个音效，并配套 npm 包和 Web Audio API 运行时。
