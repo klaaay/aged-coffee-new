@@ -123,6 +123,24 @@ Vercel - 技能是 AI 代理可重复使用的能力。通过单一命令安装�
 
 [skillshunt](https://skillshunt.io/)
 
+## 可视化表达 Skills
+
+[show-me - 用最小必要视图解释代码与系统](https://github.com/humanlayer/skills/blob/main/plugins/show-me/skills/show-me/SKILL.md)
+
+一个帮助 AI agent 把当前讨论转成简洁视觉结构的 Skill。它不追求制作复杂图表，而是要求根据问题选择信息密度最低、最容易读懂的表达方式，并把图示放在对应的简短说明旁边。
+
+- 覆盖常见工程表达：可用伪代码解释算法，用调用树说明运行流程，用组件树或浅层目录树标注状态、模块边界与文件职责。
+- 强调“变化的形状”：已有结构发生调整时优先使用 `diff`，让新增、删除和重排一眼可见；交互、控制流和数据流则适合用 Mermaid。
+- 复杂视觉才升级为 HTML：只有当 UI、布局、状态对比或概念密度超出文本图示能力时，才生成一个聚焦主题、兼容桌面和移动端的 HTML 图解或短幻灯片。
+- 适合代码讲解、架构讨论、重构方案和评审沟通，也很适合参考它“只保留当前问题所需信息”的可视化取舍原则。
+
+[eli5 - 用大图和少量文字做零基础解释](https://github.com/anthropics/claude-plugins-community/blob/main/eli5/skills/eli5/SKILL.md)
+
+Anthropic 社区插件中的极简解释 Skill。用户通过 `/eli5 <topic>` 或要求“用最简单的图解释”触发后，它会把主题制作成以大幅图片为主、文字尽量少的 HTML artifact，让完全不了解该领域的人也能快速建立直觉。
+
+- 与 `show-me` 的区别：`show-me` 会在伪代码、调用树、组件树、Mermaid、diff 和 HTML 之间选择最小必要视图；`eli5` 则固定偏向低文字密度的 HTML 图片讲解。
+- 适合解释抽象概念、工作原理和入门知识，也可以作为“先建立直觉，再补充术语与细节”的第一层教学材料。
+
 ## 视觉创作 Skills
 
 [antibes-holiday - 松弛黑色钢笔插画 Skill / Codex 插件](https://github.com/haorantang97/antibes-holiday)
