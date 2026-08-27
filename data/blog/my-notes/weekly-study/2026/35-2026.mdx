@@ -58,6 +58,18 @@ UI SFX 是一个开源的界面音效库，为 Web、移动端、SaaS 和游戏�
 
 ## 更新
 
+### [sibling-index() CSS 函数 - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/sibling-index)
+
+该文章介绍了 CSS 的 `sibling-index()` 函数，它返回当前元素在父元素所有兄弟节点中的位置索引（从 1 开始），可结合 `calc()` 用于动态样式、动画等场景，并说明了语法、示例及浏览器兼容性。
+
+- 🔢 返回当前元素在所有兄弟节点中的整数索引，第一个为 `1`，最后一个等于兄弟元素总数。
+- ⚖️ 与 `:nth-child()` 类似从 `1` 计数；但不同于 `counter()`，它返回可计算的 `<integer>` 而非字符串。
+- ✍️ 语法为 `sibling-index()`，不需要任何参数，直接使用即可。
+- 📏 动态宽度示例：`width: calc(sibling-index() * 50px)` 可让每个列表项宽度按顺序递增。
+- 🎬 顺序动画示例：通过 `animation-delay: calc(1s * sibling-index())` 实现元素按 DOM 顺序逐个淡入。
+- 🌐 兼容性：属于 Baseline 2026 新特性，自 2026 年 8 月起在最新浏览器可用，旧设备可能不支持。
+- 🔗 可配合 `sibling-count()` 和 `counter()` 使用，实现更复杂的兄弟元素样式逻辑。
+
 ## 设计
 
 ## 其他
