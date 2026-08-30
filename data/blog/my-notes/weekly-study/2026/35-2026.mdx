@@ -32,6 +32,97 @@ summary: ''
 
 ## 工具
 
+### [grammY](https://github.com/grammyjs/grammY)
+
+grammY 是一个用 TypeScript/JavaScript 编写的 Telegram Bot 框架，支持 Node.js 和 Deno，以易用性、强大功能和出色文档为特色，提供快速启动、丰富插件、社区支持和多种部署方式。
+
+- 🤖 grammY 是 Telegram Bot 框架，支持 TypeScript/JavaScript，可运行于 Node.js 或 Deno。
+- ⚡ 设计简洁易用，同时功能强大，始终与最新 API 保持同步，并具备出色的扩展能力。
+- 🚀 快速开始：通过 @BotFather 获取 token，安装 `grammy` 包后，几行代码即可创建回声机器人。
+- 📚 提供完整官方文档、API 参考和编辑器集成（如 VS Code），便于开发者查阅与学习。
+- 💬 拥有友好的 Telegram 社区聊天，可解答问题、收集反馈并接受贡献。
+- 🧩 插件生态丰富，可无缝集成 Web 框架与数据库，适应从入门到大规模场景。
+- 🌐 全面支持 Deno 原生运行，并可通过 JavaScript 打包在浏览器或 Cloudflare Workers 中使用。
+- 📦 npm 包附带 web bundle，支持 `import { Bot } from "grammy/web"` 快速接入。
+- 👥 项目遵循 all-contributors 规范，拥有大量贡献者，欢迎任何形式的帮助。
+- 🛠️ 提供示例仓库、Awesome grammY 列表、新闻频道等额外资源，助力实际开发。
+
+### [Rifm](https://trysound.github.io/rifm/)
+
+Rifm 是一个 React 输入格式化与掩码库，专注于在格式化过程中精确保留光标位置；它体积极小、零依赖、开源，通过统一的 `useRifm` API 支持数字、日期、电话、文本大小写等多种输入场景。
+
+- 🎯 光标感知：Rifm 会追踪已接受的字符，并精确恢复格式化后的光标位置。
+- 🔌 输入无关：可搭配原生 input、设计系统或第三方文本组件，仅需供应 `value` 和 `onChange`。
+- 🪶 轻量无依赖：压缩后约 1kb，0 依赖，MIT 开源协议。
+- ⚙️ 通用 API：数字、日期、电话掩码、大小写规则等场景均使用同一套小型 API。
+- 🚀 快速上手：通过 `useRifm` 配置 `value`、`onChange`、`format`、`accept` 等参数即可；示例涵盖金额、电话、日期掩码和文本强制大写。
+
+### [playwright-recorder-plus](https://github.com/MuTsunTsai/playwright-recorder-plus)
+
+这是一个高质量、可配置的 Playwright 录屏替代方案，通过双遍编码、暂停/恢复、裁剪、多页面支持及音频调度等特性，解决了内置 recordVideo 画质差、参数不可调的问题。
+
+- 🎯 针对 Playwright 内置 recordVideo 的缺陷，提供更高质量、可配置的录屏方案。
+- 🔄 默认双遍编码：第一遍固定 H.264 ultrafast 保证实时性，第二遍按预设或自定义参数转码并混流音频。
+- 📦 内置 youtube（H.264/mp4）和 web（VP9/webm）两套预设，可按输出扩展名自动选择。
+- ⏸️ 支持 pause()/resume()，可跳过构建或设置过程而不产生额外文件。
+- 🚀 支持 autoStart:false 延迟开始，适合 SPA/WASM 等需要等待页面就绪的场景。
+- ✂️ 支持 crop 裁剪子区域，可与 Locator.boundingBox() 结合实现元素级录制。
+- 🖥️ attachRecorderForContext() 自动附加所有页面，包括后续弹出的 popup 和 target=\_blank 页面。
+- 🎵 可通过 recorder.audio(path, `{ offset }`) 在时间线上内联调度音频，第二遍混流。
+- 🔧 提供 ffmpegArgs 完全自定义第二遍编码，支持 x265、AV1 等任意 ffmpeg 参数。
+- 📥 安装简单：pnpm add -D playwright-recorder-plus，依赖 ffmpeg-static，无需系统 ffmpeg；需 Node>=18 和 Playwright>=1.59。
+- 🚦 生命周期清晰：stop() 快速返回，await recorder.finalized 等待最终文件；失败时保留中间文件。
+- ⚠️ 不捕获页面自身音频，需要外部音频或自行通过 getDisplayMedia 捕获。
+- 📐 注意 attach 顺序：若 tracing 先启动会锁定帧尺寸，导致 recorder 报错，需将 attachRecorder 放在前面。
+- ⏱️ 可变帧率通过补帧和尾部填充转为恒定帧率，确保视频覆盖完整录制时长。
+- 🌐 已在 Chromium、Firefox、WebKit 中测试，跨浏览器可用；MIT 许可，ffmpeg-static 的 GPL 通过子进程调用不影响项目。
+
+### [ffmpeg-webCLI](https://github.com/tejaswigowda/ffmpeg-webCLI)
+
+这是一个基于 ffmpeg.wasm 的浏览器端视频编辑工具，所有处理均在本地通过 WebAssembly 完成，无需上传服务器，支持 30+ 视频操作、批量处理、离线 PWA、隐私保护等特性，可替代云工具实现零上传的视频编辑。
+
+- 🎬 **项目定位**: 基于 ffmpeg.wasm 的浏览器视频编辑器，零上传、零服务器，所有处理在本地完成
+- 🔒 **隐私优先**: 无数据收集、文件不出设备，可替代 CloudConvert、Kapwing 等云工具
+- ✅ **30+ 操作**: 涵盖 GIF 制作、格式转换、压缩、裁剪、音频提取、变速、旋转、字幕嵌入、自动字幕等
+- ⚡ **批处理**: 支持多文件按相同操作或操作链处理，实时进度、单文件预览/下载、ZIP 打包
+- 📴 **离线 PWA**: 首次加载后完全离线可用，可安装为原生应用，支持屏幕唤醒锁
+- 🖥️ **性能与响应**: 使用 Web Workers 后台处理，UI 不卡顿，屏幕保持常亮
+- 🎞️ **格式支持**: MP4、WebM、MKV、MOV、AVI、GIF、MP3、AAC、WAV、OGG、FLAC、JPG、PNG 等
+- 🔧 **高级功能**: 原始 ffmpeg 命令行、操作链、拼接、画中画、音频混合、Logo 叠加等
+- 🧠 **自动字幕**: 集成 Whisper 模型本地转录，支持软字幕或硬烧录，可编辑 SRT
+- 📏 **操作链模式**: 多个兼容过滤器合并为单次编码，避免反复编码质量损失，可与批处理结合
+- 🚫 **批处理限制**: 部分操作（如裁剪、多输入、反向等）因配置或内存原因不支持批量
+- 💡 **使用场景**: 适合私有文件、无法安装软件或不想上传时使用
+- 🛠️ **本地运行**: git clone 后用 node server.js 启动，需设置 COOP/COEP 头
+- 📄 **许可证**: GPL-3.0，基于 ffmpeg.wasm (LGPL-2.1)
+
+### [audio](https://github.com/raphaelsalaja/audio)
+
+audio 是一个用于 Web 的声明式音频合成库，可将声音描述为纯对象，并通过一次函数调用来播放。
+
+- 🎵 @web-kits/audio 是一个用于 Web 的声明式音频合成库，可将声音描述为纯对象，并通过一次函数调用来播放。
+- 📦 体积约 11 kB gzipped，支持 tree-shaking，兼容原生 JavaScript 与 React。
+- 🚀 快速上手：通过 `defineSound` 定义声音，`ensureReady` 初始化后即可调用播放。
+- ⚛️ React 集成：使用 `usePatch` 钩子加载声音补丁，组件内可便捷触发播放。
+- 🛠️ CLI 工具：支持浏览/安装社区声音补丁、初始化新补丁及列出已安装补丁。
+- 🗂️ Monorepo 结构：包含核心库、文档站点、共享 UI 组件及官方声音补丁。
+- 📚 完整文档见 audio.raphaelsalaja.com，基于 Web Audio API 构建，灵感来自 skills.sh。
+- 📄 遵循 MIT 许可证，支持贡献与安全策略。
+
+### [d3-maps](https://github.com/souljorje/d3-maps)
+
+d3-maps 是一个基于 D3.js 的交互式 SVG 地图工具包，专为 React 19 和 Vue 3 设计，支持构建 choropleths、标记、路线、气泡和可缩放地图。
+
+- ✨ 提供即插即用的组件和强大的默认配置，支持缩放、拖拽、线条、标记等功能。
+- 🧩 当前支持 React 19 和 Vue 3，Solid 和 Svelte 支持即将推出。
+- 📦 安装简单：React 使用 @d3-maps/react，Vue 使用 @d3-maps/vue，也支持 CDN 和 esm.sh。
+- ⚛️ 响应式渲染，移动端友好，轻量且可摇树优化，完全类型化，SSR 友好。
+- 🗄️ 支持 TopoJSON 和 GeoJSON，并附带可直接使用的 geo 文件。
+- 📊 适用场景：交互式 SVG 地图、GeoJSON/TopoJSON 渲染、标记/线条/注释、可缩放地图。
+- ⚠️ 不适用场景：低层地图渲染（建议用 D3.js）、完整图表工作流（建议用 amCharts 等）、真实地图应用（建议用 Leaflet/MapLibre）、数据密集型 3D 地图（建议用 MapLibre）。
+- 🛠️ 开发使用 pnpm，文档和示例见 d3-maps.netlify.app，灵感来自 react-simple-maps 和 Observable Plot。
+- 📜 MIT 许可，版权 © 2026 Georgii Bukharov，项目拥有 47 星和 1 fork。
+
 ### [TermDOM | 使用 HTML、CSS 和 DOM 构建终端应用](https://termdom.org/)
 
 TermDOM 是一个 JavaScript/TypeScript 库，它把浏览器标准的 HTML、CSS 和 DOM 渲染到终端里，让开发者可以用原生前端技术或主流框架直接编写 TUI 和交互式 CLI，无需学习自定义控件 API，并自动处理布局、样式、事件与重绘。
@@ -56,6 +147,20 @@ UI SFX 是一个开源的界面音效库，为 Web、移动端、SaaS 和游戏�
 - 🤖 适配编码代理：提供 Agent Guide 和可复制的实现提示词，方便让编码代理为产品选择合适风格并完成接入。
 - 📄 授权宽松：音频资源采用 CC0，可自由使用；TypeScript 运行时代码采用 MIT 许可证。
 
+### [query-core](https://github.com/TanStack/query/pull/10658)
+
+该 PR 为 TanStack Query 的 query-core 新增了简化的命令式查询方法 `query()` 与 `infiniteQuery()`，用以替代旧的 `fetchQuery`、`fetchInfiniteQuery` 等 API；新方法支持 `select`、`enabled`、`skipToken` 与静态 `staleTime` 场景，对旧方法标记弃用，并补充了大量运行时与类型推断测试，最终已合并至主分支。
+
+- 🎯 新增 `QueryClient.query()` 与 `infiniteQuery()`，作为 `fetchQuery` / `fetchInfiniteQuery` 的简化替代方案。
+- ⚙️ 新方法支持 `select`、`enabled`、`queryFn === skipToken`，并在无法返回缓存数据时抛出明确错误。
+- 🚫 当 `enabled: false` 或 `skipToken` 且无可用缓存数据时，会拒绝执行并报错。
+- 🧪 扩展了 query-core 及 React、Solid、Svelte、Preact、Angular、Lit 等框架包的运行时与 TypeScript 类型测试。
+- 📦 为旧方法 `fetchQuery`、`prefetchQuery`、`ensureQueryData` 添加了弃用标记与迁移提示。
+- 🧹 修复了静态 `staleTime`、缓存读取、禁用查询及 `skipToken` 场景下的行为一致性问题。
+- 🔀 合并过程中经 CodeRabbit 多次审查，调整了泛型参数顺序并修复了 `infiniteQuery` 返回类型等兼容性问题。
+- 📄 文档、各框架适配器更新及 Vue 代理 QueryClient 的改动计划在后续独立 PR 中跟进。
+- ✅ PR 最终通过 9 项检查，并于 2026 年 8 月 17 日合并至 TanStack Query 主分支。
+
 ## 更新
 
 ### [sibling-index() CSS 函数 - CSS | MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/sibling-index)
@@ -70,6 +175,8 @@ UI SFX 是一个开源的界面音效库，为 Web、移动端、SaaS 和游戏�
 - 🌐 兼容性：属于 Baseline 2026 新特性，自 2026 年 8 月起在最新浏览器可用，旧设备可能不支持。
 - 🔗 可配合 `sibling-count()` 和 `counter()` 使用，实现更复杂的兄弟元素样式逻辑。
 
-## 设计
-
 ## 其他
+
+一个人有教养的表现，就是他可以享受最好的，也可以承受最差的。
+
+--唐师曾，本周去世的著名记者
