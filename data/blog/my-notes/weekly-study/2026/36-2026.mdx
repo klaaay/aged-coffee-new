@@ -12,6 +12,21 @@ summary: ''
 
 ## 技术
 
+### [锚点定位入门](https://www.joshwcomeau.com/css/anchor-positioning/?ref=tailwindweekly.com)
+
+CSS Anchor Positioning API 是一套新原生机制，让开发者无需复杂 JavaScript，即可将工具提示、下拉菜单等目标元素固定到页面上其他元素（锚点）上，并自动处理溢出翻转、定位回退和视觉箭头方向调整等常见难题。文章介绍了核心用法、位置回退机制、新版容器查询特性、浏览器支持状况及降级策略。
+
+- 🎯 核心价值：用来解决工具提示/下拉菜单等 UI 元素的“锚定 - 溢出”问题，替代过去复杂易错的原生 JS 实现。
+- 🌐 浏览器支持：截至 2026 年 7 月约 81% 支持；Level 2 的“anchored container queries”覆盖率约 64%，目前主要可用在 Chromium，但已纳入 Interop 2026。
+- 🧩 基础用法：锚点元素通过 `anchor-name` 命名；目标元素设置 `position: absolute/fixed`、`position-anchor` 指向锚点，再用 `position-area` 指定相对位置（类似 3×3 网格）。
+- 📏 间距与扩展：可用 `margin` 制造目标与锚点间距；还支持逻辑属性（如 `inline-start`）以及 `span-*` 实现跨行/跨列布局。
+- 🔄 溢出保护：配合 `position: fixed` 与 `position-try-fallbacks`，当目标元素溢出视口时可自动切换到备用位置（如 `bottom`）。
+- 🧠 行为特点：一旦启用备用位置，即使原位置重新有空间也不会自动切回——这符合规范意图，可避免 UI 反复跳动。
+- 💡 翻转箭头：通过 Level 2 的 `container-type: anchored` 和 `@container anchored(fallback: …)`，可在目标元素使用回退位置时，同步调整 tooltip 箭头 / 内边距等样式。
+- 🔃 更简单方案：`flip-block` 关键字可自动在块轴方向翻转，并同步翻转 margin 等方向相关属性；且已被所有主流浏览器支持。
+- 🛠️ 兼容降级：可使用 Oddbird 提供的 polyfill，或用 `@supports` 构建从基础回退到理想体验的分级方案；部分复杂场景仍可继续考虑 JS 库。
+- 📚 扩展知识：文章未深入介绍 `anchor()` / `anchor-size()` 等高级函数；文末附有 CSS Tricks 指南、web.dev、CSSWG 规范及 Anchoreum 练习游戏等学习资源。
+
 ### [STYLEX 深度解析](https://flaviocopes.com/stylex/)
 
 StyleX 是一种 JavaScript 语法与编译器，用于在构建时将样式对象编译为普通 CSS，使开发体验类似 CSS-in-JS，但浏览器收到的是静态类名，无运行时注入。文章涵盖其核心心智模型、React/Vite 与 Astro 集成、主要特性（组合、变体、伪类、响应式、主题、令牌等）、静态约束、对比其他方案及适用场景，并强调其在编码代理（agent）方面的优势与权衡。
@@ -68,6 +83,24 @@ tailwind-stylex 是一个连接 Tailwind CSS 与 StyleX 的开源工具，它把
 
 ## 更新
 
+### [Vitest 5 正式发布](https://vitest.dev/blog/vitest-5.html)
+
+Vitest 5 正式发布，以性能优化为核心，同时带来 Trace View、嵌套项目、vi.when API、基准测试重写、更严格断言等多项新功能与改进。该版本要求 Vite ≥ 6.4.0 和 Node.js ≥ 22.12.0，并包含若干破坏性变更。
+
+- 🚀 性能大幅提升：通过新基准测试框架优化，vm pools、Browser Mode 及大型隔离测试套件提速最明显，部分场景提升超 50%
+- ⚙️ 基础性能改进：内联项目共享 Vite 服务器、稳定的文件系统模块缓存、减少主进程与 worker 间通信、加速 vm pools、预打包依赖以缩小安装体积
+- 🔍 新增 Trace View：Browser Mode 可记录每一步交互/断言/快照，支持在浏览器 UI、Vitest UI 和 HTML 报告中逐步回放，便于本地调试和 CI 失败分析
+- 📂 嵌套项目与配置继承：内联项目默认继承根配置，支持引用自带子项目的配置文件，--project/-p 支持层级过滤
+- 🎯 新增 vi.when API：可按参数深度匹配及非对称匹配器定义 spy 行为，并支持 thenReturnOnce/次数限制及 toHaveBeenExhausted 断言
+- ⏱️ 基准测试重写：bench 改为测试上下文内可用，支持比较、断言、持久化结果、自定义提供者，且输出集成到默认/json 报告器
+- ♿ Locator 错误显示 ARIA 树：更易定位元素问题，locators 默认严格模式，避免意外误匹配
+- 🕐 Mocking 支持 Temporal：假计时器和 setSystemTime 可模拟 Temporal API，也可通过 toNotFake 排除
+- 🔒 断言更严格：未 await 的异步断言直接失败；expect.poll 支持超时拒绝及 AbortSignal；扩展 Matchers 类型更完善
+- 🧹 clearMocks 默认开启：每个测试前自动清空 mock 调用记录，减少顺序相关测试问题
+- 📝 报告器更新：统一输出至 .vitest 目录，第三方报告器可用 createReport API，HTML 报告支持 singleFile 单文件导出
+- 🛠️ 其他改进：新增 --repeats 选项、可配置 CJS 全局变量注入、扩展覆盖率选项（子进程/阈值）、json/junit 报告器新选项、更美观的测试标题格式等
+- ⚠️ 破坏性变更：需升级至 Vite ≥ 6.4.0、Node.js ≥ 22.12.0，升级前请阅读迁移指南
+
 ### [Zod 4.5](https://zod.dev/blog/zod-4-5)
 
 - ⚡ 全新 `z.compile()` 可预编译任意 schema，解析速度提升约 3–9 倍，并支持全局自动编译（`import "zod/compile"`）。
@@ -86,8 +119,6 @@ tailwind-stylex 是一个连接 Tailwind CSS 与 StyleX 的开源工具，它把
 - 🐛 多项破坏性修复：`z.iso.datetime()` 强制要求秒、字符串长度按 Unicode 码点计算、record 键与 TS 对齐、`__proto__` 始终剔除、IP/ULID/URL/emoji 等格式更严格。
 - 🌍 新增 8 种语言区域：孟加拉语、中库尔德语、印地语、卡纳达语、新挪威语、巴西葡萄牙语、斯洛伐克语、土库曼语。
 - 🤝 汇总 155 个提交，感谢所有贡献者。
-
-## 设计
 
 ## 其他
 
