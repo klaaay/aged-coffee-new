@@ -12,9 +12,66 @@ summary: ''
 
 ## 技术
 
+### [面向比人类审查速度更快的 frontend 项目的 10 个反 AI 垃圾内容举措](https://evilmartians.com/chronicles/ten-anti-ai-slop-moves-for-frontend-projects-going-faster-than-humans-can-review)
+
+本文面向 TypeScript/React 与 AI agent 开发，提出 10 项对抗 AI 生成“看似可用实则难查”代码的工程措施。作者把检查分成三类：避免多余代码被写出、找出已被写出的问题、通过 CI 强制落地，并讨论了成本、渐进式推行顺序，以及自动化无法取代的人类判断。
+
+- 🧾 **OpenAPI 契约先行**：前后端共用权威 API 规范，自动生成类型、客户端与 Zod schema；AI 猜错字段（如 `user.fullName`）会直接编译失败，审查重点回到小得多的契约本身。
+- 🔒 **开启严格 TypeScript**：`strict: true` 并加上 `noUncheckedIndexedAccess`、`exactOptionalPropertyTypes`，强制处理“值可能不存在”的情况，减少 AI 代码里常见的乐观假设。
+- 🧼 **把 linter 当作行为过滤器**：sonarjs 查复杂度/重复逻辑；`react-you-might-not-need-an-effect` 拦多余 effect；Vitest/Playwright 插件抓无断言测试和 `.only`；jsx-a11y 查无障碍；再禁用 `any`、非空断言等捷径。
+- 🧱 **用依赖边界保护架构**：通过 eslint-plugin-boundaries 或 dependency-cruiser 声明组件/服务/工具/设计系统间的依赖方向，阻止 AI 每轮会话都“向 GitHub 平均架构漂移”。
+- 🛠️ **把踩过的坑写成自定义 lint 规则**：AI 让自定义规则十分钟内可完成，规则应源于真实事故，例如“service 返回前禁止 `Math.round`/`toFixed`”，避免二次舍入 bug。
+- 📏 **把规则前置到模型生成阶段**：把规则写进项目规则文件或 skill，让 agent 边写边看到指引；但这类预防只是概率性降低风险，不能替代事后检测。
+- 🧬 **用变异测试检验测试是否真的有效**：Stryker 故意改动代码，找出没有任何测试会发现的变化；存活变异往往指向只执行不验证、快照未核实、断言 mock 而非代码的测试。
+- 🪤 **用 Knip 与自定义脚本清除死代码**：Knip 找无人引用的文件/导出/依赖；自定义脚本可遍历入口图找不可达代码，或检查过期的 `vi.mock()`，把“不知道有多少问题”变成可度量的数量。
+- 📑 **用 jscpd 抓重复代码**：AI 倾向新写一个实现而不是搜索已有实现；jscpd 按不同阈值检测文本重复，JSX 可宽松、业务逻辑应严格。
+- 🚥 **让每项检查都在 CI 中成为门禁**：format/lint/tsc/unit/mutation/build 各自独立运行，分支不过就不能部署；唯一不可跳过的检查才真正有效。
+- 💸 **注意成本并渐进式落地**：误报、过期规则、运行时间和新人理解成本都真实存在；应先以 warning 建立基线并只扫改动文件，再逐条提升为 error，最后才上 CI 门禁。
+- 🧠 **自动化不能替代人的理解**：十项全绿只代表没有触发已知问题；功能对错、抽象时机、架构品味和产品判断仍需人工负责，这套机制是用来减少人工审查范围，而不是取消审查。
+
 ## 工具
 
+### [memlab](https://facebook.github.io/memlab/)
+
+memlab 是一个用于检测和调试内存泄漏的工具，支持浏览器、Node.js 和 CI 环境，提供自动化泄漏检测、堆分析、可视化调试及 AI 集成等功能，工作原理是通过定义场景、运行测试并追踪引用链来定位泄漏。
+
+- 🔍 浏览器泄漏检测：通过 Puppeteer 驱动应用，自动对比堆快照并聚类真正的泄漏对象。
+- 🧩 堆遍历 API：提供面向对象的快照访问接口，支持 Chromium、Node.js 等，可构建自定义泄漏检测器。
+- 🛠️ 内存 CLI 工具箱：内置重复字符串、超大对象和无限增长等分析，帮助发现优化机会。
+- 🖥️ MemLens 调试：在浏览器页面内直接可视化并交互式调试泄漏，无需离开测试页面。
+- ✅ Node.js 断言：单元测试可捕获自身堆快照并断言对象已释放，在 CI 中提前发现回归。
+- 🤖 MCP 服务器集成：可将堆快照交给 Claude Code 或 Cursor 等 AI 代理，用自然语言调查内存问题。
+- 📝 三步工作流程：编写测试场景（如点击操作）、运行 memlab CLI、通过引用链报告泄漏位置。
+- 🔗 引用链追踪：从 GC 根节点到泄漏对象完整展示引用关系，聚合相似泄漏，减少修复数量。
+- ⚡ 快速上手：使用 `npm install -g memlab` 安装即可开始泄漏检测。
+
 ## 更新
+
+### [Vitest 5.0](https://vitest.dev/blog/vitest-5)
+
+Vitest 5 正式发布，这次大版本以性能为核心，带来了全链路的速度优化和多项新功能，如 Trace View、嵌套项目继承、vi.when 条件 Mocking、全新的 Benchmarking API 等，同时收紧了默认行为和断言检查，并引入了一些破坏性变更（要求 Vite ≥6.4 与 Node ≥22.12）。
+
+- 🚀 性能提升显著：基于多套基准应用测量，vm 池、Browser Mode 和大型隔离套件速度提升明显，如 deps-heavy 提升 53%，大型 monolith 提升 19%。
+- ⚡ 内联项目如果没有修改 Vite 配置，会复用声明它的 Vite server，共享文件只转换一次。
+- 💾 文件系统模块缓存（fsModuleCache）已稳定，可在多次运行和不同 Vitest 进程间复用转换后的模块。
+- 🔄 主进程与 worker 之间减少往返通信，预热模块一次即可送达 worker。
+- 🧪 vmThreads/vmForks 重写：跨上下文复用编译代码、预预热模块图，并支持 require(esm)。
+- 🌐 Browser Mode 更快：预打包自身运行时、启动 Vite 时预热浏览器、自适应打开浏览器会话，并减少每文件往返。
+- 📦 安装体积更小：Vitest 现在打包自己的依赖，减少了 node_modules 数量和解析时间。
+- 📊 覆盖率更快：v8 provider 有界内存合并与预编译 glob，istanbul 迁移到维护的 @vitest/istanbuljs 包。
+- 🕵️ 新增 Trace View（Browser Mode）：记录每个交互、断言和 page.mark 的 DOM 快照，可在 UI/HTML 报告中逐步回放调试。
+- 📂 嵌套项目与继承增强：内联项目默认继承根配置，被引用的配置可作为容器定义自己的 projects，--project 支持 -p 简写。
+- 🎭 新增 vi.when API：按参数（深比较 + asymmetric matchers）为 spy 定义不同返回值或拒绝行为，并支持 thenReturnOnce/times 限制。
+- ⏱️ Benchmarking 重写：bench 作为 test-context 夹具，可在普通 test() 内使用并参与 fixture/断言；支持 writeResult、bench.from() 基线对比和自定义 provider。
+- 🌳 Locator 找不到元素时显示 ARIA 树，方便调试；locators 默认真实匹配（exact: true），避免 getByText('Item') 误匹配 "Item 1"。
+- 🕰️ Fake timers 现在会同时模拟 Temporal API（基于 @sinonjs/fake-timers v15.4），并可通过 toNotFake 关闭。
+- ⚠️ 异步断言（resolves、rejects、toMatchFileSnapshot）未 await 时直接失败；expect.poll 超时会 reject，并提供 AbortSignal。
+- 📝 断言与类型系统强化：Matchers 接口引入返回类型和接收类型参数，自定义 matcher 可精确匹配期望参数类型。
+- 🧹 clearMocks 默认启用：每个测试前自动 vi.clearAllMocks()，避免调用历史跨测试污染；可用 clearMocks: false 恢复旧行为。
+- 📁 报告器与附件统一输出到根目录下的 .vitest 目录，HTML reporter 新增 singleFile 选项生成单文件报告，方便上传 CI 产物。
+- 🔁 CLI 新增 --repeats 循环运行所有测试，用于定位 flaky；还提供 vitest doctor 自动推荐加速配置。
+- 🔻 其他改进：新增 injectCjsGlobals 开关、coverage 支持子进程/worker 跟踪、junit 命名兼容选项、test.for 支持非 ASCII 等。
+- 🔨 破坏性变更：要求 Vite >=6.4.0、Node.js >=22.12.0；建议升级前阅读详细迁移指南。
 
 ## 设计
 
