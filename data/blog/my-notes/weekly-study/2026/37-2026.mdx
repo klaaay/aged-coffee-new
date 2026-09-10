@@ -31,6 +31,36 @@ summary: ''
 
 ## 工具
 
+### [](https://github.com/react/react/tree/main/packages/react-devtools-cdt-mcp)
+
+**原文标题**: [react/packages/react-devtools-cdt-mcp at main · react/react · GitHub](https://github.com/react/react/tree/main/packages/react-devtools-cdt-mcp)
+
+这是 React 仓库中 `react-devtools-cdt-mcp` 包的说明，属于实验性浏览器库，用于把 React 检查与性能分析工具注册到 `chrome-devtools-mcp`，本身不是 MCP 服务器，需在页面中于 React 之前导入，并依赖实验性第三方工具支持。
+
+- 🧪 实验性库：基于 `chrome-devtools-mcp` 的实验性第三方开发者工具 API，用于向 MCP 客户端暴露 React 检查与性能分析能力。
+- 🌐 浏览器库定位：需在受测页面中导入，`chrome-devtools-mcp` 会从页面发现 React 工具；它不是 MCP 服务器，不应放入 MCP 客户端配置。
+- 📦 安装方式：`npm install react-devtools-cdt-mcp`。
+- ⚙️ 使用要求：在 React 之前导入 `react-devtools-cdt-mcp/register`，以确保 DevTools hook 先于 React 初始化安装；该入口在非浏览器环境会抛错。
+- 🔌 自定义目标：包根无副作用，并导出 `register`、`buildToolGroup` 等底层 API。
+- 🛠️ MCP 配置：需在 MCP 客户端配置中加入 `--categoryExperimentalThirdParty=true`，并要求 `chrome-devtools-mcp 1.3.0+`。
+- 🔍 工具调用：React 工具会出现在 `list_3p_developer_tools` 中，可通过 `execute_3p_developer_tool({toolName, params})` 或 `evaluate_script(window.__dtmcp.executeTool(toolName, params))` 调用。
+- 🔐 隐私提示：这些工具可能向 MCP 客户端暴露组件 props 和 hook 值，仅建议在本地或可信调试会话中使用。
+- 🆔 UID 约定：组件以稳定 uid（如 `r5`）标识，跨工具和重渲染保持一致，但页面重载后失效。
+- 📤 输出约定：工具返回普通 JavaScript 值；失败时返回 `{error: string}`。
+- ⏱️ 时长约定：性能分析时长单位为毫秒；若构建未收集性能计时则返回 `null`。
+- 🌳 `react_get_component_tree`：获取组件树快照，支持 `depth` 和 `rootUid`，返回节点数组。
+- 🔎 `react_get_component_by_uid`：获取单个组件详情，可选 `includeHooks`；检查 hooks 会重新渲染组件渲染函数，但不运行 effects。
+- 🧩 `react_get_component_by_dom_element`：根据页面 DOM 元素引用获取对应 React host 组件详情。
+- 🔤 `react_find_components`：按名称子串不区分大小写查找组件，支持分页和限定子树。
+- 📍 `react_get_component_source`：获取组件定义源码位置；host 组件或生产构建可能返回 `null`。
+- 🧵 `react_get_owner_stack_trace`：获取原始 owner 栈追踪，仅 DEV 环境有值。
+- 🪜 `react_get_parent_stack`：获取已渲染父级列表，从直接父级到根，包含 host DOM 组件。
+- 🧭 `react_get_owner_stack`：获取结构化 owner 列表，表示通过 JSX 创建该元素的组件链；仅 DEV 可用，owner 不等于结构父级。
+- 🟢 `react_start_profiling`：启动性能分析会话，记录每次提交的渲染耗时，可选 `traceName`。
+- 🔴 `react_stop_profiling`：停止当前性能分析会话，返回 trace 名称和提交次数。
+- 📊 `react_get_trace_overview`：获取某次 trace 的逐提交概览，包括渲染、布局、被动耗时和变更组件数。
+- 📈 `react_get_commit_report`：获取单次提交的详细报告，组件按 `actualDuration` 降序排列。
+
 ### [memlab](https://facebook.github.io/memlab/)
 
 memlab 是一个用于检测和调试内存泄漏的工具，支持浏览器、Node.js 和 CI 环境，提供自动化泄漏检测、堆分析、可视化调试及 AI 集成等功能，工作原理是通过定义场景、运行测试并追踪引用链来定位泄漏。
@@ -46,6 +76,22 @@ memlab 是一个用于检测和调试内存泄漏的工具，支持浏览器、N
 - ⚡ 快速上手：使用 `npm install -g memlab` 安装即可开始泄漏检测。
 
 ## 更新
+
+### [React DevTools 8.0.0](https://raw.githubusercontent.com/react/react/main/packages/react-devtools/CHANGELOG.md)
+
+React DevTools 8.0.0 于 2026 年 9 月 8 日发布，重点是将 Suspense 标签页默认开启、移除 Timeline Profiler 并转向浏览器 Performance 面板，同时让 Elements 面板能显示对应 React 组件。本次更新还包含大量功能改进与错误修复，涉及 Profiler、Suspense、搜索导航、连接、过滤器、CSP 兼容性等。
+
+- 🧩 Suspense 标签页默认开启，可直接检查组件挂起原因，无需额外开启。
+- ⏱️ 移除 Timeline Profiler 标签页及相关代码；React 性能分析改用浏览器 Performance 面板中的 React 轨道。
+- 🔍 在浏览器 Elements 面板检查 DOM 节点时，可看到匹配的 React 组件，并新增 React Element 窗格。
+- 📊 Profiler 空状态围绕主操作重新设计；新增提交视图组件搜索、开始/停止分析快捷键、提交导航快捷键、父级堆栈工具。
+- 🧵 Suspense 标签页支持列出命名 Activity、按结束时间排序时间线、与主文档同步滚动；Activity 子树在隐藏模式下显示并变暗。
+- 🛠️ 新增组件搜索结果直接导航、忽略列表堆栈帧披露、显示 React.optimisticKey、允许重命名 Host Component props。
+- 🌐 支持 React DevTools 客户端连接自定义 host/port/path；在 sandbox CSP 页面中提供最小支持；在 React 检测前创建扩展面板。
+- 🔄 初始加载即应用组件过滤器，并在过滤器变化时更新检查元素；改进 changed hooks 检测；禁用 Strict Mode 日志变暗设置。
+- 🐛 修复 fallback Fiber 内容协调、嵌套 HOC 名称提取、prerender 时连接/重连、WhatChanged 滚出视图、控制台占位符与转义、独立错误 HTML 注入等问题。
+- 🐛 修复 -Infinity 保留、鼠标离开 DevTools 清除高亮、空 Suspended By 区块、旧 React 页面忽略新生产 renderer、类组件错误模拟崩溃、ContextMenu 空列表崩溃、AMD 模块、hoistables 内存泄漏。
+- 🐛 修复性能分析相关问题：断开子树时长、过滤 Activity 子节点崩溃、过滤节点误报重渲染、初始操作提交树构建、切换 profiler 根时提交索引重置、console 链接、useSyncExternalStore hook 索引、Activity slice 解码等。
 
 ### [Vitest 5.0](https://vitest.dev/blog/vitest-5)
 
