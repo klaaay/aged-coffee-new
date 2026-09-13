@@ -104,7 +104,7 @@ const rawSubscriptions: RawSubscriptionItem[] = [
   {
     name: '100 云服务器 V2R 型号租用一年',
     yearly: 165,
-    expiry: '2026-09-30',
+    expiry: '2027-09-30',
     category: 'productivity',
   },
   {
