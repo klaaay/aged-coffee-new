@@ -12,6 +12,54 @@ summary: ''
 
 ## 技术
 
+### [Half Past Fetch](https://blog.gaborkoos.com/posts/2026-09-08-Half-Past-Fetch/)
+
+这篇文章的核心是：`await fetch(url)` 只等到 HTTP 响应头，而不是整个响应。promise 在最后一个响应头字节到达时即刻 settle，此时 body 仍是一个正在接收数据的活跃 ReadableStream。这个看似微小的间隙带来一连串后果——连接被占用、`clone()` 只是对活跃流做 tee、abort 在 promise resolve 后仍然生效、基于 race 的超时只覆盖头部阶段——文章用 Node 与浏览器实验逐一验证，并指出正是这个特性让流式进度等能力成为可能。
+
+- 🔍 **await fetch 只等到了一半**：promise 在响应头完成时 settle，body 仍在传输，所以通常需要 await 两次
+- 📜 **规范层面**：HTTP-network fetch 在最后一个 header 字节处退出循环，挂上新的 ReadableStream；processResponse 被排为任务，规范明确注明 body 的流此后仍在被 enqueue
+- 🧪 **实测差距**：httpbin drip 示例中 headers 在 250ms 可读，body 在 3445ms 才结束；普通端点上两者只差不到 1ms，因此极易被忽视
+- 🚫 **例外情况**：HEAD 请求与 null body 状态码（101、103、204、205、304）的 body 为 null，没有后续传输
+- 🔌 **连接仍归你所有**：状态码不合意就提前返回而不读 body，HTTP/1.1 下连接无法交回连接池，只能被关闭
+- 📊 **Node 基准**：16KB 以下响应已被完全缓冲，读不读都一样；16KB 以上每忽略一次就多耗一条连接（10 个请求用 10 条而非 2 条）
+- 🌐 **运行时差异**：Chrome 可容忍 512KB 乃至更大的未读 body，比 Node 的边界高两个数量级，两边都依赖底层缓冲区大小，不能作为可靠保证
+- 🚫 **cancel() 换不回连接**：显式取消流与直接无视 body 的计数完全相同，只有读到末尾才能把连接还给连接池
+- 📈 **失败是渐进的**：不会卡死或报错，只是连接数增长、文件描述符堆积，客户端池随压力涨落，因此可在生产环境潜伏很久
+- 💧 **根因是背压**：网络层填满内部缓冲后停止从 socket 拉取，等待一个永远不会到来的读者
+- 👥 **clone() 什么都不复制**：规范定义就是"tee body's stream"，相当于在仍在运行的管道上分叉，两个分支被绑在一起
+- 💾 **代价是内存**：60MB 响应下，放弃一个分支约多占 55MB（116.1MB → 169.3MB），与响应体大小相当
+- 📦 **数据被保留而非重取**：读完第一分支、等 500ms 后再读被弃分支，仍在 32.5ms 内拿到完整 60MB
+- ⏱️ **顺序规则**：必须在任何 pull 之前调用 clone()，读取后再 clone 会抛 "Body has already been consumed"；bodyUsed 按对象区分
+- ⚠️ **取消克隆的陷阱**：await copy.body.cancel() 会死锁，它要等另一分支读完；不 await 也要等原分支结束才 settle
+- 🛑 **Abort 比 promise 活得久**：resolve 后 abort 仍会在下一次 body 读取时抛 AbortError，已到手的 chunk 依然有效；写入端会收到 aborted，是真正的断连
+- 🧩 **便捷方法无法给出部分结果**：arrayBuffer/json/text 被 abort 就直接 reject，想保留已收数据必须用 getReader()
+- ✅ **读取完成后 abort() 是空操作**：不抛错，可安全放在清理路径，但调用成功并不代表真的取消了什么
+- ⏰ **Promise.race 超时只覆盖头部阶段**：慢 body 场景下 race 在 59.7ms 结束，请求却在 1251ms 才真正完成，200ms 预算在关键部分开始前就用尽了
+- ⏳ **AbortSignal.timeout 覆盖全程**：作为请求信号传入并附着到 body，在哪个阶段超时就在哪个阶段生效，慢 body 与慢 headers 都在约 200ms 被切断
+- 🖥️ **Chrome 后台标签页陷阱**：后台标签的 setTimeout 被钳制到约 1 秒，200ms 预算要 800ms 后才触发，正确行为看起来像坏了
+- 🔗 **组合信号**：用 AbortSignal.any 合并调用方信号、转换器信号、超时信号与内部控制器信号，任一方触发都会中止请求
+- 🔄 **读取 body 才是真正的工作**：也是这一切的正面价值——仍是活跃流才能被 pipeThrough 观察进度，示例中 promise 在 52ms settle，25%/50%/75%/100% 分布在随后的 1257ms 里
+- 📐 **包装很重要**：pipeThrough 返回的是流，需用原 status 与 headers 重建 Response，下游调用方对此毫无感知（ffetch 的 download-progress 插件即此思路）
+- 🧭 **结论**：await fetch(url) 应读作"头部已完成、body 即将开始"的那一刻；连接、内存、取消与超时都属于它之后的部分，之后写的代码才决定这一部分如何收场
+
+### [在 Next.js 应用中根据自定义指标构建仪表盘和告警](https://sentry.io/cookbook/custom-metrics-dashboard-alerts-nextjs/)
+
+本文介绍如何在 Next.js 应用中通过 Sentry 从自定义指标出发，快速搭建仪表盘与告警。只需从 Server Action 中发出一个自定义指标，就能把它变成可视化仪表盘组件，并配置阈值或异常检测告警；所有数据都与追踪关联，指标异常时一键跳转到对应的请求。教程约需 20-25 分钟，共 6 个步骤，适合具备 Next.js Route Handlers 或 Server Actions 基础的开发者。
+
+- 🚀 **前提条件**：需要一个 Next.js 应用（推荐 v13+ 的 App Router）、`@sentry/nextjs` 10.25.0 或更高版本（该版本起指标默认开启），以及 Sentry 账号和项目；使用异常检测告警需 Trial、Business 或 Enterprise 套餐
+- 🛠️ **第一步：安装 SDK**：在项目根目录运行 `npx @sentry/wizard@latest -i nextjs`，向导会自动配置 instrumentation 文件，指标默认开启，如需关闭可设置 `enableMetrics: false`
+- 📊 **第二步：发出自定义指标**：用 `Sentry.metrics.count()` 统计计数类事件，用 `Sentry.metrics.distribution()` 记录需要百分位的数值；示例中每次用户增删演讲都会统计 `schedule.event`，并附带 `action` 和 `result` 属性
+- 🔍 **第三步：在指标浏览器中查看**：触发几次代码路径后打开 Metrics explorer，选择 `schedule.event`，按 `result` 属性分组查看成功、重复和失败情况；Samples 标签页可查看单个指标事件并直接跳转到对应追踪
+- 📈 **第四步：搭建仪表盘**：从浏览器中点击 Save As 将查询固定为仪表盘组件，再加入第二个相关指标（如 `ai.tokens.total` 的 p95 或 `page.view` 吞吐量）并排展示
+- 🚨 **第五步：添加阈值告警**：通过 Save As 菜单将其转为 Monitor，选择 Threshold 检测方式并设置明确的数值（如每小时 token 费用上限），通知可发送至 Slack、PagerDuty 或邮件
+- 🤖 **第六步：改用异常检测**：当尚不清楚"正常"基线时，创建第二个告警并选择 Anomaly 检测方式，Sentry 会学习指标的季节性和日/周规律，只需调整灵敏度滑块，适合流量自然起伏的指标
+- 💡 **命名建议**：使用一致的点分命名约定（如 `schedule.event`、`ai.tokens.total`），便于团队查找和分组
+- 💡 **善用属性**：把业务上下文（action、result、套餐等级）放入 attributes 而非指标名称中，高基数事件的属性不额外收费，且能提供更多切分和告警维度
+- 💡 **百分位用分布**：需要 p95 或 p99 时应使用分布而非 gauge，因为 gauge 只保留最新快照
+- ⚠️ **常见误区**：不要把维度写进指标名（如 `schedule.event.success`），否则会爆炸基数导致无法分组；不要指望从 counter 或 gauge 中得到百分位；不要在强季节性指标上使用静态阈值；SDK 版本低于 10.25.0 会静默忽略指标调用
+- ❓ **常见问题**：指标无需额外配置；count 用于计数、gauge 用于即时值、distribution 用于百分位；静态阈值适合已知危险数值，异常检测适合无基线或强季节性场景；指标按量计费，免费套餐足够入门；阈值和异常告警均可通知 Slack、PagerDuty 或邮件
+- 🔗 **后续方向**：可进一步探索 Tracing（分布式追踪）、Logs（结构化日志），并查看本教程基于的 Sentry 工作坊示例应用源码
+
 ### [面向比人类审查速度更快的 frontend 项目的 10 个反 AI 垃圾内容举措](https://evilmartians.com/chronicles/ten-anti-ai-slop-moves-for-frontend-projects-going-faster-than-humans-can-review)
 
 本文面向 TypeScript/React 与 AI agent 开发，提出 10 项对抗 AI 生成“看似可用实则难查”代码的工程措施。作者把检查分成三类：避免多余代码被写出、找出已被写出的问题、通过 CI 强制落地，并讨论了成本、渐进式推行顺序，以及自动化无法取代的人类判断。
@@ -31,9 +79,44 @@ summary: ''
 
 ## 工具
 
-### [](https://github.com/react/react/tree/main/packages/react-devtools-cdt-mcp)
+### [serve-sim](https://github.com/EvanBacon/serve-sim)
 
-**原文标题**: [react/packages/react-devtools-cdt-mcp at main · react/react · GitHub](https://github.com/react/react/tree/main/packages/react-devtools-cdt-mcp)
+- 🚀 serve-sim 被称为 Apple Simulator 的 `npx serve`，可把已启动的模拟器托管给 Codex、Cursor、Claude Desktop 等 Agent 工具，支持本地、局域网、远程 Mac 与隧道访问。
+- 🎥 它通过 Swift 助手用 `simctl io` 捕获模拟器帧缓冲，提供 MJPEG 流、WebSocket 控制通道和 React 预览 UI，无需 Xcode 插件或 App 埋点。
+- 🕹️ 支持浏览器中 60 FPS 视频流、底部上滑回主屏、Option 键捏合缩放、键盘与热键转发、拖放图片/视频、日志转发和事件面板，并支持 iOS、iPad、Apple Watch。
+- 🧪 主要用于先本地测试托管基础设施，远程托管时隧道化 URL；工具与 React Native 无关，作者来自 Expo。
+- ⚙️ 环境要求：macOS、Xcode 命令行工具（`xcrun simctl`）、Node 20+ LTS；运行 CLI 不需要 bun；相机注入助手需 macOS 14+；仅支持 Apple Silicon arm64，不支持 Intel。
+- ⌨️ Xcode 27 键盘输入需 Device Hub 运行且目标模拟器窗口可见并前台，可能还需辅助功能权限；可设 `SERVE_SIM_DISABLE_DEVICE_HUB_KEYBOARD=1` 禁用桥接。
+- 🖥️ 核心命令包括 `serve-sim [device...]` 启动默认 `localhost:3200` 预览，`--no-preview` 仅前台流，以及 `gesture`、`button`、`type`、`rotate`、`ca-debug`、`memory-warning`、`event-log` 等。
+- 🎛️ 常用选项有 `-p/--port`、`-d/--detach`、`-q/--quiet`、`--panes`、`--fit`、`--theme`、`--codec`、`--list`、`--kill`；可指定多个模拟器，或留空附加全部已启动模拟器。
+- 📷 相机注入：`serve-sim camera <bundle-id>` 可替换单个 App 的相机源，支持 placeholder、file、webcam，并可通过 `camera switch`、`camera mirror`、`camera status` 等热切换而无需重启 App。
+- 🧠 相机注入原理：主机侧助手把 BGRA 帧写入 POSIX 共享内存，注入 dylib 通过 `DYLD_INSERT_LIBRARIES` swizzle AVFoundation；每设备一个助手，可被同一模拟器多个 App 共享。
+- 🤖 Agent Skill 位于 `skills/serve-sim`，可教 Claude Code、Cursor、Codex CLI、Gemini CLI 等通过 CLI 驱动模拟器；可用 `bunx add-skill EvanBacon/serve-sim` 添加。
+- 🧩 集成方式：Claude Code Desktop 可通过 `.claude/launch.json` 配置；Expo 可在 `metro.config.js` 挂载 `simMiddleware`，访问 `http://localhost:8081/.sim`。
+- 🔌 可嵌入开发服务器：`serve-sim/middleware` 是 Connect 风格中间件，适用于 Metro、Vite、Next、Express；单端口/远程代理用 `proxyHelpers: true`，并需把 `upgrade` 事件交给 `handleUpgrade`，TLS 反代转发 `X-Forwarded-Proto`。
+- 🏗️ 工作原理：iOS Simulator → `simctl io` → `serve-sim-bin`（Swift）→ MJPEG/WS → 浏览器；状态文件在 `$TMPDIR/serve-sim/`；Swift 助手独立运行，CLI 通过 `bun build --compile` 嵌入，npm 安装即可。
+- 📦 开发与许可：使用 `bun install`、`build`、`build:swift`、`dev`；许可证为 Apache-2.0；仓库约 2.8k stars、148 forks、161 commits。
+
+### [fast-check](https://github.com/dubzzz/fast-check)
+
+fast-check 是由 dubzzz 创建并用 TypeScript 编写的 JavaScript/TypeScript 基于属性测试框架，类似 QuickCheck。它通过随机生成输入来验证代码属性，并在失败时自动收缩到最小反例，适合单元测试、模糊测试、模型测试与竞态检测。
+
+- 🧪 核心定位：用于 JavaScript/TypeScript 的属性测试框架，验证“对所有满足前置条件的输入，断言都应成立”。
+- 📦 安装方式：支持 pnpm、yarn、npm，例如 `pnpm add -D fast-check`。
+- 🔌 测试集成：可配合 AVA、Jasmine、Jest、Mocha、Tape 等测试框架使用，并附有 Mocha 示例。
+- 🐞 失败诊断：属性失败时会报告种子、路径、收缩次数等信息，帮助快速定位实现问题。
+- 🧠 核心优势：强类型、TypeScript 友好，提供 `map`、`chain`、`fc.pre(...)`、`fc.gen()` 等扩展能力。
+- 🧩 智能生成与收缩：默认偏向同时生成小值和大值，支持 `fc.oneof` 收缩，更易找到反例。
+- 🛠️ 调试能力：支持 verbose 模式、最小反例重放、自定义样例、`fc.context` 日志记录。
+- 🏗️ 高级测试：支持模型测试，可用于测试 UI、API、状态机，并检测异步代码中的竞态条件。
+- ✅ 广泛信任：被 Jest、Jasmine、fp-ts、io-ts、Ramda、js-yaml、query-string 等项目使用，并帮助发现过开源项目 bug。
+- 📊 仓库数据：约 5.1k stars、212 forks、58 issues、14 PR、6,814 commits，采用 MIT 许可证。
+- 🧾 兼容性：4.x 需要 Node ≥12.17.0、ES2020、TypeScript ≥5.0；旧版本支持更低环境。
+- 🤝 社区贡献：拥有大量贡献者，遵循 all-contributors 规范，欢迎各种形式的贡献。
+- 💸 赞助支持：可通过 GitHub Sponsors 或 OpenCollective 赞助项目。
+- 📚 文档资源：提供入门教程、内置/自定义 arbitraries、属性运行器、API 参考和示例。
+
+### [react-devtools-cdt-mcp](https://github.com/react/react/tree/main/packages/react-devtools-cdt-mcp)
 
 这是 React 仓库中 `react-devtools-cdt-mcp` 包的说明，属于实验性浏览器库，用于把 React 检查与性能分析工具注册到 `chrome-devtools-mcp`，本身不是 MCP 服务器，需在页面中于 React 之前导入，并依赖实验性第三方工具支持。
 
@@ -77,6 +160,30 @@ memlab 是一个用于检测和调试内存泄漏的工具，支持浏览器、N
 
 ## 更新
 
+### [发布 pnpm 12.4 · pnpm/pnpm · GitHub](https://github.com/pnpm/pnpm/releases/tag/v12.4.0)
+
+pnpm v12.4.0 发布，重点支持在同一工作区管理 npm、Python 与 Cargo 依赖，新增 `pnpm pipeline` 任务编排，并带来大量锁文件、注册表、Windows 和跨平台修复。
+
+- 🐍 支持 Python 依赖：启用 `python.enabled`，用 `pnpm add pypi:<package>` 安装，支持 `pyproject.toml`、`pylock.toml`、托管 `.venv` 及冻结/离线安装。
+- 🦀 支持 Cargo 依赖：启用 `cargo.enabled`，用 `pnpm add crate:<package>` 安装，支持 crates.io、自定义 sparse registry 和凭据认证。
+- ⚙️ Python 与 Cargo 均可通过 `pnprServer` 加速解析，不支持时回退本地解析。
+- 🧩 新增 `pnpm pipeline [name]`：安装冻结依赖并运行 `pipelines` 中声明的任务图，任务失败后仍继续执行。
+- 👀 `pnpm pipeline --dry-run` 可预览任务图，不安装配置依赖或运行 workspace hooks。
+- 💻 新增平台支持：Android arm64/x64、FreeBSD x64、Linux ppc64le、s390x、RISC-V。
+- 🧹 新增 `trustPolicyExcludePrune`，可在 `add/update/remove` 时自动清理未使用的 `trustPolicyExclude`，默认关闭。
+- ✅ 新增 `pnpm change check`，用于 CI 校验包版本是否符合 `versioning.epics` 和 `versioning.fixed` 分组。
+- 🔐 注册表元数据按 URL 路径与协议隔离，避免混用不同 registry 的版本、tarball 或 HTTP/HTTPS 元数据。
+- 🧾 `pnpm cache view` 现在显示完整 registry URL，相关解析脚本需要更新。
+- 🛠️ 新增构建脚本或 `binding.gyp` 的补丁会触发构建审批；支持 `--allow-build=!<pkg>` 和 `approve-builds` 保存决定。
+- 🌐 `.npmrc` 中的 registry 优先于 `pnpm login` 保存的全局配置，修复登录后使用错误 registry。
+- ⏱️ `fetch-timeout` 改为限制无进展时间，慢速大文件下载不再超时。
+- 🚀 提升大型工作区安装、`pnpm deploy`、warm global virtual store 等场景性能，并修复相关锁文件错误。
+- 📦 修复 `pnpm add --workspace <pkg>`，支持 `workspace:` 协议；`add/install` 接受 `jsr:`、`npm:`、`workspace:` 等协议前缀。
+- 🔁 布尔标志支持显式值，如 `--prod=false`；`pnpm install <pkg>` 支持 `--offline` 与 `--prefer-offline`。
+- 🧷 修复 `frozen-lockfile`、符号链接锁文件、`lockfileDir` 版本固定、`pnpm import`、`patch-commit`、版本范围上界等问题。
+- 🪟 修复 Windows 下 `pnpm setup`、命令 shim 重试、`shellEmulator` 参数转发、store 路径反斜杠等兼容问题。
+- 🔍 其他改进：`audit` 汇总排除忽略项、`pack --json` 错误 JSON、`outdated -r` 表格换行、shell 补全支持 `pn` 别名、`pnpm version -m` 短别名。
+
 ### [React DevTools 8.0.0](https://raw.githubusercontent.com/react/react/main/packages/react-devtools/CHANGELOG.md)
 
 React DevTools 8.0.0 于 2026 年 9 月 8 日发布，重点是将 Suspense 标签页默认开启、移除 Timeline Profiler 并转向浏览器 Performance 面板，同时让 Elements 面板能显示对应 React 组件。本次更新还包含大量功能改进与错误修复，涉及 Profiler、Suspense、搜索导航、连接、过滤器、CSP 兼容性等。
@@ -119,8 +226,6 @@ Vitest 5 正式发布，这次大版本以性能为核心，带来了全链路�
 - 🔻 其他改进：新增 injectCjsGlobals 开关、coverage 支持子进程/worker 跟踪、junit 命名兼容选项、test.for 支持非 ASCII 等。
 - 🔨 破坏性变更：要求 Vite >=6.4.0、Node.js >=22.12.0；建议升级前阅读详细迁移指南。
 
-## 设计
-
 ### [Motion 是你本不会注意到的部分](https://mensurdurakovic.com/motion-is-the-part-you-are-not-supposed-to-notice)
 
 动效是用户界面里“不应该被注意到”的关键细节——它让人明白刚刚发生了什么，让操作连贯流畅。作者将自己的博客比作一块好却煎坏的牛排，并围绕六个细节进行动效打磨，让网站从“能用”变成“真正有质感”。
@@ -135,6 +240,14 @@ Vitest 5 正式发布，这次大版本以性能为核心，带来了全链路�
 - ✨ 真正的价值并不在单个功能中：这些改动不会有人专门感谢，也看起来“像浪费一个晚上”，但配合在一起，就构成了普通网站与“有人认真思考过每一个细节”之间的差别。写作、布局、颜色都没变，仍是同一块牛排，只是现在被恰当地烹饪，能尝到鲜甜的肉汁。
 
 ## 其他
+
+科学分成两种。"科学 1"是一种理想化的追求真理，"科学 2"是实际的科学实践，更多是一种社交活动，要考虑社会和政治现实。
+
+如果你是一个博士生，你必须知道，你主要从事科学 2，而不是科学 1。
+
+-- 《博士生不要试图改革科学》
+
+---
 
 ### [关于向上管理以及如何做](https://softwareleads.substack.com/p/on-managing-up-and-how-to-do-it)
 
