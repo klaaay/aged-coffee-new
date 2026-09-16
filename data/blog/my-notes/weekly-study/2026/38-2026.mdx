@@ -32,7 +32,66 @@ summary: ''
 
 ## 工具
 
+### [fallow](https://docs.fallow.tools/)
+
+Fallow 是面向 TypeScript 和 JavaScript 的代码库智能工具，提供免费的静态代码与样式分析，可检测未使用代码、重复、复杂度、架构漂移和设计系统一致性问题，并可选配运行时智能以了解生产环境中实际执行情况。
+
+- 🚀 **快速上手**：无需安装，直接运行 `npx fallow` 即可，首次使用无需配置
+- 🔍 **静态分析能力**：一次运行即可发现死代码、重复代码、复杂度和样式问题
+- 🗑️ **删除冷代码**：放心移除未使用的文件、导出和依赖
+- ♻️ **减少重复**：在重复逻辑扩散前将其找出
+- 🎯 **优先重构**：利用复杂度和健康度分析聚焦清理工作
+- 🧾 **TypeScript 证据**：确认具体符号使用、类契约、受影响文件和针对性测试
+- ⏱️ **运行时证据**：查看热路径、冷路径以及基于运行时的删除依据
+- 💻 **CLI 工作流**：最佳起点，可在本地、CI 和代理循环中使用
+- 🧩 **VS Code 集成**：编辑器内实时诊断、Code Lens 和一键修复
+- 🤖 **MCP 与代理**：为 Claude Code、Cursor 等代理提供结构化工具调用
+- 🧠 **双层模型**：静态分析回答“什么和什么相连”，运行时智能回答“实际运行了什么”，二者在 `fallow health` 中交汇
+- 📚 **常用页面**：快速开始、配置、CI 集成、CLI 参考
+
+### [GitHub - philipwalton/modern-web-types：适用于尚未加入 lib.dom 的新 Web 平台 API 的 TypeScript](https://github.com/philipwalton/modern-web-types)
+
+本仓库 `philipwalton/modern-web-types` 旨在为已在至少一个稳定浏览器中可用、但尚未进入 TypeScript 官方内置类型定义的 Web 平台 API 提供 TypeScript 类型；它复用 TypeScript 官方生成管线，输出完整 lib，可作为官方 DOM/Worker 类型的替代或补充。
+
+- 📦 项目提供 `modern-web-types`，包含五个环境 lib：DOM、WebWorker、ServiceWorker、SharedWorker、AudioWorklet。
+- 🧩 类型由与 TypeScript 官方相同的生成器生成，质量与正确性一致，区别只在于收录 API 的数量。
+- 🎯 TypeScript 官方 `lib.dom.d.ts` 等只收录已在两个及以上浏览器引擎发布的特性，因此单引擎已可用且广泛使用的 API 会缺少官方类型。
+- ⚙️ 推荐安装方式：`npm install --save-dev @typescript/lib-dom@npm:modern-web-types`，用别名替换 TypeScript 解析的 DOM 库。
+- 🧷 TypeScript 6+ 需在 `tsconfig.json` 中启用 `libReplacement: true`；TypeScript 4.5–5.x 默认支持库替换。
+- 👷 对 Worker 等环境，需从 `lib` 移除对应库，并在 `types` 中引用入口，如 `modern-web-types/webworker`。
+- 📚 入口映射包括：`modern-web-types` / `modern-web-types/dom` 替代 DOM；`webworker` 替代 WebWorker；`serviceworker`、`sharedworker`、`audioworklet` 对应相应 @types 包。
+- ⚠️ 若项目原本未设置 `types`，添加后 TypeScript 将只包含列出的 @types 包，不再自动包含 `node_modules` 中所有 `@types/*`。
+- 🔄 更新机制：每周一 workflow 重新固定生成器和条目注册表到最新提交，重新生成全部五个 lib、运行测试，并自动开 PR。
+- 🛠️ 生成流程：固定并补丁生成器，使引擎阈值可配置；用同一数据快照构建两次，分别为两引擎 baseline 和一引擎 full；再用 TypeScript 编译器 API 做结构化 diff；最后按环境生成完整 lib。
+- 📝 `report.md` 列出官方类型与一引擎类型之间的差距，冒烟测试由当前 delta 自动生成；API 一旦升级到两引擎，就会移出 delta 和测试。
+- 🧪 开发命令：`npm run update` 执行 fetch-upstream → fetch-registry → build → diff → emit-lib → emit-test → emit-readme → report；`npm test` 对每个生成 lib 做类型检查并限制增量大小。
+- 🧰 同时安装 TypeScript 6 与 7：diff/emit 脚本用 TS 6，因为 TS 7 将编译器 API 移到 `typescript/unstable/*`；测试则在两个版本下检查生成输出。
+- 🚀 发布由 `pkg/package.json` 的 `version` 驱动：合并到 `main` 且版本变化会触发 publish workflow，发布 `pkg/` 到 npm 并打 tag；版本不变则不发布。
+- 🧾 相关项目：`lib.dom.d.ts` / `@types/web` 是官方类型；`@types/dom-*` 是手写单特性补丁，本项目用生成的完整 lib 覆盖同类空白。
+- 📜 许可证为 Apache-2.0，生成输出源自 `TypeScript-DOM-lib-generator` 和 `webref` 的 Web IDL。
+
 ## 更新
+
+### [Playwright v1.63.0](https://github.com/microsoft/playwright/releases/tag/v1.63.0)
+
+Playwright v1.63.0 发布，重点带来测试锁、跨 frame 定位、可见元素定位、步骤参数与副标题、trace 的 Aria/屏幕快照等能力，并扩展 API、报告器、CLI 与浏览器支持；同时宣布部分实验组件包停止更新及 Ubuntu 20.04 不再支持。
+
+- 🔒 测试锁：访问共享资源的测试可声明命名锁，跨文件、worker、项目互不并发，其他测试仍并行；支持多个锁及 `test.describe()` 组级锁。
+- 🪟 跨 frame 定位：`page.frameLocator()` 和 `frame.frameLocator()` 不传选择器时可在任意子 frame 中搜索，匹配多个 frame 会报错。
+- 👁️ 可见定位器：新增 `locator.visible()`，仅匹配可见元素，推荐替代 `:visible` CSS 伪类。
+- 🧾 步骤增强：Playwright API 步骤会报告目标定位器和调用参数；`test.step()` 支持 `subtitle` 和 `params`，报告器可读取并在 trace viewer/HTML 报告中展示。
+- 🖼️ Trace 快照：`tracing.start()` 和 `testOptions.trace` 的 `snapshots` 可选择捕获 `dom`、`aria`、`screen`；trace viewer 新增 Display Aria 模式，可并排查看并悬停高亮。
+- 🔐 认证扩展：`httpCredentials` 支持凭据数组，按请求 origin 匹配，无 origin 的条目可匹配任意请求。
+- 🗂️ 存储状态：新增 `opfs` 选项，将 origin private file system 纳入 storage state，便于持久化与恢复。
+- 🔔 新事件：`page.on('dialogclosed')` 和 `browserContext.on('dialogclosed')` 在 JS 对话框被接受、关闭或用户关闭时触发。
+- 🧩 Aria API：新增 `locator.ariaSnapshotJSON()` 和 `page.ariaSnapshotJSON()`，以 JSON 返回 Aria 快照，支持 `mode`、`depth`、`boxes`。
+- 🌐 请求类型化：`apiRequestContext.get()` 等请求方法支持类型参数，使 `response.json()` 返回指定类型。
+- 🧪 测试选项：新增独立的 `testOptions.reducedMotion`、`testOptions.forcedColors`、`testOptions.contrast`。
+- ➕ CLI 增强：`--add-reporter` 可追加报告器；`npx playwright install --no-remove` 保留其他 Playwright 安装的浏览器；`codegen --http-credentials` 支持录制 HTTP 认证页面。
+- 🏷️ 报告器标签：`list`、`line`、`dot`、`github`、`junit` 报告器新增 `omitTags`，可抑制自动附加到测试标题的标签。
+- 📈 报告与时间线：内置 `perfetto` 报告器输出 Trace Event Format 文件，可在 Perfetto UI 或 `chrome://tracing` 中查看；HTML 报告显示测试步骤时长瀑布。
+- ⚠️ 重要公告：实验性 `@playwright/experimental-ct-react`、`ct-react17`、`ct-vue` 不再更新，需迁移到 stories 模型；Ubuntu 20.04 不再支持；Linux arm64 改用 Chrome for Testing 构建的 Chromium。
+- 🌍 浏览器版本：Chromium 153.0.8010.12、Mozilla Firefox 155.0、WebKit 26.6；同时测试兼容 Google Chrome 153 和 Microsoft Edge 153。
 
 ## 设计
 
