@@ -12,6 +12,44 @@ summary: ''
 
 ## 技术
 
+### [抽象对人类和 AI 智能体的代价](https://ondrejvelisek.github.io/the-cost-of-abstraction-for-humans-and-ai-agents/)
+
+过度抽象看似提升可维护性，实则给人类和 AI Agent 增加隐性成本；作者通过实验估计，过度抽象的代码库会让 AI Agent 成本与耗时增加约 30%，最差任务达 5 倍，因此应只在真正需要时抽象。
+
+- 🧠 抽象是隐藏实现并提供可复用接口的边界，如函数、类、组件、CSS 类、文件、包等。
+- ✅ 抽象对大型系统至关重要，可隐藏复杂度、命名和复用代码，但必须权衡成本与收益。
+- ⚠️ 过度抽象很难察觉，会逐渐累积；开发者常因害怕修改旧抽象、时间压力、教育训练和团队文化而不断添加新层。
+- 💸 每次抽象都带来间接成本：代码分散、跳转增多、心智负担上升；人类和 AI 每次读代码都要付出。
+- 🤖 AI 从人类代码中学会过度抽象，因此也会复制这一反模式，并推高使用成本。
+- 📊 实验用 4 个代码库、394 次 Agent 运行测量：过度抽象任务成本在 0.8x 到 5x 之间，最差是改按钮颜色，成本高 5 倍、时间高 4.3 倍。
+- 🔍 成本主因不是代码量，而是跨文件抽象层：读取文件和模型往返轮次显著增加；同文件内抽象对 AI 几乎免费。
+- 🧾 对真实中大型代码库的保守外推：过度抽象使 AI Agent 账单约增加 30%。
+- 🧩 不应抽象的例子包括：无意义常量、静态 JSX 列表映射、简单工厂函数、多余 CSS 类、父组件提前消费 context、只做重命名的翻译层。
+- 🛠️ 建议：用类型系统保护值表达式；从最接近使用处消费 context；遵循现有库/后端命名；优先共置代码，避免不必要跨文件边界。
+- 🧭 结论：抽象不可少，但每个抽象都有成本；应“先思考再抽象”，在代码审查中识别过度使用，并明确指导团队和 AI Agent。
+- 📜 作者公开了 no-over-abstraction.md 规则，希望降低人类心智负担和 AI 账单。
+
+### [2030-shaped software](https://posthog.com/newsletter/2030-shaped-software)
+
+文章认为：到 2030 年，AI 代理将成为软件的主要用户，因此现在就要按“代理优先”构建产品——让代理负责执行，人类专注判断、决策、信任与验证；聊天是入口，生成式 UI 与必要专用界面补足交互，并以云端和多触点实现无处不在。
+
+- 🤖 核心判断：2030 年 AI 代理会成为软件的首要用户，要构建“2030-shaped software”，而不是只给现有产品加 AI。
+- 🧠 人与代理分工：代理负责“做”，人类负责判断、决定、排序、消除歧义，以及理解与信任结果。
+- 🧱 传统“操作型”UI 如按钮和表单将减少，转而支持审批、优先级、方向选择、验收与安全确认。
+- 🛠️ 产品基础设施要代理优先：人类能做的事，代理也应能做，需完整 API、MCP 服务器、工具和权限。
+- ⚠️ 缺少能力是失败模式：如果代理无法创建实验或完成关键步骤，就仍需人类补位，削弱代理价值。
+- 🧩 不能只依赖模型提供商；自建代理运行框架可保证质量、保护品牌并持续改进，而上下文是护城河。
+- 📚 上下文工程很关键：把源代码、使用数据、客户数据和产品技能，在合适时机输入代理。
+- 💬 聊天是前门，生成式 UI 在内部：聊天适合指挥代理，但图表、开关等生成式 UI 能弥补文本低带宽问题。
+- 📄 生成式 UI 大多一次性，部分会成为可保留、分享、复制的工件，如报告、文档、代码、PR、配置甚至应用。
+- 🔍 文本不够时仍需专用 UI：信任与验证界面、分诊与收件箱界面，用于检查代理工作与处理需人类决策的事项。
+- 🚩 不是简单删按钮：若只是查看状态，代理一句话即可；若涉及信任、判断或行动，应分别交给专用 UI 或代理能力。
+- 🌐 代理不按应用方式工作：产品应主动到达用户，覆盖桌面、Slack、移动端、邮件、API、语音等。
+- ☁️ 云优先是方向：人类与代理共享控制平面，薄客户端接共享后端，支持并发运行大量代理并随处优化输出。
+- 🧪 云基础设施必须优秀：沙盒要快速、稳定、不崩溃，让应用无处不在而基础设施隐形。
+- 🚀 落地策略：2026 不是 2030。PostHog 选择“半新”路线，先用现有数据与基础设施扩展 PostHog Desktop，再迁移其他界面。
+- ⏳ 若不改变，风险是做出“2026 形态 + AI 补丁”的软件；2030 重要的公司会提前多年开始构建。
+
 ### [如何命名事物](https://kolemannix.com/blog/how-to-name-things/)
 
 命名是软件工程与知识工作的核心技能：清晰的语言几乎总意味着清晰的思考，而每次命名都是在与同事、未来的自己以及语言模型沟通。文章主张按事物本质而非即时需求来命名，把命名视为一种智力共情；坏名字往往暴露出模糊概念，甚至牵出真实缺陷。
@@ -31,6 +69,52 @@ summary: ''
 - 🎯 结论：命名要深思熟虑、整体权衡、按本质而非需求、像在乎一样对待。
 
 ## 工具
+
+### [Better Design](https://better-design.com/)
+
+Better Design 是一个应用设计系统，帮助开发者用 AI 更快交付，同时通过 UI/UX 规则保持品牌一致性与产品质量，避免做出千篇一律的应用。
+
+- 🎨 让应用拥有可信赖、易使用的品牌体验。
+- ⚡ 借助 AI 加速交付，同时不牺牲质量。
+- 🧩 从设计系统开始，连接编辑器即可使用。
+- 💻 运行一条命令，兼容你的 agent，并自动更新。
+- 🎯 选择设计系统：描述项目、比较匹配、选定一个。
+- 📏 按规则构建：加载 UI 样式规则和 UX 行为规则。
+- ✅ 自动检查间距、无障碍和文案。
+- 🚫 停止发布看起来千篇一律的应用。
+- 🆓 免费、无需账号，代码和仓库都归你。
+- 🛠️ 用 Better Design 实现无妥协的 vibe coding。
+
+### [Awesome GPT-6 Astra](https://github.com/MartinDelophy/awesome-gpt-6-astra)
+
+本目录是社区维护的 GPT-6 Astra 浏览器游戏与互动项目索引，收录 129 个可直接在浏览器试玩的作品，按类型组织，并与 OpenAI 无官方关联。
+
+- 🎮 收录 129 款游戏/互动项目，涵盖三国领土策略、木制解谜、软体水果合并、程序化城市建造 2048、单键飞行、魔法地毯战斗、弹幕射击、岛屿电网塔防、荒野生存、水下捕鱼、寿司店经营、岛屿农场、卡丁车、海岸骑行、桌游 3D 化、3D 家居装饰、Orbital Garden 等。
+- 🗂️ 分类包括动作街机、解谜与脑力、策略与模拟、RPG 与冒险、平台与竞速、实验与多人。
+- 📅 目录更新于 2026-09-17；该日期代表目录维护记录，不代表所有游戏都重新试玩。
+- 🆕 最新新增包括 9 月 16 日、15 日、12 日各 10 款，以及更早的 Barrelbound: The Lost Cargo 和 Tidehook，并提供多语言 README 条目。
+- 🖱️ 点击标题即可在浏览器直接游玩；多数项目无需下载、安装或强制登录。
+- 🧠 每个条目通常包含游戏与创作者、核心亮点、访问方式、真实截图、平台与要求、GPT-6 Astra 的贡献说明、源代码/技术等开发资源。
+- 🛠️ 创作者可用浏览器游戏链接、截图和 GPT-6 Astra 使用说明提交项目；发现者也可推荐他人公开作品并注明创作者。
+- 🔎 模型归属主要依据创作者或提交者公开说明；未确认信息会在条目中标出，不会把无依据声明当成已确认事实。
+- 🤝 这是社区维护列表，与 OpenAI 无隶属；收录是探索邀请，不是基准测试或官方背书。
+- 📜 原创整理文字和艺术以 CC0 1.0 公有领域贡献；链接的游戏、代码、图片、商标等第三方材料保留各自许可与权利。
+- 🐞 可通过 issue 或 pull request 提交游戏、报告坏链、错误信息、归属问题或访问要求变化。
+
+### [neat-annotations](https://neat-annotations.syabro.com/)
+
+neat-annotations 是一个纯 CSS 的手绘风格标注库，无需 JavaScript，只需一个小文件就能为网页元素添加箭头和手写标签。
+
+- ✏️ 纯 CSS 实现，无 JavaScript，仅需一个小文件即可使用
+- 📦 通过 CDN 引入样式表，或下载 neat-annotations.css 本地链接
+- 🖋️ 可选加载手写字体 Shantell Sans，跳过则标签回退为 cursive 字体
+- 🧭 支持指南针方向设置箭头指向（如 ann-n 表示北向）
+- 🎨 提供五种颜色加动画彩虹色，以及暖灰色默认色
+- 🌈 可通过 --ann-color 自定义任意 CSS 颜色
+- 🔆 支持目标高亮，省略 data-note 可隐藏箭头和标签，仅作文字标记
+- 📚 可嵌套标注，从不同方向指向同一目标
+- 📏 长注释自动换行，可用 --ann-label-max-width 控制行宽
+- 📄 采用 MIT 许可证，源码托管于 GitHub
 
 ### [fallow](https://docs.fallow.tools/)
 
@@ -72,6 +156,30 @@ Fallow 是面向 TypeScript 和 JavaScript 的代码库智能工具，提供免�
 
 ## 更新
 
+### [Chrome 154 beta](https://developer.chrome.com/blog/chrome-154-beta)
+
+Chrome 154 beta 于 2026 年 9 月 2 日发布，面向 Android、ChromeOS、Linux、macOS 和 Windows 平台，带来 CSS/UI、JavaScript、Web API、WebGPU 等多方面更新，并新增源试验功能。
+
+- 🚀 **发布信息**：Chrome 154 于 2026 年 9 月 2 日进入 beta 频道，可从 Google.com 或 Google Play 下载。
+- 🎯 **scroll-marker-group 模式**：新增 `links`（默认，导航列表行为）和 `tabs`（标签页行为）两种模式，分别改变焦点顺序与无障碍行为。
+- ✍️ **text-decoration-inset**：控制下划线、上划线、删除线相对文字边缘的内缩或外延距离，支持 auto、长度和百分比值。
+- ␣ **text-decoration-skip-spaces**：控制装饰线是否跳过空白字符，避免在空格下方绘制装饰。
+- 🧵 **CSSStyleValue 暴露至 Worker**：将 CSS Typed OM 的构造函数扩展到 Worker 全局作用域，符合规范与其他浏览器引擎。
+- 🔤 **FontFace width 与 font-width**：作为 stretch 和 font-stretch 的别名，对齐最新 CSS 字体加载与 CSS Fonts 4 规范。
+- 👆 **Light dismiss 改进**：popover 和 dialog 改用 click 事件触发关闭，触摸滚动和右键不再误触发。
+- 🖼️ **响应式 iframe**：允许站点启用响应式尺寸，避免子文档出现滚动条。
+- 🔁 **Iterator includes()**：TC39 提案，为迭代器添加 includes() 方法，类似 Array.prototype.includes()。
+- 🔌 **WebSocket 构造函数选项包**：支持传入 WebSocketInit 字典，可指定 protocols，并为未来选项预留扩展点。
+- 🔐 **WebCrypto 算法更新**：新增后量子与对称 AEAD 算法，包括 ML-KEM、ML-DSA、ChaCha20-Poly1305 和 X-Wing。
+- 🌐 **Background Fetch 安全强化**：强制 CORS，并限制对本地/回环服务器的访问，需相应 LNA 权限。
+- 🛑 **Fetch 转发中止原因**：将 AbortController 的 abort reason 暴露给 Response 对象及其 ReadableStream。
+- 📄 **HTML 插入与流式方法**：新增位置插入方法（before、after、append、prepend、replaceWith）与流式方法（streamAppendHTML 等）。
+- 💳 **安全支付确认语言验证**：locale 字段无匹配语言时返回 NotSupportedError，未设置则跳过验证。
+- 🌍 **WebSocket targetAddressSpace**：可将公共主机名连接视为本地或回环目标，绕过混合内容限制。
+- 🎮 **WebGPU WGSL 片段深度**：允许为 @builtin(frag_depth) 添加 less/greater 修饰符，启用 early-Z 优化。
+- 🪟 **Window Shape API**：ChromeOS 上获白名单的隔离 Web 应用可定制非矩形窗口形状，需 unframed 模式与 window-management 权限。
+- 🧪 **新源试验**：Private Verification Tokens（PVT）在常规浏览中签发、隐私浏览中兑换，减少验证码摩擦。
+
 ### [Playwright v1.63.0](https://github.com/microsoft/playwright/releases/tag/v1.63.0)
 
 Playwright v1.63.0 发布，重点带来测试锁、跨 frame 定位、可见元素定位、步骤参数与副标题、trace 的 Aria/屏幕快照等能力，并扩展 API、报告器、CLI 与浏览器支持；同时宣布部分实验组件包停止更新及 Ubuntu 20.04 不再支持。
@@ -94,6 +202,22 @@ Playwright v1.63.0 发布，重点带来测试锁、跨 frame 定位、可见元
 - 🌍 浏览器版本：Chromium 153.0.8010.12、Mozilla Firefox 155.0、WebKit 26.6；同时测试兼容 Google Chrome 153 和 Microsoft Edge 153。
 
 ## 设计
+
+### [更好的图标和标签对齐](https://ishadeed.com/article/aligning-list-icons/)
+
+本文讨论一个常见却容易被忽略的列表设计问题：带图标的列表项在单行文本时图标居中尚可，但文本换行后仍居中就显得别扭；作者分别针对图标作为 HTML 元素和伪元素背景图两种情况，给出可随图标尺寸、字体大小与容器宽度自适应的对齐方案。
+
+- 🧩 问题：列表项包含图标和文本，文本多行时图标垂直居中会显得不协调。
+- 🧱 方案一：图标是 HTML 元素时，通常用 Flexbox 排列图标与文本。
+- ⚙️ 用 `align-items: center` 会让多行文本旁的图标仍居中；改为 `start` 又会因字体行高留白而不完美。
+- 🔧 固定 `translateY(3px)` 只能临时修补，图标尺寸、字体大小或容器宽度变化后会失效。
+- 📏 动态修复：使用 `--offset: calc((1lh - var(--icon-size)) / 2)`，再配合 `transform: translateY(var(--offset))`。
+- 🔄 这个公式能随字体、图标和容器变化自动调整，偏移量甚至可能为负值。
+- 🖼️ 方案二：图标用伪元素背景图时，需要处理背景缩放和 Flex 收缩问题。
+- ✅ 关键 CSS：`background-size: contain`、`flex-shrink: 0`、`aspect-ratio: 1`、`height: auto`。
+- 🧮 伪元素也使用相同的 `lh` 与 `calc()` 偏移公式来实现垂直对齐。
+- 🛠️ 最终方案综合使用 Flexbox、`aspect-ratio`、`lh` 单位、`calc()` 和 `height: auto`。
+- 📚 文末作者推广其交互式 CSS 布局课程《The Layout Maestro》。
 
 ## 其他
 
