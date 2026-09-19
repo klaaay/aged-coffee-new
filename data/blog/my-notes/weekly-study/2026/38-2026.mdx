@@ -70,6 +70,25 @@ summary: ''
 
 ## 工具
 
+### [GitHub - argyleink/prop-for-that：JS 知道的，现在 CSS 也知道了 · GitHub](https://github.com/argyleink/prop-for-that)
+
+prop-for-that 是一个将 JavaScript 可读取、但 CSS 无法直接感知的运行时状态，写入 `--live-*` 与 `--const-*` CSS 自定义属性的库，让 CSS 通过 `calc()` 和 `var()` 直接组合、响应这些状态。它零依赖、TypeScript 编写、支持 ESM + CJS，并且 SSR 安全。
+
+- 🎯 核心目标：把滑块值、指针位置、元素可见性、视口尺寸、电池、网络、传感器等状态暴露给 CSS。
+- 📦 安装使用：`npm i prop-for-that`；最简单方式是 `<script type="module">import 'prop-for-that/auto'</script>`。
+- 🏷️ 声明式绑定：元素添加 `data-props-for="key …"`，CSS 中读取对应 `--live-*` 属性。
+- 🎨 示例：`<input type="range">` 可通过 `--live-value-pct` 自绘，无需事件监听或手动渲染循环。
+- 🔗 提升与样式查询：自定义属性只向下继承，`@container style()` 匹配祖先；可用 `data-props-to="<selector>"` 或 `{ to }` 把值写到最近匹配祖先，供自身或兄弟元素响应。
+- ⚡ 性能设计：每帧一次 `requestAnimationFrame` 刷新，无变化时空闲，标签页隐藏时冻结；写入变更 diff，并全页共享 `ResizeObserver` / `IntersectionObserver`。
+- 🧠 采样策略：持续采样元素源在离屏时暂停；事件驱动源（表单、range、select 等）不受限制。
+- 🧩 按需加载：内置 4 个核心源：viewport、元素尺寸、可见性、`<input type="range">` 值；其他均为可选、可 tree-shake 插件，`auto` 下按 `data-props-for` 需求懒加载。
+- 📡 插件能力：20+ 插件，包括指针、电池、网络/在线、页面焦点/可见性、导航类型、meta 标签、低熵 UA、FPS、时钟、滚动速度、设备方向/运动、定位、CPU 压力、软键盘几何、媒体播放、表单/字段状态、select/color-picker、文本截断、图像/视频主色与强调色、可种子随机数等。
+- 🧱 平台整合：可选启用 typed `@property` 以支持插值，或使用 FOUC 安全常量在首绘前写入；体积小、无依赖、支持多种 bundle 格式。
+- 🚪 入口点：`prop-for-that/auto` 零配置声明式；`prop-for-that` 提供命令式 API `propsFor()`、`register()`、`configure()`；`prop-for-that/head` 提供同步 FOUC 安全常量；`prop-for-that/plugins` 是插件目录。
+- ⚠️ 注意事项：`auto` 只观察 light DOM，不处理 shadow roots，需用 `propsFor(el, …)`；`auto` 懒加载插件 chunk，CDN 应使用原样提供 `dist` 的 unpkg / jsDelivr。
+- 📚 文档与 AI 参考：文档在 `prop-for-that.netlify.app/docsite`；`llms.txt` 提供单文件参考，并随 npm 包发布。
+- 📈 仓库信息：MIT © Adam Argyle；约 904 stars、19 forks、6 watchers、3 issues、1 PR、41 commits。
+
 ### [Better Design](https://better-design.com/)
 
 Better Design 是一个应用设计系统，帮助开发者用 AI 更快交付，同时通过 UI/UX 规则保持品牌一致性与产品质量，避免做出千篇一律的应用。
@@ -220,6 +239,20 @@ Playwright v1.63.0 发布，重点带来测试锁、跨 frame 定位、可见元
 - 📚 文末作者推广其交互式 CSS 布局课程《The Layout Maestro》。
 
 ## 其他
+
+### [与人工智能协作的五个软件工程职位](https://humanwhocodes.com/blog/2026/09/five-roles-working-ai/)
+
+软件工程师与 AI 的协作仍在演化，已从更好的代码补全发展到能自主分诊缺陷、定位根因并部署修复的代理。作者用五种职业角色描绘人机交互光谱——观察者、技术主管、架构师、工程经理、产品经理；选择取决于对 AI 的信任、任务风险和技术上下文，并需始终对结果负责。
+
+- 👀 观察者（结对程序员）：实时观看并审查 AI 写代码，可追问和纠错；适合起步或信任不足时，但易审查疲劳，可交替做驱动者。
+- 🧭 技术主管：写技术规范，让代理并行实现，最后审查代码并反馈；通过自动化格式化、lint、测试覆盖减少审查负担，提升生产力。
+- 🏗️ 架构师：聚焦系统布局、组件接口、基础设施与框架，主要看架构和日志而非代码；风险是远离代码，出问题缺乏底层知识，需抽查代码与测试。
+- 🏭 工程经理：搭建“软件工厂”，定义流程（如 PRD→技术规范→实施计划），给代理分配任务和验收标准；风险是流程失灵时重启循环可能较慢。
+- 🎯 产品经理：专注用户体验、界面和用户旅程，不关心实现细节，只要产品按预期工作；挑战是技术故障时难以修复，可能依赖他人。
+- ⚙️ 自动化是关键：格式化、lint、测试与覆盖率要求越高，越能降低审查疲劳，增强对 AI 生成代码合并的信心。
+- ⚠️ 主要权衡：越亲力亲为越可控但吞吐受限；越放手越高效但离代码越远，故障定位与修复能力越弱。
+- ✅ 结论：五种角色没有绝对优劣，应按信任度、风险和技术背景有意识地选择，并随信心与 AI 能力提升沿光谱移动。
+- 🔄 你可以在探索陌生代码库时当观察者，在协调多工作流时当技术主管，在重视用户体验时当产品经理，但不应放弃对结果的责任。
 
 ### [构建企业内部智能体：我们做对的 5 件事，以及我会换个方式做的 5 件事](https://oioannou.com/blog/internal-company-agent-lessons/)
 
