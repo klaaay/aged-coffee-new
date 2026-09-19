@@ -12,6 +12,25 @@ summary: ''
 
 ## 技术
 
+### [实时与离线是同一个问题](https://marmelab.com/blog/2026/09/09/real-time-and-offline-are-the-same-problem.html)
+
+本文比较 Verdant、TanStack DB 与 Zero 三种本地优先方案，作者通过构建 Verdant 离线 CRM 和 TanStack DB/React Admin 集成，发现离线与实时同步本质相同，核心都是调和分歧状态；现有库能提供即时 UI 与离线能力，但在客户端 ID、变更失败恢复、冲突解决和用户反馈方面仍不完整。
+
+- 🧪 作者构建两个项目：Verdant 离线优先 CRM，以及 TanStack DB 接入 React Admin 的集成库，并用 Zero 的 CRM 测试作对比。
+- 🌐 传统 Web 应用依赖请求/响应：UI 速度受网络限制，断网即不可用，多用户编辑靠锁，而锁又依赖持续连接。
+- 🗃️ 本地优先数据库将读写放在浏览器 IndexedDB，UI 即时更新，后台同步层负责重试、一致性与冲突调和。
+- 🌿 Verdant 是端到端方案：schema、存储、同步开箱即用，冲突策略称“冲突避免”，实际多为最后写入者胜。
+- 🧱 TanStack DB 是通用响应式查询基础：提供 live collections，但同步层留给开发者，适合逐步搭建可替换后端。
+- ⚡ Zero 是完整同步引擎：客户端 + Postgres 服务端缓存，内置认证、权限和双向同步。
+- 🧩 TanStack DB 与 React Admin 范式不匹配：React Admin 的 data provider 是 Promise 异步函数，TanStack DB 是响应式集合，实时查询难以直接接入。
+- ⚙️ 集成还遇到 react-query 双客户端问题：React Admin 需要 networkMode always，TanStack DB 需要默认队列行为，二者需分开配置。
+- 🆔 本地变更要求客户端生成 ID：UUID/ULID/Nanoid 等更合适；若现有模型用服务器 ID，支持离线写往往需要破坏性迁移。
+- 🧨 变更失败与恢复缺少内置支持：TanStack DB 无回滚/重试/通知，Zero 可能静默回滚，Verdant 同步失败也需自行处理。
+- ⚔️ 冲突解决普遍是 last-write-wins：Verdant 与 Zero 大体如此，TanStack DB 不表态；可能丢失更新，且缺少冲突提示、合并或丢弃界面。
+- 🔄 核心发现：离线与实时同步是同一个问题；差异只是断网时长，二者都需同步协议、乐观变更与分歧状态调和。
+- 🎯 适用场景：弱网/现场作业、实时协作最明显；作者认为本地优先架构普遍值得，因为它迫使团队正视冲突并提升韧性。
+- 🧭 结论：Verdant 省心但需接受其冲突策略；TanStack DB 灵活但不解决同步本身；当前库仍缺失败反馈与冲突合并路径，如何告知用户“两个真相不一致”仍是核心挑战。
+
 ### [抽象对人类和 AI 智能体的代价](https://ondrejvelisek.github.io/the-cost-of-abstraction-for-humans-and-ai-agents/)
 
 过度抽象看似提升可维护性，实则给人类和 AI Agent 增加隐性成本；作者通过实验估计，过度抽象的代码库会让 AI Agent 成本与耗时增加约 30%，最差任务达 5 倍，因此应只在真正需要时抽象。
