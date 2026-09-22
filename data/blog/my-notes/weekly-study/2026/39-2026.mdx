@@ -1,0 +1,57 @@
+---
+title: 2026-第三十九周
+date: '2026-09-21'
+tags: ['WEEKLY-2026']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+## 工具
+
+### [vercel-labs/vgpu](https://github.com/vercel-labs/vgpu)
+
+vgpu 是 Vercel Labs 开源的跨运行时 WebGPU TypeScript 库，面向着色器、3D 场景、GPU 张量、神经网络和数学可视化，主打类型化 WGSL 导入、极简 GPU-first API，并让同一套代码运行在浏览器、无头 Node 和测试环境。
+
+- 🧩 类型化 WGSL：`.wgsl` 文件可像 TypeScript 模块一样导入导出，反射机制自动保持绑定名、类型和布局正确，无需手写声明。
+- ⚙️ 单一 `Gpu` 上下文：`init()` 返回一个句柄，`draw`、`effect`、`frame`、`surface`、`target` 等入口都以其为首参，避免隐藏全局状态。
+- 📦 体积小：未使用声明在压缩前被裁剪，完整全屏特效约 25 KB gzip，且该预算由 CI 强制执行。
+- 🌐 多运行时：同一公共 API 覆盖浏览器、Dawn 支持的无头 Node（`vgpu/node`）和用于测试/CI 的确定性 mock（`vgpu/mock`）。
+- 🎞️ 显式帧控制：如 `frame(gpu, f => f.pass(target, effect))`，pass、clear、draw 都需显式调用，不依赖隐式场景图状态。
+- 🤖 面向 Agent：文档、示例画廊和着色器校验可通过 CLI 运行，如 `npx vgpu docs`、`npx vgpu examples`、`npx vgpu check`。
+- 🚀 快速开始：使用 `pnpm add vgpu` 和 `@webgpu/types`，通过 `init/surface/effect/clock/frameLoop` 即可在 canvas 上运行全屏特效。
+- 🖥️ Node 快速开始：`vgpu/node` 支持 `target`、`draw`、`frame`，可读取像素并 `dispose()`；`vgpu/mock` 让测试无需真实 GPU。
+- 📚 WGSL 标准库：`@vgpu/wgsl-std` 提供 hash、noise、color、sampling 等可复用声明，着色器也可导出自己的 `fn`、`struct` 或 `const`。
+- 📖 文档与示例：完整文档位于 `vgpu.sh`，包含入门指南、性能手册和交互式示例，也可通过 CLI 离线访问。
+- 🧰 Agent 资源：支持示例搜索/拉取、`npx skills add vercel-labs/vgpu`、`llms.txt`、OpenAPI 发现 API，以及 MCP 端点与本地 `npx vgpu mcp`。
+- 🗂️ Monorepo 包：公开入口为 `vgpu`，其他包包括 `@vgpu/cli`、`@vgpu/core`、`@vgpu/wgsl`、`@vgpu/wgsl-std`、`@vgpu/adapter-node`、`@vgpu/adapter-mock`、`@vgpu/render`。
+- 📈 仓库数据：约 2.2k Stars、113 Forks、40 Issues、13 PR，MIT 许可，含 1,596 次提交。
+
+## 更新
+
+## 设计
+
+## 其他
+
+### [](https://andiroberts.com/leadership-questions/give-feedback-to-someone-you-dont-manage)
+
+本文讨论如何向没有管理权限的人提供反馈：关键不是权威，而是“正当性”。应从共同工作的交界处出发，描述观察到的事实及其影响，避免评判对方，保持双向沟通，明确自己想要什么，并接受对方可能不同意或补充你未知的信息。
+
+- 🎯 有正当理由再提反馈：对方行为影响你的工作、共同结果或你负责的事项时，你通常有立足点。
+- 👀 从观察开始：区分实际发生的事与你对对方的推断，避免把解释当成事实。
+- 🔗 聚焦工作交界处：说明问题如何发生在你们职责、决策或流程相接的地方。
+- ⚖️ 让观点可检验：少说“你不合作”，多说具体事件、时间线和造成的后果。
+- 🧠 留出未知空间：承认自己的视角可能不完整，主动问“我可能漏掉了什么？”
+- 🔄 反馈应双向流动：愿意听对方如何看待你在这件事中的影响。
+- 🚫 别把指令伪装成反馈：若没有正式权限，要区分告知、询问、请求和工作协议。
+- 🗣️ 明确你的诉求：想要对方知晓、理解其视角、改变合作方式，还是需要具体行动？
+- 🤝 对方不同意时：先了解分歧，不要靠层级施压；必要时清楚说明自己的边界与依赖。
+- 🧭 无管理权不等于无边界：若后果足够重要，仍可通过适当渠道升级处理。
+- 📚 研究支持：来源可信度、信任和互惠关系会影响反馈是否被接受和处理。
+- ❓ 五个自问：我为何有资格提？我观察到什么？如何影响共同工作？我可能不了解什么？我是否也愿听对方对我的反馈？
+- 🧩 核心结论：权威是一种反馈依据，相互依赖是另一种；真正重要的是提供有用、相关、具体的信息，并保持开放。
