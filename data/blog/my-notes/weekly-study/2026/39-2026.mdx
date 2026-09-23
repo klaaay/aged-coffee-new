@@ -12,7 +12,104 @@ summary: ''
 
 ## 技术
 
+### [我们现在都是产品工程师](https://seldo.com/posts/we-are-all-product-engineers-now/)
+
+AI 正在把写代码的边际成本推向零，软件开发生命周期中的编码、审查、维护、部署和运维将依次被代理接管；需求没有上限，因此行业不会萎缩，但“程序员”工作会转向产品工程：理解客户、定义“好”、做出令人愉悦的产品。未来十年动荡，更多人做软件，但几乎没人只是打字。
+
+- 💸 写代码成本已崩塌：LLM 让最昂贵的编码环节趋近免费，整个行业围绕昂贵程序员的旧结构正在改变。
+- 🤖 两大假设：代理将吃掉整个软件开发生命周期；软件需求实际上无限，当前初级岗位过剩只是过渡状态。
+- 🧩 成本拆解：编码已崩塌；代码审查和维护即将自动化；部署与扩展是下一步；决定做什么、定义“好”、令人愉悦可能最安全。
+- 📉 初级开发者受重创：AI 暴露职业中 22-25 岁就业比同龄低 19%，大厂入门招聘自 2019 年降 65%，但工程师占招聘比例反升。
+- 🐞 代理进步快：修真实 bug 基准从约 50% 到约 95%，Claude Code 的 PR 84% 被合并，Big Sleep 发现 SQLite 漏洞。
+- ⚠️ 审查危机：GitHub 提交和 PR 暴增，多数 PR 无审查，代理 PR 常由另一个代理审查；AI 垃圾提交导致 curl 关闭漏洞赏金。
+- 🚀 运维与扩展：数据少但逻辑上将是下一波自动化，代理在更像操作系统的基准上仍低于 65%。
+- 🍞 产品发现不可自动化：每个软件都是人的欲望的形式化，需求因客户而异，必须从客户脑中挖掘，无法机械训练。
+- 🎨 设计/品味仍关键：当大家都能构建正确功能时，令人愉悦的设计成为竞争点；它按产品计价、不可转移。
+- 🧑💼 新工作是产品工程师：历史上有系统分析师/产品经理；现在以 forward deployed engineer、解决方案工程师等名义招聘，平均总包约 24 万美元，高级超 60 万。
+- 🏭 这不再是传统编程：代码写作只是最小部分，公司付钱买能深入客户业务、定义“好”并交付的人。
+- 🎓 人才管道缺失：APM 等项目每年仅培训几十到几百人，大学/训练营不教需求分析与品味；市场会解决但太慢，会伤害一批人。
+- 🪵 手艺损失真实：许多热爱编码的人将被迫转向产品工作；手艺像木工一样成为爱好，但不再是主要职业。
+- 🔮 十年展望：动荡先来，之后行业更大、薪酬相当、形态接近产品工程；更多软件、更多制作者、几乎无人只是打字。
+
+### [AI 编程让 CI 成了瓶颈](https://linear.app/now/ci-bottleneck-reworked)
+
+Linear 因 AI 编码代理大幅加速交付，CI 成为新瓶颈，于是围绕“缩短 PR 等待时间”和“降低 runner 时间消耗”系统性优化 CI；虽然测试套件较年初接近四倍，PR 等待从 6 分钟以上降至 5 分钟出头，单个测试的 runner 时间约减半。
+
+- 🤖 AI 代理让写代码和发 PR 更快，但验证速度没同步跟上，CI 因此成为瓶颈，推高基础设施成本并拖慢反馈。
+- 🎯 Linear 优化目标：缩短 PR 在 CI 中的等待时间，并降低 runner 时间消耗；测试套件几乎四倍增长后仍实现整体提速。
+- 🏗️ 改进分为四类：升级基础设施和工具、优化门控作业、减少重复设置、提升测试执行效率。
+- ⚡ 基础设施升级：从 GitHub Actions 迁到第三方 runner，同类任务平均快 34%，`tsc` 快 52%；采用 `tsgo` 后每周 `tsc` 检查中位数降 73%。
+- 🧹 移除 lint 对 TypeScript 类型信息的依赖，ESLint 不再需要完整类型图，API lint 时间降 68%，全仓 lint 降 55%，内存占用也大幅下降。
+- 🔄 后续迁移到 Oxlint 更容易，因为纯语法规则更易移植，并进一步减少 lint 消耗的 runner 分钟。
+- 🚦 优化门控作业：change-detection 限制 fetch depth、采用稀疏/blobless checkout；中位时长从 26 秒降至 8 秒，p90 从 31 秒降至 12 秒，最慢从 138 秒降至 37 秒。
+- 🛡️ 替换 `actions/checkout` 为自定义 composite action，加入重试退避、低速超时和持久 git mirror，减少网络不稳定导致的 checkout 挂起。
+- ✂️ 将 cache marker 写入移出关键路径，改为测试分片完成后运行但不阻塞合并，为每个 API PR 和 merge-queue 条目节省 42 秒。
+- 📦 减少重复 setup：在 CI 基础镜像中预装 Postgres client 等共享依赖，避免每个测试分片重复安装。
+- 📥 按需安装依赖：在 pnpm monorepo 中只安装 API 包及其依赖，`pnpm install` 从 44-73 秒降至 16-18 秒。
+- 🗑️ 发现重建比缓存更快：`node_modules` 缓存命中约需 28 秒恢复，而过滤安装约 7.5 秒，因此放弃缓存；每分片 setup 从 110-140 秒降至 67-73 秒。
+- 🧩 避免重放未变更设置：数据库改用 schema 快照和 bootstrap，容器数据库设置从约 12 秒降至 1-2 秒。
+- 🧱 将 7 个短检查合并为 2 个作业并并发执行，基于 6 月用量每月节省约 87,000 runner 分钟，占 CI 总量 11.8%。
+- 🧪 测试执行优化：Vitest 按文件分片，拆分大测试文件；增至 8 分片后关键作业初测快约 19%、便宜约 19%，最慢分片从 5.25 分钟降至 4.33 分钟。
+- 🔗 最大单项提升：启用 `isolate: false` 的 opt-in Vitest 项目，让安全文件共享模块注册表；月省约 17%，最慢分片从约 300-379 秒降至 195 秒，总 API 分片 runner 时间从 32.8 分钟降至 22 分钟。
+- ⚠️ 共享模块状态也是正确性风险最高的优化，需要每个文件显式 opt-in、补充 teardown，并把不安全文件留在隔离项目中。
+- 📈 分片受 setup 固定成本限制；setup 优化后 8 分片才可行，之后 8 分片总 setup 约 7.5 分钟，低于原先 4 分片的 8.3 分钟。
+- 🔮 若未进行这些优化，今天测试套件大约需要 11 分钟，接近当前等待时间的两倍；每周新增约 2,000 个测试，CI 提速仍需持续进行。
+
+### [使用 DuckDB-Wasm 和 OPFS 在浏览器中实现持久化数据库](https://duckdb.org/2026/09/18/opfs-wasm)
+
+DuckDB-Wasm 现在可以借助浏览器 OPFS 创建持久化数据库，使 `.duckdb` 文件在页面刷新和浏览器重启后仍可打开；文章介绍了打开数据库、使用数据文件、文件处理模式、持久性保证、导出方法及注意事项。
+
+- 🗂️ 背景：早期 DuckDB-Wasm 数据只存在 Wasm 内存中，持久化需手动序列化到 Parquet 并存入 IndexedDB；现代浏览器 OPFS 提供按源隔离、支持随机读写的文件系统。
+- 🚀 用法：通过 `opfs://analytics.duckdb` 和 `READ_WRITE` 调用 `db.open()`，之后可正常建表、插入和查询，数据会写入带 WAL 和检查点的普通 DuckDB 文件。
+- ⚠️ 版本坑：npm `latest` 的 1.33.1-dev57.0 会创建 OPFS 文件但不写入，导致无法持久化；应固定 1.32.0 或使用 `next` 标签的 1.33.1-dev64.0 及更高版本。
+- 📦 数据文件：远程 Parquet 可在首次加载时通过 HTTP range 请求读入 OPFS，之后从本地读取；也可用 `COPY` 将聚合结果写入 `opfs://cache/...parquet`。
+- 🗃️ 文件处理：`opfs: { fileHandling: 'auto' }` 会自动注册 SQL 中的 `'opfs://...'` 字面量；手动模式则用 `registerOPFSFileName()` 和 `dropFile()`，避免每条语句重复获取 OPFS 句柄。
+- 💾 持久性：写入先进入 WAL，默认在超过 16MB 阈值、手动执行 `CHECKPOINT` 或干净关闭时写入主文件；浏览器标签可能被强制终止，建议每批写入后执行 `CHECKPOINT`，或设置 `checkpoint_threshold = '0KB'`。
+- 🔒 存储限制：OPFS 仍可能被浏览器在磁盘紧张或长期未访问时清除；它应被视为快速本地缓存和工作状态，真实数据应保存在 DuckLake、S3 等稳定位置。
+- 📤 导出：DuckDB-Wasm 尚不能直接移动 OPFS 文件，但可用 OPFS API 读取 `.duckdb` 文件用于下载，或用 SQL `COPY ... TO 'opfs://export/...parquet'` 导出 Parquet。
+- ✅ 结论：建议批量写入后检查点、提供数据库下载能力，并阅读单文件单句柄、SQL 重命名限制等文档说明；这让本地优先分析应用无需服务器、IndexedDB 封装或自定义序列化。
+
 ## 工具
+
+### [Perry](https://www.perryts.com/)
+
+Perry 是一个将 TypeScript 直接编译为原生可执行文件的工具链，通过 SWC 解析、LLVM 生成机器码，静态链接自研运行时与 GC，无需 Node.js 或外部 JavaScript 引擎即可运行于桌面、移动、可穿戴、电视及 Web/WASM 等平台。
+
+- 🚀 **核心定位**：Perry 把 TypeScript 编译成原生 GUI 与 CLI 应用，覆盖 macOS、iOS、iPadOS、visionOS、tvOS、watchOS、Android、Wear OS、Windows、Linux 与 Web/WASM，共 11 个正式目标，HarmonyOS 为独立预览。
+- ⚙️ **编译流程**：TypeScript → SWC 解析 → Perry HIR（单态化）→ LLVM 代码生成 → 原生二进制，全程无中间 JavaScript。
+- 📦 **无外部引擎**：Perry 运行时与垃圾回收器静态链接进各平台二进制，默认不依赖 Node.js、Bun、Deno 或 V8；可选 `--enable-js-runtime` 启用 V8 回退以兼容部分 npm 包。
+- 💾 **体积与启动**：Hello World 约 330 KB，Mango 应用约 7 MB；macOS 运行时基准约 3.2 ms（Apple M 系列）。
+- 🧵 **真多线程**：提供 `parallelMap`、`parallelFilter`、`spawn` 等真实 OS 线程，默认拒绝可变捕获，配合 SharedArrayBuffer 与 Atomics 做共享内存协调。
+- 🎨 **原生 UI 组件**：35+ 原生控件映射到 AppKit、UIKit、GTK4、Win32、Android SDK、SwiftUI（手表）及 Web 的 DOM/CSS 桥。
+- 🌍 **编译期 i18n**：自动提取字符串、支持 30+ 区域 CLDR 复数规则，翻译在编译期校验并烘焙进二进制。
+- 🧩 **插件与包生态**：模块可在构建期组合、静态依赖可变为直接原生调用；约 50 个原生包与 Node API 实现（mysql2、pg、bcrypt、axios、sharp、lodash 等），53 个模块被跟踪，覆盖约 97% Node 测试套件。
+- ✅ **语言支持**：完整支持数字、字符串、布尔、数组、对象、类、泛型、接口、联合类型、async/await、闭包等；Proxy、eval、动态 import、装饰器、弱引用等为部分或暂不支持。
+- 📊 **基准测试**：在阶乘、闭包、二叉树、JSON 往返等项目上优于 Node.js 与 Bun；在素数筛、矩阵乘法上落后；结果因工作负载而异，非通用速度承诺。
+- 🚢 **发布流程**：`perry publish` 支持构建、签名、打包、验证与提交，可发布到 App Store、Play Store 或直接分发；本地编译免费且为 MIT 许可。
+- 🛠️ **上手方式**：支持 npm/npx、Homebrew、APT、winget 或源码安装，安装后用 `perry doctor`、`perry compile main.ts`、`perry check ./src` 验证工具链与兼容性。
+- 🔗 **周边项目**：Coop 将 Perry 兼容的 TypeScript 目录转为原生应用库并通过 HTTP 服务，每台机器共享运行时与标准库，支持部署、检查与回滚。
+
+### [Electrobun 2.0](https://blackboard.sh/electrobun/)
+
+Electrobun 2.0 已发布，主打超快、极小、跨平台桌面应用；它统一支持多语言与多种渲染后端，并带来 Hutch CLI、Cottontail 运行时、Warren 响应式框架、30 个模板，以及差分更新、签名、双发布通道等内置能力。
+
+- 🚀 Electrobun 2.0 发布，用于构建超快、小巧、跨平台桌面应用，Hello World 压缩下载约 1 MB。
+- 🧩 同一框架支持 TypeScript、Zig、Rust、Go、Odin，渲染可选系统 WebView、Chromium 或 WGPU。
+- 📦 体积对比：Electrobun 原生主进程 1.28 MiB，Cottontail 约 15 MiB，典型 Electron 约 85 MiB（macOS ARM64、系统 WebView 渲染器）。
+- 🛠️ 新 CLI Hutch：统一管理包、脚本、打包、固定工具链与发布，替代 npm、Bun 和旧 Electrobun CLI。
+- ⚡ 新运行时 Cottontail：基于 Zig 与 JavaScriptCore 的 TypeScript 运行时，关键处兼容 Node.js/Bun 且更小。
+- 🎛️ 新 Warren：受 SolidJS 启发的细粒度响应式框架，可写入原生 GPU 表面，或驱动 WebView 内的 UI。
+- 🧬 六种主进程/语言：默认 TypeScript，可选 Zig、Rust、Go、Odin，共享核心、构建工具与打包流程。
+- 🗂️ `hutch electrobun init` 提供键盘导航模板选择器，内置 30 个起始模板。
+- 🔄 差分更新：zig-bsdiff 支持小至 4 KB 更新，可对接 S3、R2 或静态文件托管，无需更新服务器，并支持全量下载回退。
+- 🗜️ 发布包为 Zstd 自解压包，首次运行会验证、解压并启动。
+- 🔐 内建代码签名与公证：macOS 生成 DMG，Windows 生成 setup 可执行文件，Linux 提供自解压安装器。
+- 🎮 three.js 与 Babylon 适配器：可从 Cottontail/Bun 控制原生 GPU 窗口，以及合成到 WebView 上的表面。
+- 🌐 默认系统 WebView 保持体积小；可选打包固定 Chromium/CEF，以统一各平台渲染引擎。
+- 🧪 内置 Canary 与生产两个独立发布通道。
+- 🧰 30 个模板覆盖 Web 框架、应用骨架、GPU/原生、Warren UI 实验性界面等场景。
+- 🏢 Dash 桌面产品端到端基于 Electrobun 2.0：Hutch 构建、Cottontail 运行、Warren 渲染部分界面、二进制差分更新。
+- 📥 安装：macOS/Linux 使用 curl 脚本，Windows 使用 PowerShell；随后运行 `hutch electrobun init` 创建应用。
 
 ### [vercel-labs/vgpu](https://github.com/vercel-labs/vgpu)
 
@@ -34,11 +131,75 @@ vgpu 是 Vercel Labs 开源的跨运行时 WebGPU TypeScript 库，面向着色�
 
 ## 更新
 
+### [Node.js 26.10.0](https://nodejs.org/en/blog/release/v26.10.0)
+
+Node.js 26.10.0（Current）于 2026-09-22 发布，由 Antoine du Hamel（@aduh95）维护，包含多项 SEMVER-MINOR 新功能、大量错误修复与测试优化。
+
+- 🚀 **版本发布**：Node.js 26.10.0（Current）于 2026-09-22 发布，发布署名 @aduh95
+- 🔐 **crypto 新增功能**：新增 `crypto.parsePKCS12()`，并为 Web Cryptography 加入混合 KEM 支持
+- 📁 **ffi 新特性**：支持从挂载的虚拟文件系统（VFS）加载库
+- 📄 **fs 新 API**：新增 `fs.openAsBlobSync`，并改进 `FileHandle.read`、`cpSync`、`rmSync` 等行为
+- 🌐 **net 增强**：支持将 `net.BoundSocket` 发送到线程和子进程
+- 📊 **性能钩子**：实现 `SlidingWindowHistogram` 与 Histogram 的 QRDE 分析支持
+- 🗄️ **SQLite 更新**：`undefined` 现绑定为 NULL，并修复 URL 路径、用户自定义函数跟踪等问题
+- 🛠️ **工具函数**：新增 `util.markPromiseAsHandled`、`util.throttle` 和 `util.debounce`
+- 🔄 **流与网络修复**：修复 stream、HTTP/2、QUIC、TLS 等模块的多项稳定性与内存问题
+- 🧪 **测试改进**：扩展直方图测试覆盖，优化大量测试性能并减少 flaky 情况
+- 📦 **多平台下载**：提供 Windows（x64/ARM64）、macOS（Intel/Apple Silicon）、Linux（x64/PPC64LE/s390x/ARM64）、AIX 等安装包与二进制文件
+- 🔑 **完整性校验**：发布 SHA256 校验和与 PGP 签名，确保下载安全
+- ➡️ **下一版本**：Node.js 26.9.0（Current）
+
+### [Deno 2.9 | Deno](https://deno.com/blog/v2.9#deno-desktop)
+
+- 🚀 Deno 2.9 发布，核心亮点是实验性 `deno desktop`、更轻松的 Node 项目迁移，以及显著的性能与内存优化。
+- 🖥️ `deno desktop`：从脚本或 Web 框架项目生成原生桌面应用，UI 跑在 webview、逻辑跑在 Deno，最终编译为单个可分发二进制。
+- 🧩 支持自动检测 Next.js、Astro、Fresh、Remix、Nuxt、SvelteKit、SolidStart、TanStack Start、Vite SSR 等框架。
+- 🪟 内置原生桌面 API：`Deno.BrowserWindow`、`Deno.Tray`、`Deno.Dock`、原生对话框、`Deno.autoUpdate()`，并支持 webview 与 Deno 之间绑定函数。
+- 🌐 两种桌面后端：默认 `webview` 使用系统引擎，体积小启动快；`--backend cef` 内置 Chromium，跨平台渲染一致但体积更大。
+- 📦 发行产物复用 `deno compile`，支持 `.app/.dmg/.exe/.msi/.AppImage/.deb/.rpm`，可通过 `--target` 和 `--all-targets` 跨平台构建。
+- ⚡ 性能大幅提升：冷启动从 34.2ms 降至 17.3ms；`Deno.serve` realworld 吞吐提升 1.27x；realworld RSS 从 142MB 降至 64MB。
+- 🧠 启动优化包括：懒加载 `node:` 全局、限制 Node 引导到 Node workers、V8 代码缓存、压缩快照和 macOS chained fixups。
+- 🧬 HTTP 与热路径优化：新增 Deno 自有 HTTP/1.1 服务路径，`crypto.subtle`、`console`/`Deno.inspect` 部分迁移到 Rust。
+- 🎨 支持 CSS 模块导入：`import sheet from "./styles.css" with { type: "css" }`，返回 `CSSStyleSheet`，需 `--unstable-raw-imports`。
+- 🔄 迁移 Node 项目更顺滑：`deno install` 可直接读取 npm、pnpm、yarn、Bun 的 lockfile，并生成保留精确版本与完整性哈希的 `deno.lock`。
+- 🧩 支持 npm/yarn/Bun workspaces，并可自动迁移 `pnpm-workspace.yaml` 中的 packages、catalog、catalogs。
+- 🔧 当工具调用 `node` 时，Deno 可提供 PATH shim 转发到自身，并翻译 Node CLI 参数；可用 `DENO_DISABLE_NODE_SHIM=1` 禁用。
+- 🔗 依赖管理增强：`deno link`/`deno unlink` 稳定 `links` 字段，`deno list` 类似 `npm ls`，`preferPackageJson` 可让依赖写入 `package.json`。
+- 📚 新增 `jsrDepsInNodeModules`，可通过 npm 兼容注册表把 JSR 依赖安装进 `node_modules`；工作区成员也会生成自己的 `node_modules/.bin`。
+- 🛡️ 供应链安全：`min-release-age` 默认启用 24 小时；新增 `no-downgrade` 信任策略，防止维护者令牌被盗后的降级攻击。
+- 🧪 测试增强：内置 `t.assertSnapshot()`、`--changed`/`--related`、`--retry`/`--repeats`、覆盖率阈值、`--shard` 分片、`Deno.test.each` 参数化测试。
+- 🧱 `deno compile`：新增 `--include-as-is` 原样嵌入资源；编译产物可持久化 OpenKv/localStorage/caches；实验性 `--bundle`/`--minify` 显著缩小二进制。
+- 📄 `deno bundle`：新增 `--declaration` 生成汇总 `.d.ts`，并支持 `package.json` 中 browser 字段的对象形式。
+- 🧹 `deno fmt`：非 JS 格式化改用 lax 引擎；HTML/XML/SVG 默认格式化；CSS/SCSS/Less、SQL 得到新引擎；新增导入导出排序、JSON 尾逗号、`.editorconfig` 支持。
+- 🏗️ `deno task`：支持基于输入指纹的缓存与输出恢复、`--jobs` 并发控制、`--if-present`、`--env-file`、任务名排除组通配符。
+- 🟢 Node.js 兼容性升级到 Node.js 26：`process.version` 报告 v26.3.0，裸 Node 内置模块无需 flag，`node:test` 增强，NAPI 版本 10。
+- 🔐 Web Crypto 扩展：新增后量子 ML-KEM、ML-DSA、SLH-DSA，以及 ChaCha20-Poly1305、SHA-3/SHAKE/KMAC/Argon2；新增 `SubtleCrypto.supports()`。
+- 🌐 `Deno.serve` 变更：自动压缩默认关闭，需 `automaticCompression: true` 或环境变量开启；旧 `request.signal` 中止行为弃用。
+- 📡 OpenTelemetry 增强：支持采样器、span 属性/事件数量限制，自动插桩扩展到 `node:http2`。
+- 🧰 其他更新：Web Locks API、`navigator.userAgentData`、Happy Eyeballs v2、`fetch` priority、`Deno.watchFs` ignore、`process.kill` 自身无需 `--allow-run`、WASM global 导出、`deno watch` 子命令。
+- 🙏 感谢社区贡献者，完整 PR 列表可在 GitHub 查看；升级命令为 `deno upgrade`。
+
 ## 设计
 
 ## 其他
 
-### [](https://andiroberts.com/leadership-questions/give-feedback-to-someone-you-dont-manage)
+### [高级工程师死亡螺旋](https://sunilpai.dev/posts/the-senior-engineer-death-spiral/)
+
+高级工程师在新岗位、晋升或接手大项目后，常因冒充者综合征而急于证明自己，试图模仿更高级别工程师、独自推进宏大方案，结果逐渐失联、硬扛压力，最终滑向倦怠甚至离职的“死亡螺旋”；破解之道是暂时“降一级”、成为最好的队友，转向以势头和日常节奏为核心，通过持续沟通、可靠交付和修复关系来重建信任与耐力。
+
+- 🌀 触发点常是新工作、晋升或大项目：想立刻证明自己，于是设计更宏大的东西，甚至“扮演”更资深的工程师。
+- 🕳️ 人会开始长时间消失，站会只说“进展顺利、很快有东西可展示”，但实际拿不出成果。
+- 😰 内心压力升级为“我得更努力，把进度补回来”，随后失眠、漏餐、抑郁，工作和个人关系都受损。
+- 🔥 螺旋终点可能是倦怠休假、绩效改进计划（PIP）、被解雇或主动辞职。
+- 🌐 疫情、远程办公和编码代理让工程师更孤立、更少结构化支持，因此不能让同事不知道你在做什么。
+- 🗣️ 要主动分享工作，做到“大家都知道你在忙什么”，但不必显得惹人厌。
+- 🤝 从假设周围人都在善意合作开始：公司雇用的是现在的你，不是六个月后你想象中的自己。
+- ⬇️ 反直觉做法是先“降一级”，成为最好的队友，做 bug、杂活、文档和组织性工作，帮助团队。
+- 🚀 从结果导向转为势头导向：建立日常节奏，修复关系，获得耐力和信任。
+- 🏃 大项目不靠一次性大爆发，而像马拉松一样，每天、每小时持续稳定推进，直到成为肌肉记忆。
+- 📈 可靠性和信任会让队友与经理愿意交给你更大的任务；你在经营声誉，软件成果只是下游结果。
+
+### [我该如何向不是我下属的人提供反馈？](https://andiroberts.com/leadership-questions/give-feedback-to-someone-you-dont-manage)
 
 本文讨论如何向没有管理权限的人提供反馈：关键不是权威，而是“正当性”。应从共同工作的交界处出发，描述观察到的事实及其影响，避免评判对方，保持双向沟通，明确自己想要什么，并接受对方可能不同意或补充你未知的信息。
 
