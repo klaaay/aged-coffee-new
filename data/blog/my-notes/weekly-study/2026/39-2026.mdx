@@ -43,6 +43,7 @@ Node.js 现在内置了十二个功能，可以直接替代过去几乎每个项
 - 🧹 `fs.rm()` 与带 `recursive` 的 `fs.mkdir()` 替代 `rimraf` 和 `mkdirp`：均有同步版本，可用于 clean 脚本；但 `rm()` 只接受单个路径不支持模式匹配，且不加 `recursive: true` 删目录会报 ERR_FS_EISDIR。
 - 📘 TypeScript 类型擦除替代 `ts-node` 和 `tsx`：Node 24.12 起稳定，无需安装配置，不做类型检查也没有 source map；但仅支持可擦除语法，enum、namespace、构造函数参数属性等会抛错，Node 26 移除了 `--experimental-transform-types`，且 tsconfig paths 被忽略、不支持 .tsx。
 - ⚖️ 总体建议：内置方案只覆盖常见场景，旧包在缺失的功能上仍有价值，例如需要拦截器就用 axios、服务端用 ws、模块 mock 用 Jest；移除依赖前先阅读对应“短板”，并确认部署目标的 Node 版本（Node 22 上 sqlite、glob、env-file 等仍为实验性），在 engines 中固定版本。
+
 ### [响应式 iframe 在 Chrome 154 中的支持](https://developer.chrome.com/blog/responsive-iframes)
 
 Chrome 154 为 `<iframe>` 引入了“响应式尺寸”支持，允许 iframe 根据嵌入文档的固有尺寸自动调整自身大小。这一特性替代了过去需要手动测量内容、通过 `postMessage()` 传递尺寸并更新 iframe 大小的繁琐模式，非常适合嵌入第三方评论组件、高度多变社交媒体内容等场景。嵌入文档需通过 meta 标签显式选择启用，同时支持跨源限制和渐进增强，帮助开发者更无缝地嵌入外部内容。
@@ -297,6 +298,7 @@ Svelte Bits 是面向创意开发者的 Svelte 动画 UI 组件库，提供 130+
 - ⚡ 安装便捷：支持 jsrepo 或 shadcn，通过 `npx jsrepo add` 等命令把组件加入代码库。
 - 🌐 开源免费：是 React Bits 的 Svelte 移植版，作者为 davidhaz，并有 React Bits、Vue Bits 相关生态。
 - ⭐ 社区状态：Svelte 生态较新的创意组件库，当前 GitHub Stars 为 0，鼓励点星关注。
+
 ### [原子设计方法论](https://atomicdesign.bradfrost.com/chapter-2/)
 
 本章介绍“原子设计”方法论，借用化学与自然界的层级概念，将用户界面拆解为原子、分子、组织、模板和页面五个阶段，并把它们作为同时协作的思维模型，而非线性步骤，用来构建更清晰、可复用、能适应动态内容的界面设计系统。
