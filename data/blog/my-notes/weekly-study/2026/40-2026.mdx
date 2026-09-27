@@ -1,0 +1,46 @@
+---
+title: 2026-第四十周
+date: '2026-09-28'
+tags: ['WEEKLY-2026']
+draft: false
+summary: ''
+---
+
+`该周报主要为各个地方内容的汇总整理`
+
+<TOCInlineWithSticky toc={props.toc} />
+
+## 技术
+
+## 工具
+
+### [terminal-browser](https://github.com/zenbu-labs/terminal-browser?utm_source=gold_browser_extension)
+
+- 🖥️ terminal-browser 是一个可在终端内运行的真实浏览器，基于 Chromium，支持在终端中显示网页并与其交互。
+- 📦 支持 curl 安装：`curl -fsSL https://terminal-browser.sh/install | bash`，并用 `terminal-browser upgrade` 升级。
+- 🍺 支持 Homebrew 安装：`brew install terminal-browser`。
+- 🤖 提供 Claude Code 插件，安装说明见原文链接。
+- 🚀 常用命令：`terminal-browser` 启动，`terminal-browser open <url>` 打开网址，`--split right` 右侧分屏。
+- 🔐 支持 `terminal-browser open --ssh <user@host> <url>`，通过远程服务器代理所有网络请求。
+- 📋 管理命令：`ls` 列出已打开浏览器，`action` 提供与 agent-browser 兼容的 CLI，`upgrade` 升级版本。
+- 🧑‍💻 让编码 agent 和网站共享同一终端标签。
+- 🌐 让 agent 完全访问已打开的终端浏览器，从而具备使用网页的能力。
+- 📄 让 agent 生成 HTML 计划，并自动在终端浏览器分屏中打开。
+- 🔗 通过 SSH 轻松预览远程机器上运行的网站。
+- ⌨️ 提供 macOS/Linux 快捷键：退出、新标签、编辑 URL、命令面板、页内查找、刷新、前进/后退、缩放、Devtools、复制/粘贴/剪切、录制页面、元素选择、关闭弹窗等。
+- 🖼️ 依赖支持 kitty graphics protocol 的终端，如 ghostty、kitty、cmux、VS Code 等，用于在终端显示像素。
+- ⚡ 使用 Electron 离屏渲染 API 从 GPU 直接读取 Chromium 像素，实现流畅渲染且不丢帧。
+- 🖱️ 监听终端鼠标和键盘事件并发送合成事件给 Chromium；终端无法获取的输入由后台 Swift 应用非侵入读取，支持平滑滚动和触控板事件。
+- 🦀 外层 UI 由 Rust 图形引擎构建，React 自定义渲染器和 TypeScript 定义界面；浏览器 UI 与内容绘制到同一共享 canvas。
+- 📚 底层能力已抽象为 JS 库 `pixel`：https://github.com/zenbu-labs/pixel。
+- 🔗 SSH 推荐使用 `terminal-browser --ssh <ssh arguments>`：网站本地运行，网络请求经 SSH 由远程机器代理，可加载远程 localhost 网站。
+- 🧩 支持嵌入现有 TUI，参考 `examples/embedded`。
+- 🐧 路线图：Linux 支持已完成 ✅，后续包括 Chrome 扩展和设计模式。
+- 🤝 贡献规则：PR 描述必须由人类撰写且解释清楚，动机明确，尽量缩小 PR；本地开发建议询问 coding agent。
+- 🧩 新增终端/多路复用器支持时，参考 `terminals/src/terminals` 现有实现。
+
+## 更新
+
+## 设计
+
+## 其他
