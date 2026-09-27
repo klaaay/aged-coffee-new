@@ -12,6 +12,38 @@ summary: ''
 
 ## 技术
 
+### [使用异步生成器和 Promise.race() 实现更快的 SSE 响应 | www.thecodebarbarian.com](https://thecodebarbarian.com/sse-yield-star.html)
+
+SSE 允许 HTTP 服务器以事件流方式逐步向客户端发送数据，把传统一次性响应变成类似异步生成器的多次 `yield`；文章用 Express、MongoDB 和 Node.js 展示如何按查询完成顺序推送结果，并用 `yield*` 与 `asCompleted()` 解决异步生成器中无法从回调里 `yield` 的问题，从而提升首屏与感知加载速度。
+
+- 🌊 SSE 是 HTTP 服务器向客户端流式发送数据的方式，传统请求只有一个响应，而 SSE 可以逐个发送中间响应。
+- ⚡ 传统 HTTP 处理器类似普通 `async` 函数，SSE 则类似异步生成器函数，每次 `yield` 都会向客户端发送数据。
+- 🗄️ 示例中 Express 路由先并行执行用户和消息两个 MongoDB 查询，传统做法要等全部完成后再返回。
+- 🚀 使用 SSE 后，可以在每个查询完成时用 `res.write()` 立即推送，客户端不必等待最慢的查询才能开始渲染有用内容。
+- 🧩 作者偏好“无框架 JavaScript”，用异步生成器编写业务逻辑，并通过 `toRoute()` 把每次 `yield` 转成 SSE。
+- 🚧 异步生成器不能在 `then()` 回调里直接 `yield`，因此需要 `yield*` 和辅助函数 `asCompleted()`。
+- 🔁 `asCompleted()` 循环使用 `Promise.race()`，按 Promise 完成顺序逐个 `yield` 结果，而不是保持原始顺序。
+- ⚖️ `Promise.all()` 适合必须等全部数据完成后才能处理的场景；`asCompleted()` 适合只关心完成顺序的异步任务。
+- 📦 最终可以并行启动多个操作，谁先完成谁先 `yield`，让 SSE 在数据可用时立即发送。
+
+### [取代 npm 包的 Node.js 内置模块](https://flaviocopes.com/node-builtins/)
+
+Node.js 现在内置了十二个功能，可以直接替代过去几乎每个项目都会安装的 npm 包，涵盖数据库、测试、HTTP 请求、热重载、环境变量、命令行解析、终端着色、文件匹配、WebSocket、UUID 生成、文件系统操作和 TypeScript 运行等场景。文章逐一给出最短示例、在 Node 24（LTS）中的稳定程度以及每个内置方案相比原包缺失的能力，并说明 Node 22 与 24 之间的差异，最后建议在删除依赖前先确认部署环境版本并把版本固定到 engines 字段。
+
+- 🗄️ `node:sqlite` 替代 `better-sqlite3`：同步 API、用法相似，Node 24 中为 1.2 发布候选（24.15.0 起），Node 22 仍为 1.1；缺点是没有 `db.transaction()` 自动事务封装，需自己写 BEGIN/COMMIT/ROLLBACK。
+- 🧪 `node:test` 与 `node:assert` 替代 Jest 和 Mocha：零配置，`node --test` 自动发现测试文件，Node 20 起稳定；但代码覆盖率、模块级 mock 和 watch 模式仍是实验性，重度依赖模块 mock 的项目暂时保留 Jest。
+- 🌐 全局 `fetch()` 替代 `axios` 和 `node-fetch`：基于 undici，自带 Request/Response/Headers/FormData，Node 21 起稳定；但 404/500 不会抛错（需自行检查 `res.ok`），没有拦截器和自动重试，代理需 `--use-env-proxy`。
+- 🔄 `node --watch` 替代 `nodemon`：一条命令即可在文件变更时重启进程，Node 22 起稳定；默认只监听入口文件和被导入模块，`--watch-path` 仅支持 macOS 和 Windows，且不能与 `--run` 组合。
+- 🔐 `--env-file` 和 `process.loadEnvFile()` 替代 `dotenv`：支持引号、多行值和 `#` 注释，命令行标志还能解析 `NODE_OPTIONS`；但无变量展开（需 dotenv-expand），文件缺失会报错（可用 `--env-file-if-exists`），且 shell 中已设的变量优先。
+- ⌨️ `util.parseArgs()` 替代 `yargs`、`commander` 和 `minimist`：Node 20 起稳定，支持短选项和默认值；但类型仅支持 string/boolean，无 `--help` 生成、无子命令，未声明的选项默认抛错，正式对外 CLI 仍建议用 commander。
+- 🎨 `util.styleText()` 替代 `chalk`：Node 22.13 起稳定，支持样式数组组合、遵循 NO_COLOR/FORCE_COLOR；但输出非终端时自动去掉颜色码（测试时需 `validateStream: false`），且没有链式调用 API。
+- 📂 `fs.glob()` 替代 `glob`：Node 24 稳定（Node 22 为实验性），支持花括号扩展和 exclude；但 Promise 版返回异步迭代器而非数组，选项也远少于 glob 包。
+- 🔌 全局 `WebSocket` 替代 `ws` 的客户端部分：Node 22.4 起稳定，浏览器同款 API；但仅限客户端，服务端仍需安装 `ws`，核心中没有 WebSocketServer。
+- 🆔 `crypto.randomUUID()` 替代 `uuid`：全局可用，稳定；但只能生成 v4 随机 UUID，没有 v7（时间有序、适合做数据库主键）、validate、parse 和 v5 等能力。
+- 🧹 `fs.rm()` 与带 `recursive` 的 `fs.mkdir()` 替代 `rimraf` 和 `mkdirp`：均有同步版本，可用于 clean 脚本；但 `rm()` 只接受单个路径不支持模式匹配，且不加 `recursive: true` 删目录会报 ERR_FS_EISDIR。
+- 📘 TypeScript 类型擦除替代 `ts-node` 和 `tsx`：Node 24.12 起稳定，无需安装配置，不做类型检查也没有 source map；但仅支持可擦除语法，enum、namespace、构造函数参数属性等会抛错，Node 26 移除了 `--experimental-transform-types`，且 tsconfig paths 被忽略、不支持 .tsx。
+- ⚖️ 总体建议：内置方案只覆盖常见场景，旧包在缺失的功能上仍有价值，例如需要拦截器就用 axios、服务端用 ws、模块 mock 用 Jest；移除依赖前先阅读对应“短板”，并确认部署目标的 Node 版本（Node 22 上 sqlite、glob、env-file 等仍为实验性），在 engines 中固定版本。
+
 ### [我们现在都是产品工程师](https://seldo.com/posts/we-are-all-product-engineers-now/)
 
 AI 正在把写代码的边际成本推向零，软件开发生命周期中的编码、审查、维护、部署和运维将依次被代理接管；需求没有上限，因此行业不会萎缩，但“程序员”工作会转向产品工程：理解客户、定义“好”、做出令人愉悦的产品。未来十年动荡，更多人做软件，但几乎没人只是打字。
@@ -70,6 +102,32 @@ DuckDB-Wasm 现在可以借助浏览器 OPFS 创建持久化数据库，使 `.du
 - ✅ 结论：建议批量写入后检查点、提供数据库下载能力，并阅读单文件单句柄、SQL 重命名限制等文档说明；这让本地优先分析应用无需服务器、IndexedDB 封装或自定义序列化。
 
 ## 工具
+
+### [GitHub - Human-Agent-Society/reef：面向自我改进智能体的持续学习基础设施 · GitHub](https://github.com/Human-Agent-Society/reef)
+
+Reef 是首个面向自我改进智能体的持续学习开源基础设施，连接智能体推理、反馈、学习与版本化交付，支持训练模型权重（结合 Slime 和 SGLang）或优化智能体框架（提示词、规则、技能）。
+
+- 🎯 **核心定位**：让智能体通过与你交互的过程持续学习、不断变强，支持模型权重训练、框架优化和测试时训练三种路径
+- 🧩 **技术栈差异**：与推理引擎（vLLM、SGLang）和强化学习训练框架（Slime、veRL、AReaL）互补，独家提供版本管理、更新期间保持在线、以及权重之外（技能、框架）的演化能力
+- 🔄 **四步学习循环**：服务（处理请求并记录交互）→ 观察（将反馈匹配到记录）→ 成长（从合格记录生成更新）→ 提交（评估候选并按策略发布版本）
+- 📦 **安装方式**：支持通过 PyPI 安装（`uv pip install reef-infra`）或从源码安装，使用 LFS 管理产物和检查点
+- 🚀 **最小示例**：可作为纯推理服务器启动，兼容 OpenAI 和 Anthropic 接口，通过 `x-reef-scenario` 头创建场景，用 `x-reef-agent-record-id` 回执上报评分与反馈
+- 🛠️ **框架演化**：内置 Reefine 配方，仅需模型 API 端点即可用自然语言改进编码框架，支持 `/reefine`、`/versions` 等交互命令
+- 📚 **配方生态**：按任务类型选择配方，覆盖科学发现（TTT-Discover）、任务流持续学习（SAO、GEPA）、真实使用学习（OpenClaw-RL、SkillClaw）；Reefine 随包发布，其余位于 recipes/ 目录
+- 🏗️ **文档结构**：包含快速开始、HTTP API、编写配方、框架演化、模型演化、配方目录、核心循环和术语表
+- 🤝 **社区参与**：可通过 Discord、微信群、GitHub Discussions 交流，欢迎贡献配方与 RFC 设计，项目已获 4.7k Stars、402 Forks
+- 🙏 **关键依赖**：由 SGLang（高性能推理）、slime（模型权重训练）、cordis（框架演化）等项目提供核心支撑
+
+### [NeonBlade UI](https://neonbladeui.neuronrush.com/)
+
+NeonBlade UI 是一个免费开源的未来主义 React 组件库，提供霓虹美学、锐利边缘和完全的设计控制，帮助开发者快速构建未来感界面。
+
+- 🚀 包含 39+ 组件、2 个模板，npm 下载量超过 2.1k，完全免费且开源。
+- 🎨 未来主义美学：采用 clip-path、霓虹光晕和微动画，呈现高端动态视觉效果。
+- 📦 CLI 安装：可直接将组件安装到项目中，避免冗余依赖。
+- ⚡ 高度可定制：基于 Tailwind CSS，可完全控制样式、变体和颜色，无隐藏逻辑。
+- 💬 社区好评：Reddit 上 React 开发者称赞其“绝对棒”、“赛博朋克氛围”、“酷毙了”等。
+- 🧑💻 由 Vinay Kalwale 开发，属于 NeuronRush 项目，©2026。
 
 ### [Perry](https://www.perryts.com/)
 
@@ -180,6 +238,33 @@ Node.js 26.10.0（Current）于 2026-09-22 发布，由 Antoine du Hamel（@aduh
 - 🙏 感谢社区贡献者，完整 PR 列表可在 GitHub 查看；升级命令为 `deno upgrade`。
 
 ## 设计
+
+### [Hallmark——一种拒绝看起来像 AI 生成的设计技能](https://www.usehallmark.com/)
+
+Hallmark 是一个让 AI 生成网页时避免“AI 味”和模板化输出的技能：默认用 Build 生成页面，另有 Study、Audit、Redesign 三种显式能力，并围绕反模式、设计基础与安装方式提供完整工作流。
+
+- 🧪 示例覆盖多种一次性提示：酸面包 App、维修咖啡馆海报、蜂蜜农场落地页、孔版印刷展、实验字体作品集、SaaS、旅游预订、创意工作室、个人站、时尚品牌、API、唱片页、AI 工具、海报节网站等，主题与布局互不共享。
+- 🏗️ Build 是默认行为：先选宏结构，再配主题与增强，产出可用、已打标、经“slop 测试”的页面，并拒绝重复最近 3 个宏结构。
+- 🔎 Study 可读取截图或 URL 的结构而非像素，输出 DNA 卡；说“lock the DNA”还能生成可移植的 `design.md`，供其他 AI 工具使用，但不会识别字体或复制像素。
+- 🩺 Audit 只诊断不修改：针对页面按反模式目录给出排序后的问题清单，例如紫粉渐变 Hero、Inter 同时做展示与正文、全部居中、闪光 emoji 徽章、渐变胶囊 CTA 等。
+- 🔄 Redesign 保留内容与品牌，抛弃结构指纹，以新的版块节奏、标题位置和组件语气重建；“页面就是演示”。
+- 🚫 五大反模式包括：紫渐变 Hero、Inter 当展示字体、全部居中、图标方块功能卡、万能 AI 导航；Hallmark 分别以单锚色/单强调色、双字体配对、非对称布局、不对称卡片或去掉图标、按品类选导航来修复。
+- 📐 八项基础规则：展示/正文字体配对、OKLCH 调色与单一锚色、4 倍数命名间距、指数缓出与减少动效、主题化语气、非对称布局、可快速读懂的层级、克制（宁缺毋滥）。
+- ⚖️ 同一提示对比：无 Hallmark 的 Sonnet 4.6 会默认渐变、通用数据条、虚构 Trustpilot 评分和“10× faster”；加 Hallmark 后可选 Marquee Hero/Atelier/斜体 Fraunces，并使用真实素材、不编造数据。
+- 🛠️ 安装运行 `npx skills add nutlope/hallmark`，可被 Claude Code、Cursor、Codex 自动检测；之后直接让 agent 生成 UI，Hallmark 会自动附加。
+
+### [Svelte Bits - 适用于 Svelte 的动画 UI 组件](https://sveltebits.xyz/)
+
+Svelte Bits 是面向创意开发者的 Svelte 动画 UI 组件库，提供 130+ 个高度可定制、即插即用的动画组件与背景，基于 Svelte 5、TypeScript 和 Tailwind，开源免费并支持 AI 编程工具快速集成。
+
+- 🎨 面向创意开发者：高度可定制动画组件和背景，可让项目立即更出彩。
+- 🧩 组件丰富：包含 130+ 背景、文字效果、动画和 UI 模式，示例有 DotField、Line Waves、Blob Cursor、Magic Rings 等。
+- 🗂️ 分类清晰：分为背景、动画、文字动画、组件四类，便于查找。
+- 🛠️ 技术栈统一：每个组件都是类型化的 Svelte 5 组件，并用 Tailwind 编写样式。
+- 🤖 AI 友好：适配 Cursor、Copilot、v0，可描述需求后直接放入项目。
+- ⚡ 安装便捷：支持 jsrepo 或 shadcn，通过 `npx jsrepo add` 等命令把组件加入代码库。
+- 🌐 开源免费：是 React Bits 的 Svelte 移植版，作者为 davidhaz，并有 React Bits、Vue Bits 相关生态。
+- ⭐ 社区状态：Svelte 生态较新的创意组件库，当前 GitHub Stars 为 0，鼓励点星关注。
 
 ## 其他
 
