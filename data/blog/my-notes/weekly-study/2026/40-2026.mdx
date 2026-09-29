@@ -47,6 +47,22 @@ Cloudflare 通过 Cloudflare Codex 将工程标准集中为可供人和 AI 代�
 
 ## 工具
 
+### [Hallmark](https://github.com/nutlope/hallmark)
+
+- 🎨 Hallmark 是面向 Claude Code、Cursor 和 Codex 的设计技能，目标是让产出拒绝“AI 生成感”；由 Together AI 制作。
+- 🔁 现场演示包含 21 个主题、4 个动词，可按 T 循环切换。
+- 🧱 它会为 brief 选择宏结构，套用 21 个主题之一，并运行 57 道 slop-test 关卡及发射前自批评。
+- 🚫 拒绝 LLM 默认风格；不同 brief 生成的两页像不同网站，而不是同一模板换色。
+- 🏗️ 默认动词：构建新 UI，选择宏结构、应用规则、返回前跑 slop test。
+- 🔍 `hallmark audit <target>`：用反模式给现有代码打分，输出待办清单，不直接编辑。
+- ♻️ `hallmark redesign <target>`：丢弃结构，保留文案、信息架构和品牌，用不同指纹重建。
+- 🧬 `hallmark study <screenshot | URL>`：从欣赏的设计提取 DNA，如宏结构、字体搭配、色彩锚点；拒绝像素克隆和付费模板，可选生成 `design.md`。
+- 🖼️ 示例覆盖应用、API、唱片、AI 工具、茶单、蜂蜜农场、印刷展、字体工作室、SaaS、旅行、时尚、基础设施等；每页自包含 HTML+CSS，CSS 注释标记宏结构。
+- 🌐 完整示例可在 usehallmark.com 或 `site/_tests/` 浏览。
+- 🧵 Custom NEW：当目录主题都不适配时，从零定制调色板、字体和布局，仍走 57 道测试，无底层模板；协议在 `custom-theme.md`。
+- 📦 安装：`npx skills add nutlope/hallmark`，可重跑更新；也可复制 `SKILL.md + references/` 到 Claude Code、Cursor、Codex 对应目录。
+- 📚 规则在 `SKILL.md` 和 `references/`，示例在 `docs/recipes.md` 与 `docs/study-examples.md`；MIT 许可，可自由使用、fork、发布。
+
 ### [magpie](https://usemagpie.ai/)
 
 magpie 是一款免费、开源、原生的本地 AI 网关工具，运行在你自己的机器上（127.0.0.1:3425），可同时兼容 OpenAI、Anthropic 和 Google Gemini 等各家 API 协议，并双向翻译（含流式输出、工具调用与推理），让任意 AI 编程代理都能调用任意厂商的模型。它提供菜单栏界面、智能路由、订阅共享、多账号故障转移、逐代理用量统计，并附带 TUI 与 CLI，支持 macOS、Windows 和 Linux。
