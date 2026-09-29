@@ -447,6 +447,15 @@ Impeccable 是一套专为前端设计优化的 AI 工具集，旨在通过扩�
 - 📥 **快速集成** – 支持 Cursor、Claude Code、VS Code Copilot 等多种开发工具，可通过官网下载或命令行直接安装技能包。
 - 🎯 **解决痛点** – 针对 AI 训练数据中的设计偏见（如千篇一律的模板、可访问性不足等），提供系统化的纠正方案与案例示范。
 
+[Hallmark - 减少 AI 模板感的界面设计 Skill](https://github.com/nutlope/hallmark)
+
+一个面向 Claude Code、Cursor 和 Codex 的设计 Skill，根据需求选择页面结构、主题、字体与配色，并通过设计反模式检查和输出前自审，减少 AI 生成界面千篇一律的模板感。适合新建页面、审查现有 UI，以及重新设计已有站点。
+
+- 新建界面：结合需求选择布局与视觉主题；现有主题不适合时，可采用自定义设计。
+- 设计审查与改版：`hallmark audit` 输出问题清单，不直接修改代码；`hallmark redesign` 保留文案、信息架构和品牌，重新构建页面结构。
+- 参考风格提取：`hallmark study` 从截图或 URL 分析布局、字体搭配和色彩特征，可输出便于其他 AI 工具使用的 `design.md`。
+- 安装：`npx skills add nutlope/hallmark`；[在线示例](https://www.usehallmark.com/) 可用于查看设计效果。
+
 [gsap-skills](https://github.com/greensock/gsap-skills)
 
 GSAP Skills 是一套专注于提升 GreenSock 动画平台（GSAP）应用能力的技能指南与实践案例，涵盖了从基础动画到复杂交互的核心技术。
