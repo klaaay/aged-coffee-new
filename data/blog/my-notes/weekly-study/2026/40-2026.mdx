@@ -12,6 +12,25 @@ summary: ''
 
 ## 技术
 
+### [我们如何在两周内让 claude.ai 提速 3 倍](https://claude.dev/blog/how-we-made-claude-ai-faster/)
+
+Anthropic 工程团队在 2026 年 8 月的两周冲刺中，通过 Slack 中的人类与 Claude 协作、确定性实验室基准和 CI 棘轮，将 claude.ai 与桌面应用核心体验提升约 3 倍，合并 3000+ 变更且无客户影响事故。
+
+- 🚀 四大旅程占 95% 用户活动：启动应用、开始对话、加载对话、发送消息；13 项 p75 测量平均提速 3.1 倍。
+- ⚡ 具体结果：claude.ai 网页冷加载 3.1s→0.55s，Claude Code 新会话 0.8s→0.3s，Cowork 云会话 2.6s→0.73s；每天节省数万用户小时。
+- 🤝 使用 Claude Tag（beta，约 Opus 5.5），在一个 Slack 频道中监控部署、完善遥测、维护仪表盘、主动修复并提议项目；人类设定目标、取舍并批准变更。
+- 📊 用 Datadog MCP 分析，识别最高影响旅程，建立客户端/服务端可比的端到端基线；启动约 20 个项目并由 Claude 估算毫秒收益，第 3 天完成 12/13 目标。
+- 🧱 早期优化包括：把静态 composer 烤进 HTML、预编译 V8 code cache、保持 composer 挂载、悬停预取会话、将侧栏重渲染减少 90%。
+- 🔬 核心经验：能被测量就能被优化；用 Valgrind + node --predictable 测指令数，用 React commits、V8 调用数、布局/样式重算、DOM 变更等确定性指标做实验室基准。
+- 🛡️ 每个基准必须证明与 wall-clock 相关，否则丢弃；有效指标进入 CI 作为只能下降的棘轮。
+- 📉 示例：消息树组装消除重复 message ID 解析，指令 -48%、墙钟 -78%；状态行扫描器加首字符检查，指令 -31%、墙钟 -44%。
+- 🔁 工作循环：开线程→追踪并建基准→提交 PR→带 flag 部署→读真实用户数据→成功则下调棘轮，失败则关 flag 迭代→继续找下一处；同时运行 150+ 线程。
+- 🐛 发现并修复：侧栏抖动（31% 网页加载在可用后移动）、composer 输入路径 6900 hooks/900 store 订阅、:root:has() 每次 DOM 变更加 24ms、每天 50 万隐藏 reload、IndexedDB 重复克隆，以及 em dash 触发 UTF-16 使代码高亮变慢（1.0s→0.35s）。
+- 🚦 护栏：自动审查 + 人工批准、测试先行、短生命周期 feature flags；近 200 个 flag 超过一半已清理；静态 composer 有 jsdom、14 视口 1px、按键、0.1px 字段偏移等测试；高风险变更按员工→1%→全量推进。
+- 🎛️ 人类 steering 分三部分：Ambition 鼓励更大胆、Taste 由人类 owner 判断体验取舍、Direction 保持线程窄并聚焦排序/合并/止损。
+- 🖥️ 8.33ms 帧预算：用 headless Chrome DevTools begin-frame 实现确定性 120Hz，逐帧优化流式渲染，约 60 个 PR；长回复主线程阻塞 750ms→200ms、CPU 约 1/3、120fps，流式流畅度约 4 倍。
+- 📌 后续：claude.ai 和桌面应用目前约快 3 倍，棘轮防止回退；p95、其他旅程和超长对话仍有空间，并向上游 Electron、Chromium、Node.js 贡献。
+
 ### [咬紧牙关，把它发布出去](https://www.seangoedecke.com/grit-your-teeth-and-ship-it/)
 
 本文核心是“咬牙发布”：构建能力与交付能力是两种不同技能，优秀品味会放大对不完美的痛苦，使人拖延；但无论编程还是写作，都必须偏向发布，接受瑕疵，靠持续产出和动量而非单次结果来提升成功率。
@@ -127,6 +146,41 @@ Submarine 是一款免费、开源、快速且安全的 SSH/SFTP 客户端，支
 - 🧩 新增终端/多路复用器支持时，参考 `terminals/src/terminals` 现有实现。
 
 ## 更新
+
+### [Mermaid 12.0.0](https://github.com/mermaid-js/mermaid/releases/tag/mermaid%4012.0.0)
+
+Mermaid 12.0.0 是一次破坏性大版本：默认布局改为 ELK，默认主题/外观改为 redux-color / neo，新增 UML 用例图，并要求 ES2024、Safari 17.4+、Node 22.12+；若要保留旧渲染，需显式设置 `layout: 'dagre'`、`theme: 'default'`、`look: 'classic'`。
+
+- 💥 破坏性升级：要求 ES2024、Safari 17.4+、Node.js 22.12+，旧浏览器可能需要 polyfill 或转译。
+- 🧩 ELK 成为内置默认布局引擎：流程图、状态图、类图、ER、需求、用例等未指定 `layout` 时会从 dagre 切换到 ELK；可显式用 `layout: 'dagre'` 恢复。
+- 🎨 新默认外观：`redux-color` / `neo` 取代 `default` / `classic`，未配置的图会重新布局和配色。
+- 🆕 新增 UML 用例图：支持角色、用例、系统边界、关系、构造型、备注、JSON 表、类/样式、无障碍元数据和业务变体。
+- ⚙️ 布局配置增强：支持 `elk.stress`、`elk.force`、`elk.mrtree`、`elk.sporeOverlap`、`elk.box`、`elk.rectpacking` 等变体；容器可用 `@{ algorithm: … }` 指定自己的 ELK 算法。
+- 🧹 移除 `defaultRenderer`：流程图、类图、状态图的该选项失效，改用顶层 `layout: 'dagre' / 'elk'`；旧 legacy 渲染器 ID 移除。
+- 📦 构建变化：ESM 中 ELK 按需加载；IIFE 内联后约增大 500 kB gzip；tiny 构建不含 ELK，会回退到 dagre。
+- 🧭 配置粒度增强：`theme`、`look`、`layout` 可按图类型设置；优先级为 front matter/directive、`initialize()`、图类型默认、全局默认。
+- 🌈 主题增强：`redux-color` / `redux-dark-color` 支持类框、流程图子图、复合状态、泳道、用例图等按项、按容器或按角色轮换配色。
+- 🐛 关键修复：块图渐变边框、C4 边界端点、ELK 箭头日志、子图边框/标题留白、复合状态循环起始点、手绘填充和线跨避让等。
+- 📐 图形与标签修复：多边形边连接偏移半像素、stadium 标签不再挤成圆形、`</br>` 识别为换行、Circle/Delay/Display 节点按标签高度调整尺寸。
+- 🧪 性能与维护：深度缩进解析性能从约 1.4 秒降至约 30 毫秒；移除部分内部布局导出；更新 `@mermaid-js/parser@2.0.0`。
+- ✅ 兼容旧外观：初始化时设置 `mermaid.initialize({ layout: 'dagre', theme: 'default', look: 'classic' })`，或在前言中按图设置。
+
+### [宣布 Vite+ 1.0 | VoidZero](https://voidzero.dev/posts/announcing-vite-plus-1-0)
+
+Vite+ 1.0 正式发布，这是由 Vite、Vitest、Rolldown 和 Oxc 背后的团队打造的统一 Web 开发工具链。它采用 MIT 开源许可，接近每周两百万下载量，通过单条命令 vp 统一管理 Node.js 运行时、包管理器和前端工具链。Vite+ 并非框架、包管理器，也不是 Vite 的替代品，而是一个框架无关的整合方案，将已有工具组合成经过测试的单一技术栈，配以单一配置文件和一致的命令集，支持从 React 应用到大型 monorepo 的各类项目。
+
+- 🚀 **核心定位**：Vite+ 为 Web 开发提供单一入口，将现有工具整合为统一技术栈，拥有单一配置文件与一致的命令体系，且项目本身无需使用 Vite 也能采用。
+- 🛠️ **九大命令覆盖本地开发周期**：包括 vp create（脚手架）、vp install（依赖安装）、vp dev（开发服务器）、vp check（格式化/检查/类型检查）、vp test（测试）、vp build（生产构建）、vp pack（库构建与独立二进制）、vp run（带缓存的 monorepo 任务运行器）、vp env（Node.js 版本管理），全部由根目录的 vite.config.ts 统一配置。
+- ⚡ **性能大幅提升**：底层工具以 Rust 编写，Oxlint 比 ESLint 快 50 至 100 倍，Oxfmt 比 Prettier 快最高 30 倍，Vite 8 借助 Rolldown 显著加快构建速度。
+- 📦 **告别工具链维护**：单个 vite-plus 依赖可替代 vite、vitest、eslint、prettier、tsup、turbo 等一整套依赖及其插件配置，升级只需一次版本号变更且作为整体经过测试。
+- 🔄 **跨仓库一致体验**：内置 vp 命令在任何项目中含义相同，项目自定义脚本通过 vpr 运行，方便新成员和 AI 代理上手。
+- ⏩ **CI 更高效**：vp run 记录任务实际使用的文件、参数与环境变量，未变更任务可即时重放缓存；setup-vp 将 Node 环境、包管理器与依赖缓存步骤合并为单一操作。
+- 🔓 **无锁定风险**：可继续使用喜爱的 Vite 插件和包管理器，vp run 的缓存同样适用于任意脚本。
+- 🆕 **Beta 以来的更新**：新增 GitLab CI/CD 的 setup-vp、支持 tsup 迁移、提供 Homebrew 和 Docker 镜像、新增 vp toolchain、vp env doctor、vp hooks 与 vp staged 命令；Vitest 5 稳定，Vite 8.1 发布实验性 Bundled Dev Mode，Oxc 获得原生 React Compiler 支持。
+- 🌍 **采用情况**：接近两百万周下载量，超过 2600 个公开仓库依赖 vite-plus；用户包括 Tiptap、Dify、vinext、BlockNote、Inkline、npmx、hono 等，其中 Tiptap 已用 Vite+ 替换其原有的 Vite、Vitest、tsup 和 Oxc 组合。
+- 📥 **快速开始**：macOS/Linux 使用 curl -fsSL https://vite.plus | bash，Windows 使用 PowerShell 脚本安装；随后运行 vp create 新建项目，或用 vp migrate 迁移现有项目（迁移前会展示计划，生产项目建议先阅读迁移指南，也可使用迁移提示词配合编码代理）。
+- 🔮 **未来规划**：远程缓存、更深入的 monorepo 诊断、vp release 和 vp docs 等功能将在后续版本中推出。
+- 🙌 **社区共建**：Vite+ 由国际核心团队与社区共同开发，半数核心成员来自社区，感谢众多贡献者的审核、修复与功能提交。
 
 ## 设计
 
