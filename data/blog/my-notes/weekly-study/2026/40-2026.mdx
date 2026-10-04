@@ -66,6 +66,46 @@ Cloudflare 通过 Cloudflare Codex 将工程标准集中为可供人和 AI 代�
 
 ## 工具
 
+### [livenerf](https://github.com/ninjahawk/livenerf)
+
+livenerf 是一个长期、尽量确定性的基准测试，用于检测前沿模型在发布后是否悄悄变差，尤其回应 Anthropic 模型被“削弱”的传闻。它从 Claude Opus 5.5 发布后启动，每天运行 30 天，使用 Claude Max 订阅通过无头 Claude Code，冻结提示词、固定 CLI、精确评分器和原始日志，并用统计方法度量能力漂移。
+
+- 🎯 目标：检测模型发布后是否出现真实能力漂移或静默降级，并区分变化与噪声。
+- 📅 时间线：Opus 5.5 于 2026-09-22 发布；Day 1 为 2026-09-24，运行 30 天，前 10 天为基线；截至 2026-10-01 已收集 8/30 天。
+- ⚙️ 运行方式：通过 headless Claude Code（`claude -p`）和 Claude Max 订阅运行，无需 API key；固定 CLI 版本 2.1.280，并关闭自动更新。
+- 🔬 确定性设计：冻结系统提示词、固定 CLI、使用纯函数评分器、保存原始 `.eval` 日志，统计漂移基于数千个样本。
+- 📊 统计框架：基于 UK AISI 的 Inspect，遵循 Anthropic 的《Adding Error Bars to Evals》，使用配对每题差异和聚类标准误。
+- 🧩 面板筛选：从 2,336 道 GPQA Diamond、MMLU-Pro、竞赛数学和 AIME 题中筛出 78 道模型有时对、有时错的题。
+- 🧮 检测能力：每日运行整个面板可检测约 7.5 个百分点/10 天窗口的准确率变化，成本约为每周计划额度的 3.6%。
+- 🧪 验证结果：正对照显示低/中 effort 会显著减少输出 token 并降低准确率；A/A 检查验证误差棒可靠。
+- 🚫 已知限制：无法区分 Opus 5 与 Opus 5.5 的同族模型替换；问题中有 8 个答案键疑似错误、30 个模糊题，但未删除，改用预注册敏感性分析。
+- 🛡️ 安全分类器：有时会以 Opus 5 回答或拒绝生物/数学题；这些样本被拒绝并计数，相关题目排除。
+- 📈 主要指标：配对每题分数差异对比基线；次要指标是每样本输出 token 数，可能先于准确率显示“思考变少”。
+- 🔒 预注册规则：数据收集前公开 `PREREGISTRATION.md`；判定变化需两个连续 10 天窗口 99% 区间排除零、效应至少 3 点、且控制组不移动。
+- 🧠 双组设计：主面板测量 Opus 5.5；对照组用 `claude-opus-5` 每天跑 GPQA 题，用于排除 harness 或平台变化。
+- 🛠️ 使用流程：需要 Python 3.11+、`uv` 和已登录的 Claude Code；依次运行校准、设计、验证、提交并启动每日收集，支持 Linux/macOS/Windows。
+- 📌 测量对象：Opus 5.5 通过 Claude Code 订阅服务，而非原始 API；发布周基线只是参考点，不假设降级机制。
+- 🤝 贡献与披露：任务须可精确评分、位于 30–70% 区间且足够便宜；变更会创建新版本；PR 需披露 LLM 贡献，冻结面板题目保持私有。
+
+### [harness-sdk](https://github.com/strands-agents/harness-sdk)
+
+Strands Agents 是一个开源 SDK，用模型驱动方式在 Python 和 TypeScript 中只需少量代码即可构建和运行生产级 AI 代理；本仓库是包含 harness、SDK、CLI、文档与治理材料的 monorepo。
+
+- 🧩 核心定位：适合原本需要手写 agent loop 的场景，SDK 在自身进程运行，无需托管控制平面。
+- 📦 仓库结构：包含 harness-py、harness-ts、strands-cli、strands-py、strands-ts、site、team、test-infra 等目录。
+- ⚡ 快速开始：推荐使用 Strands harness，通过 `create_harness()` 或 `createHarness()` 获得带基准默认配置的完整代理。
+- 🚀 安装方式：Python 可 `pip install strands-harness`，TypeScript 可 `npm install @strands-agents/harness`。
+- 🧰 SDK 深入：Python 需 3.10+，安装 `strands-agents` 与 `strands-agents-tools`；TypeScript 需 Node.js 22+，安装 `@strands-agents/sdk`。
+- 🔄 模型无关：一等支持 Amazon Bedrock、Anthropic、OpenAI、Gemini，并支持更多提供商和自定义模型。
+- 🛡️ 生产控制：内置生命周期控制、token 预算、取消、停止原因、guardrails、steering，以及可拦截每步的 hooks。
+- 🔌 内置能力：MCP、流式输出、多代理模式、结构化输出、记忆、会话、追踪和评估。
+- 🧭 可观测性：agent loop 默认追踪每个决策，hooks 可记录、验证或重定向任一步骤。
+- 👨‍💻 编码代理集成：提供 Strands skill，Claude Code 可通过 `.claude/skills/strands` 自动发现。
+- 📚 文档与社区：文档位于 `site/`，发布在 strandsagents.com；Discord 可联系团队与用户。
+- 🛠️ 开发方式：Python 用 hatch 测试与格式化，TypeScript 用 npm 构建与测试，文档站用 npm run dev。
+- 📈 社区指标：约 8.6k stars、1.3k forks、2,845 次提交、541 个 issues、369 个 PR。
+- 📜 许可证：项目采用 Apache License 2.0。
+
 ### [EmDash 1.0](https://emdashcms.com/blog/emdash-1-0)
 
 EmDash 1.0 正式发布，这是一个基于 Astro 构建的稳定、免费且开源的 CMS，历经六个月开发与生产环境验证，现已准备好服务于从个人博客到大型生产站点的各类需求。
@@ -164,6 +204,23 @@ Submarine 是一款免费、开源、快速且安全的 SSH/SFTP 客户端，支
 - 🧩 新增终端/多路复用器支持时，参考 `terminals/src/terminals` 现有实现。
 
 ## 更新
+
+### [Panda CSS 2.0](https://panda-css.com/blog/panda-css-v2)
+
+Panda CSS 2.0 正式发布，最大的变化是编译器完全用 Rust（基于 Oxc）重写，但样式 API 保持不变；性能大幅提升，同时带来可发布设计系统、新工具函数、官方 ESLint 插件等新特性，升级需注意 ESM-only、Node 22+ 及若干配置与 CSS 输出变更。
+
+- 🚀 **核心重写**：编译器从 Node/TypeScript（ts-morph）迁到 Rust + Oxc，CLI 与打包器用原生绑定，浏览器用约 490 KB 的 WASM 绑定，管线为 extract → encode → emit。
+- ⚡ **性能飞跃**：抽取快 15–37 倍；watch 模式重新解析快约 360 倍（每文件 650μs 降到 2μs 以内）；staticCss 在 29,000 条规则配置上从 25.7 秒降到约 0.3 秒，约快 85 倍。
+- 🧠 **类型更轻**：生成类型的类型实例化减少约 99%，tsc 内存少 21–25%，类型检查时间减少 40–60%；运行时因记忆化约快 4 倍。
+- 📦 **可发布设计系统**：用 `panda lib` 编写并发布 npm 包，消费端通过 `designSystem` 字段接入，无需在应用中重新抽取样式，支持跨配置、互相扩展。
+- ✨ **新样式工厂**：新增 `viewTransition()`、`firstThatWorks()`、`keyframes()`、`positionTry()`，用于视图过渡、带回退的有序值、组件局部动画与锚点定位回退。
+- 🎨 **新预设能力**：内置遮罩（mask）与滚动条（scrollbar）工具类，新增指针、用户校验、`inert` 等条件；变量改用 `@property` 注册，仅在真正使用时输出。
+- 🛠️ **CLI 与工具升级**：`panda doctor`、`panda analyze`、`panda debug`、`--profile`、`--include`、`panda init -i` 等；日志统一为 `--log-level`。
+- 🧩 **编辑器与 ESLint**：官方 `@pandacss/eslint-plugin` 提供无效 token、硬编码颜色、简写冲突等规则；类型服务插件与 LSP 为 `panda.config.ts` 提供真实补全与诊断。
+- 📚 **其他新增**：`@pandacss/preset-typography` 提供 `prose` 配方；MCP 独立为 `npx -y @pandacss/mcp`；Vite、webpack、Rollup、Bun 打包插件支持 `transform: true` 消除运行时。
+- 🔄 **升级要点**：Panda 2.0 仅支持 ESM，需要 Node 22+，`panda.config.ts` 基本沿用；hooks 移入 plugins，`createStyleContext` 拆分为 `createSlotRecipeContext` / `createRecipeContext`，`matchTag` 改为声明式 `jsxMatchTag`。
+- ⚠️ **移除与输出变化**：删除 `studio`、`eject`、`lightningcss`、`browserslist` 等 9 个配置及模板字符串写法；CLI 合并为 `panda doctor`；边框覆盖按属性而非源码顺序排序，`scrollbarWidth` 改为关键字取值。
+- 🧱 **渐进迁移提醒**：Panda 的 CSS 位于 `@layer` 中，未分层的旧样式会默认胜出；可运行 `postcss-cascade-layers` 去掉层级包装，或按路由、目录、团队划清边界。
 
 ### [Mermaid 12.0.0](https://github.com/mermaid-js/mermaid/releases/tag/mermaid%4012.0.0)
 
@@ -269,6 +326,22 @@ Vite+ 1.0 正式发布，这是由 Vite、Vitest、Rolldown 和 Oxc 背后的团
 - 🙋 **称呼读者为“你”**：用“你将收到邮件”，而非“用户将收到邮件”。
 
 ## 其他
+
+### [关于倦怠，你听到的一切都是错的](https://bscholl.substack.com/p/everything-youve-been-told-about)
+
+作者认为倦怠并非源于工作过度，而是缺乏可信动机；休息通常无效，真正有效的是把遥远目标拆解为近期、可信、有意义的里程碑，从而“工程化动机”。
+
+- 🔥 文章颠覆常识：倦怠不是因为太努力，而是因为目标太远、太不可达、太抽象。
+- ✈️ Boom 团队曾为 XB-1 亮相长期高强度工作，成功后获一周假，却仍抱怨倦怠。
+- 🧭 作者提出“满足窗口”：人需要在一段可信时间内看到有意义回报，才能持续保持动力。
+- 🍡 棉花糖实验说明满足窗口长短不同；创始人通常较长，多数人处于中间。
+- 🎯 只要窗口内有具体、可信、鼓舞人的目标，优秀的人愿意长期聪明而努力地工作，甚至很少休息。
+- 🚫 若窗口内没有目标，即使工作不重、刚休完假，也会感到倦怠。
+- 🛠️ 休息、充电不是根本解法，关键是工程化动机。
+- 🪜 作者把“飞行”这种遥远抽象目标拆成一系列近期里程碑，称为 Mission Success Events。
+- 🎉 例如首次起落架收放测试；约每月一个，达成后全公司共同庆祝。
+- 🔍 面对倦怠，应先检查动机而非工作量：团队被什么驱动？下个里程碑是什么？人们是否相信它可实现且有意义？
+- 🚀 工程化动机，是工程化超音速喷气机的第一步。
 
 ### [TBM 440：将人分门别类的问题](https://cutlefish.substack.com/p/tbm-440-the-problem-with-putting)
 
