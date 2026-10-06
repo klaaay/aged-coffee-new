@@ -368,6 +368,15 @@ Kami 是一个面向 AI 时代的文档设计系统 Skill，主打“好内容�
 
 ## 动画 / 多媒体 Skills
 
+[agent-sprite-forge - 2D 精灵动画与分层地图生成 Skills](https://github.com/0x0funky/agent-sprite-forge)
+
+一套以 Codex 为主要使用环境的 2D 游戏资产生成 Skills。通过自然语言描述需求，由 agent 规划制作流程、调用图像生成，再用本地脚本完成清理、切帧、对齐、校验和导出，适合制作游戏素材与可玩原型。
+
+- 精灵动画：`generate2dsprite` 支持角色、怪物、道具、法术和攻击特效，可输出透明精灵图集、独立 PNG 帧、动画 GIF 与元数据，也支持基于参考图生成变体。
+- 分层地图：`generate2dmap` 支持地面底图、场景参考图、道具包与透明道具提取，并结合遮挡排序、碰撞和触发区域组织地图。
+- 引擎衔接：提供 Godot 可编辑 TileMap 与独立场景物件的导出流程，仓库也展示了 Unity 和浏览器游戏原型。
+- 值得参考的制作链路：将图像生成与确定性的本地后处理结合，把原始图片整理成可复用的游戏资产。
+
 [spine-animation-ai](https://github.com/GenielabsOpenSource/spine-animation-ai)
 
 一个面向 Spine 2D 骨骼动画生产的 Claude Skill。它的重点不是教模型“怎么画动画”，而是把角色拆件、骨骼结构、部件定位、基础动作生成和预览产物串成一条可执行流水线，适合拿来研究 AI 如何直接介入 2D 角色动画制作。
