@@ -12,6 +12,46 @@ summary: ''
 
 ## 技术
 
+### [React 的新浏览器 API：仅在浏览器中渲染组件 - Certificates.dev](https://certificates.dev/blog/reacts-new-browser-api-rendering-components-only-in-the-browser)
+
+React Canary 新增 `browser` API，配合 `use()` 和 Suspense，让组件跳过服务端渲染、只在浏览器中渲染，从而避免 `localStorage`、`window`、DOM 等浏览器专属值引发的 hydration 不匹配。
+
+- 🌐 SSR 要求服务端 HTML 与首次客户端渲染一致；组件渲染时读取 `localStorage` 或 `window` 会导致服务端失败或 hydration 问题。
+- 🧩 `browser()` 从 `react-dom` 导入，必须与 `use()` 搭配使用：`use(browser('原因'))`；单独调用没有效果。
+- ⏳ 服务端遇到 `use(browser())` 时会停止渲染该子树，并使用最近的 Suspense fallback；浏览器中则返回 `undefined` 并继续渲染。
+- 🚧 Suspense 边界是必需的；浏览器 API 在服务端永远不会可用，没有 fallback 会导致服务端渲染失败。
+- 🔍 可选字符串用于说明组件为何需要浏览器，便于在日志中识别有意的浏览器专属渲染。
+- 🧱 fallback 会进入初始 HTML 并持续到 hydration，应提供有用状态并预留空间；边界应尽量靠近浏览器专属组件。
+- ⚠️ 旧方案有局限：`typeof window` 分支可能造成 hydration 不匹配；`isMounted` + Effect 会增加状态和额外渲染。
+- 🧭 与 `'use client'` 不同：`'use client'` 标记客户端组件边界但仍可在服务端出 HTML；`use(browser())` 明确让该子树跳过服务端渲染。
+- 💾 典型用例包括：从 `localStorage` 读取草稿、依赖 DOM 的代码编辑器、显示用户时区等浏览器专属数据。
+- 🧪 该 API 目前仅在 React Canary/Experimental 中可用；可安装 `react@canary` 和 `react-dom@canary`，并用 `--save-exact` 固定版本。
+- ✅ 结论：`browser` API 为首次有意义渲染依赖浏览器状态的组件提供了明确路径；服务端完成其余页面并发送有意 fallback，代价是 hydration 前显示 fallback。
+
+### [Claude Code mods](https://claude.dev/blog/getting-started-with-claude-code-mods/)
+
+Claude Code mods 是运行在会话内的小型 JavaScript/TypeScript 文件，可通过 hooks 观察、改写或扩展 Claude Code，并绘制终端或桌面 UI；教程从零构建约 80 行的 Token Weather，并展示 Blast Radius、Replay Theater、分享方式与最佳实践。
+
+- 🧩 mod 是 Claude Code 插件的模块，能监控事件、改变行为或绘制自定义界面。
+- ⚡ 无需先学 API：运行 `claude`，描述想要的 mod，并允许热重载即可开始。
+- 🔗 mod 本质是 hooks，事件如 `tool.call`、`turn.complete`、`session.start`、`ui.render` 都会进入链式处理。
+- 🎛️ hook 可采取三种动作：观察、改写事件，或直接拒绝/回答而不调用 `next`。
+- 🧱 与 settings hooks 不同，mod 加载一次并留在会话中，可保存状态、绘制动态 UI、注册命令和工具。
+- 🛠️ Claude Code 自身也用 mod 实现部分功能，例如 AGENTS.md 支持和 `/diff` 面板，源码在公开仓库。
+- 🌦️ 教程项目 Token Weather 在提示上方显示上下文窗口占用：天气图标、百分比、token 数、迷你图和上轮增量。
+- 📁 构建步骤包括创建插件目录、`plugin.json`、`hooks/hooks.json` 和导出 `register(on)` 的模块。
+- 🖥️ 第一个目标是 `AbovePrompt` 组件，通过 `ui.render` 返回 `Box`、`Text` 等元素。
+- 📊 使用 `$.session.usage()` 读取真实上下文数据；历史状态应放入 `$.state`，以在热重载后保留。
+- 📝 状态需要在类型契约中声明，如 `types/index.d.ts`，否则 `claude plugin validate` 会报错。
+- 📈 绘制时注意 `e.props`、`hasSurvey`、`bodyColumns`，并用单宽符号保证终端字体对齐。
+- ✅ 用 `claude plugin validate` 检查插件，用 `claude plugin test` 在真实运行时中测试 hooks 和 UI。
+- 📦 mod 通过插件市场分享，可用 `/plugin marketplace add`、`/plugin install`、`/reload-plugins` 安装。
+- 🔒 mod 运行在本机并拥有 Claude Code 同等权限，因此应只安装可信来源，并先阅读仓库。
+- 💥 Blast Radius 示例拦截危险 Bash 命令，预览影响并提供 Proceed/Cancel，必要时降级到提示上方显示。
+- 🎬 Replay Theater 示例记录 Edit/Write，回合结束后通过 `/replay` 或快捷键逐步查看 diff。
+- 🧠 四个习惯：依赖自动生成类型、从 `e.props` 读属性、热重载状态放 `$.state`、UI 不显示时用 `claude --debug` 查日志。
+- 💡 可继续做成本/速率表、团队规范提示注入、文件阅读地图、专注计时器、kubectl/terraform 防护等 mod。
+
 ### [单体优先](https://martinfowler.com/bliki/MonolithFirst.html)
 
 Martin Fowler 认为，新项目应优先采用“单体优先”策略：即使未来可能受益于微服务，也先从单体开始。因为成功微服务案例大多来自过大的单体拆分，而从零构建微服务常陷入严重麻烦；微服务适合复杂系统，但存在显著“微服务溢价”，早期应优先速度与反馈，待边界稳定后再逐步演进。
@@ -30,6 +70,44 @@ Martin Fowler 认为，新项目应优先采用“单体优先”策略：即使
 ## 工具
 
 ## 更新
+
+### [Video.js v10](https://videojs.org/blog/videojs-10)
+
+- 🚀 Video.js v10.0.0 于 2026 年 10 月 1 日正式 GA，结束 Beta/RC 阶段，稳定版可投入生产。
+- 🧱 v10 是底层重建，汇集 Video.js、Plyr、Vidstack、Media Chrome 和 Mux Player 的经验与贡献者。
+- 📦 默认包体积较 v8 减少约 60%，可组合架构让你只打包真正使用的功能。
+- ⚛️ 提供 React 一等组件、原生 HTML Web Components、TypeScript 与 Tailwind 支持，状态、UI 和媒体解耦。
+- 🎨 默认皮肤设计更完善，并可通过 Shadcn CLI 将皮肤源码加入项目，自由修改布局、控件和样式。
+- 🤖 面向编码代理优化，发布官方 Video.js skill，可用 `npx @videojs/cli agents skills` 安装。
+- 🌐 支持 HLS、DASH、YouTube、Vimeo、Mux 和 Cloudflare Stream 等多种源与服务。
+- 🧭 文档与安装流程重新设计，并提供从 Video.js v8、Mux Player、Media Chrome、Vidstack 迁移的指南。
+- 🧩 GA 新增标题显示、章节展示改进，以及 Compat 皮肤，浏览器兼容回溯至 Safari 16。
+- ⚙️ SPF 新流媒体引擎带来显著体积节省，但暂不支持广告或真正低延迟直播；这些场景可用 HlsJsVideo。
+- 📦 v10 以 `@videojs/react` 和 `@videojs/html` 发布；npm 上的 `video.js` 包目前仍是 v8。
+- 🆓 仍为 Apache 2.0 免费开源；作者邀请用户试用、迁移并反馈体验。
+
+### [ink-v8](https://github.com/vadimdemedes/ink/releases/tag/v8.0.0)
+
+Ink v8.0.0 发布：这是一次包含破坏性变更、新 API 和大量渲染、文本、输入、焦点及可访问性修复的重大更新，要求 React 19.3+。
+
+- 🚀 v8.0.0 由 sindresorhus 于 10 月 3 日发布，包含 Breaking、New 和 Fixes。
+- ⚛️ 破坏性变更：要求 React 19.3+。
+- 📏 `<Box>` 的 `minWidth` 和 `maxWidth` 现在只接受数字，不再支持百分比字符串。
+- 🔌 `stdin`、`stdout`、`stderr` 改为泛型 Node.js 流类型，`stdout.columns` 等 TTY 属性不再包含在类型中。
+- ⌨️ `useInput` 不再接收未识别的终端控制序列，例如鼠标报告、焦点事件、光标位置报告等。
+- 🆕 `<Box>` 新增 `contentOffsetX` 和 `contentOffsetY`，配合 `overflow="hidden"` 可构建可滚动视图。
+- 📐 `useBoxMetrics()` 和 `measureElement()` 新增 `clientWidth`、`clientHeight`，表示不含边框的内容尺寸。
+- 🌊 `render()` 的 `stdin`、`stdout`、`stderr` 可接受任意 Node.js 流，如 `PassThrough`、`Readable`、`Writable`。
+- ⚡ `incrementalRendering` 模式会跳过未变化行前缀，只写入变化部分，减少输出和闪烁。
+- 🔗 React DevTools 移除 `ws` 依赖，改用原生 `WebSocket`。
+- ↩️ 应用键盘区 Enter 现在可识别为 `key.return`。
+- 🖥️ 渲染修复：保留滚动回看、清屏后恢复帧、终端行数缩小时保留内容、恢复光标位置等。
+- 🧱 `<Static>` 修复：停止全清帧重放、恢复备用屏幕时重放、隐藏祖先输出、空白行、并发渲染等问题。
+- 📝 文本修复：多行文本逐行截断、自然宽度、控制字符清理、Tab/CRLF、ANSI 样式跨换行、组合字符、宽字符裁剪。
+- ⌨️ 输入修复：旧式键盘修饰键、SS3、Kitty 键盘解析、Ctrl+C 与普通输入同时到达、Meta 键解析、终端挂起时副作用。
+- 🎯 焦点修复：共享焦点 ID 视为一个 Tab 停靠点、`disableFocus()` 按文档模糊、自动焦点 ID 防冲突、空字符串可作焦点 ID。
+- ♿ 其他修复：屏幕阅读器输出、错误展示、`renderToString()`、`useWindowSize()`、动画暂停重置、文本缓存、Yoga 节点释放。
+- 🧭 迁移指南：升级 React 19.3+；宽高用数字计算；TTY 属性改用 `useWindowSize()`；`useInput` 不再解析终端控制序列。
 
 ## 设计
 
