@@ -10,6 +10,15 @@ summary: ''
 
 ## MCP 与环境桥接
 
+[REA - 面向 AI Agent 的应用分析与逆向工程工具](https://github.com/morluto/rea)
+
+REA（Reverse Engineer Anything）通过 MCP 和 CLI 将应用分析工具接入编码代理，支持检查原生二进制、JavaScript / Electron 应用、.NET 程序集和网站。适合研究现有应用的功能实现，让 Agent 根据分析证据解释工作原理，再结合自己的项目需求实现类似功能。
+
+- 分析流程覆盖反编译、实现逻辑追踪与功能重建，结论附带证据和局限说明；不承诺恢复原始源码或自动克隆整个应用。
+- 分析工具在本地运行，REA 不会将目标应用上传到托管分析服务；原生二进制分析依赖 Hopper 或 Ghidra。
+- 可通过 `npx rea-agents setup` 配置支持的编码代理及分析工具，向导会展示待修改内容并备份现有配置。
+- 适合关注 AI 辅助逆向工程、无源码应用分析，以及从功能研究到代码实现的开发流程。
+
 [codegraph - 语义代码图索引与本地 MCP](https://github.com/colbymchenry/codegraph)
 
 一个面向 AI 编码代理的本地代码语义索引工具，支持 Claude Code、Cursor、Codex 等多种工作台。它会在项目内构建 `.codegraph/` 索引，把符号关系、调用链和结构化上下文暴露给代理，减少盲目 `grep/read` 探索带来的 token 与工具调用开销。
