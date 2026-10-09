@@ -12,6 +12,38 @@ summary: ''
 
 ## 技术
 
+### [繁忙机器上的 Node.js 线程池](https://blog.platformatic.dev/more-threads-on-an-already-busy-machine)
+
+本文讨论了 Node.js 线程池自动扩容的问题：作者 Matteo Collina 反对根据 CPU 数量自动设置线程池大小，认为 `os.availableParallelism()` 只反映进程可用的并行能力，并不代表 CPU 真的空闲；在繁忙主机上盲目增加 worker 反而会拖慢事件循环、增加请求延迟。文章建议按实际测量结果手动调优，并在繁忙主机上同时关注吞吐量与慢请求，尤其对 bcrypt 这类 CPU 密集型任务更需谨慎。
+
+- 🧠 **核心异议**：反对"按 CPU 数自动决定线程池大小"，因为系统不清楚机器上还有谁在占用 CPU
+- 📊 **"可用"不等于"空闲"**：`os.availableParallelism()` 只估算进程可用的并行度，并不检查 CPU 是否真的空闲
+- ⚔️ **多进程竞争**：多个进程都读到 16 就各起 worker，会一起抢占同一批 CPU 时间，没有预留机制
+- 🐌 **nice 值不等于空闲**：降低到 nice 10 只是减少份额，仍会占用 CPU、内存与缓存带宽，还可能拉长请求完成延迟
+- 🖥️ **一 vCPU 的例外**：Nub 检测到 ≤1 vCPU 时仍保留 4 个 worker（10 是 nice 值，不是线程数），对容器配额而言仍可能过多
+- 📉 **gzip 实测反例**：2 MiB 输入、8:1 压缩下，1 worker + 1 job 达 49.3 MiB/s，4 worker + 4 job 只有 37.3 MiB/s，增加并发反而更慢
+- 💾 **等待存储与计算不同**：I/O worker 等待存储时几乎不耗 CPU，多起 worker 可能有收益；bcrypt 是计算密集型，无法享受这种好处
+- 🧪 **基准测试的矛盾**：Node.js PR 中更大线程池提升了 crypto 基准，却让某个文件系统基准变慢，不能据此一刀切定默认值
+- ✅ **结论与建议**：应针对具体应用在繁忙主机上测试，兼顾吞吐与慢请求；nice 值解决不了这个问题，且队列的 job/字节预算满时必须停止接收工作
+
+### [CSS 现在负责你的工具提示定位 - Matt Smith](https://allthingssmitty.com/2026/10/05/css-does-your-tooltip-positioning-now/)
+
+CSS 锚点定位让元素可跟随指定锚点自动定位，内置滚动/缩放重算和溢出翻转，适合 tooltip、popover 和下拉菜单，且多数场景无需 JavaScript。
+
+- 🧰 旧方案：用 `getBoundingClientRect()` 和 `top/left` 定位，需监听 `resize/scroll`，并手动计算溢出或翻转，或依赖 JS 库。
+- 🎯 新方案核心：给锚点设 `anchor-name`，给目标设 `position: fixed/absolute`、`position-anchor` 和 `position-area`，即可定位。
+- ♻️ 浏览器会自动在滚动、窗口调整时重新计算位置；仅适用于已绝对或固定定位的元素。
+- 🏷️ `anchor-name` 不必全页唯一，但每个锚点与其匹配目标之间必须唯一；组件复用时需为每个实例生成独立名称。
+- 📐 `position-area` 用 `bottom`、`top`、`bottom span-right` 等描述放置，替代手写 `top: calc()` 偏移。
+- 🔄 `position-try-fallbacks: flip-block, flip-inline` 可在溢出视口时自动翻转到另一侧，省去 resize 监听和手动检测。
+- 🪟 与原生 `popover` 配合可实现下拉菜单：自动置顶渲染、避免 `z-index` 争斗、点击外部轻关闭。
+- 📏 `anchor-size(width)` 可让下拉菜单宽度直接匹配触发按钮，无需 JS 测量。
+- 👁️ 锚点定位只解决“放在哪”，不解决“何时显示”；显示切换仍需 `:has()`、`popover` 或少量 JS。
+- 🧩 非兄弟元素可借助共同祖先上的 `:has()`，根据锚点状态显示注释。
+- 🧭 经验法则：相对特定元素定位用 `anchor-name/position-anchor`；相对自身容器用 `absolute + relative` 父级即可。
+- 🌐 现代 Chrome、Firefox、Safari、Edge 支持良好，但 Safari/Chrome 在回退定位边缘情况有差异，`popover` 默认 margin 可能干扰，旧浏览器需 `@supports` 回退。
+- ♿ 锚点关系是纯视觉的，屏幕阅读器仍按文档顺序朗读；`aria-describedby` 只能部分弥补，不应视为无障碍方案。
+
 ### [React 的新浏览器 API：仅在浏览器中渲染组件 - Certificates.dev](https://certificates.dev/blog/reacts-new-browser-api-rendering-components-only-in-the-browser)
 
 React Canary 新增 `browser` API，配合 `use()` 和 Suspense，让组件跳过服务端渲染、只在浏览器中渲染，从而避免 `localStorage`、`window`、DOM 等浏览器专属值引发的 hydration 不匹配。
@@ -69,6 +101,29 @@ Martin Fowler 认为，新项目应优先采用“单体优先”策略：即使
 
 ## 工具
 
+### [Pascal Editor](https://github.com/pascalorg/editor)
+
+Pascal Editor 是一个开源、本地优先的 3D 建筑编辑器，基于 React Three Fiber 与 WebGPU 构建，可在浏览器或 CLI 中运行，并通过 MCP 为人类和 AI agent 提供实用工作流。
+
+- 🏗️ 核心定位：开源 3D 建筑编辑器，面向 BIM、CAD、平面图、参数化设计与 AI agent 协作。
+- ⭐ 社区数据：约 24.7k stars、3.1k forks、135 watchers，采用 MIT 许可证。
+- 🌐 在线预览：editor.pascal.app 展示下一代 Pascal，包括爆炸视图、剖切、X-ray、漫游、交互与环境切换，但预览功能尚未进入开源版本。
+- 🎥 视频素材：六个原始视频可按 CC BY 4.0 用于教程、文章或社交内容，需署名 Pascal 并链接许可证。
+- 💻 本地运行：Node.js 22.13+ 下运行 `npx @pascal-app/cli editor`，CLI 会启动编辑器与认证 MCP 服务，项目默认存于 `~/.pascal/data/pascal.db`。
+- 🔌 MCP 与 agent：支持 `pascal mcp connect`，本地连接无需账号或 API key；每个本地 CLI 服务应只使用一个活跃 agent 客户端。
+- 🧠 Agent skills：通过 `npx skills add pascalorg/editor --skill pascal-3d --skill furniture-fit` 安装，也可作为 Claude Code、Codex 等插件使用。
+- ☁️ 托管 MCP：Claude 插件还包含 `pascal-hosted`，连接 `https://editor.pascal.app/api/mcp`，可选 Pascal API key 并存入系统钥匙串。
+- 📦 发布包：查看器与内置节点定义分离，需安装 `@pascal-app/core`、`@pascal-app/viewer`、`@pascal-app/editor`、`@pascal-app/nodes` 并加载 `builtinPlugin`。
+- 🧱 仓库架构：Turborepo monorepo，包含 Next.js 应用及 core、viewer、editor、nodes、cli、mcp、ui 等包。
+- 🗂️ 状态管理：`useScene` 管理场景节点与持久化，`useViewer` 管理查看器选择与层级模式，`useEditor` 管理编辑器工具与面板。
+- 🧩 核心概念：节点是以 `parentId` 连接的扁平字典；层级为 Site → Building → Level → Wall/Slab/Ceiling/Roof/Zone/Scan/Guide。
+- 🎛️ 渲染与系统：渲染器创建 Three.js 对象并注册到 sceneRegistry，系统通过 `useFrame` 处理 dirty nodes 来更新几何体。
+- 🖱️ 编辑器工具：包括选择、墙体、区域、物品、楼板工具，以及层级选择管理器和可视化数据流。
+- 🧱 插件机制：插件通过统一 `Plugin` manifest 提供节点类型、2D/3D 渲染、放置工具、检查器参数和面板；示例仓库为 `pascalorg/plugin-trees`。
+- 🛠️ 技术栈：React 19、Next.js 16、Three.js WebGPU、React Three Fiber、Drei、Zustand、Zod、Zundo、three-bvh-csg、Turborepo、Bun。
+- 🚀 开发与发布：`bun install`、`bun dev` 启动开发服务器（localhost:3002），`turbo build` 构建，发布由 GitHub Actions 统一 bump 七个包并按依赖顺序发布。
+- 🤝 贡献：欢迎 bug 修复、功能、文档和想法；新节点类型和侧栏面板建议以插件形式发布，安全漏洞按 SECURITY.md 报告。
+
 ## 更新
 
 ### [Video.js v10](https://videojs.org/blog/videojs-10)
@@ -112,6 +167,33 @@ Ink v8.0.0 发布：这是一次包含破坏性变更、新 API 和大量渲染�
 ## 设计
 
 ## 其他
+
+### [你如何应对那些强烈反对你观点的人？](https://lemire.me/blog/2026/09/30/how-do-you-deal-with-people-who-strongly-disagree-with-your-views/)
+
+有效沟通与理性讨论的关键在于：先理解对方，再通过提问厘清立场，寻找共识，并以可信度和恰当表达推进对话；同时用故事增强共鸣，坚决避免人身攻击。
+
+- 👂 先真诚倾听并确认理解：复述对方观点，转身面对他们，交谈时不看屏幕。
+- ❓ 多问真问题而非挑战：用提问厘清对方真正想法，暴露未经思考的立场，建立讨论基础。
+- 🤝 聚焦共同点：分歧常比想象中小，先建立广泛一致可避免冲突。
+- 📊 先建立可信度再表达观点：引用事实、数据、资料，事前做研究和反思，不空谈。
+- 🗣️ 使用适合议题的语言：学习并运用专业术语，同时解释清楚以保持易懂。
+- 📖 用故事说明：情感与理性同样重要，故事应真实并有硬证据支持。
+- 🛡️ 避免并不容忍人身攻击：若被冒犯，可指出感受、要求道歉，攻击“侮辱行为”而非回骂。
+
+### [可持续的 Web 职业，等这一切都过去之后](https://dbushell.com/2026/10/07/sustainable-web-career/)
+
+网络行业正经历非理性低谷，财务与职业前景承压，但人们仍需要网络。作者建议不要在没有后路时辞掉有薪工作，并认为应回归基础、修炼稀缺技能，等行业回暖时占据有利位置。
+
+- 📉 网络行业陷入阶段性困境，长期职业前景不稳，但网络需求本身并未消失。
+- 🍺 不要在没有备用方案时辞职；先熬过这轮风波，等待情况好转。
+- ♿ 无障碍是可持续职业重点：从第一天融入决策，学习指南，与真实用户测试，并尊重专家意见。
+- 🎨 深入学习 CSS：掌握层叠层、低特异性选择器等，别依赖 CSS-in-JS 等限制性抽象。
+- 🗣️ 沟通是稀缺软技能：简洁表达、敢于提问、提前处理顾虑、不指责，保持积极。
+- ✊ 拒绝法西斯主义：科技界极右与仇恨抬头，不要沉默，警惕否认威胁的人。
+- ⚛️ 不再值得投入 React：遗留框架、代码生成快于阅读、高薪岗位将减少。
+- 🔒 GitHub 已成负担：私有仓库用自托管 git forge（如 Forgejo），CI/CD 本地化或选独立服务，并学基础 git。
+- 📵 不要被影响者叙事主导：他们推销新奇事物，普通用户仍在使用网络，注意力经济不再重要。
+- 🧭 结论：网络是为人服务的创造；丢掉繁荣期积累的负担，回归基础，为需求回归做好准备。
 
 ### [TBM 436：基于张力的优先级排序（一种非框架）](https://cutlefish.substack.com/p/tbm-436-tension-based-prioritization)
 
