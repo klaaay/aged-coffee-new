@@ -28,6 +28,58 @@ summary: ''
 
 ## 更新
 
+### [迁移到 v5 - Hono](https://hono.dev/docs/guides/migrating-to-v5)
+
+Hono v5 保持核心精简，将运行时适配器拆分为独立包，并带来多项破坏性变更；本文列出从 v4 迁移所需的关键更新。
+
+- 📦 仅支持 ESM：CommonJS 构建被移除；Node.js 需 22.12 或更高版本，仍可用 `require()` 加载 ESM。
+- 🧩 运行时适配器独立成包：如 `@hono/bun`、`@hono/aws-lambda`、`@hono/vercel` 等；`hono/cloudflare-pages` 移除，推荐改用 Workers。
+- ⚙️ `onError()` 改为可路由中间件：签名从 `(err, c)` 变为 `(c, next)`，错误通过 `c.error` 读取；`notFound()` 支持路径和多个中间件。
+- 🧵 路由规则：注册会叠加而非替换，返回响应即停止，调用 `next()` 继续；路径相对 `basePath()`，不受 HTTP 方法影响。
+- 🚨 非 Error 抛出：字符串或普通对象会被包装为 `Error` 进入 `onError`，原值在 `c.error.cause`，字符串还会成为 `c.error.message`。
+- 🎨 `getColorEnabledAsync()` 移除：改用 `getColorEnabled()`，Cloudflare Workers 需传入 bindings；`logger()` 已自动处理。
+- ❓ `c.req.query()` 可能返回 `undefined`：类型变为 `Record<string, string | undefined>`，`queries()` 同理。
+- 📥 `c.req.json()` 返回 `unknown`：不再返回 `any`，需显式指定类型或配合 `c.req.valid()`。
+- 🚫 `c.json()` 对不可 JSON 序列化值抛错：`undefined`、函数或 symbol 会抛 `TypeError`，与 `Response.json()` 一致。
+- 🧭 通配符匹配统一：段尾 `*` 可匹配空，段中 `*` 不是通配符，单独 `*` 匹配一个非空段；RegExpRouter 可能回退 SmartRouter。
+- 🗑️ 移除废弃 API：`app.mount()` 改用 `mount` 中间件，`app.fire()` 改用 `@hono/service-worker`，`matchedRoutes`/`routePath` 改用 `hono/route`。
+- 🧱 SSG 与其他移除：`toSSG()` 钩子改由 `plugins` 传入；Bearer Auth 消息配置改名；`pathResolve`、`SSG_DISABLED_RESPONSE`、`getQueryStrings()`、`UnOfficalStatusCode` 等移除或更名；`timingSafeEqual()` 仅接受字符串。
+
+### [OpenCode 2.0](https://anoma.ly/notes/opencode-2-0/)
+
+OpenCode 2.0 是一次重大重构，基于数百万每日用户经验，带来大量新功能、性能提升和错误修复，目标是让代理系统更灵活地满足各种需求。
+
+- 🚀 服务架构：2.0 默认自动以单一后台进程运行，TUI、Web 界面和桌面应用都连接同一中心服务。
+- 🧩 编程接入：@opencode/client 可自动发现本地服务，支持 CLI 的 opencode api 命令，也可通过 /pair 或 opencode pair 连接其他应用。
+- 🔄 API 重写：旧 API 从零重建，支持几乎所有代理需求；OpenCode 能调用自身 API，例如把当前会话移入 git worktree。
+- 📦 客户端包：发布 @opencode/client，提供原生 JavaScript 和 Effect 客户端，适合脚本与定时任务。
+- 💻 Code Mode：@opencode/codemode 内置极简 JavaScript 解释器，把 MCP 服务器或 OpenAPI 端点转换为代理可调用的函数。
+- 🔗 工具编排：Code Mode 可单次往返调用多个工具、映射结果并继续调用；所有 MCP 服务器默认启用，减少上下文膨胀。
+- 🧵 后台子代理：主代理可把任务交给后台子代理并继续工作，支持自动或手动触发，甚至使用不同模型。
+- ⚙️ 后台 Shell：Shell 工具可异步运行长任务，完成时通知；可按 ctrl+b 把前台命令或子代理移到后台。
+- 🔌 插件系统：2.0 几乎所有功能都以内部插件实现，已有 80+ 插件；TUI 插件转为稳定，支持热重载和自写自用。
+- 🧰 SDK：@opencode/sdk 让 OpenCode 可作为库使用，复用 CLI 代码，可部署到服务器或 Durable Objects，并连接任意 OpenCode 客户端。
+- ⬆️ 升级方式：CLI 先确保在最新 1.x，再运行 opencode upgrade --major；桌面端下载最新版。
+- ⚠️ 破坏性变更：1.0 插件不再工作，Server API 完全不同，tui.json 配置移至 json；其他变化大多向后兼容，可让 OpenCode 按文档自动迁移。
+
+### [Bootstrap 6 Alpha | Bootstrap 博客](https://blog.getbootstrap.com/2026/10/08/bootstrap-6-alpha/)
+
+Bootstrap 6 Alpha 1 于 2026 年 10 月 8 日发布，是 Bootstrap 的一次重大现代化重构，围绕 Sass 模块系统、CSS 变量与 token maps、ESM-only JavaScript、现代浏览器特性和新工具链全面升级。它继续定位为面向人类与 AI 的开源设计系统，后续将分批介绍颜色主题、组件、网格、表单、前缀与工具类、JS 插件等变化。
+
+- 🚀 Bootstrap 6 首个 Alpha 版本发布，目标是让更多人、人类或 AI，更快更轻松地构建软件。
+- 🧱 Sass 全面转向 `@use` / `@forward` 模块系统，视觉定制改为 CSS 变量与 token maps，可通过 `$root-tokens` 和组件 token 映射覆盖，并支持运行时修改。
+- 🎨 新体系以 CSS 为优先：Sass 负责程序化生成变体、工具类和函数，CSS 负责视觉定制，几乎所有 v5 Sass 变量都变为 CSS 变量。
+- 🌐 浏览器基线大幅提高：要求 Chrome/Edge 130+、Firefox 132+、Safari 18+，使用 `light-dark()`、`:has()`、容器查询、`oklch()`、`color-mix()`、原生 `<dialog>` 等新特性，不再为旧浏览器提供回退、前缀或 polyfill。
+- 📦 安装方式：`npm i bootstrap@6.0.0-alpha.1` 或使用 CDN；JavaScript 仅支持 ESM，`<script>` 需添加 `type="module"`。
+- 🏷️ 响应式与状态修饰改为前缀写法：如 `.d-md-none` → `.md:d-none`，`.col-lg-6` → `.lg:col-6`，`.opacity-50-hover` → `.hover:opacity-50`，`.offcanvas-md` → `.md:drawer`。
+- 🧩 CSS 现代化亮点包括：CSS layers、`oklch()` / `color-mix()`、`light-dark()`、范围媒体查询、容器查询、原生 `<details>` / `<summary>` 手风琴、原生 `<dialog>`、`:where()`、`@property`、`content-visibility` 等。
+- ⚙️ JS 与工具链更新：插件 ESM-only，无 UMD 和 `window.bootstrap`；源码改为 TypeScript 并自带类型；Rolldown 替代 Rollup/Babel，Vitest + Playwright 替代 Karma，文档使用 Astro 7。
+- 🤖 面向人类与 AI 的配套：提供 `llms.txt`、`llms-full.txt` 文本文档，并在 `skills/` 目录加入代理技能文件，用于迁移、构建工具、组件编写等任务。
+- ♻️ Bootstrap 5 仍可用并受支持，将尽快发布 v5.4.0，之后再公布 Bootstrap 5 的终止支持日期。
+- 🧑🤝🧑 社区感谢：特别感谢共同维护者 Julien，以及所有贡献者、Open Collective 支持者、提交 issue 和 PR 的参与者。
+- 📝 后续反馈：目前仍是 Alpha，Beta 前仍可能明显变化；可通过 GitHub Discussions、Issues 或 Pull Request 提供反馈。
+- 🖥️ 其他更新：博客与 Icons 网站改版，新增搜索、分类页和布局；并推出私有 `@twbs/bui` 包用于共享 Bootstrap 文档组件。
+
 ## 设计
 
 ## 其他
