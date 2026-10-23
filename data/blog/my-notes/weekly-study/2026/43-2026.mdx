@@ -12,6 +12,38 @@ summary: ''
 
 ## 技术
 
+### [Web 上的压缩与合并](https://theconsensus.dev/p/2026/10/04/compression-and-concatenation-on-the-web.html?focus=1)
+
+本文探讨 Web 压缩与压缩流拼接：gzip、Brotli、Zstandard 在服务端预压缩、动态压缩及多段文件合并中的实际表现。重点结论是：压缩能减少传输字节，但拼接压缩文件不仅取决于格式规范，还取决于浏览器、curl 等客户端是否真正支持；gzip 虽可简单拼接但客户端兼容性差，Brotli 需额外工具或扩展，zstd 原生支持拼接且浏览器可直接解码。
+
+- 📉 **压缩目标**：减少服务端到客户端的传输字节；需在压缩率与压缩速度之间权衡，静态资源可承担更高压缩成本。
+- 🧭 **协商机制**：客户端通过 `Accept-Encoding` 声明支持的格式，服务端用 `Content-Encoding` 返回对应压缩内容。
+- ⚡ **静态预压缩**：对静态 HTML/CSS/JS 等可在构建时生成 `.gz`、`.br`、`.zst` 文件，避免请求时动态压缩的开销。
+- 🌐 **使用现状**：gzip、Brotli、zstd 是主要 Web 压缩格式；Brotli 在 CDN 流量中占比领先，gzip 在非 CDN 流量中仍占多数。
+- 🧩 **gzip 拼接**：命令行 `cat` 多个 gzip 文件后 `gunzip` 可还原，但 curl 可能报错，Chrome 只显示第一段并静默丢弃后续内容。
+- 🛠️ **gzip 安全拼接**：zlib 示例程序 `gzjoin.c` 可生成客户端可读的拼接文件，且无需重新压缩，但仅作为示例存在，主流语言缺少内建 API。
+- 🚫 **Brotli 默认限制**：Google Brotli 参考实现不支持 gzip 式直接拼接，简单 `cat` 后会产生损坏输入。
+- 🔧 **Brotli 变通方案**：rust-brotli 提供可拼接/可追加标志，并可在末尾追加特定字节，使 Google Brotli、curl 和浏览器都能解码；Google Brotli 的流偏移方案支持不完整。
+- ✅ **zstd 原生优势**：zstd 从设计上支持拼接，直接 `cat` 多个 `.zst` 文件即可被 zstd、curl 和 Chrome 正确解码。
+- 🔄 **规范演进**：文章关注的不仅是规范缺口，而是实现者如何在不产生“其他实现无法解码”的文件前提下扩展兼容性。
+
+### [CSS 的未来 ✨ • Josh W. Comeau](https://www.joshwcomeau.com/css/interop-2027/)
+
+Interop 2027 正在规划中，Mozilla 通过排名系统收集开发者最期待的 Web 特性；文章列出作者投票的 10 个 CSS 提案，多数已在 Chromium 实现，可作为渐进增强提前试用，若入选 Interop 有望加速跨浏览器普及。
+
+- 🌐 Interop 项目由主流浏览器厂商协作推进，能显著提升 Web 特性的跨浏览器支持率，Subgrid 就是成功案例。
+- 🧩 CSS 函数提案允许用 `@function` 定义可复用函数，并可结合 `calc()`、三角函数实现极坐标转换等复杂效果。
+- 🔲 `corner-shape` 支持 squircle、bevel、notch、scoop 等角形，且会改变实际 border-box，使边框、轮廓和阴影正确跟随。
+- ✏️ `border-shape` 可自定义直线、弧线和贝塞尔曲线组成的边框形状，并支持形状间动画。
+- ⚓ 锚点容器查询为 Anchor Positioning Level 2 增加回退位置检测，解决 tooltip 翻转后无法判断位置的问题。
+- ♻️ `inherit()` 函数提案允许读取继承值并用 `calc()` 修改，例如修正嵌套圆角，但目前尚无浏览器实现。
+- 🎬 滚动触发动画与滚动驱动动画互补，可在滚动到特定位置时触发关键帧动画，减少对 IntersectionObserver 的依赖。
+- ♿ `reading-flow` 和 `reading-order` 可让 Tab 顺序跟随视觉布局，改善响应式网格和 Flexbox 的可访问性。
+- 📏 `interpolate-size` 与 `calc-size()` 支持在 `height: 0` 和 `height: auto` 等关键字尺寸间动画，适合折叠面板。
+- 🧱 Gap decorations 通过 `rule`、`row-rule`、`column-rule` 为网格间隙绘制边框式线条，避免空单元格和背景色 hack。
+- 📌 滚动状态容器查询可检测 sticky 元素是否“粘住”，以及滚动容器是否还能向上/向下滚动，用于粘性头部和滚动渐变提示。
+- 🚀 截至 2026 年 10 月，这些特性多仅在 Chrome/Edge 支持，Firefox/Safari 尚未支持；作者建议用 `@supports` 渐进增强，并鼓励开发者参与 Interop 2027 排名投票。
+
 ### [速度的宗教——灰胡子的福音](https://graybeard.ing/the-religion-of-speed/)
 
 文章批判“速度宗教”：组织把快速行动当作认真、雄心与进步的证明，却常用忙碌和紧迫感掩盖模糊需求、半成品决策与责任回避；真正可持续的高效来自先理解问题、明确约束与责任，再果断执行，并区分合理紧迫与盲目仓促。
@@ -27,7 +59,40 @@ summary: ''
 
 ## 工具
 
+### [React DevTools for agents – React](https://react.dev/reference/dev-tools/react-devtools-cdt-mcp)
+
+该文档介绍实验性工具 `react-devtools-cdt-mcp`：它把 React DevTools 的组件树、Props、Hooks、Owner、源码位置和渲染耗时能力暴露给通过 Chrome DevTools MCP 操作浏览器的 AI 编码代理，帮助代理理解组件状态、来源与性能；它需在 React 初始化前导入，且仅建议用于开发环境。
+
+- 🧪 该功能属于 React 实验特性，基于 Chrome DevTools MCP 的实验性第三方开发者工具 API，工具与输出可能随版本变化。
+- 🧩 `react-devtools-cdt-mcp` 是运行在页面内的浏览器库，不是 MCP server，不需要加入 MCP 客户端配置；只需配置 Chrome DevTools MCP。
+- 🤖 它为 AI 编码代理提供类似 React DevTools 的视图：组件树、Props、Hooks、Owner、源码位置和渲染时序。
+- ⚙️ 安装方式为 `npm install --save-dev react-devtools-cdt-mcp`，并在应用入口文件最顶部、任何 `react-dom` 导入之前导入 `react-devtools-cdt-mcp/register`。
+- 🚨 必须在 React 初始化前加载；它会像 DevTools 扩展一样让 React 报告每次 commit，可能拖慢应用，因此只应包含在开发构建中。
+- 🛠️ 注册的 `react` 工具组包括组件树快照、按名称查找、按 uid 或 DOM 元素查询、父级与 Owner 栈、源码位置、性能分析开始/停止、trace 概览和 commit 报告。
+- 🆔 组件使用类似 `"r5"` 的短 uid 标识，跨工具和重渲染保持稳定，但页面刷新后会失效，需要重新获取。
+- 📦 每个工具返回可序列化的普通对象；失败时返回带 `error` 信息的对象；也可手动调用 `register(target?)` 安装 hook，并返回 `facade` 与 `unregister`。
+- 🔍 排障要点：确认已启用第三方开发者工具且页面导入了 register；组件树为空通常是导入太晚；源码位置/Owner 栈为空通常是生产构建；浏览器外导入会报错，应仅在客户端代码中使用。
+
 ## 更新
+
+### [发布 v10.0.0-alpha.6：WebGPU 优先 · pmndrs/react-three-fiber · GitHub](https://github.com/pmndrs/react-three-fiber/releases/tag/v10.0.0-alpha.6)
+
+R3F v10.0.0-alpha.6 发布，这是 v10 目前最大的 alpha，核心变化是默认转向 WebGPU，并对渲染器、TSL hooks、多 Canvas、物理时间步、React 19 支持和 ESLint 迁移工具做了系统性升级。
+
+- 🚀 v10.0.0-alpha.6 是迄今最大的 alpha，自 alpha 5 以来包含 200+ 提交，明确走“WebGPU 优先”路线。
+- 🖥️ 默认渲染器改为 WebGPURenderer，可回退 WebGL2；使用自定义 GLSL 或旧 WebGL 库时，从 `@react-three/fiber/legacy` 导入 `Canvas`。
+- 📦 核心不再直接导入 three，各渲染器独立打包，默认入口只加载 WebGPU，legacy 入口只加载 WebGL；`@react-three/fiber/webgpu` 已废弃。
+- 🧠 类型随入口变化：默认入口的 hooks 按 WebGPURenderer 类型，legacy 按 WebGLRenderer 类型；同时支持双渲染器的库可用 `@react-three/fiber/extension`。
+- 🧩 TSL hooks 移至新包 `@react-three/tsl`，包括 `useUniforms`、`useLocalNodes`、`useRenderPipeline` 等，并改进类型注册、依赖追踪和资源重建。
+- 🎛️ 多 Canvas 共享渲染器简化为 `primary` 和 `share` 属性，`scheduler` 也成为 Canvas 属性。
+- ⏱️ physics 阶段改为固定 1/60 秒时间步，保证不同刷新率下物理速度一致；可用 `state.overstep` 做插值。
+- ⚛️ 更好支持 React 19 的 StrictMode、Fast Refresh 和 `<Activity>`，卸载立即清理，运行时设置不被重渲染覆盖，并适配高 DPI 屏幕。
+- 🛠️ 多数材质属性变更不再需要手动 `needsUpdate`，如图片背景、`frameloop="demand"` 重绘等问题得到修复。
+- 🧹 `state.gl` 保留为 `state.renderer` 的别名；`onUpdate` 被移除；`<Canvas shadows>`、`primaryCanvas`、`scheduler` 等 API 有迁移变更。
+- 🧪 `@react-three/eslint-plugin` 升级到 1.0.0-alpha.6，规则从 2 条扩展到 20 条，并提供 v9 迁移配置和 `eslint --fix`。
+- 🔬 CI 新增基于 Dawn 的真实 WebGPU 设备像素测试，不再只依赖 mock 或手工浏览器验证。
+- ⚠️ 破坏性变更包括默认 WebGPU、TSL hooks 新包、shadows 配置方式、physics 固定步长、`useRenderPipeline` 卸载行为等。
+- 📥 安装命令为 `npm install @react-three/fiber@alpha @react-three/tsl@alpha three@latest`，要求 three >= 0.185.0、React >= 19.0 < 19.4。
 
 ## 设计
 
@@ -36,6 +101,20 @@ summary: ''
 https://figma.com/design/5gJsBEyypBoGo48GFRcd4F
 
 ## 其他
+
+### [你们所有人都应该多问很多问题](https://www.seangoedecke.com/you-should-all-be-asking-way-more-questions/)
+
+作者主张：在听别人（包括资深工程师和 AI 模型）解释方案时，应每三十秒左右就提一个问题；用高频的简短确认来避免误解累积，同时边听边在心里把方案实现一遍，提前发现设计缺陷，从而把可能失败的项目变成成功的项目。
+
+- ❓ **高频提问是习惯不是刁难**：作者平均每三十秒问一个问题，问题短、答案短，多为“你说 X 是指 Y 吗”这类确认式提问，目的是确保自己真的听懂。
+- ⏳ **误解会像滚雪球一样变大**：早期的理解偏差会衍生出更多偏差，所以不能等对方讲完再一次性提问，而要当场打断确认。
+- 🎯 **不提问往往是因为不够投入**：多数人不提问，是因为并没有真心想弄懂；一旦你要为成败负责、会后要落地执行，也就是利益攸关，问题自然会变多。
+- 🧠 **边听边在脑中构造实现**：听方案时同步推演数据如何在服务间流动、服务间如何通信与鉴权、需要持久化什么数据并存在哪里。
+- 🚨 **警惕模糊表述**：听到“存储数据”这类含糊说法要立刻追问，因为这常暴露缺失的依赖，进而引出设计变更，甚至发现方案根本不可行。
+- 💸 **越早提问越省钱**：在对话现场就做技术评审，可以省下数小时乃至数天的无效实现；这也是把失败项目救回成功的关键。
+- 🤖 **对 AI 代理更要密集追问**：模型写代码少出错，但设计错误频发，因为它们永远处于“入职第一天”，缺乏持续学习；作者会问“代码库里别处有做过吗”“服务 Y 真支持这种鉴权吗”等。
+- 🔍 **约一半追问能揪出错误**：模型常常该复用的没复用、鉴权方式想当然、把简单实现搞复杂，因此不能因为它“更聪明”就盲目信任。
+- 🏁 **结论：更努力地真正理解**：复杂软件产品没人能完全搞懂；只要你在某个领域有深厚知识，就会经常纠正强大的模型和资深工程师。
 
 ### [AI 账单只是小头](https://avivbenyosef.com/the-ai-bill-is-the-cheap-part/)
 
