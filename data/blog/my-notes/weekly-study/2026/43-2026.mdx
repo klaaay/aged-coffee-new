@@ -59,6 +59,21 @@ Interop 2027 正在规划中，Mozilla 通过排名系统收集开发者最期�
 
 ## 工具
 
+### [粒子图表 — 由光构成的 JavaScript 图表](https://particlecharts.com/)
+
+Charticles 是一个零依赖的粒子图表库，将数据渲染为动态粒子云，支持柱状图、折线图、气泡图、雷达图、饼图和环形图，并强调响应式、可访问性与纯 JSON 驱动。
+
+- ✨ 六种图表共用同一粒子引擎：柱状图支持分组、堆叠或水平布局；折线图平滑单调不过冲；饼图直接标注；环形图中心显示实时总计；气泡图用尺寸表达第三值；雷达图呈现多指标轮廓。
+- 🧩 零依赖、单文件：一个 `<script>` 标签即可使用，无需构建；同时提供 ESM 源码、npm 包、CommonJS 构建和 TypeScript 类型。
+- 📐 响应式与 HiDPI：通过 `ResizeObserver` 在容器尺寸变化时重新布局，并自动处理高清屏。
+- 📊 数据输入简单：支持数字数组、`{label, value}`、多系列对象和 `{x, y}` 点，气泡图额外支持 `{x, y, r}`。
+- 🌟 粒子视觉：支持密度、大小、辉光、抖动、速度、形状等参数；粒子叠加到离屏层并经过两次模糊实现 bloom 发光。
+- 🧭 自动图表元素：自动生成坐标轴、刻度、图例、提示框和十字准线；图例支持键盘切换系列。
+- ♿ 可访问性友好：每张图附带屏幕阅读器数据表，遵循 `prefers-reduced-motion`，并在滚出视口时暂停。
+- ⚙️ 配置灵活：除 `data` 外几乎所有选项可选；可设置主题、颜色、字体、轴/网格/图例/提示框，以及各图表类型的曲线、堆叠、气泡半径、雷达层级、环形图内半径等。
+- 🛠️ 提供 `update`、`setOptions`、`resize`、`toDataURL`、`destroy` 等方法，支持数据切换、样式调整、强制重排、PNG 快照和销毁。
+- 🚀 快速上手：容器需设置高度，通过 CDN 或 npm 安装后用三行代码创建图表；官方展示案例包括 DrawDojo 等。
+
 ### [React DevTools for agents – React](https://react.dev/reference/dev-tools/react-devtools-cdt-mcp)
 
 该文档介绍实验性工具 `react-devtools-cdt-mcp`：它把 React DevTools 的组件树、Props、Hooks、Owner、源码位置和渲染耗时能力暴露给通过 Chrome DevTools MCP 操作浏览器的 AI 编码代理，帮助代理理解组件状态、来源与性能；它需在 React 初始化前导入，且仅建议用于开发环境。
