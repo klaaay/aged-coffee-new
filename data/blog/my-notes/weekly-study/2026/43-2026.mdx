@@ -12,6 +12,20 @@ summary: ''
 
 ## 技术
 
+### [推出 tsrs：TypeScript 到 Rust 的移植 | Cloudflare 博客](https://blog.cloudflare.com/typescript-rust-port/)
+
+Cloudflare 与 VoidZero 宣布推进 `tsrs`——TypeScript 编译器的 Rust 移植版，并与 TypeScript 团队紧密合作、在 Oxc 工具链中孵化。项目强调“不是分叉 TypeScript”，语言设计与方向仍由 TypeScript 团队掌控，目标是在不改变上游语义的前提下，让类型检查更快、更省内存，并更易在浏览器、Workers 等环境中运行。
+
+- 🚀 **项目定位**：`tsrs` 是 TypeScript 的忠实 Rust 移植，不是 fork，TypeScript 团队继续负责语言设计与方向。
+- ⚡ **性能提升**：在相同类型检查 worker 数量下，早期基准显示比 TypeScript 7.0 最高快 8 倍、内存占用少约 70%。
+- 📉 **内存与配置**：默认根据机器类型自适应配置，使用更多内存但速度更快；TypeScript 7.1 beta 也比 7.0 最高快 2.5 倍，部分优化已回馈上游。
+- 🧪 **试用方式**：可通过 npm 安装实验版本：`npm install tsrs`，然后运行 `npx tsrs`。
+- 🦀 **选择 Rust 的原因**：Rust 与 WebAssembly 的内存模型更适合 Wasm，便于在 Cloudflare Workers、浏览器、嵌入式设备和 IoT 中高效运行完整开发工具链。
+- 🔧 **维护方式**：将与 Theo Browne 合作合并 `tsc-rs` 与 `tsrs`，支持 LSP、content mappers 等 TypeScript 功能。
+- 🤖 **同步上游**：借鉴 Vinext 的维护流程，用代理每日检查上游变更、生成兼容性矩阵并运行测试，尽量减少与上游 TypeScript 的行为差异。
+- 🔁 **回馈社区**：发现性能优化会尝试贡献回 TypeScript Go 代码库；目标是在稳定版发布前把诊断输出顺序等差异降到最低。
+- 🌱 **后续计划**：Cloudflare 已拥有 Vite、Rolldown、Oxlint、Oxfmt 等 Rust 工具，未来会探索 `tsrs` 与 Oxlint 类型感知规则等更深集成，并以健康开源项目方式维护。
+
 ### [Web 上的压缩与合并](https://theconsensus.dev/p/2026/10/04/compression-and-concatenation-on-the-web.html?focus=1)
 
 本文探讨 Web 压缩与压缩流拼接：gzip、Brotli、Zstandard 在服务端预压缩、动态压缩及多段文件合并中的实际表现。重点结论是：压缩能减少传输字节，但拼接压缩文件不仅取决于格式规范，还取决于浏览器、curl 等客户端是否真正支持；gzip 虽可简单拼接但客户端兼容性差，Brotli 需额外工具或扩展，zstd 原生支持拼接且浏览器可直接解码。
