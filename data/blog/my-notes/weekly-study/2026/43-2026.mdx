@@ -12,6 +12,20 @@ summary: ''
 
 ## 技术
 
+### [软件慢是因为设计糟糕，而不是语言慢](https://www.seangoedecke.com/software-is-slow-because-of-bad-design-not-slow-languages/)
+
+文章核心观点是：软件性能通常由设计决定，而非编程语言速度。大多数真实程序受 I/O 限制，重写成 C、Rust 或汇编只能优化局部 CPU 热点，难以带来数量级提升；更有效的做法是通过剖析与重新设计减少工作、缓存、异步、并行和优化查询。AI 应帮助发现热点并提出重构方案，而不是盲目重写语言。
+
+- 🧠 软件慢往往源于糟糕设计，而不是使用了“慢语言”；语言速度并非性能主导因素。
+- ⏳ 多数真实程序是 I/O-bound，时间主要花在数据库、第三方 API、磁盘和网络等待上。
+- 📉 重写成 C/Rust 只能加速非 I/O 部分，受 Amdahl 定律限制，整体收益通常有限。
+- 📚 慢语言常已通过 C 扩展和成熟库委托高性能工作，如 Python 的机器学习库、Markdown 渲染库。
+- 🔍 真正有效的提速通常来自重新设计：缓存、异步/后台任务、并行、合并 SQL、消除 N+1、跳过不必要操作。
+- 🎯 只有少数真正 CPU-bound 且无法减少工作的热点，才适合用更快语言重写局部代码。
+- 🤖 使用 AI 优化软件时，应让代理做性能剖析、定位热点、建议重构，而非一开始就要求用 C/Rust/汇编重写。
+- 💬 评论区争议包括 CRUD 是否真为 I/O-bound、CPU-bound 程序占比、语言生态对设计难易度的影响；作者仍坚持设计优先。
+- 🧩 换语言对可移植性、效率、可维护性有价值，但若目标是原始速度，应优先优化程序设计与工作方式。
+
 ### [推出 tsrs：TypeScript 到 Rust 的移植 | Cloudflare 博客](https://blog.cloudflare.com/typescript-rust-port/)
 
 Cloudflare 与 VoidZero 宣布推进 `tsrs`——TypeScript 编译器的 Rust 移植版，并与 TypeScript 团队紧密合作、在 Oxc 工具链中孵化。项目强调“不是分叉 TypeScript”，语言设计与方向仍由 TypeScript 团队掌控，目标是在不改变上游语义的前提下，让类型检查更快、更省内存，并更易在浏览器、Workers 等环境中运行。
