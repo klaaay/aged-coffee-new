@@ -60,6 +60,40 @@ summary: ''
 
 ## 工具
 
+### [useScopeMotion | React 中的作用域动画与手势 | Motion for React](https://motion.dev/docs/react-use-scope-motion)
+
+useScopeMotion 是 Motion for React 的 Hook，用于把 animate、inView、hover、drag 等 JavaScript 动画、手势和滚动监听限定在组件 ref 元素和/或媒体查询范围内，并在组件卸载时自动清理。
+
+- 🎯 通过 ref 创建作用域，选择器只在 ref 元素内解析，例如 `"li"` 仅选中该列表中的 `li`。
+- 📦 从 `"motion/react"` 导入 `useScopeMotion` 及 `animate`、`inView`、`drag` 等函数。
+- ⚙️ 接收 ref 与 setup 函数；setup 在组件挂载后、浏览器绘制前运行。
+- 🧹 作用域自动收集 `animate`、`scroll`、`inView`、`hover`、`press`、`drag`、`resize`、`delay` 及其回调中启动的动画。
+- 🗑️ 组件卸载时取消作用域：停止动画、移除手势/滚动/视口监听，并恢复被 animate 或拖拽元素的 `style`。
+- ↩️ setup 可返回自定义清理函数，用于作用域未收集的工作，如 `window` 事件监听。
+- 🔁 默认只运行一次；通过 `deps` 在依赖变化时取消当前作用域并重新运行 setup。
+- 🧩 `ref`、`transition`、`matchMedia` 仅在作用域创建时读取；若 ref 元素延迟挂载，需添加相应依赖。
+- 🖱️ 返回当前 scope 的 ref，可在事件处理器中用 `scope.current?.run` 或 `bind` 启动受作用域管理的动画。
+- 🎛️ 选项包括 `deps`、`transition`（作用域内 animate 默认过渡）和 `matchMedia`（按媒体查询运行 setup）。
+
+### [GitHub - romainsimon/uisfx：为你的界面提供 UI 音效 · GitHub](https://github.com/romainsimon/uisfx)
+
+UI SFX 是面向 Web、移动端、SaaS、教育、媒体和游戏的开源语义化界面音效系统，可通过统一语义提示在不同音色包间切换，代码 MIT、音频 CC0，并提供 npm 包、轻量 Web Audio 运行时和可直接使用的音频文件。
+
+- 🎯 **核心能力**：用 `success`、`drop`、`level-up` 等语义提示调用音效，切换 12 种音色包无需修改交互代码。
+- 📦 **内容规模**：包含 78 个语义提示、13 类交互、12 个完整音色包、936 个原创音效，均提供 MP3 与 Ogg。
+- 🎚️ **音效类型**：72 个短 one-shots 与 6 个无缝循环，循环覆盖 loading、processing、recording、connecting、scanning、streaming。
+- 🧩 **12 种音色人格**：minimal、soft、glass、arcade、mechanical、organic、dreamy、scifi、rubber、cinematic、studio、zen，适配效率、移动、游戏、AI、创意等场景。
+- ⚡ **运行时轻量**：压缩后 Web Audio 运行时仅 12.0 kB，零依赖；懒创建 `AudioContext`，首次可信交互调用 `unlock()`。
+- 🛠️ **易集成**：通过 `npm install uisfx` 安装；`createUISFX` 配置音色包与偏好，`play` 播放，`setPack` 切包；支持 HTML 数据属性绑定。
+- 🔁 **播放器策略**：默认 8 voices，循环去重，重复结果重启，高频提示限流，切换音色包时迁移活动循环句柄。
+- 📁 **跨平台音频**：提供 `sounds/{pack}/{cue}.mp3/ogg` 与 manifest，可用于 React Native、Swift、Kotlin、Unity、Godot、视频等环境。
+- ♿ **无障碍原则**：声音只强化可见反馈；提供持久静音与音量设置；不以声音作为成功、警告、错误的唯一区分；首次交互后播放。
+- 💾 **偏好与预加载**：`preferences` 将音色包、音量、启用状态存入 localStorage；`preload()` 支持 `AbortSignal`，避免阻塞主任务。
+- 🧪 **可复现构建**：音效由确定性合成配方生成；需 Node 22.20+、Chrome/Chromium、ffmpeg；质量门禁验证大小、峰值、尾静音、循环接缝、相似度等。
+- 🧠 **设计理念**：将“产品事件 → 语义提示 → 音色包 → 配方/资源”分离，避免 `soft-pop-03.mp3` 式命名造成含义碎片化。
+- 📜 **许可与社区**：TypeScript 代码 MIT，音频与音色包插画 CC0；仓库约 898 stars、49 forks，欢迎贡献并赞助。
+- 🌐 **在线体验**：可在 uisfx.com 预览全部音效、提示与音色人格。
+
 ## 更新
 
 ## 设计
