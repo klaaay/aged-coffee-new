@@ -12,6 +12,21 @@ summary: ''
 
 ## 技术
 
+### [设计系统应默认保持快速 | Den Odell](https://denodell.com/blog/design-systems-should-be-fast-by-default)
+
+设计系统是应用性能的基础层；若组件在真实数据量下响应缓慢，所有使用它的应用都会受影响。作者像重视可访问性一样重视性能，实测 10 个流行开源设计系统，分析慢因并提出测试、性能预算与“默认快”的改进方案。
+
+- 🧱 设计系统位于浏览器、框架和应用代码之间，组件在主线程上的开销会直接挤占应用性能。
+- ⏱️ 作者用生产构建、Chrome、4 倍 CPU 节流测试两个高频重任务：打开含 249 个国家的下拉框、一次勾选 100 个复选框。
+- 📊 结果差异明显：Fluent、Carbon 打开国家选择器最快；Ionic 最慢，约 1266ms，且最长无响应约 1133ms；Ant Design 勾选 100 个复选框最慢，约 421ms。
+- 🧩 性能不由框架单独决定：同用 Lit 的组件表现差异很大，同一设计系统也可能一个任务慢、另一个任务较快。
+- 🔍 Ionic 慢因是 Stencil 在非 Shadow DOM 的 radio group 中处理 slot，新增选项时反复检查已有子项，呈 O(n²) 增长；可通过改用 Shadow DOM 或优化 Stencil 检查逻辑修复。
+- 🪟 Material UI 国家选择器一次性渲染约 250 个元素；Ant Design 采用虚拟化，只渲染可见选项，因此明显更快，但需兼顾键盘导航和屏幕阅读器。
+- 🎨 UI5 在隐藏 popover 中预置全部选项及内部 Shadow DOM，打开时一次性计算约 1500 个元素样式；React Spectrum/React Aria 存在逐个读写布局导致的 layout thrashing。
+- ✨ Ant Design 复选框慢因是 100 个动画同时执行样式计算与绘制；建议仅在用户直接选择时动画，或“全选”时关闭动画，并用 opacity 合成层动画替代高成本重绘。
+- 🧪 作者提供 Playwright 性能测试仓库，使用 TaskDuration 与 Long Animation Frames API，设置性能预算：总耗时低于 300ms、最长阻塞低于 100ms、选项翻倍耗时增长低于 2.5 倍。
+- 🚀 建议设计系统团队把性能测试纳入每次 PR，默认提供快行为，在文档标注组件测试过的数据量上限，收集真实页面性能剖面，并在发布说明中公布性能前后指标。
+
 ### [软件慢是因为设计糟糕，而不是语言慢](https://www.seangoedecke.com/software-is-slow-because-of-bad-design-not-slow-languages/)
 
 文章核心观点是：软件性能通常由设计决定，而非编程语言速度。大多数真实程序受 I/O 限制，重写成 C、Rust 或汇编只能优化局部 CPU 热点，难以带来数量级提升；更有效的做法是通过剖析与重新设计减少工作、缓存、异步、并行和优化查询。AI 应帮助发现热点并提出重构方案，而不是盲目重写语言。
@@ -60,6 +75,32 @@ summary: ''
 
 ## 工具
 
+### [GPUI](https://gpui.rs/)
+
+GPUI 是一个面向 Rust 的快速、混合即时模式与保留模式、GPU 加速的 UI 框架，由 Zed 和 Delta 的创作者开发，并提供文档、示例与开源贡献入口。
+
+- 🚀 **核心定位**：高性能 Rust UI 框架，结合即时模式与保留模式，并利用 GPU 加速渲染。
+- 🧑‍💻 **背景来源**：由 Zed 与 Delta 的创作者打造，与 Zed 生态紧密相关。
+- 🪟 **示例能力**：示例展示如何创建 500×500 居中窗口，并使用 flex 布局、间距、背景色、边框、阴影、文字样式及子元素色块构建界面。
+- 📚 **文档资源**：提供 Docs、README、GPUI API 文档、示例、上下文说明、按键事件分发说明，以及 Zed crates 和 UI crate 中的更多内容。
+
+### [打包：你的 Node 应用，一个已签名文件](https://bundle.pipobscure.com/)
+
+bundle 是一个实验性工具，旨在把 Node.js 应用及其依赖冻结为单个可签名、可校验、可复现的归档文件，让分发和安装更透明，减少对 npm 安装流程和安装脚本的依赖。
+
+- 📦 将 Node 应用打包为单一签名文件，接收方无需执行 `npm install`，Node 可直接从文件中运行应用。
+- 🧊 发布时一次性冻结完整依赖树，生成标准 ZIP；相同文件生成相同归档，便于任何人重建并比对。
+- 🔐 一个签名覆盖整个文件，任意字节被修改都会导致校验失败；默认使用 Sigstore，也支持自有 CA。
+- ⚠️ 签名只证明“是谁构建的、字节未被改动”，并不证明应用安全；账号被劫持后仍可能签出恶意包，因此仍需审计与证明。
+- 🛠️ 发布流程分为四步：运行并记录实际读取的文件、创建归档、审计（可与上一版本基线对比）、签名。
+- 🚀 可通过 `bundle run` 或 `bundle sea` 独立可执行文件在运行前校验；但通过 `#!` 按名称启动不会自动校验。
+- 🧾 `bundle install` 会先展示签名者、审计证明和警告，再按用户策略决定是否安装；安装过程不运行安装脚本。
+- 🌐 证明、列表和套件是 Atmosphere/atproto 账户中的记录，发布者、审计者和用户各自控制自己的数据与信任策略。
+- 🧩 套件可一次安装一组应用或插件，但每个成员仍需单独审查；插件也是签名 bundle，按应用安装并通过普通 `import` 加载。
+- 📊 相比 npm、Docker 和编译二进制，bundle 无需安装时访问注册表、通常不运行安装代码、字节一致，并可用 `unzip` 查看内容。
+- 🧪 目前仍是实验性方案，需要 Node 26.11.1 或更高版本及 `--experimental-vfs`；它不是沙箱，也不保证安全。
+- 📥 可从最新 release 下载 `bundle.nzip`，用 Node 运行其 `install` 将签名后的 `bundle` 放入 PATH；也可通过 `npm install @pipobscure/bundle` 使用库和插件加载器。
+
 ### [useScopeMotion | React 中的作用域动画与手势 | Motion for React](https://motion.dev/docs/react-use-scope-motion)
 
 useScopeMotion 是 Motion for React 的 Hook，用于把 animate、inView、hover、drag 等 JavaScript 动画、手势和滚动监听限定在组件 ref 元素和/或媒体查询范围内，并在组件卸载时自动清理。
@@ -96,7 +137,27 @@ UI SFX 是面向 Web、移动端、SaaS、教育、媒体和游戏的开源语�
 
 ## 更新
 
-## 设计
+### [TanStack AI 1.0](https://tanstack.com/blog/tanstack-ai-1-0)
+
+2026 年 10 月 23 日，TanStack AI 正式发布 1.0：核心 API 进入稳定、可用于生产的阶段，并延续“仍由你掌控 AI 技术选型”的承诺——provider、框架、沙箱和通信协议均可自选。与此同时，TanStack AI 推出实验性的 Agent Harness；相比 alpha 阶段，它已扩展为覆盖聊天、工具、媒体、MCP、持久化、沙箱和 Agent 的完整工具集。
+
+- 🚀 1.0 是正式的 API 承诺：核心 API 稳定；新的 Agent Harness 仍属于实验性功能，API 为 0.x。
+- ⚠️ 升级时需同步进行：1.0 客户端需要搭配 1.0 服务端，所有稳定的 `@tanstack/ai*` 包应一起升级；实验性的 Harness 包仍保留在 0.x。
+- 🔄 常见迁移包括：把 `body` 改为 `forwardedProps`，把 `conversationId` 改为 `threadId`；`threadId` 在浏览器和服务端都必填。
+- 🧹 工具审批 API 也有变化：`addToolApprovalResponse()` 被移除，改为通过 `interrupts` 解析 `tool-approval`。
+- 🧱 其他升级注意事项：移除 `@tanstack/ai-react-ui`、`@tanstack/ai-solid-ui`、`@tanstack/ai-vue-ui`；自建流式服务端应以 `RUN_FINISHED` 结束，不再发送 `data: [DONE]`；已存储数据需按指南迁移。
+- 🧠 RC 后新增 Agent 能力：子代理、`decide()` 类型化决策、可移植 Agent Skills、上下文压缩、computer use。
+- 🔧 模型能力增强：统一 `reasoning` 选项、自动 prompt caching、`retry`、跨模型历史回放、统一 Files API。
+- 🔑 密钥与登录更灵活：支持 BYOK/`defineByok`，也可用 ChatGPT、GitHub Copilot、OpenRouter 或 Claude OAuth 登录。
+- 🔌 MCP/WebMCP 支持增强：`createMCPServer` 可将 TanStack 工具暴露为 MCP 服务；支持工具过滤、审批、任务型工具及双向 WebMCP。
+- 🌐 生态扩展：新增 Cloudflare Workers AI、AI Gateway、Azure OpenAI、Lovable AI Gateway、World Labs Marble 等适配器；新增 Remix 3、Svelte devtools 和多个沙箱 provider。
+- 🧪 开发与测试：提供类型化 headless chat UI factories、自定义适配器、`fakeText()`，以及面向编码助手的 Agent Skills。
+- 📚 文档按 1.0 重写：每页先讲问题与可运行设置，高级细节后置；适配器页面结构统一，Quick Start 约 5 分钟完成流式聊天。
+- 🧩 新 Agent Harness：`@tanstack/ai-harness` 提供持久会话、重启后等待恢复、类型化代理、插件、多用户、后台任务；可在终端、脚本/CI、Web、ACP、MCP 中运行。
+- 🛠️ 可快速构建编码代理：通过 permissions、workspaceTools、snapshots、todos、compact、usage 等插件配合 `runCli`，搭建终端 coding agent。
+- 🙌 社区与伙伴：143 位贡献者参与建设，OpenRouter 等伙伴持续支持。
+- 🎯 下一步：打磨核心 API、支持团队落地各类 AI 功能，并推动 Harness 稳定、增加更多 provider 和沙箱。
+- 📦 快速开始：`pnpm add @tanstack/ai @tanstack/ai-react @tanstack/ai-openai`，随后按 Quick Start 或升级指南操作。
 
 ## 其他
 
@@ -142,3 +203,11 @@ UI SFX 是面向 Web、移动端、SaaS、教育、媒体和游戏的开源语�
 - 🔄 重组历史：问最近一次重组时间与触发原因；频率和原因反映组织稳定性。
 - ❓ 岗位空缺原因：直接问“为什么这个职位开放”；区分增长、补缺、重组，并注意回答是否迟疑。
 - 🚪 反向筛选：若公司因这些问题不悦、敷衍或让你觉得自己“难搞”，说明它不愿被面试，应果断放弃。
+
+---
+
+一个人的音乐品味，很大程度上是在青春期形成的，25 岁之后很难喜欢上不一样的东西。
+
+其他方面也是如此，你成年后喜欢的东西，往往都是青少年时期决定的。
+
+-- 《人们的音乐爱好会随年龄发生怎样的变化？》
