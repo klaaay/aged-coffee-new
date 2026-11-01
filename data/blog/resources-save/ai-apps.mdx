@@ -10,6 +10,15 @@ summary: ''
 
 ## 知识处理
 
+[AIHOT - 可自建的行业热点与资讯精选站](https://github.com/KKKKhazix/AIHOT)
+
+AIHOT 是一个自动采集资讯、筛选热点并编制日报的网站框架，开源了网站、管理后台、精选流程、事件聚簇、热度算法及提示词。可替换信源和行业判断标准，搭建自己的垂直行业资讯站；[线上原站](https://aihot.news) 展示 AI 行业的使用效果。
+
+- 资讯处理：支持 RSS、网页列表、JSON 接口、X 账号、微信公众号和脚本推送，经过判重、预筛、独立两次评分后生成中文标题与摘要。
+- 事件与刊物：将不同来源的同一事件聚合，按独立来源数量和时间衰减计算热度，并编制日报、周报与月报。
+- 可定制与接入：可调整信源、分类、精选提示词和入选门槛，提供人工校准后台，以及 RSS、公开 API、MCP 和 Agent Markdown 出口。
+- 部署条件：推荐 Docker Compose，配置生成使用 Node.js 24，需要 OpenAI 兼容的模型 API Key；仓库附示范信源，不包含原站的完整信源名单和运营数据，自建站需替换 AIHOT 名称与 Logo。
+
 [ebook-to-mindmap](https://github.com/SSShooter/ebook-to-mindmap)
 
 这是一个基于 AI 技术的智能电子书解析工具，支持将 EPUB 和 PDF 格式的电子书转换为结构化的思维导图和文字总结。工具采用 BYOK 模式保障隐私，提供多种处理模式，并具备缓存管理、现代化界面等特性。
@@ -129,6 +138,15 @@ Cumora 是一个让人类和多个 AI Agent 以“团队成员”身份共同工
 Clawdbot 是一款可在本地设备上运行的个人 AI 助手，支持通过 WhatsApp、Telegram、Slack、Discord、Google Chat、Signal、iMessage、Microsoft Teams、WebChat 等多种常用通讯渠道进行交互，并具备语音唤醒、实时画布、多智能体路由等功能。
 
 ## 图表与界面生成
+
+[Cowart - 面向 Codex 的 AI 无限画布](https://github.com/zhongerxin/Cowart)
+
+Cowart 是一个基于 tldraw 的 Codex 原生无限画布插件，把构思、图片标注与 AI 内容生成放在同一画布中，适合视觉创作、设计迭代和演示内容制作。
+
+- 图片生成与修改：通过提示词和参考图生成图片，也可提交带箭头、文字的标注截图，让 Codex 根据标注生成修订图。
+- 多媒体创作：支持生成并嵌入可运行的单文件 HTML、制作可导出 MP4 的 HTML/JS 动效影片，以及组织和演示由图片或 HTML 构成的 AI Slides。
+- 本地保存：通过 MCP widget 打开画布，项目内使用时将页面和素材保存到项目的 `canvas/` 目录；侧边栏入口使用系统文稿目录下的 `Cowart/canvas/`。
+- 体验入口：提供[网页版](https://cowart.jiqiren.ai/)，也可按仓库说明安装 Codex 插件。
 
 [open-design](https://github.com/nexu-io/open-design)
 

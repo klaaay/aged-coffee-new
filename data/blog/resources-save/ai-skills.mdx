@@ -368,6 +368,24 @@ Kami 是一个面向 AI 时代的文档设计系统 Skill，主打“好内容�
 
 ## 动画 / 多媒体 Skills
 
+[video-shotcraft - 产品宣传片与镜头编排 Skill](https://github.com/Vincentwei1021/video-shotcraft)
+
+一个面向 Claude Code 和 Codex 的产品宣传片制作 Skill。以真实页面截图和文案为素材，由 Agent 选择镜头、编排分镜，通过 Remotion 编写动画，再完成音乐卡点、音效和逐帧检查，适合制作可持续编辑的产品演示与发布视频。
+
+- 镜头资源：提供开场、运镜、转场、文字、UI 入场、交互、数据展示等分类的镜头配方与 Remotion 示例，可在[在线 Gallery](https://vincentwei1021.github.io/video-shotcraft/) 预览。
+- 交付内容：输出 MP4 和完整 Remotion 项目；提供 Motion Workbench 浏览器编辑器，可继续调整文案、颜色、片段时长和镜头，也支持可选的剪映草稿导出。
+- 制作方式：画面由代码结合截图与文案绘制，便于保持品牌样式并逐镜修改；配套页面采集、分镜设计、声音设计和成片 QA 流程。
+- 运行条件：需要 Node.js / npm 与 FFmpeg / ffprobe；音乐节拍分析使用 `uv`，页面采集按需安装 Puppeteer，Remotion 首次渲染需下载其无头浏览器。
+
+[ffmpeg-skill - 面向 Agent 的本地音视频剪辑 Skill](https://github.com/kajisho5/ffmpeg-skill)
+
+一套供 Claude Code、Cursor、Codex 等 Agent 使用的 FFmpeg 工具与工作流，也提供 MCP 接口。围绕“探测素材 → 尽可能无损编辑 → 检查规格 → 验证结果”组织剪辑任务，适合处理不便上传的本地音视频和批量制作交付素材。
+
+- 编辑能力：覆盖剪切、拼接、静音移除、时长与画幅适配、字幕与卡拉 OK、叠加与动效、调色、音频清理、响度处理和批量导出。
+- 结果校验：通过 `ffprobe` 检查输出参数，并生成抽帧联系表供 Agent 查看；画面内容判断依赖调用方的视觉能力。
+- 自动化接口：提供结构化参数、JSON 输出、执行计划和 `--dry-run`，可通过机器可读契约与 MCP 接入其他工作流。
+- 运行条件：核心处理依赖本地 FFmpeg / ffprobe 与 Python 3.10+，无需云端服务或 API Key；自动语音转写需另装本地语音引擎。
+
 [agent-sprite-forge - 2D 精灵动画与分层地图生成 Skills](https://github.com/0x0funky/agent-sprite-forge)
 
 一套以 Codex 为主要使用环境的 2D 游戏资产生成 Skills。通过自然语言描述需求，由 agent 规划制作流程、调用图像生成，再用本地脚本完成清理、切帧、对齐、校验和导出，适合制作游戏素材与可玩原型。

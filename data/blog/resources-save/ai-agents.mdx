@@ -90,6 +90,15 @@ GOD 是一个面向 Agent 社会的实时控制台，用来观察、回放和干
 
 ## GUI 与设备操作 Agent
 
+[iPhone Use - 通过 USB 操作真实 iPhone](https://github.com/zhongerxin/iPhone-use)
+
+一个将真实 iPhone 接入 Codex、WorkBuddy 或豆包工作的工具项目，基于 WebDriverAgent（WDA）提供本地 MCP 服务、安装与使用技能，以及实时手机屏幕 widget，适合用自然语言执行手机 App 操作和设备自动化任务。
+
+- 操作能力：支持打开 App、读取页面、点击、滚动、输入文字和整理列表；控件定位失败时可结合截图进行坐标点击。
+- 实时交互：在侧边栏展示手机屏幕，并支持直接点击预览画面、拖动和滚动。
+- 使用条件：需要 macOS、完整 Xcode、Python、Node.js / npm 和 USB 连接的 iPhone；首次使用需在手机上安装、签名并启动 WDA Runner，完成设备信任与开发者模式配置。
+- 使用统计：默认插件会发送匿名使用统计，可通过 `IPHONE_USE_ANALYTICS=0` 或 `DO_NOT_TRACK=1` 关闭；WorkBuddy 和豆包工作适配版默认关闭。
+
 [Browser Harness](https://github.com/browser-use/browser-harness)  
 Browser Harness 是一个基于 Chrome DevTools Protocol 的浏览器操作 harness。它把浏览器控制能力暴露给 LLM，并允许 Agent 在任务中补写缺失 helper，适合研究浏览器自动化、网页操作 Agent 和可自愈 harness。
 
