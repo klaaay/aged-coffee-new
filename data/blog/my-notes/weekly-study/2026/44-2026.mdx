@@ -75,6 +75,48 @@ summary: ''
 
 ## 工具
 
+### [Tinyauth](https://github.com/tinyauthapp/tinyauth)
+
+Tinyauth 是一个极简的 OpenID Certified™ 认证与授权服务器，可作为应用认证中间件或独立认证服务器，支持 OAuth、LDAP、访问控制及主流反向代理；项目处于活跃开发期，目前由单人维护，并呼吁社区开发者协助。
+
+- 🧩 定位：号称“史上最小”的认证与授权服务器，兼顾中间件和独立服务两种使用方式。
+- 🔐 能力：支持 OAuth、LDAP、访问控制，并兼容 Traefik、Nginx、Caddy 等流行代理。
+- ⚠️ 开发状态：项目活跃开发中，配置可能频繁变化，升级前应仔细阅读发布说明。
+- ✅ 认证进展：截至 2026-06-25，Tinyauth v5.1.0 已获得 OpenID Certified™ 的 Basic OP 认证。
+- 🛠️ 维护现状：截至 30/10/2026，项目由单人维护；AI 代理持续提交大量缺陷和安全报告，其中部分有效、部分无效，审查与修复耗时较多。
+- 🤝 寻求协助：开发者可通过 Discord 或 hello@tinyauth.app 联系维护者并提供帮助。
+- 🚀 快速上手：可参考官方文档；仓库还提供包含 Traefik、Whoami 和 Tinyauth 的 docker-compose 示例。
+- 🧪 在线演示：可试用 Demo，默认用户名是 user，默认密码是 password。
+- 📚 社区资源：提供文档、Discord 服务器、贡献指南和 Crowdin 本地化页面。
+- 📜 许可证：采用 GNU Affero General Public License v3.0；修改版通过网络提供服务时，也需向用户提供源代码。
+
+### [elephant-goldfish-model](https://github.com/google/elephant-goldfish-model)
+
+概述摘要：EGM 是数千名 Google 工程师使用的开源插件，采用“Elephant 设计、Goldfish 审查”的模式：先用深度上下文代理起草规格，再用零上下文子代理压力测试，最后由工程师做出架构权衡并批准设计，再进入实现。
+
+- 🐘 EGM 让掌握项目上下文的“Elephant”代理探索需求并起草规格文档。
+- 🐟 “Goldfish”审查者在没有先前对话的情况下检查草稿及引用材料，暴露未言明假设、模糊需求和实现风险。
+- 👤 你负责解决架构权衡、批准设计并决定最终实现内容；审查不能替代测试或人工判断。
+- ✅ 适合需要先做设计决策的功能；小型、明确的 bug 修复可使用普通编码流程。
+- 🛠️ 支持 Antigravity CLI、Claude Code、Codex 等代理安装；安装后需新开会话，部分环境需使用 `/egm:` 前缀或从技能选择器选择。
+- 🔄 核心流程为：`/egm-brainstorm` 探索想法 → `/egm-draft` 生成 `design_draft.md` → `/egm-review` 审查草稿 → 批准后实现。
+- 🧩 提供 Brainstorm、Draft、Resolve、Bootstrap、Review、Review loop、Drift report 等技能，可按需使用，不必严格遵循完整序列。
+- ⚠️ Goldfish 审查依赖可创建全新子代理上下文；若代理无法创建，EGM 会停止审查。
+
+### [everything](https://github.com/HeyPuter/everything)
+
+概述总结：Everything Project 旨在从零重建并开源全球软件，为各类专有软件提供免费开源替代品，并通过单一 monorepo 汇集所有应用与工具。
+
+- 🌍 项目目标：从头重建并开源世界软件，覆盖从 Office、Slack 到 Photoshop、AutoCAD 等专有软件的替代方案。
+- 🧱 代码组织：使用单体仓库（mono-repository）统一存放项目下所有应用和工具。
+- 🗂️ 覆盖类别：包括 Office、协作、创意工具、工程、生产力、财务、商业、开发者工具和游戏。
+- 🏢 Office 与协作：提供电子表格、文档、演示、白板、PDF、笔记、会议、团队聊天、邮件、日历、电子签名等替代品。
+- 🎨 创意与工程：包含照片、视频、矢量、音频、音乐、3D 工作室，以及 CAD、参数化设计、电路和建筑设计工具。
+- 📊 生产力与商业：涵盖任务、项目、Wiki、时间追踪、问卷、会计、发票、费用、CRM、客服、合同、POS、库存、招聘等。
+- 💻 开发者工具与游戏：提供 API 客户端，以及国际象棋、双陆棋、跳棋、纸牌和数独等游戏。
+- ⚙️ 快速开始：需要 Node.js 22.12 或更高版本；克隆仓库后进入 `src/[app-name]`，运行 `npm install` 和 `npm run dev`。
+- 📜 许可证：仓库及其内容默认采用 MIT 许可证，除非另有明确说明；第三方库可能遵循其各自许可证。
+
 ### [GPUI](https://gpui.rs/)
 
 GPUI 是一个面向 Rust 的快速、混合即时模式与保留模式、GPU 加速的 UI 框架，由 Zed 和 Delta 的创作者开发，并提供文档、示例与开源贡献入口。
