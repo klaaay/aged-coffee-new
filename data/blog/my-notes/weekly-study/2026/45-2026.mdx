@@ -12,6 +12,20 @@ summary: ''
 
 ## 技术
 
+### [66 个成本区间中有 60 个重叠。JavaScript 字节则几乎不重叠](https://gautamparab.com/writing/sixty-of-sixty-six-ranges-overlap/)
+
+Nolan Lawson 让 AI 代理在 12 个 JavaScript 框架中构建同一个应用，每个框架构建五次，结果显示框架对代理成本的影响远不如运行间的随机波动明显，而框架对最终 JavaScript 体积的影响则几乎完全可复现。
+
+- 🧪 **实验设计**：Lawson 编写了规格说明和一致性测试套件，让 Opus 5.5 在 12 个框架（Angular、Astro、Next.js、Nuxt、Qwik、React Router、SolidStart、SvelteKit、TanStack Start、Hono+htmx、Gracile+Lit、原生 TypeScript）中各构建五次 Pokémon 浏览器应用，取中位数。
+- 💰 **成本差异大多不显著**：Hono+htmx 最便宜（中位数 $2.67），Angular 最贵（$4.97），但 66 对框架中有 60 对的成本范围重叠或相接；只有 SvelteKit 和 Gracile+Lit 的整个范围完全高于 Hono+htmx 的最贵一次运行。
+- ⏱️ **时间和 token 同样如此**：时间范围在 66 对中有 62 对重叠，token 范围有 60 对重叠，Nuxt 的最低中位 token 数范围触及所有其他框架。
+- 📦 **JavaScript 体积几乎不重叠**：66 对中只有 5 对范围重叠，同一框架的五次构建传输的字节数相差仅几 KiB（Hono+htmx 每次都是 18 KiB，Next.js 在 136–143 KiB 之间），从 Astro 的 0 KiB 到 Next.js 的 142 KiB 的排序可复现。
+- 📝 **代码行数居中**：66 对中有 42 对范围重叠，框架决定样板代码的下限，代理决定其余部分。
+- 🎲 **随机性是主因**：代理控制的指标（成本、时间、token）受会话行为影响大（是否跑偏、是否读文档、是否找到技能文件），而有研究表明确代码生成本身高度非确定性，五次运行远不足以区分大多数框架。
+- 🔍 **成本差异的解释**：SvelteKit 代理每次都读 SvelteKit 3 迁移指南（版本新于模型训练数据），Gracile 代理克隆仓库或读取编译源码——这些衡量的是模型对框架的熟悉度，会随模型更新而变化。
+- 🧭 **实用建议**：选框架时，质量指标（JS 字节、TBT、LCP）依赖框架且会重复出现；成本指标是特定模型、特定努力水平与特定框架文档的产物，五次运行只能区分两个昂贵异常值。
+- 🛠️ **MCP 与技能存疑**：使用表显示代理经常忽略官方 MCP 服务器或技能文件（Nuxt MCP 从未被使用，Next.js 技能五次只用一次），Lawson 怀疑当前 MCP 和技能可能弊大于利，但需开关对照实验才能回答。
+
 ### [精通人工智能需要时间和练习](https://www.seangoedecke.com/getting-good-at-ai-takes-time-and-practice/)
 
 文章认为，熟练使用 AI 并非靠几个“提示词技巧”就能速成，而是需要长期练习的稳定技能；AI 能力分布不均、错误模式特殊，使用者需要学会提供上下文、判断能力边界、审查输出并管理协作流程。完全回避 AI 可能让人落后，但盲目全盘依赖也不可取，因为 LLM 会放大专业能力，而专业能力仍需亲手积累。
@@ -54,11 +68,79 @@ MCP 连接器让智能体接入 Slack、Jira、GitHub 等系统，但只提供�
 
 ## 工具
 
+### [如何在不到 350 字节内让 postMessage 类型安全——Martian Chronicles，Evil Martians 团队博客](https://evilmartians.com/chronicles/how-to-make-postmessage-type-safe-in-under-350-bytes)
+
+typed-channel 是一个极小型的 TypeScript 库，用统一、类型安全的方式封装 postMessage，适用于 Web Worker、iframe、标签页和页面内事件总线；开发者只需定义一次消息名和载荷，TypeScript 就会在发送端和接收端进行检查。最新 0.11 版本新增可取消的请求/响应能力，取消请求时，对端正在执行的处理也会停止。
+
+- 📦 **体积极小**：核心约 271 字节，包含 postMessage 传输约 341 字节，零依赖；请求/响应功能单独引入，约 1 kB。
+- 🧩 **解决原生 postMessage 痛点**：消息名是普通字符串、载荷为 any、跨边界无类型检查、路由依赖 switch、监听器清理麻烦、各边界重复样板代码。
+- 🔤 **一次定义消息契约**：通过 ClientMessages、WorkerMessages 等类型映射声明双向消息，emit 和 on 自动获得类型检查，拼写错误无法通过编译。
+- 🔌 **传输与通道分离**：channel 负责消息类型，transport 负责跨边界传输；更换 transport 即可适配 Worker、iframe、BroadcastChannel、MessagePort、EventTarget 等场景。
+- 🧹 **更安全的订阅管理**：on 返回取消订阅函数，避免手动保存 handler 再调用 removeEventListener，减少重复监听和内存泄漏。
+- 🪟 **多场景复用**：同一套 API 可用于 Web Worker、iframe、页面内事件总线；也支持同时接入多个 transport，让一次 emit 同时到达当前标签页和其他标签页。
+- 🛠️ **可自定义传输**：transport 只需实现 on 和 emit 两个函数；文章以 Figma 插件为例，展示用十几行代码封装 figma.ui.postMessage 和 parent.postMessage。
+- 📨 **0.11 新增请求/响应**：createTypedRpcChannel 在 emit/on 之外增加 request/handle，请求参数和返回值均有类型，handler 抛错会让调用方 Promise 拒绝。
+- ⏱️ **基于 AbortSignal 的取消与超时**：request 接受 AbortSignal，可用 AbortSignal.timeout(5000) 设置超时；取消时会通知对端并中止 handler 的工作，避免“结果没人要但仍在计算”。
+- 🧭 **使用建议**：先安装 typed-channel，用 createTypedChannel 和消息映射处理单向消息；需要应答时再用 createTypedRpcChannel；遇到内置 transport 未覆盖的边界时自行实现 transport。
+
 ## 更新
+
+### [pnpm 12.17.0 | pnpm](https://pnpm.io/blog/releases/12.17.0)
+
+pnpm 12.17.0 是一次功能增强与稳定性修复版本，重点新增全局 peers 检查、`overrides` 依赖组选择器与通配符、`outdated/update` 对运行时、包管理器、Cargo 与 Python 依赖的检查更新，并修复 Docker 多用户文件权限、本地依赖重复安装漏检、全局命令依赖解析等问题。
+
+- 🚀 `pnpm peers check` 新增 `--global/-g`，全局安装或更新后会提示使用 `pnpm peers check -g`。
+- 🔍 `pnpm outdated` 与 `pnpm update` 可检查/更新 `devEngines.packageManager`、`packageManager`、`devEngines.runtime`、`engines.runtime` 和 `runtime:` 依赖；启用 Cargo/Python 时也处理 `Cargo.toml`/`Cargo.lock` 与 `pyproject.toml`/`pylock.toml`。
+- 🧩 `overrides` 支持 `:prod`、`:optional`、`:peer` 伪选择器及 `*` 通配符；非范围覆盖不再错误添加 peer 依赖，用 `"-"` 删除可选依赖也会清理 `dependencies` 重复项。
+- 🐳 新建文件权限改为遵循 umask（如 `0644`），修复 Docker 中以其他用户运行时的可读性问题；涉及 workspace 状态、`pnpm-workspace.yaml`、deploy、patch、dedupe 及 Cargo/Python 文件，编辑已有文件则保留原权限。
+- 🔗 修复 `node_modules` 为符号链接时写入失效依赖链接的问题；全局安装的命令现在能找到 pnpm 提升的依赖。
+- ⚙️ 切换项目固定 pnpm 版本时，会安装当前主机原生二进制并修复缺失；全局虚拟存储下依赖环中任一依赖变化会让环内包获得新目录，避免加载旧副本。
+- 📦 `nodeLinker: hoisted` 下无法提升到根目录时，各 workspace 项目保留自己的包副本并分别执行构建脚本。
+- 🔁 重复安装与本地依赖修复：避免 `--frozen-lockfile` 刚写入就报过期；正确检测 `file:`、注入的 `workspace:../dir`、本地 tarball、`package.json` 及 pnpmfile `readPackage` 变化；被删除的 `workspace:`/`link:` 链接会重新链接。
+- 📦 `pnpm update --latest` 配合包选择器时只在声明范围内更新；`pnpm add <pkg>@<tag>` 与 catalog dist-tag 行为更一致，catalog 记录精确版本，npm alias 保存解析后的版本范围。
+- 🖥️ 脚本/`pnpm exec` 启动的进程生命周期更接近直接运行命令；递归/并行任务中止时 Unix 先发 `SIGTERM`，Windows 会结束相关进程。
+- 🪟 Windows 下 `.cmd`/`.bat` shim 在关闭 MSYS 参数转换时改用 Git Bash，避免误开交互式 cmd。
+- 📁 `pnx` 与 `pnpm create` 支持在 `--dir` 或 `--workspace-root` 指定目录执行；`--env-file` 行为与 Node 一致，不再展开变量或拒绝文件内容。
+- 🛠️ 设置与提示改进：`gitTagVersion=false` 时 `pnpm version` 不再提交/打标签；`publishBranch` 支持 workspace 配置与环境变量；新增 `--strict-ssl`、`--local-address`；`doctor` 注册表检查超时 15 秒；配置解析错误统一为 `ERR_PNPM_INVALID_SETTING`；无效依赖名错误会指出项目目录。
+- ⚡ 性能修复：从存储硬链接时每个存储文件每次安装只 stat 一次，降低大型工作区离线安装 CPU 开销；Node.js `latest` 选择器改为最新稳定版。
+
+### [Vitest 5.1 已发布！ | Vitest](https://vitest.dev/blog/vitest-5-1)
+
+Vitest 5.1 于 2026 年 11 月 2 日发布，重点提升了测试筛选、快照审阅、失败追踪、浏览器模块 Mock 与覆盖率体验，并带来多项性能优化。
+
+- 🚀 新版为 Vitest 5.1，建议先阅读入门与功能指南，并欢迎社区参与问题分类、PR 审查和讨论支持。
+- ⏱️ 新增实验性 `--since-last-run`：首次运行记录每个测试加载的文件及依赖，后续仅运行自上次运行以来变更、删除或上次失败仍未通过的测试；无需 Git，适合 AI 编码代理。
+- 🖼️ 新增交互式快照审阅：watch 模式按 `i` 逐个查看失败快照，按 `a` 接受新快照、按 `r` 保留旧快照，覆盖内联快照、`.snap` 文件、文件快照和 ARIA 快照。
+- 🧭 Trace View 稳定并默认启用 `'failure-only'`：仅记录失败浏览器测试的步骤，失败报告展示操作时间线；可设为 `'on'` 记录所有测试并附带每步页面快照。
+- 🧵 新增实验性 `experimental.traceTimeline`：Node 测试中记录 `expect.poll`、`vi.waitFor`、`vi.waitUntil` 步骤，失败时打印等待时长与位置；`vi.waitFor/vi.waitUntil` 支持 `message`。
+- 🔁 新增 `--last-failed`：从结果缓存读取上次失败测试并仅重跑，可按完整测试名筛选；若文件级失败则重跑整个文件。
+- 🌐 Browser Mode 通过 import map 提供模块 Mock：基准中无 Mock 耗时降低 16%，有 Mock 降低 52%，混合场景降低 38%；实验性 `browser.importMapMocks` 在支持多 import map 的浏览器启用。
+- 🖱️ 新增实验性 `userEvent.pointer`：支持底层指针按下、移动、释放序列，可用于精确拖拽等交互。
+- ⏳ 新增 `fakeNodeBuiltins`：让 `node:timers` 和 `node:timers/promises` 也使用假定时器；默认关闭，计划下个大版本默认开启。`vi.setSystemTime` 支持 `Temporal.Instant` 和 `Temporal.ZonedDateTime`。
+- 📊 新增 `TestCase.attempts()`：分别返回每次重试/重复运行的状态、错误和耗时；默认报告器会把多次失败合并为一个标题。
+- 📈 覆盖率改进：HTML 报告新增明暗主题并跟随系统；Istanbul 插桩改用 Oxc + magic-string，速度提升 5–10 倍，仓库 479 个文件从 3.7s 降至 0.38s；V8 新增 `coverage.ignoreNode`。
+- ⚡ 性能优化：`isolate:false` 复用 worker 缓存；`toEqual` 类型化数组比较提速（2MiB 数组 1.5s→125ms）；Firefox Trace View 提速；Browser Mode WebSocket 在高负载下更稳定。
+- 🔧 其他变更：Browser Mode 默认端口改为 `23315`，`api.port:0` 可让系统选择空闲端口；浏览器测试无法连接服务器时会直接报错而非无限等待。
 
 ## 设计
 
 ## 其他
+
+### [一项提议：在人工智能时代如何招聘初级工程师 | Seldo.com](https://seldo.com/posts/a-proposal-how-to-hire-junior-engineers-in-the-age-of-ai/)
+
+概述：随着 AI 编码兴起，初级工程师招聘自 2023 年起急剧萎缩，传统编码面试已失效，而多数公司只招资深工程师或依赖实习项目，均非长久之计。作者基于"产品工程师"这一新岗位的定义，提出一套结构化面试方案：让候选人在一小时内向扮演客户的 LLM 挖掘需求，并指挥另一个 LLM 编写出可运行的软件，以此考察产品感、系统思维与书面表达能力；该方案借鉴医学界的 OSCE 标准化病人考核，且坚持由人类做最终评判。
+
+- 📉 **初级招聘崩塌**：斯坦福研究显示 22–25 岁开发者就业较 2022 年峰值下降近 20%，Anthropic 新招工程师中初级占比从 27% 跌至 9%，而资深岗位需求持续增长。
+- 💀 **编码面试已死**：作者十余年来一直批评编码面试，如今 Anthropic 部分团队、Canva、Meta、Google 均已改用或试点 AI 辅助与技术理解类面试，但尚无公认方案。
+- 💰 **自私但合理的理由**：初级产品工程师更便宜、更易招，而 2025–2026 年 71% 的岗位增长集中在资深工程师；不培养新人，整个行业将萎缩。
+- 🏫 **常见替代方案都不靠谱**：付费实习慢且贵，创业公司无力承担；名校筛选只是"富家子弟"过滤器；"饥饿感""品味"等标准含义模糊；非结构化面试预测效度仅 0.19（结构化 0.42）。
+- 🎯 **该考察什么**：产品感（从混沌信息中找出真问题、反驳表面需求）、系统级智力（在脑中装下整个系统、识别约束变化）、书面表达能力（无法用自然语言解释就无法有效提示智能体）。
+- 🧪 **核心提案**：给候选人 1–2 小时，与一个掌握全部需求细节的 LLM"客户"对话，并指挥另一个（对所有人相同的）LLM 写出可运行、甚至已部署的真实软件。
+- 📜 **规则设计**：可随时追问客户、可展示半成品、可多次推倒重来；但不允许"越狱"客户套取需求文档——现实中客户不会被这样骗。
+- ⚖️ **评分与公平**：任务统一、与岗位相关，可高度贴近真实业务；用评审智能体自动生成并运行测试，但最终打分必须由人类完成，且需人工校准。
+- 🩺 **并非新发明**：医学界自 1960 年代起就用 OSCE 标准化病人考核，学生面对同一演员、按清单评分，与本方案高度相似；科技界类似尝试仅有 Palantir 的拆解面试与初创公司 Promptster。
+- 🚫 **不要全自动化**：模型评审与人类一致率仅相当于人类彼此间的一致率，且部分评审模型存在严重偏差；纽约市还要求对自动化招聘工具做年度偏见审计。
+- 🔮 **前景**：方案目前仍是理论，尚未实测；但率先跑通的公司将在该岗位需求爆发时，获得一批可自我定义需求的廉价高能力开发者。
 
 ### [不要让恐惧驱动你的](https://yewjin.substack.com/p/dont-let-fear-drive-your-decisions)
 
