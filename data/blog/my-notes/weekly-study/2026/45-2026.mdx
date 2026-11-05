@@ -12,6 +12,38 @@ summary: ''
 
 ## 技术
 
+### [React.lazy、Suspense 与隐藏的 300 毫秒启动延迟 • 标签页小部件](https://tabwidgets.com/blog/react-lazy-suspense-delay)
+
+文章复盘了 Tab Widgets 新标签页扩展的启动性能问题：真正瓶颈不是包体积，而是 React.lazy 首次渲染必挂起，叠加 Suspense 固定 300ms 的揭示节流。团队最终改为“不触发 Suspense 的代码门控”，让组件代码就绪后立即渲染，使首个组件内容从约 540ms 提前到约 298ms。
+
+- 🧩 Tab Widgets 是 React 19 + Rspack 新标签页扩展，每个小组件独立成 chunk，并通过 React.lazy 与 Suspense 按需加载。
+- 🐢 性能剖析发现：headless Chromium 中脚本约 100ms 已加载执行，但组件约 380ms 才出现，中间大量时间浏览器处于空闲。
+- ⏱️ 根因是两件事叠加：lazy 组件首次渲染必定 suspend；Suspense 对挂起内容有全页共享的 300ms 揭示节流，导致占位符至少停留 300ms，组件还成批出现。
+- 📉 缩小主包并未解决问题：移除模态框 re-export、移出 luxon 等改变文件分布或减少约 100KB，但对内容出现时间无可测影响；扩展从本地磁盘加载，字节不是关键。
+- 🛠️ 第一版修复利用 React 私有字段 \_init/\_payload 预加载 lazy 组件，并在首屏前最多等待 100ms；headless 下从约 380ms 降至约 95ms，但慢机器上超时组件可能更晚。
+- ✅ 最终方案不再让组件因自身代码 suspend：用 useLazyReady 判断代码是否就绪，未就绪时渲染普通占位并启动预加载，完成后通过 state 更新替换；保留 Suspense 和错误边界处理失败。
+- 🔐 同一思路也用于权限检查等 suspending query，避免仅几毫秒的检查被 300ms 节流拖慢。
+- 📊 Windows Chrome 实测（4 次冷启动、20 组件仪表盘）：首个组件内容 540ms→298ms，85% 内容 540ms→336ms；全部内容 540ms→544ms，因 Weather 和 Word of the Day 仍在数据请求时 suspend。
+- 🧪 若不碰 React 私有字段，可用自建模块缓存和 useLoadedComponent 实现“预加载 + 占位 + 状态替换”，并自行处理失败重试。
+- 💡 经验：衡量“何时出现”而非只看包大小；寻找主线程空闲；理解框架的有意节流；实验室定位后要在真实设备确认。
+
+### [现代 CSS 可能会让你的前端变得更复杂 — Smashing Magazine](https://www.smashingmagazine.com/2026/11/modern-css-might-make-your-front-end-more-complex/)
+
+现代 CSS 能让局部代码更简洁，却可能把复杂度转移到 CSS 与 JavaScript、布局、级联和渲染性能之间的交互中。文章通过四个真实迁移场景说明：只有明确归属、检查作用域、理解级联并测量性能，现代化 CSS 才真正降低系统复杂度，而不是制造更难排查的问题。
+
+- 🧩 局部简洁不等于系统简单：删除大量 JavaScript 只减少单文件代码量，却可能增加需要理解和维护的交互关系。
+- 👥 行为不能有两个主人：容器查询与 `ResizeObserver` 并存、断点更新不一致时，会出现没人写过却真实存在的混合状态；迁移后应删除旧观察器、类名和相关选择器。
+- 📐 `container-type: inline-size` 不只启用容器查询：它还会创建新的块格式化上下文并施加尺寸包含，可能改变外边距折叠、浮动环绕和内容自适应宽度。
+- 🃏 内容撑宽的卡片可能塌陷：若元素宽度来自内容，加入尺寸包含后可能变成 `0px`；应把 `container-type` 放到已有明确宽度的包装元素上，并在真实布局中测试。
+- 🎯 `:has()` 选择器容易匹配过宽：`.card:has(img) p` 可能误伤评论头像和内部段落，并通过更高特异性覆盖组件自身规则；应使用 `>` 等组合器限制范围。
+- ⚖️ 原生嵌套会借用选择器列表中的最高特异性：`&` 类似 `:is()`，可能让无关的 ID 权重影响组件；可用 `:where()` 将权重归零。
+- 🧱 级联层不是默认救星：未分层的旧样式通常优先于分层的新样式；只有冲突双方都纳入分层时，层的作用才稳定可预期。
+- ⏱️ 从 JavaScript 搬到 CSS 不代表更快：性能成本取决于属性、选择器和 DOM 规模；`:has()` 锚定大子树或与其他规则组合时可能产生意外重绘成本。
+- 🔬 性能优化要测量：用 DevTools 记录交互前后“Recalculate Style / Layout / Paint”，启用选择器统计，并使用生产规模数据验证。
+- 🧪 真实迁移常同时触发多个问题：一个 PR 可能同时造成断点逻辑残留、卡片消失、文本间距异常和列表选择卡顿；修复方向不是退回 JavaScript，而是修正归属、容器和选择器范围。
+- ✅ 迁移前应回答六个问题：行为归属是否唯一？格式化上下文和周边布局会受何影响？哪些级联规则会冲突？旧实现是否彻底删除并测试所有状态？性能是否实测？下一位开发者能否理解规则边界？
+- 🏁 结论：现代 CSS 很强，但新能力不会自动带来更简单的系统；只有具备单一所有者、经过检查的作用域、有意设计的级联位置和可验证的性能收益，迁移才算完成。
+
 ### [66 个成本区间中有 60 个重叠。JavaScript 字节则几乎不重叠](https://gautamparab.com/writing/sixty-of-sixty-six-ranges-overlap/)
 
 Nolan Lawson 让 AI 代理在 12 个 JavaScript 框架中构建同一个应用，每个框架构建五次，结果显示框架对代理成本的影响远不如运行间的随机波动明显，而框架对最终 JavaScript 体积的影响则几乎完全可复现。
@@ -67,6 +99,23 @@ MCP 连接器让智能体接入 Slack、Jira、GitHub 等系统，但只提供�
 - 🚀 核心结论：连接器目录不会自动变成上下文引擎，关键工作发生在摄取阶段，而非查询阶段。
 
 ## 工具
+
+### [GitHub - flyfish-dev/file-viewer：在浏览器中预览 275+ 种文件格式：Office、PDF、OFD、CAD](https://github.com/flyfish-dev/file-viewer)
+
+File Viewer 是 flyfish-dev 开源的浏览器端只读文件预览项目，支持 Office、PDF/OFD、CAD、3D、压缩包、邮件等 275+ 扩展名，采用纯前端解析渲染，无需转换服务器，并提供 Web Component、Vue、React、Svelte、jQuery 等多框架接入及离线自托管能力。
+
+- 📦 仓库约 2.7k Star、286 Fork，核心自有源码采用 Apache-2.0，定位为多格式浏览器预览组件。
+- 🧩 覆盖 275 个注册扩展名（225 稳定、50 实验）和 47 条预览管线，含 Word、Excel、PPT、PDF、OFD、DWG/DXF、STEP/IFC、压缩包、邮件、图像、媒体、代码、DICOM 等。
+- 🚫 文件在浏览器中解析渲染，无需转换服务器；Workers、WASM 和字体可自托管，支持离线网络。
+- ⚡ 重型引擎按格式懒加载，只加载文件所需资源，降低初始负担。
+- 🧑‍💻 一套 API 覆盖 Web Component、Vue 3、Vue 2.7/2.6、React 16.8–19、Svelte 和 jQuery。
+- 🚀 快速开始可安装 `@file-viewer/web-full` 并调用 `mountViewer`，或用 `npm create file-viewer@latest` 创建示例、CLI 接入现有项目。
+- 🧱 可按需选择轻量组件、`preset-office`、`preset-lite`、`preset-engineering` 或独立渲染器；`*-full` 包保留 v2.4 兼容基线（221 扩展名/32 管线）。
+- 📱 提供 Flutter SDK 开发预览 0.1.0-dev.2，目标平台包括 Android、iOS、Web、Windows、macOS 和 Linux。
+- ⚠️ 它是查看器而非编辑器；字体、厂商特性、加密文件和超大输入可能影响保真度或内存，生产使用前应查格式矩阵并用真实文件测试。
+- 🛠️ Full 包需随应用提供版本匹配的 Workers、WASM、字体等运行时资源，默认路径为 `<deployment-base>/file-viewer/`；Vite 可用插件复制资源，其他构建可用 `file-viewer-copy-assets`。
+- 🤝 格式问题反馈需附脱敏样本或复现链接、浏览器版本和预期结果；贡献前阅读 `CONTRIBUTING.md`，安全问题按 `SECURITY.md` 报告。
+- ⚖️ DWG/DWF/DWFX 运行时 `@flyfish-dev/cad-viewer` 和 `dwf-viewer` 采用 AGPL-3.0-only，使用或分发 CAD 支持需遵守该许可。
 
 ### [如何在不到 350 字节内让 postMessage 类型安全——Martian Chronicles，Evil Martians 团队博客](https://evilmartians.com/chronicles/how-to-make-postmessage-type-safe-in-under-350-bytes)
 
