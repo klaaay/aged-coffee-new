@@ -75,6 +75,43 @@ summary: ''
 
 ## 工具
 
+### [OxideTerm](https://github.com/AnalyseDeCircuit/oxideterm)
+
+该工具是一个用 Rust + GPUI 编写的、面向本地 shell 与远程机器的 AI 原生工作区，强调零 WebView、零 OpenSSL、零遥测且无需应用订阅。终端、SFTP、端口转发、编辑器、监控与 AI 都围绕同一台服务器节点组织，UI 与 SSH 后端运行在同一个 Rust 进程中。
+
+- 🚀 **快速上手**：安装后，可在 Session Manager 中新建 SSH 连接，或从 `~/.ssh/config` 导入主机；打开终端时，会用 `~/.ssh/known_hosts` 校验主机密钥；SFTP、端口转发和内置编辑器默认共用同一条 SSH 连接；AI 功能需在设置中自行配置服务商端点来启用。
+- 🖥️ **终端与协议**：支持本地 shell、SSH、Mosh、Telnet、Serial、分屏窗格、多跳路由、SSH agent 及转发、2FA/TOTP、X11 转发、命令标记、会话日志与录制、Sixel/Kitty 图形、trzsz 传输。
+- 🪟 **tmux 与广播**：提供原生 tmux `-CC` 控制模式（窗格布局、可拖拽分隔条）、命名广播组，以及可按计划重复输入的多目标命令发送器。
+- 🔁 **连接可靠性**：Grace Period 重连会先探测旧连接 30 秒再替换，从而让 TUI 程序挺过短暂断网，并恢复转发、传输和已打开的编辑器文件；重连后，旧连接的 SFTP 会话不会被静默迁移到新连接。
+- 📁 **文件与编辑**：SFTP 双栏管理器、带限速与预计剩余时间的传输队列、书签、支持安全写入与冲突处理的内置远程编辑器，以及工作区恢复。
+- 🌐 **网络能力**：本地、远程和动态 SOCKS5 转发，规则保存，远程端口检测，连接拓扑查看，临时 socket 调试。
+- 🖥️ **远程桌面**：可从插件市场安装 RDP 或 VNC，并使用原生查看器，支持剪贴板和输入。
+- 📊 **主机运维监控**：可查看进程、服务、日志、端口、任务、磁盘、软件包、容器和 tmux。
+- 🤖 **OxideSens AI**：自带密钥（BYOK），支持 OpenAI、Anthropic、Gemini、Ollama 及 OpenAI 兼容端点；支持 MCP（stdio/SSE）、本地 RAG（BM25 + 向量索引）、Agent Skills；工作区上下文与动作需用户批准，命令策略规则生效，发送前做凭据模式脱敏，密钥存于系统钥匙串。
+- 🧩 **三类插件**：仅清单（无代码）、WASM（Wasmtime/WASI 或 sidecar，能力受限）、普通本地进程（受信任代码，不经 OS 沙箱）；旧版 Tauri 1.x ESM 插件可被列出但不会被原生 2.x 执行。
+- 🔒 **安全与隐私**：凭据存储于 macOS Keychain / Windows Credential Manager / libsecret；敏感类型使用 zeroize；主机密钥采用 TOFU 并拒绝意外变更；`.oxide` 导出使用 ChaCha20-Poly1305 + Argon2id（256 MB、4 次迭代）；会话录制与审计默认关闭且加密留在本机，录制不捕获键盘输入；无遥测。
+- 🛡️ **CLI 安全护栏**：会改变状态的命令提供 dry-run 计划、`--yes` 确认与回滚备份。
+- 📉 **内存占用**：从 Tauri 1.x 迁移到原生 GPUI 2.0 后，维护者记录的 macOS 空闲内存由 318.7 MB 降至 81.3 MB（约 74%），Windows 由 182.4 MB 降至 23.5 MB（约 87%）；旧版本数据包含相关 WebView 进程。
+- 🧱 **架构与技术栈**：GPUI 在 GPU 上直接渲染，终端字节直接更新 `TerminalState`，无 JSON/WebSocket/Base64/xterm.js 解析环节；`NodeRouter` + `SshConnectionRegistry`（DashMap）实现按节点连接池；SSH 使用 russh + ring（无 OpenSSL/libssh2）；另有 portable-pty、alacritty_terminal、tree-sitter、Tokio、Wasmtime 等。
+- 💻 **无头 CLI**：`oxideterm` CLI 不启动桌面应用即可用于自动化、CI 与诊断，覆盖设置、连接、转发、插件、密钥、便携包、报告、批量计划、备份、云同步，支持 `--json`/`--dry-run` 与配置目录隔离。
+- 📦 **安装与限制**：提供 macOS DMG、Windows 安装程序、Linux AppImage/.deb/.rpm（x64 与 ARM64），可用 `sha256sums.txt` 校验；仅桌面端（无移动应用），项目迭代频繁，进程插件无 OS 沙箱；渲染异常时可设 `OXIDETERM_RENDER_PROFILE=compatibility`；许可证为 GPL-3.0-only。
+
+### [GG Coder：更充分利用 AI 订阅的编程智能体，20 款测试中最快最精简，可无限本地搜索真实开源代码](https://github.com/KenKaiii/gg-framework)
+
+GG Coder 是一款桌面编程智能体，主打让用户已付费的 AI 订阅发挥更大价值。页面称其在同一模型的 20 款智能体竞速中速度最快、开销最低，并列出真实代码本地搜索、自动验证、一键项目检查、多模型订阅支持等功能，同时提供安装方式、可复用 npm 包和 AGPL-3.0 许可说明。需要注意：竞速成绩来自项目方组织的单次测试，属于其自述数据，并非独立第三方基准。
+
+- 🎯 **产品定位**：GG Coder 是桌面端编程智能体，目标是更充分地利用现有的 Claude、ChatGPT、Gemini 等 AI 订阅。
+- 🏁 **竞速排名**：在同一模型下对比 20 款智能体，GG Coder 完成整套任务用时 102 秒、成本 $0.014，两项均列第一。
+- 🐢 **与 Claude Code 对比**：Claude Code 用时 142 秒、成本 $0.037，按其表格计算比 GG Coder 慢 39%、开销多 169%；表现最弱的 jcode 为 380 秒、$0.178，慢 274%、开销多 1196%。
+- 🧪 **测试条件**：2026 年 11 月 4 日单次竞速；7 个任务、每个 5 次运行，共 700 次；统一使用 Claude Haiku 5.5 和相同思考设置；每次使用全新项目副本，所有智能体（含 GG Coder）均裸跑，不使用技能、插件、MCP 服务器或自定义指令；只有隐藏测试通过或答案正确才计为有效运行。
+- 🔍 **真实代码搜索**：Agent Steroids 可在本机搜索真实、当前的开源代码，不依赖限速的 MCP 服务器，且无使用次数限制。
+- ✅ **完成即验证**：Ken Autopilot 会持续推动任务，直到工作真正得到验证。
+- 🛡️ **新手友好的一键检查**：除编码外，还提供安全、合规、数据安全、无障碍、测试等检查，并给出项目健康分。
+- 🔌 **广泛的模型支持**：可连接 Claude、ChatGPT、Gemini、Grok、Kimi、API key 或本地模型。
+- 🧩 **其他内置能力**：GG Goals 可把完整目标交给一组 worker 执行；Chat 提供带上下文记忆的对话；GG Motion 可将想法转为视频。
+- 💻 **安装方式**：macOS（Apple Silicon）下载 .dmg；Windows 运行 .exe 安装包；Linux x86_64 安装 .deb 或 .rpm；开发模式需 Node.js、pnpm 和 Tauri 前置条件。
+- 📦 **框架复用**：提供 `@kenkaiiii/gg-ai`、`@kenkaiiii/gg-agent`、`@kenkaiiii/gg-core`、`@kenkaiiii/ggcoder` 四个包；自建智能体可从安装 `@kenkaiiii/gg-ai` 和 `@kenkaiiii/gg-agent` 开始。
+
 ### [Tinyauth](https://github.com/tinyauthapp/tinyauth)
 
 Tinyauth 是一个极简的 OpenID Certified™ 认证与授权服务器，可作为应用认证中间件或独立认证服务器，支持 OAuth、LDAP、访问控制及主流反向代理；项目处于活跃开发期，目前由单人维护，并呼吁社区开发者协助。
