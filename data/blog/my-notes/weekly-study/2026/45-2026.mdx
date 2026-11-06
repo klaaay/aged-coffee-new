@@ -100,6 +100,24 @@ MCP 连接器让智能体接入 Slack、Jira、GitHub 等系统，但只提供�
 
 ## 工具
 
+### [tapflow](https://github.com/jo-duchan/tapflow)
+
+tapflow 是一个用 MIT 许可开源、可自托管的移动端 QA 工具，定位为 Appetize / BrowserStack 的替代方案：在已有的 Mac 上运行 iOS 模拟器与 Android 模拟器，团队成员通过浏览器即可实时操作，构建产物、串流与录制都留在自有基础设施内。它由自托管 relay（兼做仪表盘）、macOS agent（驱动模拟器）和浏览器仪表盘三部分组成，不依赖 WebDriverAgent。资料为项目说明文档（GitHub 仓库），未提供页码或字幕时间戳，因此以下要点无法标注具体位置；涉及定位与路线图的表述属于文档自述，使用效果（如延迟）以文档给出的测量为准。
+
+- 🧩 **核心定位**：不在云端上传构建、不维护设备池，复用团队已有 Mac；解决“非移动开发同学难以及时访问模拟器”的协作不均问题
+- 🏗️ **三段式架构**：relay（Linux 或 Mac，同端口提供仪表盘）←WebSocket→ 浏览器；Mac agent 以出站连接接入 relay（无需入站防火墙规则），并直接注入 iOS 触摸事件，无需 WebDriverAgent
+- 🚀 **快速上手**：`npm install -g tapflow` → 在 Mac 上执行 `tapflow setup` → `tapflow start`（本机模式下同时启动 relay 与 agent，默认 http://localhost:4000），首次访问跳转 `/setup` 创建管理员；无头服务器可用 `tapflow admin init`
+- ⚙️ **环境要求**：Node.js ≥ 22；relay 任意 OS、约 512 MB 内存；iOS agent 需 macOS 26/27 + Xcode 26/27 + 模拟器运行时；Android agent 需 Java + Android SDK + AVD；**agent 仅支持 macOS**，浏览器为任意现代浏览器
+- 🎥 **串流能力**：iOS/Android 约 30 fps，H.264 经两级解码（安全上下文用 WebCodecs，纯 HTTP 用 WASM/tinyh264）绕开 media element 缓冲；不可用时回退 JPEG；分辨率随连接自适应（HTTPS 原生、纯 HTTP 局域网降采样）
+- ⏱️ **延迟数据**：局域网内“解码到呈现”p50 约 11–17 ms（WASM 软件解码），HTTPS 下 WebCodecs 更快；端到端“玻璃到玻璃”需再加上网络往返（文档称详见其延迟日志）
+- 🖱️ **交互与调试功能**：触摸/滑动/捏合实时转发、深链工具栏、键盘快捷键、双向剪贴板同步（从设备复制需 HTTPS 或 localhost）、设备音频回传、可断网模拟离线（iOS 首次安装网络过滤器，Android 无需）
+- 🗂️ **协作与管理**：App Center 上传 `.app.zip` / `.apk` 并按状态跟踪构建；会话录制保留约 72 小时后自动清除；截图 REST 端点供 CI/AI 使用；按 agent 监控 CPU/内存；邀请链接、四种角色（Admin/Developer/QA/Viewer）与个人访问令牌（PAT）
+- 🤖 **自动化**：内置确定性 flow runner（`tapflow flow run` 回放 YAML，带条件等待与 JUnit 报告，回放时不调用 LLM）与 `@tapflowio/mcp-server`（供 Claude Code 等 LLM agent 控制模拟器），两者均标注为实验性
+- 🔐 **安全模型**：relay 是信任边界；默认仅本机 localhost 可免认证，外部浏览器需登录、异地 agent 需 agent-scope token，经隧道访问也视作 off-host；PAT 带作用域（如 `builds:write`、`agent`）
+- 🖥️ **团队自托管**：单 Mac 只需 `tapflow start`；团队可将 relay 放在独立 Linux 服务器或专用 Mac（PM2 或 Docker 运行，Docker 镜像仅含 relay，数据卷必填且存登录密钥），各 Mac agent 用 `tapflow agent start --relay wss://… --token <agent-token>` 接入
+- 🚫 **边界说明**：不替代 Xcode / Android Studio 等原生开发工具，也不是设备农场；不接入 WebDriverAgent / Appium 等外部自动化框架，改用自带的最小 runner
+- 📌 **项目状态**：v0.x 活跃开发，默认向后兼容、破坏性变更少见且写入变更日志；贡献需 Node.js ≥ 22、pnpm ≥ 9；捆绑 scrcpy-server（Apache-2.0）用于 Android 屏幕串流，版权标注为 2026 年起
+
 ### [GitHub - flyfish-dev/file-viewer：在浏览器中预览 275+ 种文件格式：Office、PDF、OFD、CAD](https://github.com/flyfish-dev/file-viewer)
 
 File Viewer 是 flyfish-dev 开源的浏览器端只读文件预览项目，支持 Office、PDF/OFD、CAD、3D、压缩包、邮件等 275+ 扩展名，采用纯前端解析渲染，无需转换服务器，并提供 Web Component、Vue、React、Svelte、jQuery 等多框架接入及离线自托管能力。
