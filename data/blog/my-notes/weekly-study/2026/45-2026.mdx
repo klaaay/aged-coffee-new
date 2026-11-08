@@ -12,6 +12,17 @@ summary: ''
 
 ## 技术
 
+### [理解 React 内部机制](https://www.alexandretrotel.org/articles/understanding-react-internals)
+
+这篇文章旨在深入讲解 React 内部机制，而不是停留在 hooks 的使用层面；核心观点是 React 本质上是一个调度器，负责决定渲染内容、渲染时机以及哪些工作可以等待。文章将覆盖异步 React、lanes、服务端到客户端的组件序列化、hydration 等通常隐藏的机制，并强调阅读源码和反复理解的重要性。
+
+- 🧩 大多数人通过 hooks 学习 React，但 hooks 只是表层接口，并不是 React 的核心。
+- ⚙️ React 底层是一个调度器：它决定渲染什么、何时渲染、哪些任务可以延迟，并与浏览器交互、拆分任务、在更高优先级任务到来时暂停。
+- 🌐 文章深入探讨异步 React、lanes、服务端与客户端之间的组件序列化、hydration 以及通常不可见的内部机制。
+- 📚 部分内容较难理解，作者建议不必一次全部掌握，可以阅读后回顾并反复学习。
+- 🔍 理解 React 的最佳方式是阅读 React 源码；包括本文在内，其他材料都只是对源码的解读。
+- 🧠 读完后应能更好地掌握 React，理解每个 hook 的使用场景及原因，并建立服务端、客户端与浏览器交互的心智模型。
+
 ### [React.lazy、Suspense 与隐藏的 300 毫秒启动延迟 • 标签页小部件](https://tabwidgets.com/blog/react-lazy-suspense-delay)
 
 文章复盘了 Tab Widgets 新标签页扩展的启动性能问题：真正瓶颈不是包体积，而是 React.lazy 首次渲染必挂起，叠加 Suspense 固定 300ms 的揭示节流。团队最终改为“不触发 Suspense 的代码门控”，让组件代码就绪后立即渲染，使首个组件内容从约 540ms 提前到约 298ms。
@@ -152,6 +163,19 @@ typed-channel 是一个极小型的 TypeScript 库，用统一、类型安全的
 
 ## 更新
 
+### [tailwindlabs/tailwindcss · GitHub](https://github.com/tailwindlabs/tailwindcss/releases/?ref=tailwindweekly.com)
+
+该页面汇总了 Tailwind CSS 从 v4.2.1 到 v4.3.5 的发布记录（2 月至 11 月），重点涵盖新工具类与 `@variant`/`@utility` 能力扩展，以及 canonicalization、CLI/Vite/PostCSS/Webpack/Turbopack 集成和跨平台稳定性的持续修复。
+
+- 🆕 v4.3.0 引入 `@container-size`、`scrollbar-*`、`zoom-*`、`tab-*` 等实用类，并支持 `@variant` 堆叠/组合与 functional `@utility` 的 `--default(...)`。
+- 🧩 v4.3.4 新增 `@tailwindcss/turbopack`，加强 Next.js/Turbopack 支持，同时修复 `@scope`、watch 模式与自动源检测问题。
+- 🩹 v4.3.5 作为最新版本，重点修复 canonicalization 性能、`color-mix(...)` 回退颜色、oxide WASM 加载和类型声明错误。
+- ⚡ 多个版本持续优化 canonicalization：合并/迁移工具类、保留任意值单位与空格、避免错误 `calc(...)` 折叠及性能退化。
+- 🛠️ CLI 与构建工具稳定性是主线：改进 `--watch`/`--poll`、Vite/PostCSS/Webpack 重建、Vite 8 支持、Vite alias 解析与 HMR 崩溃修复。
+- 🌐 跨模板/语言支持增强：覆盖 Ruby `%w`/`%W`、Slim/Haml、Pug、Twig、Maud、MDX 等文件中的类名提取与识别修复。
+- 🎨 样式细节修复包括 `placeholder-*` 颜色变量、CJK 字体语言适配、间距输出优化及滚动条/缩放等新增能力。
+- 🔐 发布页显示各版本由 GitHub Actions 发布并使用 GitHub 验证签名，社区反应以点赞、庆祝、爱心和火箭为主。
+
 ### [pnpm 12.17.0 | pnpm](https://pnpm.io/blog/releases/12.17.0)
 
 pnpm 12.17.0 是一次功能增强与稳定性修复版本，重点新增全局 peers 检查、`overrides` 依赖组选择器与通配符、`outdated/update` 对运行时、包管理器、Cargo 与 Python 依赖的检查更新，并修复 Docker 多用户文件权限、本地依赖重复安装漏检、全局命令依赖解析等问题。
@@ -188,8 +212,6 @@ Vitest 5.1 于 2026 年 11 月 2 日发布，重点提升了测试筛选、快�
 - 📈 覆盖率改进：HTML 报告新增明暗主题并跟随系统；Istanbul 插桩改用 Oxc + magic-string，速度提升 5–10 倍，仓库 479 个文件从 3.7s 降至 0.38s；V8 新增 `coverage.ignoreNode`。
 - ⚡ 性能优化：`isolate:false` 复用 worker 缓存；`toEqual` 类型化数组比较提速（2MiB 数组 1.5s→125ms）；Firefox Trace View 提速；Browser Mode WebSocket 在高负载下更稳定。
 - 🔧 其他变更：Browser Mode 默认端口改为 `23315`，`api.port:0` 可让系统选择空闲端口；浏览器测试无法连接服务器时会直接报错而非无限等待。
-
-## 设计
 
 ## 其他
 
