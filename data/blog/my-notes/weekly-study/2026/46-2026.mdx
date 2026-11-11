@@ -30,7 +30,90 @@ TanStack Query 默认每个标签页各自维护缓存，因此一个标签页�
 
 ## 工具
 
+### [Text.js | 控制台框架](https://textjs.org/)
+
+Text.js 是一个把全栈 React 应用直接渲染到浏览器控制台 `console.log` 中的框架，提供 React 组件、App Router 路由、服务端渲染、终端与 AI 代理运行能力，以及完整的开发工具链，让控制台变成可交互的应用界面。
+
+- 🚀 通过 `bunx create-text-app` 快速创建项目，使用 `AsciiFont`、`Box`、`Text`、`useInput` 等组件构建控制台界面。
+- 🧭 采用 App Router：`app/` 中的文件夹自动成为路由和布局，支持前进、后退与深链接，并适配 DevTools 面板尺寸。
+- ⌨️ 统一处理键盘输入、粘贴和 IME 组合输入，通过隐藏的 `<textarea>` 将事件传递给应用。
+- 🧱 提供布局、数据展示、图表、表单控件和键盘交互组件，如 Grid、Table、LineChart、Input、Dialog、CommandPalette 等。
+- ⚙️ 渲染管线包括 React 自定义 reconciler、Yoga 布局、CellBuffer 绘制、脏行检测、RLE 编码和 `console.log` 输出。
+- 📉 只有发生变化的帧才会产生一次 `console.log`；未变化帧为 0 次调用，并采用追加帧而非清空控制台，减少闪烁。
+- ⚡ 性能示例：3,200 个单元格编码为 149 个 `%c` span；单行编辑约 0.011ms，完整重绘约 0.163ms，空闲帧 0 次调用。
+- 🖥️ 支持 `runtime = "server"` 服务端渲染，浏览器只加载约 21kB gzip 的帧播放器，并通过 SSE 接收行增量。
+- 🧩 支持 Partial Prerendering、中间件、缓存与 stale-while-revalidate，以及 static、bun、vercel、cloudflare 等部署适配器。
+- 💻 同一套应用还可在终端中以真彩色 ANSI 运行，或通过 MCP 供编码代理导航路由、按键并读取文本帧。
+- 🛠️ 配套 DevTools 扩展、VS Code 预览、ESLint 插件、测试工具、错误码文档和 `window.text` 控制台 REPL。
+- 🌍 支持 Unicode 双向文本算法与 FIGlet 字体解析，并提供 10 章、约 65 分钟的控制台部署仪表盘课程。
+
+### [GitHub - paulirish/chrome-capture：从 Chrome 以 60-120fps / 2160p 捕获标签页视频/音频 · GitHub](https://github.com/paulirish/chrome-capture)
+
+chrome-capture 是一个基于 Chrome 新版原生录屏能力的开源工具，可直接把标签页以 60–120fps、最高 2160p 录制成 AV1 编码的 MP4，并支持标签页音频，无需 ffmpeg。它封装了 Chrome 153+ 的 `Page.startScreenRecording`，相比旧方案在速度、文件体积和录制体验上都有明显提升。
+
+- 🎥 支持 60–120fps、最高 2160p 的标签页视频与音频录制，输出 AV1 `.mp4`，无需 ffmpeg。
+- ⚡ 基于 Chrome 153+ 原生 `Page.startScreenRecording`，视频帧从合成器经共享内存直达独立编码器，边录边写入 MP4。
+- ⏹️ 停止录制几乎即时完成，无需像 ffmpeg 方案那样等待数秒收尾；可随时开始/停止，适合只录关键交互。
+- 🧩 Puppeteer v25.10+ 已提供实验性 `page.record()` 并弃用 `page.screencast()`；Playwright 仍使用旧 `Page.startScreencast`，预计后续跟进。
+- 💻 CLI 用法简单：`npx chrome-capture <url> <output.mp4> <duration>`；默认录制音频，≤60fps 时无头运行，macOS 上 >60fps 自动切换有头模式以利用 ProMotion 120Hz。
+- 🛠️ `startRecording()` 支持 Playwright Page、Puppeteer Page 或原始 CDP 会话，默认 60fps，可配置输出路径、分辨率、录制区域和音频。
+- 🧪 提供 `@playwright/test` fixture，可自动录制每个测试并附加 MP4 到报告。
+- 🖱️ 可通过 Playwright `showActions()` 或自定义 DOM 覆盖层把光标、点击徽章等录进视频。
+- 📊 M4 Max 基准测试中，6.4 秒 UI 回放：旧方案 25fps、总耗时 21s、停止耗时 3800ms、WebSocket 流量 10.5MB；新方案 60fps、总耗时 11s、停止耗时 17ms、流量 450KB。
+- 📦 新方案文件更小、画质略优：示例中最终文件 330KB vs 480KB，PSNR 34dB vs 32dB，并支持可选音频。
+- 🎚️ 暂无码率/CRF 参数；Chrome 使用 libaom AV1 实时 1-pass VBR，码率随像素率线性增长，如 720p30 约 2Mbps、1080p60 约 9Mbps、2160p120 约 72Mbps。
+- 🚀 压力测试显示：Mac 无头可达 2160p60；120Hz ProMotion 有头可达 1080p120 和 2160p120；无 GPU 的 Linux CI 可达 1080p60/1440p60，解除 vsync 限制可到 1080p75–83fps。
+- ⚠️ macOS GPU 加速环境不要同时启用 `--disable-frame-rate-limit --disable-gpu-vsync`，否则 rAF 过快会拖垮采集。
+- ⭐ 仓库约 232 stars、4 forks，采用 Apache-2.0 许可证；实现较小，也可直接参考 `src/index.ts` 集成。
+
 ## 更新
+
+### [发布 v1.65.0 · microsoft/playwright · GitHub](https://github.com/microsoft/playwright/releases/tag/v1.65.0)
+
+Playwright v1.65.0 发布，重点包括 Bun 测试运行支持、仅失败报告、独占测试锁、新 API 与缓存配置，同时带来 TypeScript 类字段、Cookie 匹配、inert 等待、代理认证和可访问名称等行为变更，并停止支持 Node.js 20。
+
+- 🥟 测试运行器可通过 `--bun` 在 Bun 下运行，由 Bun 自行转译 TypeScript；但无 watch 模式，`--tsconfig` 和 JSX 配置不生效，堆栈、步骤名称及控制台输出支持存在差异。
+- 🚨 新增 `failures` reporter，以及 HTML、JSON、JUnit reporter 的 `onlyFailures` 选项，仅保留意外失败、flaky 和中断测试。
+- 🎯 新增 `-exclusive-` 测试锁，该测试运行期间不并行执行其他测试；`test.skip()`、`fixme()`、`fail()`、`slow()` 可仅传描述并记录为测试注释。
+- 🗂️ 新增 `PLAYWRIGHT_TRANSFORM_CACHE_DIR` 控制转译缓存目录；`cdpSession.send()` 支持 `timeout` 和 `signal`；`reporter.preprocess()` 中可用 `testRun.mode()`。
+- ⚠️ TypeScript 类字段遵循 `useDefineForClassFields`，字段初始化器先于构造参数属性执行；读取构造参数属性的初始化器会失败，需调整初始化或关闭该选项。
+- ⏳ `locator.click/check/tap/fill/clear/selectOption` 会等待元素非 `inert`；分片运行全部无匹配测试时默认报“No tests found”。
+- 🍪 Cookie 匹配遵循 RFC 6265，修正子域 host-only Cookie、`Path` 前缀等匹配；`APIRequestContext` 对无名称 Cookie 的处理更规范。
+- 🔐 代理凭据不再发送给网站，仅用于代理挑战；网站认证应使用 `httpCredentials`。
+- ♿ 浏览器不渲染的文本不再计入可访问名称和 aria 快照；`params` 会追加到已有查询串；`.css/.less/.scss` 导入需文件存在。
+- 🧹 blob reporter 会先清空输出目录；CommonJS 中导入调用位置与 ESM 对齐；不再测试 Node.js 20，Docker 镜像升级到 Node.js 26。
+- 🌐 浏览器版本为 Chromium 158.0.8127.18、Firefox 159.0、WebKit 27.2，并测试 Chrome 157 与 Edge 156。
+
+### [ESLint 现已正式支持对 shell 脚本进行 lint 检查 - ESLint - 可插拔的 JavaScript Linter](https://eslint.org/blog/2026/11/eslint-shell-plugin-announcement/)
+
+ESLint 正式新增对 Shell 脚本的 lint 支持，推出官方插件 @eslint/shell，继续推进其语言无关的源码检查平台目标。
+
+- 🐚 ESLint 于 2026 年 11 月 6 日宣布正式支持 Shell 脚本 lint，这是继 JSON、Markdown 和 CSS 之后的又一语言扩展。
+- 📦 新插件名为 @eslint/shell，可通过 npm install @eslint/shell -D 安装，并在 eslint.config.js 中启用推荐配置。
+- ⚙️ 推荐配置默认使用 Bash，可检测未加引号的变量展开、未使用变量、不安全的 read 用法等常见问题。
+- 🧩 插件支持 Bash、POSIX sh 和 MirBSD Korn shell（mksh），也可手动配置规则和 Shell 方言。
+- 🔍 规则灵感来自 ShellCheck，覆盖旧式命令替换、遍历 ls 输出、未加引号展开、printf 格式字符串中的变量等问题。
+- 🌳 插件将 Shell 脚本解析为 ESTree 风格语法树，使 ESLint 规则可像遍历 JavaScript 一样遍历 Shell 语法树，从而支持自定义规则。
+- 🛠️ 解析器基于 mvdan-sh，即 shfmt 使用的解析器；用户还可在 ESLint Code Explorer 中查看 Shell 语法树。
+- 🚀 该支持让 Shell 脚本可与项目其他代码一起使用 ESLint 配置和规则 API 进行检查，有助于统一项目质量。
+- 💡 ESLint 是独立开源项目，由志愿者维护，文章鼓励有兴趣的公司赞助项目；作者为 Nicholas C. Zakas。
+
+### [宣布 Parcel 3 alpha](https://v3.parceljs.org/blog/v3-alpha/)
+
+Parcel 3 alpha 于 2026-11-04 发布，是 Parcel 的 Rust 从零重写版本，核心、CLI、开发服务器、转换器、打包器和优化器均原生实现且不依赖 Node；相比 v2 构建最高快 100 倍、内存更低，并加入原生插件、内置 JS/TS 插件运行时、自动代码分割、库模式、tree shaking 与集中配置等能力。
+
+- ⚡ 完全 Rust 重写：自包含二进制，无 Node 依赖，充分利用多核与共享内存，避免 GC 和跨语言序列化开销。
+- 📈 冷构建性能：Storybook 16.62s→572ms（29×）、文档站 87.59s→810ms（108×）、库构建 131.47s→2.71s（49×）。
+- 🧠 内存占用：对应场景 7.7GB→1.5GB（少 5.1×）、13.9GB→2.1GB（少 6.6×）、5.7GB→2.3GB（少 2.5×）。
+- 🗂️ 架构更简单：优先优化冷构建，支持内存增量重建，减少磁盘缓存与失效跟踪，避免一类 stale-cache 问题。
+- 📦 开箱即用：内置 HTML、CSS、JS、TS、SVG、图片优化、RSS/Atom、Web Manifest 等；新增 Tailwind（无需 PostCSS）、React Compiler、MDX、SVG→JSX、glob imports。
+- 🛠️ 开发体验提升：可信 HTTPS 本地 CA、macOS 下 `--open` 复用标签页、内置 bundle analyzer、`parcel run` 支持 Node 入口 HMR。
+- 🔌 原生插件：支持 Rust、Go、Swift 及 C ABI 动态库，提供 SDK 与 GitHub Actions 跨平台发布流程。
+- 🧩 JS/TS 插件：基于 QuickJS 的嵌入式运行时，部分兼容 Node，启动快、内存小、可多线程；高性能场景建议用原生插件。
+- ⚙️ 集中配置：`.parcelrc` 统一插件配置，构建开始时一次性解析，便于查找并提升性能。
+- ✂️ 打包与 tree shaking：改进 bundle 合并成本模型，450 页站点每页 HTTP 请求少 64%、传输字节少 10%；CSS 顺序更安全；支持 SVG tree shaking；移除 scope hoisting。
+- 📚 库构建增强：自动读取 `package.json#exports`，支持嵌套/多入口并行构建 ESM/CJS；每模块单独输出便于消费方 tree shaking；`.d.ts` 生成后续回归。
+- 🚀 试用方式：安装 `parcel@next`，或用 `@parcel/parcel3` 的 `parcel3` 命令并行体验；压缩器插件、`.d.ts`、自定义 bundler 插件、JS API 等仍在开发。
 
 ## 设计
 
