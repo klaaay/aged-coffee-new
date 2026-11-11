@@ -30,6 +30,32 @@ TanStack Query 默认每个标签页各自维护缓存，因此一个标签页�
 
 ## 工具
 
+### [OhMyGame](https://github.com/WhiteTowerAI/ohmygame/blob/main/README.zh-CN.md)
+
+OhMyGame 是一个开源的一人游戏工作室应用，把游戏设计文档、2D/3D 美术、视频、音频、代码、试玩和发布整合在同一块画布中，由 AI Agent 驱动，并使用用户自己的模型密钥。文档称其目前处于 Beta 阶段（beta 5），项目采用 Apache-2.0 许可证。
+
+- 🚧 **Beta 状态**：OhMyGame 目前处于 Beta 阶段；2026-10 发布 beta 5，新增互动故事支持。
+- 🧩 **产品定位**：把原本分散在设计文档、2D 美术、3D 模型、视频、代码和发布等五六个工具中的工作，收进一个应用；用户描述游戏后，Agent 负责设计、制作素材、搭建、试玩并发布为可分享链接。
+- 🖼️ **核心画布理念**：每个项目有设计空间，主设计文档与图片、视频、3D 模型、音频并排；节点可互相引用，生成结果进入共享素材库（Asset Library）。
+- 🤖 **Agent 自动工作**：Agent 像用户一样操作画布，起草文档、生成素材、编写代码，在实时预览中运行游戏并亲自试玩 Canvas 和 WebGL 游戏；发现问题会尝试修复后再玩。
+- 🎬 **互动故事**：适合视觉小说、互动电影和剧情游戏；每个画面是自由网页，可放视频、对白、选择甚至小游戏，不受固定节点类型限制。
+- 🧑‍💻 **自带 Agent**：可选择 Claude Code、Codex 或 OpenCode 运行对话，使用其自身登录，同时仍可使用画布、媒体生成、试玩、插件和撤销，对话记录保留在 OhMyGame。
+- 🔌 **MCP 接入**：在“设置 → MCP 服务”中把 OhMyGame 加入 Claude Code 或 Codex，可获得媒体生成、画布、试玩能力和工作流 Skill；DeepSeek Harness 等 MCP 客户端可添加 `ohmygame-studio` 命令。
+- 🧩 **插件生态**：引擎侧支持 Godot、Unity、Unreal Engine、Cocos Creator；平台侧支持 TapTap Maker、微信小游戏、抖音小游戏；素材侧支持 Blender、Aseprite、Tiled；也可用插件构建器自建插件，引擎插件需先安装对应引擎。
+- 🎮 **网页游戏**：文档称最推荐的起点，使用 Three.js、React Three Fiber 或 Phaser；适配任意窗口尺寸、支持触屏，发布为可分享链接，项目本身是普通 Web 项目。
+- 🎲 **General Game**：不预设引擎和技术栈，可从想法开始、导入任意引擎项目或制作工具与内容；网页产物可预览、试玩和发布，原生游戏使用各引擎工具。
+- 🔗 **发布与社区**：登录后可构建游戏并生成浏览器可玩链接，重新发布更新同一链接；社区可按最新、最多浏览、最多点赞排序，查看创作者主页并点赞。
+- 💰 **变现方式**：微信/抖音小游戏靠广告和内购；TapTap 靠下载和内购；Steam 等商店买断，经 Godot 或 Unity 插件导出；itch.io、Poki、CrazyGames 可直接上传网页构建产物。文档明确称不从游戏收入中抽成。
+- 🧠 **任意模型、自带密钥**：通过 Pi 接入 40 多家服务商，包括 Anthropic、OpenAI、Google、DeepSeek、通义千问、Kimi、智谱 GLM、MiniMax、xAI、Mistral、Groq、OpenRouter、Amazon Bedrock、Vercel AI Gateway；可登录 ChatGPT Plus/Pro、GitHub Copilot 或粘贴 API 密钥，无按次计费点数。
+- 🎨 **媒体模型接入**：图片、视频、3D 和音频生成可通过 OpenAI、Codex、OpenRouter、火山方舟 / BytePlus ModelArk、MiniMax、Meshy、Tripo、Hyper3D、豆包语音 / Seed Audio 接入；支持自定义服务商和模型别名。
+- 🔐 **密钥安全**：密钥只保存在本地守护进程，不会进入 Agent 的工作区、游戏或渲染进程。
+- ⚙️ **实现原理**：运行带图形界面的完整 Pi Agent，具备完整工具集和持久化会话；每个工作区都是文件（Web 项目、Markdown 设计文档、JSON 节点模型、磁盘节点图），并附 `AGENTS.md` 和 JSON Schema；试玩（`game_use`）、生成媒体、检查故事节点均为普通 Pi 工具调用。
+- 💻 **下载与首次运行**：Releases 提供 macOS（Apple 芯片）和 Windows（x64）版本，Windows 版暂无代码签名，可能触发 SmartScreen；应用不内置模型，首次启动需选择语言、连接模型（可跳过）、选择起点（描述游戏、空白项目或导入文件夹）。网页搜索无需配置；本地做游戏不需要账号，仅发布需登录。
+- 📋 **能力与服务商对应**：设计文档、代码、试玩需任意语言模型；图片需 Codex CLI、OpenAI、OpenRouter 或火山方舟 / BytePlus ModelArk；视频需 OpenRouter、火山方舟 / BytePlus ModelArk 或 MiniMax；3D 需 Meshy、Tripo 或 Hyper3D；配音、音效、音乐需豆包语音和 Seed Audio。文档提醒 ChatGPT 登录不包含 OpenAI 图片 API，需另加 API 密钥。
+- 🛠️ **源码运行**：需 Bun 1.4.2+、守护进程 Node.js 22.19+；克隆 `main` 分支后执行 `bun install --frozen-lockfile`，再运行 `bun run dev` 或 `bun run dev:desktop`；参与开发应从 `dev` 分支开始。
+- 🕵️ **隐私**：项目和密钥留在本地，提示词与生成请求直接发送给所选模型服务商；发布需 OhMyGame 账号且只上传静态构建产物；正式版会检查更新并发送使用数据和崩溃报告，可在设置中关闭；源码构建版本不发送遥测；桌面应用本地保留脱敏日志，仅在导出诊断信息并分享时离开电脑。
+- 🗺️ **路线图**：正在做通俗易懂的试玩报告、从社区 Remix 游戏，以及 Intel Mac / Linux 版本；可在 Issues 投票，`help wanted` 标签下可参与。
+
 ### [Text.js | 控制台框架](https://textjs.org/)
 
 Text.js 是一个把全栈 React 应用直接渲染到浏览器控制台 `console.log` 中的框架，提供 React 组件、App Router 路由、服务端渲染、终端与 AI 代理运行能力，以及完整的开发工具链，让控制台变成可交互的应用界面。
