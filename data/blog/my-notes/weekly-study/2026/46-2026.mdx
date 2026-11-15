@@ -52,6 +52,37 @@ TanStack Query 默认每个标签页各自维护缓存，因此一个标签页�
 
 ## 工具
 
+### [GitHub - denodell/playwright-soak-test：使用 Playwright 在几分钟而非几小时内发现单页 Web 应用中的内存泄漏。· GitHub](https://github.com/denodell/playwright-soak-test)
+
+项目 playwright-soak-test 是一个基于 Playwright 的浸泡测试工具，可在几分钟内发现单页 Web 应用中的内存泄漏。它通过重复执行可回到初始状态的用户流程数百次，持续统计 DOM 节点和事件监听器数量；若计数持续增长，则判定存在泄漏，并借助虚拟时钟和请求模拟覆盖长时间使用场景。
+
+- 🧪 核心原理：重复打开或关闭抽屉、筛选或清除筛选等闭环流程，比较每轮后的 DOM 节点与监听器计数，异常增长即失败。
+- ⏱️ 虚拟时钟默认每轮推进 18 秒，200 轮约覆盖 1 小时应用时间；配合 `page.route` 用 fixture 响应请求，避免等待真实服务器。
+- 📦 安装：`npm install --save-dev playwright-soak-test`；依赖 `@playwright/test` 1.45+，仅支持 Chromium，Firefox/WebKit 会跳过。
+- 🚀 快速使用：从 `playwright-soak-test` 导入 `test`，调用 `soak.run()` 包装待测流程；`soak.measure()` 只返回数据不失败，适合无限滚动等会主动增长的流程。
+- ⚙️ 建议配置独立 soak 项目，匹配 `*.soak.spec.ts`，使用 `soakLaunchOptions`，关闭 trace 和 video，并保留 `list` reporter；运行 `npx playwright test --project=soak`。
+- 📊 失败报告会显示监听器、DOM 节点、堆内存趋势图与每轮增长斜率、R²，并通过堆快照对比指出泄漏引用链，例如 `window` 上未移除的 `onResize` 监听器。
+- 🕒 可配置 `advanceMs` 匹配应用轮询周期；用 `waitForResponse` 等待每轮请求完成；支持 `page.routeWebSocket()`（Playwright 1.48+）和 `page.clock.runFor()` 处理计时器。
+- 🔧 关键默认值：`passes=200`、`warmup=5`、`nodeThreshold=100`、`listenerThreshold=0`、时钟每轮 18 秒、`gcPasses=2`、`diagnose='on-failure'` 等；可通过 `soakOptions` 或 `run`/`measure` 第二参数覆盖。
+- ⚠️ 限制：计数存在波动，建议夜间运行；使用 `workers: 1`、`retries: 0`；非 DOM 泄漏需设置 `heapThresholdPercent`；`contenteditable` 撤销历史和 `console.log` 对象可能干扰计数。
+- 🧭 与 fuite、memlab 等外部工具相比，它直接嵌入现有 Playwright 测试，流程重复次数更多，并可利用虚拟时钟覆盖更长应用时间；仓库含示例应用、测试和覆盖率要求，采用 MIT 许可证。
+
+### [一个 TypeScript 客户端，适配所有 forge](https://forges.link/)
+
+forges 提供面向 14 个代码托管平台的统一 TypeScript 接口，把 issues、拉取请求、通知、checks 与 webhooks 等操作抽象到同一套数据模型上，并由该库处理各平台的端点、分页、认证和限流差异。
+
+- 🔌 **统一入口**：用 `createForges` 组合 `github`、`gitlab` 等 provider，以 token 认证后即可通过一个循环遍历 `notifications.list()`，跨平台读取通知。
+- 🧩 **单一数据模型**：issues、拉取请求、评论、checks 和事件在各 forge 上形状一致；需要原始数据时，仍可从 `raw` 字段取得原始 payload。
+- ✅ **声明式能力**：每个 provider 声明其 forge 支持哪些能力，并随每次提交用测试校验这些声明；调用操作前可先询问 `provider.can()`。
+- 🔔 **已验证 webhook**：provider 代为验证每次投递并转换为类型化事件，各平台的事件种类与动作保持一致。
+- 📦 **小体积打包**：只保留导入的 forge；webhook 投递转换代码在接收时才加载；GitHub provider 约 42 kB（gzip）。
+- 🧪 **离线测试**：可针对内存中的 forge 或重放的响应进行测试，无需访问网络。
+- ⚠️ **类型化错误与重试**：限流、token 被吊销、缺少 scope 分别有独立错误类；遇到短暂限流后 provider 会自动重试一次。
+- 🗺️ **能力矩阵**：按 forge 列出 `threads.merge`、`notifications.list`、`checks.list`、`ci.runs`、`releases.list`、`webhooks.create`、`search.threads` 的支持状态，用 Native、Experimental、Emulated、Unverified、Not applicable、Not available 标注；文档提供完整矩阵入口。
+- 🛠️ **可构建场景**：文档给出通知收件箱（合并多平台通知）、标签机器人（打标签并按评论命令关闭）、发布摘要（展示最新 release 与失败 PR）、webhook 接收器（把各平台投递转为单一事件类型）等示例方向。
+
+说明：上述内容均来自该网页的简介与功能列表；能力矩阵在文本中较为密集，具体某平台某项能力的精确状态需查阅原文“完整矩阵”。网页未提供版本号、发布时间或更详细的 API 文档。
+
 ### [OhMyGame](https://github.com/WhiteTowerAI/ohmygame/blob/main/README.zh-CN.md)
 
 OhMyGame 是一个开源的一人游戏工作室应用，把游戏设计文档、2D/3D 美术、视频、音频、代码、试玩和发布整合在同一块画布中，由 AI Agent 驱动，并使用用户自己的模型密钥。文档称其目前处于 Beta 阶段（beta 5），项目采用 Apache-2.0 许可证。
@@ -116,6 +147,20 @@ chrome-capture 是一个基于 Chrome 新版原生录屏能力的开源工具，
 
 ## 更新
 
+### [推出 UI SDK · UI SDK](https://ui-sdk.dev/docs/core/changelog/introducing-ui-sdk)
+
+UI SDK 是一个面向智能体、用于构建组件的 TypeScript UI 行为库，提供 50 多种可组合的交互行为与跨框架组件库，并支持智能体读取和操作界面。
+
+- 🚀 2026 年 11 月 12 日发布 UI SDK，定位为“为智能体而做”的 UI 行为库。
+- 🧱 提供键盘导航、焦点、选择、弹窗、拖拽以及这些交互所需的 ARIA 属性等基础能力。
+- 🧩 包含 50 多种行为，例如 `createRovingFocus`、`createTypeahead`、`createPopup`，可组合构建自定义组件。
+- ⚛️ 使用 `@ui-sdk/core` 定义一次组件，再接入 React 等框架；智能体也可学习编写，用户可直接向智能体索取组件。
+- 📚 基于相同行为提供跨框架组件库：50 多个现成组件，覆盖 React、Vue、Svelte、Solid 和 Web Components，样式由用户自带。
+- 🤖 专为智能体构建与使用：`createAgent` 让智能体在权限范围内读取页面，并像人一样点击、输入和选择。
+- 🌐 通过 WebMCP 的 `registerTools`，浏览器内置智能体也能读取组件并调用其动作。
+- 🛠️ 可复制 setup prompt 让智能体自动配置 UI SDK；目前处于 beta，API 可能变化，可在 GitHub 反馈。
+- 🙏 致谢 Radix、Base UI、React Aria、shadcn/ui、Nuxt UI、Geist 以及 WAI-ARIA Authoring Practices。
+
 ### [发布 v1.65.0 · microsoft/playwright · GitHub](https://github.com/microsoft/playwright/releases/tag/v1.65.0)
 
 Playwright v1.65.0 发布，重点包括 Bun 测试运行支持、仅失败报告、独占测试锁、新 API 与缓存配置，同时带来 TypeScript 类字段、Cookie 匹配、inert 等待、代理认证和可访问名称等行为变更，并停止支持 Node.js 20。
@@ -163,9 +208,35 @@ Parcel 3 alpha 于 2026-11-04 发布，是 Parcel 的 Rust 从零重写版本，
 - 📚 库构建增强：自动读取 `package.json#exports`，支持嵌套/多入口并行构建 ESM/CJS；每模块单独输出便于消费方 tree shaking；`.d.ts` 生成后续回归。
 - 🚀 试用方式：安装 `parcel@next`，或用 `@parcel/parcel3` 的 `parcel3` 命令并行体验；压缩器插件、`.d.ts`、自定义 bundler 插件、JS API 等仍在开发。
 
-## 设计
-
 ## 其他
+
+### [你无法改变你的老板——雅各布·卡普兰 - 莫斯](https://jacobian.org/2026/oct/12/you-cant-change-your-boss/)
+
+面对糟糕老板，核心观点是：你无法改变老板的行为，最好把其行为视为像天气一样不可控；现实选择通常只有忍受或离职，因为向上反馈在权力不对等的情况下极少成功，甚至可能带来负面后果。
+
+- 🌩️ 老板的行为应视为基本不可改变，试图改变往往徒劳。
+- 🧭 遇到坏老板，真正现实的选择通常只有两个：学会共处或另找工作。
+- ⚖️ 跨权力层级给上级反馈很少成功，因为反馈背后常隐含“否则会被解雇”的权力关系。
+- 🚫 下属对老板缺乏影响力，老板没有理由听取反馈；最需要反馈的坏老板反而可能因“顶撞”而愤怒。
+- 🔥 向上反馈不仅可能无效，还可能带来负面后果，甚至因尝试改变老板而丢掉工作。
+- 🌤️ 愿意听取下属反馈的好老板确实存在但罕见，而且这类老板通常会主动寻求反馈，不需要下属冒险进言。
+- ☔ 对老板的抱怨可以理解也有必要，但个人能控制的只是自己如何应对，比如“带雨衣”。
+
+### [协作的悖论：你需要麻烦制造者](https://mdalmijn.com/p/the-paradox-of-collaboration-you)
+
+协作的悖论在于：想要更好的跨部门协作，组织反而需要敢于打破部门壁垒、提出尖锐问题的“麻烦制造者”。当法务、安全、销售等利益相关者只从自身立场提出不合理要求时，真正有效的协作需要有人追问背景、影响和替代方案，把讨论拉回公司整体利益；这类人虽不受欢迎，却能带来建设性摩擦，避免低价值内耗。
+
+- 🧱 常见问题：外部利益相关者提出不合理要求，例如法务禁止变更、安全让简单事情变复杂、销售强推客户指定的方案。
+- 🏢 根源在于各自守着自己的“地盘”和舒适区，只关注本部门视角，不愿搅动现状。
+- ❓ 作者会向法务等提出尖锐问题，弄清变更原因、公司特殊性、是否必须抢先、不实施的后果、罚款与整改期限等，以判断是否符合公司整体利益。
+- 😬 这类追问常不受欢迎，因为对方未必有答案，还会觉得专业判断被挑战；但提问者并非挑战权限，而是想理解选项、寻找最佳行动方案。
+- 🚫 若合作方只在乎自己的部门利益，协作就会变成低价值支线讨论，忽视真实业务影响。
+- 🌍 现实问题不会尊重专业边界；协作悖论是：要实现最佳协作，反而需要“麻烦制造者”。
+- 🧩 需要有人温和但坚定地指出法务要求不合理、提醒安全要求可能反噬、促使销售直接与客户沟通真实需求。
+- ⚡ 最佳结果来自“建设性摩擦”：不一定要得罪人，但要敢于挑战现状、推动他人跳出狭窄专业视角。
+- 🚀 马斯克、乔布斯等例子说明，制造摩擦的创新者常能带来更好结果，但不必模仿他们，也不要为制造麻烦而伤人。
+- 🤝 长期做正确的事比赢得短期争论更重要，同时要维护关系，否则可能像乔布斯一样被赶走。
+- 📣 组织若协作不佳，就需要更多敢于“搅局”的人；即使不被感激，公司往往比表面承认的更需要他们。
 
 ### [程序员的悖论：小事](https://theprogrammersparadox.blogspot.com/2026/10/little-things.html)
 
@@ -196,3 +267,17 @@ AI 智能体的自主权不应是一次性开启的开关，而应像培养新�
 - 🧑‍✈️ **自主不等于孤立**：像新人出差有人陪同一样，智能体执行任务时也应让用户能看到其工作位置并随时接管。
 - 🧱 **产品设计应体现授权层级**：界面要反映用户授予的自主程度，显示智能体正在操作的范围，支持监督和回退。
 - 💡 **结论**：用“判断、挑战、观察、派出”的模式设计智能体产品，让用户有时间逐步建立信任，并在信任不足时随时收回自主权。
+
+---
+
+假设 AI 平均每天改动 5 次代码，那么你平均每天至少要阅读 10 次代码（采样），否则很快就会丧失对代码仓库的理解。
+
+大家可以想一想，是不是这样。有些公司为了加快开发速度，不断增加 AI 的使用频率，每天提交大量的代码改动。但是，阅读代码的频率没有同步提升，大大低于奈奎斯特极限（2 倍），那么就进入了信号失真状态，他们对自己的产品已经不了解了。
+
+---
+
+很多人以为，AI 编程很轻松。其实，完全不是这样，它让人精疲力尽，因为你需要不停做出决策。
+
+空中交通管理员和卡车司机都有强制休息时间，但是没有人会强制要求 AI 编程的使用者休息，你只有一块智能手表提醒自己站起来活动活动。
+
+-- 《为什么 AI 编程令人如此疲惫》
