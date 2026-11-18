@@ -32,6 +32,22 @@ summary: ''
 
 ## 工具
 
+### [Flashwright：最快的端到端测试框架，Playwright 的即插即用替代方案](https://flashwright.dev/)
+
+Flashwright 是可直接替换 Playwright 的超快端到端测试框架，保持相同 API、测试运行器与 `npx playwright test` 命令，现有测试套件无需修改即可运行，并在基准测试中显著快于 Playwright 及其他主流工具。
+
+- 🚀 直接替换 Playwright：导入、配置、命令行、浏览器、报告器、Trace Viewer 和 VS Code 扩展均沿用 Playwright。
+- ⚡ 性能突出：24 个 TodoMVC 测试在 1 worker 下为 2.36 秒，Playwright 为 4.48 秒；4 workers 下为 1.47 秒，Playwright 为 3.02 秒。
+- 🥇 对比 9 种工具仍最快：同一机器、同一 Chromium、各自推荐等待与隔离策略下，Flashwright 中位耗时最低。
+- 📦 安装简单：`npm i -D @playwright/test@npm:flashwright-test`，随后继续使用 `npx playwright test`。
+- 🛠️ 提速机制：复用热浏览器但重置上下文、页面变化驱动等待、输入不等待动画、提前启动 workers、V8 代码缓存、更快截图编码。
+- 🤖 适合编码代理：暖会话下重跑一个 TodoMVC 测试仅 72 毫秒，Playwright 为 652 毫秒；MCP 支持自适应等待。
+- ⚙️ 默认更快但可配置：`isolation: 'recycled'`、`failFastWhenIdle: true`、`waitForAnimations: false`、`testOrder: 'longest-first'` 等。
+- 🔄 可恢复 Playwright 行为：可在项目、文件或 `describe` 块中逐项开启 Playwright 默认行为。
+- 🌐 浏览器差异：主要提升 Chromium；Firefox 与 WebKit 基本保持 Playwright 行为，仅复用每 worker 一个标签页。
+- ✅ 兼容性验证：Playwright 自有测试套件在 Chromium 上通过 2610/2610，runner、library 和 MCP 套件与 Playwright 1.64.1 一致。
+- ↩️ 可随时回退：执行 `npm i -D @playwright/test@1.64.1` 即可，代码中不引用 Flashwright。
+
 ## 更新
 
 ## 设计
