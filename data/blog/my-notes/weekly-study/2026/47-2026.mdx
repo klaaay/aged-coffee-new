@@ -12,6 +12,18 @@ summary: ''
 
 ## 技术
 
+### [在删除你的 AGENTS.md 之前，请先阅读这篇文章——作者：Jina Yoon](https://newsletter.posthog.com/p/your-agentsmd-is-holding-you-back)
+
+文章指出，上下文工程正从“不断补充信息”转向“主动做减法”，避免过多规则和提示反而拖累 AI 智能体。作者建议定期删除或重写 AGENTS.md / CLAUDE.md，并通过人工审查、评估测试和智能体反馈三种方式，让上下文保持精简、准确和可维护。
+
+- 🧠 模型能力提升后，过去必需的上下文可能变成负担；Anthropic 曾移除 Claude Code 系统提示的 80%，Claude Code 创作者也建议每六个月删除 CLAUDE.md 以保持前沿。
+- 🩺 先运行 `/doctor` 做基础健康检查：删除冗余提示、发现损坏配置、清理未使用插件、优化懒加载，并估算可节省的 token。
+- 👀 `/doctor` 不能判断内容是否正确，仍需人工逐行检查 AGENTS.md；如果说不清某条规则能防止什么失败，就删除它。
+- ⚠️ 文章举例：团队暂停 merge queue 后忘记更新 AGENTS.md，导致智能体在 21 小时内给出错误合并指令，说明上下文必须随外部状态同步维护。
+- 🧪 把上下文当作代码来测试：每次智能体出错，就记录触发错误的提示到 `failures.md`，修改 AGENTS.md 后重跑这些提示作为回归测试。
+- 🔁 PostHog 用约 40 个示例应用运行 Wizard，再由 `pr-evaluator` 评估生成的 PR，从中发现如“跳过安装 PostHog”等问题。
+- 💬 直接让智能体反馈上下文缺口：在提示中询问哪些信息本可避免工具失败、错误编辑和无效轮次，并将反馈聚类、验证后用于改进上下文系统。
+
 ### [我如何使用 AI（2026 年 10 月）——本·斯托洛维茨](https://ben.stolovitz.com/posts/how-use-ai-oct-2026/)
 
 作者在 2026 年 10 月回顾过去一年使用 AI 的变化：他从微软 Windows AI 团队工程师转为 Salesforce AI Research 研究工程师，月均 token 花费约 3000 美元；AI 已深度进入编程、检索、学习、转录等日常，但他通过个人 AI 政策、人工审查与选择性使用，抵御“AI 泥浆”和对创作与思考的侵蚀。
@@ -31,6 +43,37 @@ summary: ''
 - 🚀 结论与订阅：这一年是“勇敢新世界”的开端，AI 既产 corporate slop 也帮助人们学习和创造；他订阅 Claude Pro 与 GitHub Copilot Pro，已取消 OpenAI。
 
 ## 工具
+
+### [A2UI 1.0：构建令人愉悦、快速、可靠的智能体体验 - Google 开发者博客](https://developers.googleblog.com/a2ui-10-build-delightful-fast-reliable-agentic-experiences/)
+
+A2UI 1.0 是 Google A2UI 团队发布的生成式 UI 开放协议首个稳定版，让 AI 智能体以可交互界面（如表单、图表、卡片）回应，而不再只输出大段文本；应用使用自身原生组件安全、低延迟地渲染，并可通过开源渲染器与智能体 SDK 接入。
+
+- 🚀 **正式发布 1.0**：这是首个稳定版本，支持 Web、Android、iOS 渲染器及 Python、TypeScript、Dart 智能体 SDK。
+- 🧩 **核心机制**：智能体描述要展示的内容，应用接收 A2UI 消息后用原生组件渲染，兼顾低延迟、高信任与原生体验。
+- 🎨 **个性化与品牌一致**：UI 可按用户需求即时生成，并只使用开发者注册的设计系统和组件。
+- 🛡️ **生产级能力**：支持 A2UI Express 或“系统一”决策模型选择组件；服务端绑定数据与子组件，敏感值不进入模型，并支持边生成边流式呈现。
+- 🔄 **1.0 新特性**：新增双向函数调用、可访问性支持与扩展元数据；渲染器覆盖 React、Angular、Lit、Flutter、SwiftUI，Jetpack Compose 暂为 0.9.1。
+- 🌐 **MCP Apps 集成**：A2UI 屏幕可出现在支持 MCP Apps 的 AI 助手中，如 Claude 和 Gemini。
+- 🏢 **企业采用**：Atlassian 将 A2UI 用于 Jira 智能体交互卡片；Alation 用其渲染指标卡、图表和 SQL 透明信息；ByteDance 为 Lynx 发布渲染器；Bloomberg 等公司也在构建。
+- 🧪 **应用示例**：同一智能体输出可跨手机和笔记本原生呈现，例如整合日历、餐厅订位与打车价格的晚餐安排视图；Gemini Notebook 用卡片询问并确认幻灯片选项。
+- 🔮 **后续计划**：Jetpack Compose 1.0 支持即将推出，Gemini Enterprise 将升级至 1.0，路线图还包括跨平台设计系统原语和决策模型官方 SDK 支持。
+- 🛠️ **上手方式**：可在 a2ui.org 阅读文档与快速开始，使用 CopilotKit 的 A2UI Playground 体验，并在 GitHub 提交问题与讨论。
+
+### [GitHub - joshpuckett/allo：Allo 是你身边友好的字体，免费且开源 · GitHub](https://github.com/joshpuckett/allo)
+
+Allo 是一款免费开源的友好型可变字体，专为屏幕和界面设计，支持字重、圆润度与光学尺寸调节，并提供静态字体、可变字体、Web 字体及 npm 安装方式。
+
+- 🔤 开源字体：Allo 免费开源，采用 SIL Open Font License 1.1，可商用、修改和再分发，但不能单独售卖字体。
+- 🎛️ 三个可变轴：光学尺寸 opsz 9–32（默认 14）、字重 wght 100–900（默认 400）、圆润度 ROND 0–100（默认 50）。
+- 📦 字体文件：提供 18 个静态字体（Thin 到 Black，各带 Oblique）、AlloVariable.ttf，以及 WOFF2 网页字体。
+- 🌐 Web 使用：可通过 npm 安装 `allo-font`，也可自托管 `fonts/webfonts` 中的 WOFF2 文件。
+- ⚡ 精简版本：`AlloVariableFriendly.woff2` 将圆润度固定为 50，文件约小一半。
+- 🔠 OpenType 功能：支持单层 a、消歧字形、开放数字、表格数字、分数、上下标、大写旁标点、连字和上下文替代等。
+- 🖥️ 屏幕优化：光学尺寸随字号自动调整，Display 更紧凑，小字号主要调整间距。
+- 🛠️ 构建方式：需 Python 3.9+，运行 `build.py` 可生成字体文件、校验和与发布压缩包，构建可复现。
+- 📐 源文件结构：`Allo.designspace` 含 48 个主 master 和 8 个稀疏图层；静态字体从可变字体母版切出后单独编辑，斜体为独立绘制。
+- 🤝 贡献规则：发现问题或缺字可开 issue；目前暂不接受直接修改母版或字体文件的 Pull Request。
+- 🌱 来源与致谢：Allo 基于 Inter 4.2 起步，但所有字形均已重绘，并参考 Honk Sans 的温暖趣味风格。
 
 ### [Flashwright：最快的端到端测试框架，Playwright 的即插即用替代方案](https://flashwright.dev/)
 
