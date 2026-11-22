@@ -152,7 +152,7 @@ const rawSubscriptions: RawSubscriptionItem[] = [
   },
   {
     name: 'Apple Music',
-    yearly: 17 * 12,
+    monthly: 20,
     expiry: '2030-01-01',
     category: 'entertainment',
     extra: '家庭',
