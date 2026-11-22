@@ -14,7 +14,10 @@ type RawSubscriptionItem = Omit<SubscriptionItem, 'yearly' | 'monthly'> & {
   monthly?: number
 }
 
-export const DOLLAR_TO_RMB = 7.5
+// 中国外汇交易中心 2026-11-20 美元兑人民币汇率中间价
+export const DOLLAR_TO_RMB = 6.7131
+
+const CHATGPT_PRO_EXPIRY = '2027-10-03'
 
 const toFixed2Number = (value: number) => Number(value.toFixed(2))
 
@@ -48,9 +51,15 @@ const rawSubscriptions: RawSubscriptionItem[] = [
   {
     name: 'ChatGPT Pro',
     yearly: toFixed2Number(200 * 12 * DOLLAR_TO_RMB),
-    expiry: '2027-10-03',
+    expiry: CHATGPT_PRO_EXPIRY,
     category: 'productivity',
     extra: '200USD/Month',
+  },
+  {
+    name: 'ChatGPT Pro ($100/mo)',
+    yearly: toFixed2Number(100 * 12 * DOLLAR_TO_RMB),
+    expiry: CHATGPT_PRO_EXPIRY,
+    category: 'productivity',
   },
   {
     name: 'DeepSeek API',
@@ -205,7 +214,7 @@ const rawSubscriptions: RawSubscriptionItem[] = [
   {
     name: '哔哩哔哩超级大会员',
     yearly: 178,
-    expiry: '2026-12-19',
+    expiry: '2027-11-22',
     category: 'entertainment',
     extra: '续订 7/5 Apple 付款',
   },
