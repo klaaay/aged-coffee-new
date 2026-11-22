@@ -52,7 +52,7 @@ const rawSubscriptions: RawSubscriptionItem[] = [
   {
     name: 'Google AI Ultra (20 TB)',
     yearly: toFixed2Number(14500 * 12 * JPY_TO_RMB),
-    expiry: '2026-12-23',
+    expiry: '2027-11-23',
     category: 'productivity',
     extra: '14500JPY/Month',
   },
