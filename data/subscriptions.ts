@@ -14,8 +14,9 @@ type RawSubscriptionItem = Omit<SubscriptionItem, 'yearly' | 'monthly'> & {
   monthly?: number
 }
 
-// 中国外汇交易中心 2026-11-20 美元兑人民币汇率中间价
+// 中国外汇交易中心 2026-11-20 人民币汇率中间价
 export const DOLLAR_TO_RMB = 6.7131
+const JPY_TO_RMB = 4.1961 / 100
 
 const CHATGPT_PRO_EXPIRY = '2027-10-03'
 
@@ -43,10 +44,17 @@ const rawSubscriptions: RawSubscriptionItem[] = [
   },
   {
     name: 'Google AI Pro',
-    yearly: toFixed2Number(126.76 * 12),
+    yearly: toFixed2Number(2900 * 12 * JPY_TO_RMB),
     expiry: '2026-04-08',
     category: 'productivity',
     extra: '2900JPY/Month',
+  },
+  {
+    name: 'Google AI Ultra (20 TB)',
+    yearly: toFixed2Number(14500 * 12 * JPY_TO_RMB),
+    expiry: '2026-12-23',
+    category: 'productivity',
+    extra: '14500JPY/Month',
   },
   {
     name: 'ChatGPT Pro',
