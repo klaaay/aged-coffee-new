@@ -62,6 +62,12 @@ const rawSubscriptions: RawSubscriptionItem[] = [
     extra: '100USD/Month',
   },
   {
+    name: 'ChatGPT Pro ($100/mo)',
+    yearly: toFixed2Number(100 * 12 * DOLLAR_TO_RMB),
+    expiry: '2027-10-03',
+    category: 'productivity',
+  },
+  {
     name: 'DeepSeek API',
     monthly: 10,
     expiry: '2030-01-01',
