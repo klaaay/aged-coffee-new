@@ -55,14 +55,14 @@ const rawSubscriptions: RawSubscriptionItem[] = [
     extra: '14500JPY/Month',
   },
   {
-    name: 'ChatGPT Pro',
+    name: 'ChatGPT Pro（一号）',
     yearly: toFixed2Number(100 * 12 * DOLLAR_TO_RMB),
     expiry: '2027-10-03',
     category: 'productivity',
     extra: '100USD/Month',
   },
   {
-    name: 'ChatGPT Pro ($100/mo)',
+    name: 'ChatGPT Pro（二号）',
     yearly: toFixed2Number(100 * 12 * DOLLAR_TO_RMB),
     expiry: '2027-10-03',
     category: 'productivity',
