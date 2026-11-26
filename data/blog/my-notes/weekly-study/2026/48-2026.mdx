@@ -12,9 +12,146 @@ summary: ''
 
 ## 技术
 
+### [让 Agent 先问清楚、画出来、再证明：我的 Ryugi 工作流](https://innei.in/posts/tech/ryugi-workflow)
+
+作者介绍了一套名为 Ryugi（流儀）的开源 artifact 工作流，用来把 coding agent 需要人拍板的事项从聊天框转移到可直接作答的页面：设计决策写成文档供逐题选择与评论，界面方案画在画板上供点选，完成后用验收页并排展示“批准的方案”和“运行截图/录屏”供逐组通过或驳回，页面上的选择会回到发起它的 agent 会话。文章以博客编辑器 haklex 去掉 Excalidraw 依赖、按原数据格式自研白板为例，记录了约半天内完成两轮开发、一次发版和三个下游项目适配的过程，作者在聊天框中的发言不到 20 条。
+
+- 🧩 **Ryugi 的定位**：一套面向 coding agent 的 artifact 机制，把问题、方案和验收结果放到可交互页面上，而不是在聊天记录里来回追问。
+- 📝 **设计文档会提问**：开场只有一句“去掉 excalidraw 依赖，根据它的数据结构来手搓一个 whiteboard”，agent 先读代码确认范围，再把问题嵌进设计文档，每题附推荐与理由；第一题是决定第一版规模的分岔题。
+- ✅ **结论标明归属**：每轮回答后结论并入“已定”一节，并标明是作者定的还是 agent 代定的，方便快速识别哪些还需复核。
+- 🧊 **冷读审稿代理**：设计稿交付前，由未参与讨论的审稿代理冷读，大部分问题由其自行处理，最后只剩两个交给作者决定。
+- 🎨 **UI 改用画板**：因为界面“用文字讲不清楚”，改为每组并排几个方案、推荐项标红框并附便签理由；两轮共 5 组，作者都选了推荐项，选中的图链接进设计稿。
+- 🧱 **批准后按任务推进**：设计稿被切成 19 个小任务，在单独分支上以“先写失败测试—再实现通过—提交”的节奏完成，自主决定的细节记入台账，对话被压缩时也照台账继续。
+- 🔍 **独立审查与验收页**：完成后交给未参与开发的审查代理，问题逐个先补失败测试再修；随后在真实浏览器运行编辑器，截图录屏，与批准方案并排验收。
+- 🔁 **验收可迭代**：作者逐组通过或驳回，曾在图上留言，agent 修改后重新截图放回同一位置；未能验证的部分单独列出，不混入“已完成”。
+- 🖼️ **第二轮以参考图为标准**：作者贴出参考图询问原版 Excalidraw 能否实现，agent 逐元素对照能力缺口；作者限定“只做通用绘制能力”，再走设计文档、三轮问答、审稿、批准、实现、审查。
+- 🚀 **发版与下游适配**：两轮通过后发新版本，再到三个使用该编辑器的项目逐个升级、跑测试并在浏览器确认白板显示正常，下游结果也放进验收页（浅色、暗色各一张）。
+- 🔐 **仍需人工的环节**：整个过程中只有 npm 发布需要作者本人登录验证，agent 无法替代。
+- 🧭 **边界与取舍**：流程不替作者做判断；开放题未填时 agent 会按自己理解补上并标出，验收页列出未验证项，是否补做由作者决定。
+- 📦 **开源与安装**：Ryugi 已开源（github.com/Innei/ryugi），可在终端运行 `npx ryugi-artifacts install` 并选择所用 agent 安装；文中两份设计文档、画板和验收页均已公开。
+
+### [智能体真的在终结 UI 吗？](https://posthog.com/blog/agents-killing-ui)
+
+PostHog 的 Cleo Lant 撰文反驳「agent 正在杀死 UI」的流行说法：agent 确实成了软件的一类新用户，但界面并未消失，只是像当年的 API 和 GUI 一样，在产品之上又增加了一层。未来是混合（hybrid）而非无头（headless）——每个用户都会带着一个 agent 一起使用产品，因此构建者要为 agent 和人类分别设计入口，并把设计精力集中到审批、审查、撤销、可辨认性和编排这些真正需要人来判断的屏幕上。
+
+- 🧩 **混合而非无头**：文章的核心论点是「我在用的一切都是用户界面」，agent 只是没在用你专门设计的那部分。headless 是叠加在产品构建之上的新一层，而非替代；产品构建者的工作因此翻倍：每个人类用户都会带来一个 agentic plus-one。
+- 🔑 **首页不再是前门**：面向技术用户的上手流程越来越少从「get started」按钮开始，而是从终端或 AI 聊天窗口开始。用户可能经 Claude 或 ChatGPT 推荐（AEO）后由 agent 直接开通，永远看不到首页。但 agent 不一定会读安装文档，所以配置必须能被 agent 独立走完：容易找到、容易认证、一次调用完成而非十步。同时别忘了 agent 背后的人最终会打开产品，需要知道它做什么、下一步做什么。
+- 🛠️ **两套入口的具体清单**：给 agent 的：能端到端完成的注册流程、在 Claude 和 Codex 等 agent 查找连接器的应用目录中有条目、可解析的文档（`llms.txt`、以纯 Markdown 提供的页面）、agent 即兴发挥时也安全的短时效 scoped token。给人的：若由 agent 代为设置，用户是从流程中段进入，要展示已完成与待完成；若自己点击进入，直接指向下一步。
+- 💻 **文中实例**：`npx -y @posthog/wizard@latest` 一条命令创建账户、扫描代码库确定埋点位置并逐步在终端打日志，之后有人继续通过 MCP 以 headless 方式使用，也有人回到 Web 应用查看数据。Slack app 把消息提示变成 PR 草稿，但合并前仍要在 GitHub 看 diff（另一个 UI）。AgentMail 的文档教 agent 自助开通收件箱和密钥，但六位验证码仍需人接收并交付。
+- 🔗 **AX 与 MCP**：computer-use 类 agent（如 Perplexity 的 Comet）会点击真实 DOM，但那是缓慢且「人形」的交互。agent 真正需要的是 AX（agent experience），当前标准是 Model Context Protocol：运行一个描述产品能力的服务端，agent 连接后直接与产品交互。要求是每个动作都有 agent 能执行的路径，以及人能核查它是否完成的路径。Vercel 的 MCP server 可查看部署、拉取运行时日志并触发部署，结果同步回仪表盘；PostHog 的 MCP server 让 agent 用你的凭证创建功能开关或实验，变更记入项目活动日志并附 `x-posthog-client` 头以区分 agent 与人的操作。
+- 📈 **如何观测 agent**：agent 命中的是 API 而非前端，pageviews、autocapture 和 session replay 都捕不到它们的挫折信号；失败方式也不同：编造参数、认证墙、超时、幻觉出并不存在的工具，现有日志分类接不住。PostHog 因此做了 MCP Analytics，把每次工具调用（含 intent）转成事件；agent 去调用你并不存在的工具，等于机器人写的功能请求。上个月记录了近 1000 万次工具调用，来自 31 个 agent 客户端，背后是发短信告警、跑 A/B 测试、排查线上报错等真实工作。
+- 🔍 **外部数据与配套设施**：Cloudflare Radar 6 月数据显示 HTML 流量中自动化请求首次超过人类，占 57.5% 对 42.5%，比其 CEO 的预测早约 18 个月。Temporal 把 agent 运行的每一步记录成可重放、可检查的持久事件历史，用来看循环卡在哪里或重复了什么。
+- 🎨 **值得认真设计的六类屏幕**：审批（两秒内看懂自己在同意什么）、审查（给 diff 本身而非变更摘要）、撤销（agent 自主执行的动作旁要有回退）、可辨认（一屏内分辨同事与机器人的操作）、编排（五个 agent 是一屏看还是开五个对话）、打断（agent 运行中如何插手）。应降低会被 agent 取代的屏幕的优先级，把 MCP 当产品做；但 MCP 给的是触达而非质量，护城河可能是比对手更好用、更好看的 UI。Intercom 的 Fin Operator 把每项调整变成结构化提案（他们称之为 Operator 版的 pull request），由人审阅、编辑、批准后才生效；Anthropic 除了终端里的 Claude Code，还提供桌面应用、Web 应用、IDE 扩展和 Cowork。
+
+### [压缩侧边栏的烦恼](https://blog.master.dev/the-compacting-sidebar-blues/)
+
+文章讨论响应式应用侧边栏在视口高度不足时如何优雅降级：当导航项放不下时，隐藏文字标签只留图标，并重点分析“何时触发压缩”的几种方案及其陷阱，最终给出基于 CSS 样式查询与 `sibling-count()` 动态计算高度上限的解法。
+
+- 📐 **问题场景**：屏幕太矮导致侧边栏导航项放不下，内部出现滚动条；对应用导航这种重要元素来说，内部滚动体验很糟。
+- 🏷️ **降级方案**：压缩时移除文字标签、只留图标；作者认为这可作为第一个断点，并强调要用 `aria-label`，或让文字只是移出屏幕而非 `display: none`，以保持可访问性。
+- 🔁 **“诅咒”方案**：用 `scroll-state(scrollable: y)` 在出现滚动条时压缩；但压缩后不再滚动，样式回退又变高，形成无限抖动循环。
+- 🌀 **CSS 循环先例**：作者提到早期 CSS-Tricks 的“CSS-Jitter Man”演示——`:hover` 状态比原状态小，导致悬停时反复缩放。
+- 🔢 **魔法数字断点**：直接写 `@container sidebar-height (height < 500px)` 隐藏标签；短期可用但脆弱，导航项数量、字体渲染、间距、图标尺寸变化都会让断点失准。
+- ➗ **去魔法化计算**：用 `calc()` 累加侧边栏上下内边距、每个导航项的上下内边距、图标高度、图标与文字间距、文字高度，再乘以 `sibling-count()`；文字高度 14px 仍是唯一的魔法数字。
+- 🚫 **自定义属性不能进查询**：`@container ... (height < var(--navItemHeight))` 无效，因为 `var()` 按元素解析，查询没有可解析的元素；作者推测这也是为了避免查询层面的无限循环，`@custom-media` 也帮不上忙。
+- ✨ **样式查询解法**：注册 `@property --sidebar-h` 与 `--limit`，在 `.sidebar-inside` 上设 `--sidebar-h: 100cqh`，在每个 `.nav-item` 上计算 `--limit`，再用 `@container nav-item style(--sidebar-h < --limit)` 隐藏标签；由于 `--limit` 由不变常量算出，不会触发无限循环。
+- ⚠️ **计算注意事项**：插入 `<hr />` 等额外子元素会打乱 `sibling-count()` 的计算；文字高度测量本身仍是棘手领域。
+- 🌐 **浏览器支持**：Chrome 142+ 与 Firefox 154+ 可用；Safari 尚不支持样式查询中的范围语法，会保留标签，但不至于灾难。
+
 ## 工具
 
+### [Ryugi — 面向编码代理的交互式产物](https://github.com/Innei/ryugi)
+
+Ryugi（流儀）是一个面向编码代理的本地优先交互式产物工具集：把代理原本只能用 Markdown 描述的方案，变成可点选、可批注、可验证的页面（画板、文档、白板、HTML 调参台、幻灯片、数据报告、分镜、验证报告），用户的挑选、评论和结论会直接回传到开启该页面的代理会话。产物存放在项目中，由一个本地服务器统一打开，只有需要分享链接时才发布到 Ryugi Cloud。
+
+- 🎯 **核心痛点**：向代理要三个布局方案，只会得到三段文字或一堵无法指认的 Markdown；Ryugi 让代理把选项画出来，用户直接在页面上作答。
+- 🖼️ **八类产物**：Artboard 并排画选项并标出推荐项；Document 在文档内嵌代理问题、可逐句评论或就地编辑；Whiteboard 双方共画方框与箭头；HTML 用真实滑杆调组件、字号或动效；Slides 可全屏或演示者模式放映并手动改版式；Report 由脚本输出 JSON 驱动图表表格并可刷新；Storyboard 按镜头与旁白规划后用多轨时间线剪辑导出；Verify 把成品与已批准设计并排比对并给出通过/驳回。
+- 💬 **反馈回流**：评论可钉在画板、某句话或草图上，连同问题、选项和结论一起送达代理会话；在 Claude Code 中评论会自动到达，代理修改后在评论下回复并实时更新页面。
+- 📋 **验证报告细节**：每条被运行验证的断言占一行（测试运行、API 响应、迁移数量、部署的是哪个构建），原始输出一键可查，并附“未能验证”清单及原因；可逐条通过、驳回或豁免。
+- 🖥️ **Library 与本地优先**：一个本地服务器覆盖机器上所有项目，⌘K 快速跳转，链接重启后仍有效；免费、无需账号，发布到 Ryugi Cloud 仅为获得分享链接。
+- 📦 **安装方式**：运行 `npx ryugi-artifacts install`；要求 Node.js 20.12 或更高；终端向导会安装常驻的 `ryugi` 命令、选择多个 harness，并询问装“仅产物”还是“完整流程”。
+- 🧭 **两种安装模式**：`--mode artifacts` 只装产物与评论回流，代理规划写码方式不变；`--mode full` 追加 brainstorm → spec → TDD 构建 → verify 的技能，例如说“做一个 React todo list”会先开头脑风暴和画板再写代码。
+- 🤖 **代理代装规则**：安装前必须询问用户想要哪种安装并等待回答，不得替用户决定；不确定时建议选“仅产物”；`--yes` 加显式 `--mode` 与 `--harness` 参数运行向导。
+- 🧩 **支持的 harness**：Claude Code、Codex、Cursor、Gemini CLI、OpenCode、Copilot CLI、Pi、Antigravity、Kimi Code、Qwen Code、Devin、Droid 等，各有多条安装命令（`agy`、`devin`、`gemini extensions`、`pi install` 等）。
+- ⚠️ **非安装器目标**：Devin、Droid、Kimi Code、Qwen Code、Hermes Agent、Muse、DeepSeek Harness、OMP 的插件命令只安装完整流程，没有“仅产物”选项，需先告知用户再执行。
+- ⚙️ **Claude Code 配置**：在 `~/.claude/settings.json` 顶层加 `"disableArtifact": true` 可关闭官方托管 Artifacts，其余设置保持不变；修改前需征得用户同意。
+- 🛠️ **CLI 与运行时**：默认缓存于 `~/.cache/ryugi/artifacts/`，每天最多检查一次更新，可离线复用兼容缓存，首次运行需联网与可写缓存；`ryugi update`、`ryugi doctor`、`ryugi uninstall` 分别用于更新、检查与卸载（卸载保留产物和用户数据）。
+- 🔁 **完整流程链路**：Idea → Brainstorm → Artifacts → Spec → Build·TDD → Verify → Land；签核后代理拆分任务、逐项红绿验证、跨压缩保留判断记录、做一次分支新审查并给出落地方式。
+
+### [Chat On Steroids：面向 ChatGPT 的跨平台本地 MCP 能力，含 Chrome 集成、Goal、Compact & Resume 与持久多智能体工作流](https://github.com/totec448-spec/chat-on-steroids)
+
+这是一个 GitHub 项目页面，介绍名为 Chat On Steroids（CoS）的独立开源测试版工作区：它通过 MCP 把 ChatGPT 连接到本地文件、终端与桌面，并提供多 worker 分工、长任务控制、远程通知、项目文件夹和细粒度权限设置；页面同时强调必须遵守 OpenAI 及所连接服务的规则、风险自担，且项目与 OpenAI 无关联。以下为页面要点，事实与项目自述均按原文整理。
+
+- 🧪 **定位与风险**：独立 beta，开源，按“原样”以 MIT 许可提供；使用前需阅读使用须知，自担风险并遵守服务商规则。
+- 💻 **本地实操能力**：让 ChatGPT 读取和编辑文件、运行测试、保持终端打开并使用桌面，并跟随实际到达的工具结果。
+- 👥 **多智能体分工**：把独立任务拆分给多个 worker，再汇总结果；worker 保留上下文，后续任务可接着做。
+- 🎯 **长任务控制**：运行中可发送纠正；Goal 跟进未完成工作；Loop 在给定简报内持续工作；Compact & Resume 把会话与 worker 历史带入新聊天。
+- 🔗 **与 Codex 的关系**：使用你的 ChatGPT 对话而非直接调用 Codex；页面提示 ChatGPT Work 与 Codex 共享用量限制，账户的模型可用性、用量和上下文限制仍然适用。
+- 🙋 **需要人工时明确提示**：登录、USB key、不应由应用执行的命令等步骤会交给用户，附确切命令、文件夹和预期结果；用户自行执行并标记完成，应用不会代跑。
+- 📱 **离开桌面也能掌握进度**：通过免费 ntfy 应用或自建 Telegram bot 接收完成、需人工或失败通知；Telegram 可查询 /status、停止或暂停聊天、在手机上拒绝批准，但不能远程允许。
+- 🟡 **卡住原因一行说明**：显示从何时开始、尝试频率和每一步；应用停止尝试后该行变琥珀色，提示需要人工介入。
+- 📁 **项目上下文与访问隔离**：可为项目添加相关文件夹以补充上下文，但这些文件夹不会成为工作文件夹，也不会扩大可触碰范围。
+- 🤖 **Telegram 快速接入**：用 @BotFather 创建 bot、粘贴 token 并发送页面显示的代码即可接收通知；ntfy 会继续工作直到在手机通知设置中关闭开关；“Include chat names and answers”开启后，两种渠道都可携带聊天名称和答案。
+- 🗂️ **聊天归入项目**：可从菜单移动或拖拽聊天进项目，并立即撤销；聊天按日期分组，项目文件夹即其聊天的工作目录。
+- ⚙️ **可调控制项**：每个聊天可选择模型和 effort（与 ChatGPT 提供的控件一致）；控制可访问文件夹及其权限；限制同时工作的聊天数量；命令输出在 dock 中只读查看并可一键停止；支持 Skills、插件、pets、13 种语言及明暗主题。
+- 🚫 **不得绕过限制**：Workers、Goal/Loop、Compact & Resume 和完成检查点只用于组织工作，不授予额外配额或模型访问；不得切换账户、聊天、插件或隧道以规避速率限制、用量上限或账户限制。
+- 🛑 **不得覆盖安全拒绝**：不得用本地工具、浏览器控制、插件或另一个 worker 执行提供商因安全原因阻止的操作；本地权限或启用 MCP 插件不等于可推翻提供商的拒绝。
+- 🔍 **集成的性质**：CoS 通过 MCP 连接本地工具；浏览器扩展还会观察并自动化 ChatGPT 浏览器 UI，并在本地记录对话内容；页面明确该浏览器集成不是公开的 ChatGPT 自动化 API，MCP 可用也不等于允许任何形式的浏览器自动化或记录，OpenAI 条款还限制自动化或程序化提取数据或输出。
+- ⚠️ **无合规保证**：CoS 不能保证符合政策、持续服务访问或免于账户警告、限制或停用；若工作流受限或收到政策警告，应停止并通过提供商支持或申诉流程寻求澄清。
+- 🏁 **开始使用**：安装后打开 Settings → Setup，按七步图文引导操作；第一步在 Chrome、Edge 或 Brave 加载浏览器扩展（开启开发者模式、Load unpacked、选择“Open extension folder”显示的文件夹，自动配对）；第 2–3 步共享文件夹并选择访问权限；第 4–7 步在 OpenAI 创建隧道和受限 API key，按 Connect，然后在 ChatGPT 的 Plugins → Add → Add custom MCP server 添加应用；最后选模型、写任务并发送。
+- 🖥️ **系统与账户要求**：Windows 10/11、macOS 13 Ventura 或更新版本、或当前桌面 Linux；Chrome 125+、当前 Edge 或 Brave；需要能创建 custom MCP apps 的 ChatGPT 账户/工作区，是否可用取决于计划和 workspace 策略。
+- 🔐 **未签名 beta 与 macOS 提示**：Windows 包无发布者签名，macOS 未签名且未公证，应按发布校验和验证；macOS 每次更新后会询问一次登录密码以打开已保存密钥（“chat-on-steroids Safe Storage”），选择 Always Allow；未回答前聊天和浏览器连接会等待。
+- 🐧 **Linux 注意事项**：需要 Secret Service keyring；优先使用 DEB；禁用非特权用户命名空间时，AppImage 启动器可回退到 `--no-sandbox`。
+- 🛡️ **权限默认值**：连接前应选择批准文件夹并审查能力；全新安装启用 Core 能力和两个 worker，Windows 还启用桌面权限；shell 命令以普通用户权限运行。
+- 🌐 **语言与更新**：支持英语、德语、西班牙语、法语、韩语、葡萄牙语（巴西和葡萄牙）、俄语、土耳其语、越南语、日语、简体中文和繁体中文，可在 Appearance → Language 选择；更新后浏览器扩展会在没有聊天忙碌时自行更新，若 CoS 要求刷新 ChatGPT 中的应用则照做，Settings 中的 Automatic plugin refresh 可自动完成。
+
+### [eve：构建智能体的开放框架](https://github.com/vercel/eve)
+
+eve 是一个以文件系统为先、面向持久化 AI 智能体的框架，将核心能力放在常规文件位置，便于检查、扩展和运维。文档介绍了项目结构、初始化与运行方式、最小天气智能体示例、Web Chat 集成，以及社区协作和安全漏洞报告流程。
+
+- 🗂️ **文件系统即创作界面**：智能体的配置、提示词、工具、技能、频道和定时任务都按约定目录组织。
+- 🧩 **典型目录结构**：`agent.ts` 可选，用于模型和运行时配置；`instructions.md` 必填，是常驻系统提示词；`tools/`、`skills/`、`channels/`、`schedules/` 均为可选。
+- 🚀 **快速初始化**：运行 `npx eve@latest init my-agent` 会创建目录、安装依赖、初始化 Git 并启动交互式终端 UI；生成的智能体默认使用 `openai/gpt-6-luna-fast` 和高推理。
+- ⚙️ **模型与推理配置**：可通过 `--model` 指定其他 AI Gateway 模型；只传 `--model` 时使用提供商默认推理，传 `--reasoning` 可显式设置。
+- 📁 **支持现有项目**：在现有项目中执行 `npx eve@latest init .` 即可添加 eve；包内包含完整文档，编码智能体可从 `node_modules/eve/docs` 本地读取。
+- 🌦️ **最小示例**：替换 `agent/instructions.md`，在 `agent/tools/get_weather.ts` 中用 `defineTool` 和 Zod 定义模拟天气工具，并在 `agent/agent.ts` 中选择模型，随后运行 `npm run dev`。
+- 💬 **Web Chat 集成**：在智能体目录中执行 `npx eve link` 和 `npx eve add channel/web`，选择托管布局并通过 Vercel 登录为项目团队配置认证；本地开发无需浏览器登录，发布时运行 `npx eve deploy`。
+- 👥 **社区与贡献**：社区交流位于 GitHub Discussions；贡献可参考 `CONTRIBUTING.md`，并通过 issues 和 discussions 协作，参与即同意 Code of Conduct。
+- 🔐 **安全报告**：安全漏洞不应公开提交 issue，应按 `SECURITY.md` 负责任地报告至 `responsible.disclosure@vercel.com`。
+
+### [GitHub - wieandteduard/port-menu：一款小巧的 macOS 菜单栏应用，可跟踪各个项目中的开发服务器。· GitHub](https://github.com/wieandteduard/port-menu)
+
+Port Menu 是一个小型 macOS 菜单栏应用，用于自动追踪跨项目的本地开发服务器，无需配置即可查看运行中的服务及其项目、分支、端口和运行时长，并支持停止、打开或复制 localhost 地址；项目面向 macOS 14（Sonoma）及以上用户提供下载，源码构建需 Xcode 15+，发布包经签名和公证。
+
+- 🚀 **自动发现**：Port Menu 常驻菜单栏，每隔几秒扫描本机运行中的开发服务器，无需配置或设置，点击图标即可查看当前运行的服务。
+- 🧩 **项目上下文**：对检测到的服务显示 Git 仓库名、当前分支、端口和运行时长，帮助区分不同项目的本地服务。
+- ⚙️ **服务操作**：可从菜单直接停止服务器、在浏览器中打开服务，或右键复制 localhost URL。
+- 💻 **系统要求**：提供 macOS 下载，要求 macOS 14（Sonoma）或更高；安装方式为打开 DMG 后将 `Port Menu.app` 拖入 `Applications`，再从应用程序启动并点击菜单栏图标。
+- 🛠️ **源码构建**：仓库包含 `Porter.xcodeproj`，克隆后进入 `Porter` 目录并打开工程；构建要求 Xcode 15+。
+- 📦 **发布与许可**：签名并公证的 macOS 构建发布在 GitHub Releases 页面，维护者发布流程见 `docs/releasing.md`；项目采用 MIT 许可证。
+- 🧪 **测试**：测试命令为 `xcodebuild test -project "Porter.xcodeproj" -scheme "Porter" -destination "platform=macOS"`。
+
 ## 更新
+
+### [🗺️ Query v6 路线图 · TanStack/query · 讨论 #12669 · GitHub](https://github.com/TanStack/query/discussions/12669)
+
+TanStack Query 维护者 TkDodo 宣布启动 v6，主线不是大规模重写公开 API，而是借大版本清理内部实现、更新工具链与支持范围，并分项收集反馈；ESM-only、React 19 最低版本、微任务调度、必填 queryFn、哈希与相等性、streamedQuery 稳定化等已实现，gcTime 语义、queryOptions 下沉 core 仍在计划中，enabled 移除和服务端 gcTime 等仍在讨论，官方不承诺时间表。
+
+- 🚀 **版本定位**：v6 已开工，但官方强调大版本用于破坏而非加功能，目前不计划大规模改写使用方式；开发分支为 `query-v6`，不做时间承诺，并会关闭未经沟通的全自动 PR。
+- 📦 **仅发布 ESM**：放弃 CJS 和面向旧 webpack4 的 legacy 构建，简化构建并推动生态转向 ESM；状态为已实现。
+- ⚡ **React 最低 19**：React 适配器最低要求提高到 v19，内部在 `useSuspenseQuery` 的 Suspense 集成中使用 `use()`，替代已弃用的 throw promise；状态为已实现。
+- 🔄 **默认调度改微任务**：默认调度器从 `setTimeout(0)` 切换为 microtask，以获得更好的批处理效果，并缓解 await 失效后 setState 渲染旧 query 数据的问题；状态为已实现。
+- 🛠️ **移除 v5 弃用 API**：删除 v5 标记弃用的接口，包括 query-core 的 `context.direction`、`isInitialLoading`、`queryClient.fetch/prefetch/ensure(Infinite)Query(Data)`、`queryObserver.getOptimisticResult`，solid-query 的 suspense option，sync-storage-persister，vue-query 的 Vue 2 via vue-demi，以及 devtools 的 styleNonce；状态为已实现。
+- 🎯 **queryFn 必填**：`useQuery` 及框架适配器中的 `queryFn` 改为必填；需要全局默认函数时应显式传入导出的 `defaultQueryFn`，避免隐式依赖前一个组件渲染时提供的 queryFn；状态为已实现。
+- 🧩 **全局 hashFn 与 equalityFn**：用 QueryClient/QueryCache 级别的全局 `hashFn` 取代 queryOptions 里的 `queryKeyHashFn`，解决同一 QueryKey 多哈希函数导致精确查找不一致；新增 `equalityFn` 可传入 `replaceEqualDeep`，为 Date 等非 JSON 类型自定义结构共享；状态为已实现。
+- 🧪 **streamedQuery 稳定化**：`experimental_streamedQuery` 提升为稳定 API，结束实验状态；状态为已实现。
+- 🌐 **提高浏览器基线**：最低支持 Chrome/Edge 119、Firefox 121、Safari/iOS 17.4、Opera 105，以便使用 `promise.withResolvers` 等现代浏览器 API；状态为已实现。
+- ⚙️ **重试加入 jitter**：默认指数退避重试延迟加入 jitter，避免 thundering herd；因属于行为破坏性变更，只在 v6 发布；状态为已实现。
+- 🧭 **gcTime 改为 last wins**：计划把同一 query 多次设置 `gcTime` 的规则从当前最高值胜出改为最后一次设置胜出，使选项覆盖更确定；状态为计划中。
+- ⚠️ **enabled 拟由 skipToken 取代**：讨论移除 `enabled`、改用 `skipToken`；难点是无法复刻永久禁用后按需 `refetch()` 的模式，维护者希望先确认实际使用情况，尚未决定。
+- 🎨 **queryOptions 下沉 core**：计划把 `queryOptions` 移入 `query-core`，各框架适配器只再导出或覆盖自身实现；此前受类型问题阻碍，现由协作者推进，并归入 v6 以控风险；状态为计划中。
+- 🔍 **服务端 gcTime 待改进**：讨论服务端 `gcTime` 行为：默认是 `Infinity`，但直接传给 `useQuery` 的值仍会在服务端生效，已有文档提示但投诉增加；同时需保留服务端 GC 以支持长生命周期 QueryClient，尚未定案。
+- 🛡️ **HydrationBoundary 清理**：移除 HydrationBoundary 中受类型保护的防御检查；但 pages router 使用 `pageProps.dehydratedState` 时用户可能需要额外守卫，维护者表示必要时可回退；状态为已实现。
 
 ## 设计
 
