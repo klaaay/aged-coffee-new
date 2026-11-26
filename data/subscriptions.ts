@@ -129,7 +129,7 @@ const rawSubscriptions: RawSubscriptionItem[] = [
     category: 'productivity',
   },
   {
-    name: 'Chorus Pro',
+    name: 'Miraa Pro',
     yearly: toFixed2Number(49.99 * DOLLAR_TO_RMB),
     expiry: '2027-11-26',
     category: 'productivity',
