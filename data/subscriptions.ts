@@ -129,6 +129,13 @@ const rawSubscriptions: RawSubscriptionItem[] = [
     category: 'productivity',
   },
   {
+    name: 'Chorus Pro',
+    yearly: toFixed2Number(49.99 * DOLLAR_TO_RMB),
+    expiry: '2027-11-26',
+    category: 'productivity',
+    extra: '49.99 USD/年 · 外语听力学习 · 到期日暂估',
+  },
+  {
     name: 'ReadWise',
     yearly: toFixed2Number(95.88 * DOLLAR_TO_RMB),
     expiry: '2025-01-26',
