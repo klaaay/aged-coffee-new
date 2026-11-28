@@ -12,6 +12,20 @@ summary: ''
 
 ## 技术
 
+### [我如何通过让 monorepo 对 agent 更友好，在一周内修复了 55 个 bug](https://www.devas.life/how-i-fixed-55-bugs-in-a-week-by-making-my-monorepo-more-agent-friendly/)
+
+Takuya Matsuyama 在把 39 个仓库迁入 monorepo 后，继续重构应用代码，让编码代理复制正确模式而非坏模式：按功能重组目录、用 lint 强制模块边界，并在为严格 lint 修复补测试的过程中发现并修复约 55 个由他手工编写的 bug。文章的核心结论是代码库本身就是代理的记忆，纠正代理应落成确定性检查，而不是不断追加规则。
+
+- 🧠 **代码库即记忆**：Lauren Tan 的演讲指出代码库是代理最大的输入之一，已有坏模式会被下一个代理当成惯例复制；因此每次纠正代理时，应优先转成 lint 等确定性检查，而不是继续往规则文件或 `AGENTS.md` 里加说明。
+- 🧩 **按功能分组**：目录结构被视为上下文，代码从按类型分组改为按功能和层分组，避免 `utils`、`modules` 这类模糊分类；桌面端形成 `renderer/features` 下 15 个功能目录，每个功能只通过 `index.ts` 对外暴露，组件、hooks、actions、reducer、命令处理器和测试放在一起。
+- 🛡️ **强制模块边界**：主进程和渲染进程不能再互相导入，否则 lint 报错；每个 IPC channel 都基于共享契约做类型约束，配置文件只允许主进程写入；移动端和 Web 编辑器也采用同一结构，减少跨边界导入和审查时到处查找。
+- ⚙️ **严格 lint 拦截**：采用 Christoph Nakazawa 的 `@nkzw/oxlint-config`，其规则面向 anti-slop 且关注性能；初始在 2,422 个文件中报告 11,589 个问题，尚未全部完成，但仅 `rules-of-hooks` 就发现 18 个真实 bug，例如在提前 return 后或循环中调用 hooks。
+- 🧪 **补测试找 bug**：为满足 `react-hooks/exhaustive-deps` 等规则，代理先在旧代码上补组件测试再修改；新增测试 uikit 385 个、mobile web editor 625 个、desktop 764 个、mobile 852 个，最终发现约 55 个 bug 且每个都有先失败的测试，例如编辑器搜索栏每次 effect 都订阅却从不取消订阅，导致“查找下一个”跳过多个匹配；移动端还有 13 个 bug 已被测试固定、等待修复。
+- 🐛 **自动修复风险**：自动 fixer 并不总是安全：`catch-error-name` 把 `{ cause }` 改名为 `{ error }`，`prefer-node-protocol` 会破坏 React Native 的 `crypto` alias，`no-var` 会改写 `.d.ts` 文件里的 `declare var`。
+- 🔄 **大规模迁移冲突**：目录移动后把 `main` 合并进 lint 分支产生了 145 个冲突；移动端还因从功能 `index.ts` 导出 Redux state 而让 Redux roots 反向加载组件，启动时新增 10 个 require cycle，后来通过每个功能增加第二个公共文件 `state.ts` 解决。
+- ⚠️ **验证仍滞后**：迁移后尚未生成打包的桌面构建，CI 还没运行移动后的测试，Windows、Linux 和账号流程也仍未检查；作者下一步希望增加更多运行时验证。
+- 💡 **工程方式转变**：作者意识到自己过去也像代理一样盲目沿用 Atom 的目录和编码模式，直到应用变大后旧模式不再适用；新的工程工作是从手工改代码转向通过工具和设计建立与代理的高信任，并在给代理加规则前先怀疑代码库和 lint 规则本身。
+
 ### [让 Agent 先问清楚、画出来、再证明：我的 Ryugi 工作流](https://innei.in/posts/tech/ryugi-workflow)
 
 作者介绍了一套名为 Ryugi（流儀）的开源 artifact 工作流，用来把 coding agent 需要人拍板的事项从聊天框转移到可直接作答的页面：设计决策写成文档供逐题选择与评论，界面方案画在画板上供点选，完成后用验收页并排展示“批准的方案”和“运行截图/录屏”供逐组通过或驳回，页面上的选择会回到发起它的 agent 会话。文章以博客编辑器 haklex 去掉 Excalidraw 依赖、按原数据格式自研白板为例，记录了约半天内完成两轮开发、一次发版和三个下游项目适配的过程，作者在聊天框中的发言不到 20 条。
@@ -59,6 +73,44 @@ PostHog 的 Cleo Lant 撰文反驳「agent 正在杀死 UI」的流行说法：a
 - 🌐 **浏览器支持**：Chrome 142+ 与 Firefox 154+ 可用；Safari 尚不支持样式查询中的范围语法，会保留标签，但不至于灾难。
 
 ## 工具
+
+### [button-sounds/docs/react.md（位于 main 分支） · joshwcomeau/button-sounds · GitHub](https://github.com/joshwcomeau/button-sounds/blob/main/docs/react.md)
+
+button-sounds 的 React 文档围绕两个自定义 Hook 展开：高层 `useButtonSounds` 负责把元素 ref 与声音名绑定，在点击和释放时自动播放随机样本并预加载资源；低层 `useImperativeButtonSounds` 暴露 `press`、`release` 供调用方手动控制。文档同时说明音量、音高变化、lofi 位深/降采样参数，低层 API 下的嵌套 `pointerUp` 监听方案，以及音频文件默认走 JSDelivr CDN 或改为自托管的做法。
+
+- 🧩 **高层 Hook**：`useButtonSounds` 接收元素 ref、声音名和可选参数；内部为每次 click 和 release 触发所选声音的随机样本，并预加载指定声音，声音名列表见 Sound Playground。
+- ⚙️ **播放参数**：`volume` 默认 0.5，范围 0 到 1；`pitchVariation` 默认 0，按 +/- 调整 `playbackRate`，如 0.1 对应 0.9 到 1.1，也可传元组如 `[0.8, 1.5]` 手动设定随机最小/最大播放速度。文档建议音量取 0.25 到 0.5，音高变化少即是多，0.05 也能产生不错的变化，具体取决于声音。
+- 🎨 **lofi 效果**：`lofi` 默认 false，启用后 `lofiOptions.bits` 默认 4，位深越低量化误差使声音更粗糙；`lofiOptions.downsample` 默认 0.25，降低采样率后声音更深更浑浊；`lofiOptions` 仅在 `lofi` 为 true 时生效。
+- 🔄 **低层 Hook**：`useImperativeButtonSounds` 返回 `press` 和 `release`，由调用方决定何时触发；两者可选参数包括 `sampleIndex`（指定样本，省略则随机）、`volume`（默认 0.5）、`playbackRate`（默认 1）以及与高层 API 相同的 `lofi`/`lofiOptions`；低层 API 不提供 `pitchVariation`，而是每次调用直接指定实际 `playbackRate`。
+- ⚠️ **嵌套事件**：低层 API 文档建议不要并列添加 `pointerDown`/`pointerUp`，而要在 `pointerDown` 处理器内嵌套 `pointerUp` 逻辑，并用 `window.addEventListener('pointerup', ..., { once: true })` 注册全局一次性监听；这样可避免在按钮上释放选中文本的鼠标时误播释放音，以及按下后移出按钮再释放时漏播释放音。
+- 🌐 **自托管音频**：默认会从 JSDelivr CDN 下载 .mp3，例如 `https://cdn.jsdelivr.net/npm/button-sounds@0.0.0/assets/hi75-soft.mp3`；也可自行下载音频文件并把库指向自有副本，详见“Self-hosting the audio files”文档。
+- 💡 **使用范围**：技术上 `useButtonSounds` 可作用于任意有效 DOM 节点，但文档强烈建议仅用于 `<button>`、`<a>`、`<input>` 等交互元素。
+
+### [agent-device：面向智能体的开源设备层](https://agent-device.dev/)
+
+agent-device 以开源设备层的形式把编码代理接入真实应用运行环境，让代理在本地或云端的真机、模拟器和设备上控制移动、Web、TV 与桌面应用，并把截图、视频、日志和可回放脚本作为验证证据带到评审与 CI 中。它补上了代理写完代码后无法亲自到设备上验证的环节，同时通过 `.ad` 脚本、JUnit 报告、MCP/Node.js API 和托管设备接入，把代理自测、回归回放、性能剖析与多人多代理协作串成一条可执行链路。
+
+- 🚀 **开源发布**：agent-device 是面向编码代理的开源设备层，让代理在本地或云端的真机、模拟器上控制移动、Web、TV 和桌面应用；支持 iOS、Android、HarmonyOS、tvOS、Android TV、Fire TV、Vega OS、macOS、Linux、Web、React Native、Expo、Flutter，安装命令为 `npm i -g agent-device`，页面显示 npm 3M+/mo、GitHub 5.5K。
+- 🧩 **设备操作命令**：代理可通过 `open`、`snapshot`、`screenshot`、`record`、`press`、`fill`、`wait` 等命令读取界面并操作元素，支持 `@e2` 元素引用和 `role=button label="Done"` 选择器；原文用 onboarding 与 Contacts 示例展示跨 iOS/Android 运行、填写联系人并等待文本出现。
+- 🧪 **代理自验证**：代理可在模拟器或设备上运行改动、读屏、点击流程并自行修复，在人工评审前附上截图和视频；Expensify 的代理技能会复现 bug、录前后视频、回放 `.ad` 脚本、测量 Sentry span 并剖析 React 渲染，作为 PR 证据。
+- 📦 **证据与 CI 回放**：用 `--save-script` 把成功运行保存为 `.ad` 脚本，用 `record start/stop` 生成 mp4；CI 中执行 `agent-device test ./workflows --reporter junit:./tmp/junit.xml` 可在无模型参与下回放，并保留截图、日志和 JUnit 报告。
+- 📊 **React 性能剖析**：`react-devtools profile start/stop/report` 可定位渲染问题；示例在 8.3s 内记录 8 次 commit、1303ms 渲染、8 次超过 16ms（最差第 6 次 188ms），ContactRow 的 memo 在 480/480 次更新中被绕过，报告建议在 ContactList 用 `useCallback`/`useMemo` 稳定传入的 object 和 function props。
+- 🌐 **多地运行**：本机会话跟随 git worktree，CI 可回放脚本；设备主机用 `agent-device proxy --port 4310 --public-origin https://...` 建隧道，隧道终止 TLS 时该参数必填；托管设备内置 BrowserStack、AWS Device Farm、Limrun，TestMu AI 通过 provider 插件接入，Expo Simulators on EAS 也可驱动。
+- 🛠️ **接口与生态**：`agent-device mcp` 启动官方 stdio MCP server，CLI、MCP 与类型化 Node.js API 共享同一运行时，会话、证据和回放行为一致；e2e 的 `@e2e-dev/mobile` 和 T3 Code 的模拟器/仿真器支持构建在其上，另有 AI SDK tools 与 Eve 集成。
+- 🔄 **与现有框架互补**：与 Appium、Detox、Maestro 运行由人编写维护的套件不同，agent-device 让代理在运行时读应用并逐条选择命令；它可将运行保存为 `.ad` 脚本或导出严格 Maestro YAML，并用 `agent-device capabilities --platform <platform>` 查看目标平台能力。
+- 🏢 **采用与协作**：Expensify、Shopify、MetaMask、Uniswap、Expo、T3 Code、e2e 等团队和项目使用；会话按 git worktree 隔离，设备占用声明防止并行代理抢占彼此的模拟器，`agent-device device status` 可查看谁持有哪些设备。
+
+### [一次构建 devtool，随处挂载。](https://devfra.me/)
+
+devframe 发布了一套面向 devtool 开发的框架无关基础层：只要用 `defineDevframe()` 定义一次工具，`initDevframe()` 就会把它转换为符合 Web 标准的 Request → Response handler；这个 handler 可以原生挂载到 Hono、Nitro、Next.js、SvelteKit、Vite、Rsbuild、Deno、Bun 等宿主中；同一份定义也能被适配器封装成 CLI、独立开发服务器、静态报告、MCP 服务器或 Vite DevTools 面板。它把工具边界收敛到 Web 标准请求与响应；任何支持该标准或 connect 风格中间件的框架都能接入，并复用同一套 RPC、状态与生态。
+
+- 🚀 **核心发布**：devframe 提供与框架无关的 devtool 基础：用 `defineDevframe({ id, name, rpc, view })` 描述工具，用 `initDevframe(devframe, { base })` 得到 handler，实现构建一次、随处挂载。
+- 🧩 **单一标准 Handler**：handler 的边界是 Web 标准 `Request`/`Response`；它可直接挂进 Hono、Nitro 全捕获事件路由、Next.js App Router route handler，Vite 则复用同一实例提供的 connect 风格 `nodeMiddleware`，只有面向宿主框架的适配层会变化。
+- 📦 **适配器形态**：同一份定义可按发布方式选择入口：`devframe/adapters/cac` 生成独立 CLI，`devframe/adapters/dev` 启动开发服务器，`devframe/adapters/mcp` 以 `stdio` 等传输暴露给编码智能体，`devframe/adapters/build` 输出到 `outDir`（如 `dist-static`）生成自包含 SPA 快照用于 CI。
+- 🔗 **类型安全 RPC 与共享状态**：双向调用基于 birpc，并可用任意 Standard Schema 校验器校验；同时提供可观察的 patch 同步状态，在连接断开重连后仍然保留。
+- 🧠 **可视化与智能体双接口**：RPC 函数默认私有，需通过 `agent: { description }` 显式选择暴露给智能体；MCP 适配器把这些函数、资源及选定的共享状态转换为智能体可消费的接口，界面表现不同但数据源唯一。
+- 🏢 **Hub 组合层**：`@devframes/hub` 是无头组合层：多个 devframe 可注册 docks、commands、terminals 和共享状态，并通过一个入口统一呈现；`initHub({ base, devframes, ui })` 产出的 handler 与独立 devframe 使用相同的 handler/中间件 API。
+- 🎨 **内置 Devframe 跨 UI 框架**：内置 devframe 覆盖 Vue、Svelte、Solid 与 React；devframe 自身负责协议层，具体 UI 框架交由工具作者选择。
 
 ### [Ryugi — 面向编码代理的交互式产物](https://github.com/Innei/ryugi)
 
@@ -172,3 +224,19 @@ Seth Godin 在《The power of sync》中指出，同步工作按共享时间表�
 - 🔮 **AI 目前是异步的**：agent 永远不需要开会，还能在凌晨 3 点工作，于是人类反而成了同步流程的瓶颈。随着其能力增强，可以预期 AI 将成为大多数同步事件的参与者。
 - 🔗 **信任在同步中建立、在异步中消耗**：异步在已经互相了解的人之间效果更好。新团队、新员工和新客户关系初期可能需要同步；替代方案是构建天然异步的系统，让新参与者通过在线声誉系统和有设计的在线社区以新的方式赢得信任。
 - 📝 **三条行动原则**：不要采用同步，除非它能比异步带来有价值的优势，并说明理由、为之辩护；做异步工作时要匹配自己的内在节律，以不同于分配顺序的方式完成更多事情；留意同步与异步之间的切换，机会与陷阱都在那里。组织还应更留意同步的成本，创作者则应为不同种类的工作合理定价，这也是请 Bob Dylan 在生日派对上唱歌要价一百万美元的原因。
+
+---
+
+大模型的使用者分成两种。一种人充满了好奇心和责任心，将大模型用来放大自身的能力，提升自己的工作效率和理解深度。
+
+另一种人比较懒惰，只充当"人肉代理"，把收到的需求放到输入框里，然后点击"生成"按钮进行处理。
+
+-- 《聪明人怎样使用工具》
+
+---
+
+你把 AI 生成的代码称为"AI 垃圾"，通常只是表明你根本没读过它。只有当你止步于此，这种侮辱才成立。
+
+如果你愿意投入大量精力，不断完善这些代码，它可以成为值得信赖的东西。
+
+-- 《AI 作为一种生活方式的选择》
